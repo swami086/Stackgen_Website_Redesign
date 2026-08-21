@@ -2,105 +2,65 @@ import type { SVGAttributes } from 'react';
 import type { DiagramProps } from '@/lib/types';
 import { DiagramText } from './DiagramText';
 
-/** Normalized Y origin: Creation Ops frame top in problem.json (y=-1037). */
-const Y0 = 1037;
-const CARD = { x: 100, y: 0, w: 1240, h: 369, rx: 24 };
-const PAD = 32;
-const DIVIDER_Y = PAD + 141;
-const FAILURE_Y = DIVIDER_Y + 1;
-const ROW_H = 57;
-const GAP_X = PAD + 534;
-const OPS_X = PAD + 666;
-const EVIDENCE_TOP = -604 + Y0;
-const EVIDENCE_ROW_H = 172;
-const PULL_Y = -24 + Y0;
+const VIEWBOX = { width: 1438, height: 696 };
+const LEFT_PANEL = { x: 0, y: 0, width: 593, height: 696, rx: 8 };
+const RIGHT_COLUMN = { x: 982.5, y: 100.67906188964844 };
 
-const FILL: Record<string, string> = {
-  '$surface-card': 'var(--color-surface-card)',
-  '$border-hairline': 'var(--color-border-hairline)',
-  '$text-primary': 'var(--color-text-primary)',
-  '$text-secondary': 'var(--color-text-secondary)',
-  '$text-tertiary': 'var(--color-text-tertiary)',
-  '$accent': 'var(--color-accent)',
-};
+const COLORS = {
+  panel: 'var(--color-panel)',
+  panelRaised: 'var(--color-panel-raised)',
+  panelBorder: 'var(--color-border-panel)',
+  text: 'var(--color-text-on-panel)',
+  muted: 'var(--color-text-muted-panel)',
+  accent: 'var(--color-accent)',
+  gap: '#FBE3F5',
+  chipLeft: 'var(--color-text-on-panel)',
+  chipRight: '#C0C0C0',
+  iconBorder: '#FCDBCE',
+} as const;
 
-const CREATION = {
-  title: 'Software Creation',
-  body: 'Agents compress local creation loops. Code, pull requests, and spec changes rise before governance catches up.',
-};
-
-const OPERATIONS = {
-  title: 'Software Operations',
-  body: 'Operations still carry the whole-system check. Approvals, drift checks, incident context, and rollback safety stay cross-domain.',
-};
-
-const FAILURE_ROWS = [
+const CREATION_ROWS = [
   {
-    title: 'Manual toll',
-    body: 'Supervised deploys, approval chains, and stale runbooks slow each release.',
+    title: 'AI Coding Assistants:',
+    body: 'have drastically accelerated the core software creation process.',
   },
   {
-    title: 'Reactive SRE',
-    body: 'On-call response starts with missing change history and fragmented tools.',
-  },
-  {
-    title: 'Stateless agents',
-    body: 'Domain helpers accelerate one lane at a time, not the shared operational loop.',
+    title: 'PR Acceleration:',
+    body: 'Coding aids have effectively doubled pull request volumes globally.',
   },
 ] as const;
 
-const EVIDENCE_ROWS = [
+const OPERATIONS_ROWS = [
   {
-    figure: '1.7x',
-    title: 'more issues in AI-generated PRs',
-    description:
-      'Independent analysis found AI-authored pull requests carry more defects, especially logic and correctness bugs that become production incidents.',
-    source: 'CodeRabbit / Stack Overflow Blog, State of AI vs Human Code Generation',
+    title: 'Operations Stagnation:',
+    body: 'The ops later has failed to scale or match development velocity spikes',
   },
   {
-    figure: '78%',
-    title: 'report more incidents once AI code is live',
-    description:
-      'Teams rate AI code highly in review, then see production failures after ship when line-by-line review is skipped.',
-    source: 'New Relic 2026 State of AI Coding',
-  },
-  {
-    figure: 'DORA',
-    title: 'AI helps productivity, hurts stability',
-    description:
-      'AI adoption raises individual productivity while hurting software delivery stability and throughput.',
-    source: 'DORA 2024 Accelerate State of DevOps Report',
+    title: 'Reliability Gap:',
+    body: 'Creates a hazardous bottleneck where code is written faster than it can safely ship',
   },
 ] as const;
-
-const PULL =
-  'Autonomy should scale at the pace of confidence, not at the pace of autocomplete.';
-
-function accentFill(fontSize: number, token: string): string {
-  if (token !== '$accent') return FILL[token] ?? token;
-  return fontSize >= 24 ? 'var(--color-accent)' : 'var(--color-accent-text)';
-}
 
 function SvgText({
   x,
   y,
-  fontSize,
-  fontWeight = 'normal',
-  fontFamily = 'sans',
-  fill,
   width,
   lineHeight,
+  fontSize,
+  fontWeight = 400,
+  fill,
+  maxLines,
   children,
   ...rest
 }: {
   x: number;
   y: number;
-  fontSize: number;
-  fontWeight?: 'normal' | '500';
-  fontFamily?: 'sans' | 'mono';
-  fill: string;
   width?: number;
   lineHeight?: number;
+  fontSize: number;
+  fontWeight?: number;
+  fill: string;
+  maxLines?: number;
   children: string;
 } & SVGAttributes<SVGTextElement>) {
   return (
@@ -110,13 +70,78 @@ function SvgText({
       width={width}
       lineHeight={lineHeight}
       fontSize={fontSize}
-      fontWeight={fontWeight === '500' ? 500 : 400}
-      mono={fontFamily === 'mono'}
-      fill={accentFill(fontSize, fill)}
+      fontWeight={fontWeight}
+      fill={fill}
+      maxLines={maxLines}
       {...rest}
     >
       {children}
     </DiagramText>
+  );
+}
+
+function TitleBadge({
+  x,
+  y,
+  label,
+}: {
+  x: number;
+  y: number;
+  label: string;
+}) {
+  return (
+    <g data-part="title-badge">
+      <rect
+        x={x}
+        y={y}
+        width={20}
+        height={22.21766471862793}
+        rx={2.951}
+        fill="none"
+        stroke={COLORS.accent}
+        strokeWidth={1.2}
+        aria-hidden="true"
+      />
+      <circle cx={x + 10} cy={y + 11.108832359313965} r={4.1} fill="none" stroke={COLORS.accent} strokeWidth={1.2} aria-hidden="true" />
+      <SvgText x={x + 30.136035919189453} y={y + 1.1088323593139648} fontSize={28.96} fill={COLORS.text}>
+        {label}
+      </SvgText>
+    </g>
+  );
+}
+
+function InsightIcon({
+  x,
+  y,
+}: {
+  x: number;
+  y: number;
+}) {
+  return (
+    <g data-part="insight-icon" aria-hidden="true">
+      <rect
+        x={x}
+        y={y}
+        width={39.09894943237305}
+        height={39.09894943237305}
+        rx={2.951}
+        fill="none"
+        stroke={COLORS.iconBorder}
+        strokeWidth={0.738}
+      />
+      <rect x={x + 8} y={y + 8} width={24} height={24} rx={2} fill="none" stroke={COLORS.accent} strokeWidth={1} />
+      <path d={`M ${x + 16} ${y + 20} H ${x + 24}`} stroke={COLORS.text} strokeWidth={1.4} strokeLinecap="round" />
+      <path d={`M ${x + 20} ${y + 16} V ${y + 24}`} stroke={COLORS.text} strokeWidth={1.4} strokeLinecap="round" />
+    </g>
+  );
+}
+
+function GapGuide() {
+  return (
+    <g data-part="gap-guide" aria-hidden="true">
+      <path d="M 735 286 H 755 M 770 278 H 791 M 807 270 H 829 M 844 262 H 864" stroke={COLORS.muted} strokeWidth={1.2} strokeLinecap="round" />
+      <path d="M 735 349 H 755 M 770 357 H 791 M 807 365 H 829 M 844 373 H 864" stroke={COLORS.accent} strokeWidth={1.2} strokeLinecap="round" />
+    </g>
   );
 }
 
@@ -129,221 +154,176 @@ export function ProblemDiagram({
   titleId = 'problem-diagram-title',
   citations,
 }: ProblemDiagramProps) {
-  const evidence = EVIDENCE_ROWS.map((row, i) => ({
-    ...row,
-    description: citations?.[i]?.claim ?? row.description,
-    source: citations?.[i]?.source ?? row.source,
-  }));
+  const citationSummary = citations?.map((citation) => citation.source).filter(Boolean).join(', ');
 
   return (
     <svg
-      viewBox="0 0 1440 1083"
+      viewBox={`0 0 ${VIEWBOX.width} ${VIEWBOX.height}`}
       className={className}
       role="img"
       aria-labelledby={titleId}
+      data-ground="panel"
     >
-      <title id={titleId}>Creation versus operations gap</title>
+      <title id={titleId}>Software creation outpaces software operations</title>
       <desc>
-        Software creation accelerates on the left while operations lag on the right, separated by a
-        context gap; manual toll, reactive SRE, and stateless agents widen the gap before cited
-        industry evidence and a closing principle on autonomy.
+        A dark grounded comparison diagram shows software creation on the left and software
+        operations on the right, with a labeled gap between them. Creation shows 2X PR volume plus
+        two acceleration callouts, while operations shows 1x no boost plus stagnation and
+        reliability-gap callouts.
+        {citationSummary ? ` Home citations remain available from ${citationSummary}.` : ''}
       </desc>
 
-      <g data-part="creation-card">
-        <rect
-          x={CARD.x}
-          y={CARD.y}
-          width={CARD.w}
-          height={CARD.h}
-          rx={CARD.rx}
-          fill={FILL['$surface-card']}
-          stroke={FILL['$border-hairline']}
-          strokeWidth={1}
-        />
+      <rect
+        x={0}
+        y={0}
+        width={VIEWBOX.width}
+        height={VIEWBOX.height}
+        rx={8}
+        fill={COLORS.panel}
+        stroke={COLORS.panelBorder}
+        data-part="plate"
+      />
 
-        <g data-part="creation-column" data-index={0}>
-          <SvgText
-            x={CARD.x + PAD}
-            y={CARD.y + PAD}
-            fontSize={18}
-            fontWeight="500"
-            fill="$text-primary"
-          >
-            {CREATION.title}
-          </SvgText>
-          <SvgText
-            x={CARD.x + PAD}
-            y={CARD.y + PAD + 34}
-            width={510}
-            lineHeight={21}
-            fontSize={14}
-            fill="$text-secondary"
-          >
-            {CREATION.body}
-          </SvgText>
-        </g>
+      <rect
+        x={LEFT_PANEL.x}
+        y={LEFT_PANEL.y}
+        width={LEFT_PANEL.width}
+        height={LEFT_PANEL.height}
+        rx={LEFT_PANEL.rx}
+        fill={COLORS.panelRaised}
+        data-part="creation-panel"
+      />
 
-        <g data-part="gap-marker" aria-hidden="true">
-          <rect
-            x={CARD.x + GAP_X + 51}
-            y={CARD.y + PAD + 8}
-            width={6}
-            height={72}
-            rx={999}
-            fill={FILL['$accent']}
-          />
-          <SvgText
-            x={CARD.x + GAP_X + 42}
-            y={CARD.y + PAD + 90}
-            fontSize={13}
-            fontFamily="mono"
-            fill="$accent"
-          >
-            Gap
-          </SvgText>
-          <SvgText
-            x={CARD.x + GAP_X + 10}
-            y={CARD.y + PAD + 117}
-            fontSize={12}
-            fill="$text-secondary"
-          >
-            context gap
-          </SvgText>
-        </g>
-
-        <g data-part="operations-column" data-index={1}>
-          <SvgText
-            x={CARD.x + OPS_X}
-            y={CARD.y + PAD}
-            fontSize={18}
-            fontWeight="500"
-            fill="$text-primary"
-          >
-            {OPERATIONS.title}
-          </SvgText>
-          <SvgText
-            x={CARD.x + OPS_X}
-            y={CARD.y + PAD + 34}
-            width={510}
-            lineHeight={21}
-            fontSize={14}
-            fill="$text-secondary"
-          >
-            {OPERATIONS.body}
-          </SvgText>
-        </g>
-
-        <rect
-          x={CARD.x + PAD}
-          y={CARD.y + DIVIDER_Y}
-          width={1176}
-          height={1}
-          fill={FILL['$border-hairline']}
-          aria-hidden="true"
-        />
-
-        {FAILURE_ROWS.map((row, i) => (
-          <g key={row.title} data-part="failure-row" data-index={i}>
-            <rect
-              x={CARD.x + PAD}
-              y={CARD.y + FAILURE_Y + i * ROW_H}
-              width={1176}
-              height={1}
-              fill={FILL['$border-hairline']}
-              aria-hidden="true"
-            />
-            <SvgText
-              x={CARD.x + PAD}
-              y={CARD.y + FAILURE_Y + i * ROW_H + 18}
-              fontSize={14}
-              fontWeight="500"
-              fill="$text-primary"
-            >
-              {row.title}
-            </SvgText>
-            <SvgText
-              x={CARD.x + PAD + 204}
-              y={CARD.y + FAILURE_Y + i * ROW_H + 18}
-              fontSize={14}
-              fill="$text-secondary"
-            >
-              {row.body}
-            </SvgText>
-          </g>
-        ))}
-      </g>
-
-      <g data-part="evidence">
-        <rect
-          x={CARD.x}
-          y={EVIDENCE_TOP}
-          width={CARD.w}
-          height={1}
-          fill={FILL['$border-hairline']}
-          aria-hidden="true"
-        />
-        {evidence.map((row, i) => (
-          <g key={row.figure} data-part="evidence-row" data-index={i}>
-            <SvgText
-              x={CARD.x}
-              y={EVIDENCE_TOP + i * EVIDENCE_ROW_H + 32}
-              fontSize={44}
-              fontFamily="mono"
-              fill="$accent"
-            >
-              {row.figure}
-            </SvgText>
-            <SvgText
-              x={CARD.x + 256}
-              y={EVIDENCE_TOP + i * EVIDENCE_ROW_H + 32}
-              fontSize={20}
-              fontWeight="500"
-              fill="$text-primary"
-            >
-              {row.title}
-            </SvgText>
-            <SvgText
-              x={CARD.x + 256}
-              y={EVIDENCE_TOP + i * EVIDENCE_ROW_H + 65}
-              width={640}
-              lineHeight={24}
-              fontSize={15}
-              fill="$text-secondary"
-            >
-              {row.description}
-            </SvgText>
-            <SvgText
-              x={CARD.x + 256}
-              y={EVIDENCE_TOP + i * EVIDENCE_ROW_H + 122}
-              fontSize={12}
-              fill="$text-tertiary"
-            >
-              {row.source}
-            </SvgText>
-            <rect
-              x={CARD.x}
-              y={EVIDENCE_TOP + (i + 1) * EVIDENCE_ROW_H}
-              width={CARD.w}
-              height={1}
-              fill={FILL['$border-hairline']}
-              aria-hidden="true"
-            />
-          </g>
-        ))}
-      </g>
-
-      <g data-part="pull-line">
+      <g data-part="creation-column">
+        <TitleBadge x={69} y={96.00007629394531} label="Software Creation (Dev)" />
         <SvgText
-          x={CARD.x}
-          y={PULL_Y}
-          width={860}
-          lineHeight={35}
-          fontSize={26}
-          fontWeight="500"
-          fill="$text-primary"
+          x={69.00009694998153}
+          y={135.59371818284853}
+          width={454}
+          lineHeight={57}
+          maxLines={1}
+          fontSize={43.44}
+          fill={COLORS.text}
         >
-          {PULL}
+          AI-Accelerated Speed
         </SvgText>
+        <SvgText x={69} y={213.377669384121} fontSize={138.82} fontWeight={500} fill={COLORS.accent}>
+          2X
+        </SvgText>
+        <rect
+          x={258.0827941894531}
+          y={241.9256609306298}
+          width={121.99362182617188}
+          height={39.90446090698242}
+          fill="none"
+          stroke={COLORS.chipLeft}
+          strokeWidth={1.14}
+          data-part="creation-chip"
+        />
+        <SvgText x={278.60047721862793} y={256.74599157760244} fontSize={15.962} fontWeight={500} fill={COLORS.chipLeft}>
+          PR Volume
+        </SvgText>
+
+        {CREATION_ROWS.map((row, index) => {
+          const y = index === 0 ? 375.3778991699219 : 525.5328674316406;
+          return (
+            <g key={row.title} data-part="creation-insight" data-index={index}>
+              <InsightIcon x={69} y={y} />
+              <SvgText x={131.79528045654297} y={y} width={390} lineHeight={28} maxLines={1} fontSize={21.327} fill={COLORS.text}>
+                {row.title}
+              </SvgText>
+              <SvgText
+                x={131.79528045654297}
+                y={y + 36.326698303222656}
+                width={390}
+                lineHeight={25}
+                maxLines={2}
+                fontSize={18.957}
+                fill={COLORS.muted}
+              >
+                {row.body}
+              </SvgText>
+            </g>
+          );
+        })}
+      </g>
+
+      <GapGuide />
+      <SvgText
+        x={757.25}
+        y={343}
+        width={61}
+        lineHeight={18}
+        maxLines={1}
+        fontSize={14}
+        fill={COLORS.gap}
+        textAnchor="start"
+        letterSpacing={0.56}
+        data-part="gap-label"
+      >
+        {'← Gap →'}
+      </SvgText>
+
+      <g data-part="operations-column">
+        <TitleBadge x={RIGHT_COLUMN.x} y={RIGHT_COLUMN.y} label="Software Operations" />
+        <SvgText
+          x={RIGHT_COLUMN.x + 0.00009694998152554035}
+          y={RIGHT_COLUMN.y + 46.37605155687197}
+          width={454}
+          lineHeight={57}
+          maxLines={1}
+          fontSize={43.44}
+          fill={COLORS.text}
+        >
+          AI-Accelerated Speed
+        </SvgText>
+        <SvgText
+          x={RIGHT_COLUMN.x}
+          y={RIGHT_COLUMN.y + 124.15978074073792}
+          fontSize={80}
+          fontWeight={500}
+          fill={COLORS.accent}
+        >
+          1x
+        </SvgText>
+        <rect
+          x={1080.5828018188477}
+          y={232.83928680419922}
+          width={96}
+          height={40}
+          fill="none"
+          stroke={COLORS.chipRight}
+          strokeWidth={1.14}
+          data-part="operations-chip"
+        />
+        <SvgText x={1094.4989223480225} y={247.65963745117188} fontSize={15.962} fontWeight={500} fill={COLORS.chipRight}>
+          No Boost
+        </SvgText>
+
+        {OPERATIONS_ROWS.map((row, index) => {
+          const y = index === 0 ? 345.8392791748047 : 495.99424743652344;
+          const bodyWidth = index === 0 ? 392 : 344;
+          const maxLines = index === 0 ? 2 : 3;
+          return (
+            <g key={row.title} data-part="operations-insight" data-index={index}>
+              <InsightIcon x={RIGHT_COLUMN.x} y={y} />
+              <SvgText x={1045.295280456543} y={y} width={392} lineHeight={28} maxLines={1} fontSize={21.327} fill={COLORS.text}>
+                {row.title}
+              </SvgText>
+              <SvgText
+                x={1045.295280456543}
+                y={y + 36.326698303222656}
+                width={bodyWidth}
+                lineHeight={25}
+                maxLines={maxLines}
+                fontSize={18.957}
+                fill={COLORS.muted}
+              >
+                {row.body}
+              </SvgText>
+            </g>
+          );
+        })}
       </g>
     </svg>
   );

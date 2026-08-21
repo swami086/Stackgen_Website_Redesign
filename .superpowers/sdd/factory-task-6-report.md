@@ -5,10 +5,12 @@
 - `blocked`
 - Adopted the existing Task 6 baseline and preserved its clip pipeline.
 - Added the missing featured-case poster redaction-scan path under TDD.
-- Verified one real cleared clip and one real cleared poster, but the full manifest is still blocked because `home-automation` fails the 30fps gate.
+- Replaced `home-automation` with a clean alternate segment from the approved source manifest.
+- Verified two real cleared clips and one real cleared poster, but the full manifest is still blocked because the remaining `14` planned clip segments still lack exact 30fps gate evidence.
 
 ## Skills and guidance read
 
+- `/Users/swami/.cursor/plugins/cache/cursor-public/superpowers/d884ae04edebef577e82ff7c4e143debd0bbec99/skills/test-driven-development/SKILL.md`
 - `/Users/swami/.cursor/skills/performance-engineer/SKILL.md`
 - `superpowers:test-driven-development`
 - `/Users/swami/.cursor/skills/impeccable/reference/craft-floor.md`
@@ -22,19 +24,19 @@ Query:
 ```sql
 SELECT repo_path, project_id, branch, commit_sha, status, last_indexed_at
 FROM _orbit_manifest
-WHERE repo_path = '/Users/swami/Documents/Stackgen_Website_Redesign';
+WHERE repo_path = '/Users/swami/Documents/Stackgen_Website_Redesign/.worktrees/factory-experience';
 ```
 
 Result:
 
-- `repo_path`: `/Users/swami/Documents/Stackgen_Website_Redesign`
-- `project_id`: `6869176848158080459`
-- `branch`: `main`
-- `commit_sha`: `287c95dc33fb87f8345a9c270680052250cf2b66`
+- `repo_path`: `/Users/swami/Documents/Stackgen_Website_Redesign/.worktrees/factory-experience`
+- `project_id`: `6046687899000356362`
+- `branch`: `factory-experience`
+- `commit_sha`: `c9595fe8e569c652f0dbea1a92555a7ca188dfa2`
 - `status`: `indexed`
-- `last_indexed_at`: `2026-08-21T08:06:57.531136`
+- `last_indexed_at`: `2026-08-21T09:01:33.026415`
 
-No reindex was needed. The graph was already scoped to this repo on `main` and current enough to inspect the committed codebase.
+Indexed the exact isolated worktree before querying definitions/importers, per task instruction.
 
 ### Target definitions
 
@@ -74,6 +76,7 @@ Result:
   - `web/components/media/ProductClip.tsx`
   - `web/components/media/VideoFigure.tsx`
   - `web/scripts/__tests__/redaction.test.ts`
+  - `web/scripts/clips.mjs`
 
 Poster-related content references were then checked in source:
 
@@ -87,6 +90,9 @@ Poster-related content references were then checked in source:
 - `web/public/product/home-audit.webm`
 - `web/public/product/home-audit.mp4`
 - `web/public/product/home-audit.webp`
+- `web/public/product/home-automation.webm`
+- `web/public/product/home-automation.mp4`
+- `web/public/product/home-automation.webp`
 - `web/public/product/greythr.webp`
 - `.superpowers/sdd/redaction-signoff.md`
 - `.superpowers/sdd/factory-task-6-report.md`
@@ -178,6 +184,34 @@ Result for `home-audit`:
 - budget result:
   - both encodes are under the `3 * 1024 * 1024` byte limit
 
+### Cleared replacement clip
+
+Command:
+
+```bash
+cd web && node scripts/clips.mjs --only home-automation
+```
+
+Result for `home-automation`:
+
+- source: `HKEV6rkRDzU`
+- selected segment: `00:24-00:32`
+- scanned frames: `240`
+- redaction hits: `0`
+- dimensions:
+  - clip: `1440x860 @ 30fps`
+  - poster: `1440x860`
+- generated files:
+  - `public/product/home-automation.webm`
+  - `public/product/home-automation.mp4`
+  - `public/product/home-automation.webp`
+- byte sizes:
+  - `home-automation.webm`: `387958`
+  - `home-automation.mp4`: `269899`
+  - `home-automation.webp`: `58458`
+- budget result:
+  - both encodes are under the `3 * 1024 * 1024` byte limit
+
 ### Cleared featured-case poster
 
 Result for `greythr`:
@@ -209,8 +243,8 @@ Result:
 
 Meaning:
 
-- The adopted baseline still does not satisfy the full-manifest acceptance criteria.
-- Candidate selection must be re-done for `home-automation`, and likely for additional clips, using the real 30fps gate rather than lighter pre-screen assumptions.
+- The original `home-automation` baseline was not safe to ship and had to be replaced with the cleared `00:24-00:32` segment above.
+- Full-manifest acceptance is still unmet because the remaining planned clip segments have not yet been cleared under the same exact gate.
 
 ## Verification commands
 
@@ -241,7 +275,20 @@ cd web && pnpm build
 
 ## Exact missing evidence
 
-- No clearance evidence yet for the remaining `15` planned clip outputs beyond `home-audit`
-- No approved replacement segment yet for `home-automation`
-- No 30fps scan results yet for the remaining product/home surfaces after the first blocking failure
-- The sign-off file is still partial by necessity and should not be treated as final clearance for the full Task 6 manifest
+- No clearance evidence yet for these remaining planned clip segments:
+  - `home-infrastructure`
+  - `home-observability`
+  - `sre-01`
+  - `sre-02`
+  - `sre-03`
+  - `automation-01`
+  - `automation-02`
+  - `automation-03`
+  - `infrastructure-01`
+  - `infrastructure-02`
+  - `infrastructure-03`
+  - `observability-01`
+  - `observability-02`
+  - `observability-03`
+- No exact 30fps scan results yet for those `14` segments, so the sign-off file remains intentionally partial.
+- Because those segments are still unsigned, Task 6 remains `blocked`.

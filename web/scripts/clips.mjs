@@ -36,7 +36,7 @@ const SOURCES = {
 
 export const CLIPS = [
   clip('home-audit', 'home', 'audit', 10, 8),
-  clip('home-automation', 'home', 'automation', 20, 8),
+  clip('home-automation', 'home', 'automation', 24, 8),
   clip('home-infrastructure', 'home', 'infrastructure', 10, 8),
   clip('home-observability', 'home', 'observability', 20, 8),
   clip('sre-01', 'sre', 'audit', 70, 8),

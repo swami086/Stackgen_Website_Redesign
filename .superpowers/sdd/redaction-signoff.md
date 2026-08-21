@@ -3,9 +3,9 @@
 ## Status
 
 - `blocked`
-- `home-audit` and the featured-case poster are cleared.
+- `home-audit`, `home-automation`, and the featured-case poster are cleared.
 - The full Task 6 media set is not cleared yet.
-- The next required clip, `home-automation`, still fails the 30fps gate.
+- The remaining planned clip segments still need exact 30fps gate evidence.
 
 ## Cleared assets
 
@@ -19,6 +19,24 @@
   - `web/public/product/home-audit.webm`
   - `web/public/product/home-audit.mp4`
   - `web/public/product/home-audit.webp`
+
+### `home-automation`
+
+- source video: `HKEV6rkRDzU` (`Approval and Auto Remediation Flow`)
+- timecodes: `00:24-00:32`
+- scan command: `cd web && node scripts/clips.mjs --only home-automation`
+- frame scan result: `240` frames scanned, `0` hits from `findSensitive`
+- dimensions / fps:
+  - clip: `1440x860 @ 30fps`
+  - poster: `1440x860`
+- byte sizes:
+  - `home-automation.webm`: `387958`
+  - `home-automation.mp4`: `269899`
+  - `home-automation.webp`: `58458`
+- outputs:
+  - `web/public/product/home-automation.webm`
+  - `web/public/product/home-automation.mp4`
+  - `web/public/product/home-automation.webp`
 
 ### `greythr`
 

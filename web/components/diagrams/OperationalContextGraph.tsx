@@ -91,12 +91,42 @@ const ILLUSTRATION = {
   width: 321.09136962890625,
   height: 292.0830993652344,
   layers: [
-    { x: 92, y: 76, size: 136 },
-    { x: 92, y: 104, size: 136 },
-    { x: 92, y: 130, size: 136 },
+    {
+      href: '/diagram-assets/operational-context-graph/stack-layer-front.png',
+      x: 21.010427851462737,
+      y: 33.005615234375,
+      width: 280.0314744333409,
+      height: 280.02695695053444,
+    },
+    {
+      href: '/diagram-assets/operational-context-graph/stack-layer-middle.svg',
+      x: 21.010427851462737,
+      y: 5,
+      width: 280.0314744333409,
+      height: 280.02695695053444,
+    },
+    {
+      href: '/diagram-assets/operational-context-graph/stack-layer-back.png',
+      x: 21.010427851462737,
+      y: -21.007232666015625,
+      width: 280.0314744333409,
+      height: 280.02695695053444,
+    },
   ],
-  centerX: 463.2972717285156 + 160.54568481445312,
-  centerY: 90.02475738525388 + 121,
+  union: {
+    href: '/diagram-assets/operational-context-graph/stack-union.svg',
+    x: 101.04180908203125,
+    y: 43.0142822265625,
+    width: 161.0458984375,
+    height: 110.03125,
+  },
+  core: {
+    href: '/diagram-assets/operational-context-graph/stack-core.svg',
+    x: 135.052001953125,
+    y: 66.02029418945312,
+    width: 92.78225708007812,
+    height: 63.01753616333008,
+  },
 };
 
 const CONNECTORS = {
@@ -287,7 +317,7 @@ function AccentConnector({
 }
 
 function SharedIntelPlate() {
-  const { x, y, width, height, layers, centerX, centerY } = ILLUSTRATION;
+  const { x, y, width, height, layers, union, core } = ILLUSTRATION;
 
   return (
     <g data-part="shared-intel-plate">
@@ -300,55 +330,39 @@ function SharedIntelPlate() {
         stroke="var(--color-accent-dim)"
       />
       {layers.map((layer, index) => (
-        <rect
+        <image
           key={index}
           x={x + layer.x}
           y={y + layer.y}
-          width={layer.size}
-          height={layer.size}
-          transform={`rotate(-45 ${x + layer.x + layer.size / 2} ${y + layer.y + layer.size / 2})`}
-          fill="none"
-          stroke={index === 0 ? 'var(--color-border-card)' : 'var(--color-text-tertiary)'}
-          strokeDasharray={index === 0 ? undefined : '3 3'}
-          opacity={index === 0 ? 1 : 0.65}
+          width={layer.width}
+          height={layer.height}
+          href={layer.href}
+          preserveAspectRatio="none"
+          transform={`rotate(-44.73 ${x + layer.x + layer.width / 2} ${y + layer.y + layer.height / 2})`}
+          data-part="shared-intel-stack-layer"
           aria-hidden="true"
         />
       ))}
-      <path
-        d={`M${centerX - 38} ${centerY} H${centerX + 38} M${centerX} ${centerY - 38} V${centerY + 38}`}
-        fill="none"
-        stroke="var(--color-accent-text)"
-        strokeWidth={1.5}
+      <image
+        x={x + union.x}
+        y={y + union.y}
+        width={union.width}
+        height={union.height}
+        href={union.href}
+        preserveAspectRatio="none"
+        data-part="shared-intel-union"
         aria-hidden="true"
       />
-      <path
-        d={`M${centerX} ${centerY} L${centerX - 36} ${centerY - 24} M${centerX} ${centerY} L${centerX + 36} ${centerY - 24} M${centerX} ${centerY} L${centerX} ${centerY + 36}`}
-        fill="none"
-        stroke="var(--color-accent-text)"
-        strokeWidth={1.5}
+      <image
+        x={x + core.x}
+        y={y + core.y}
+        width={core.width}
+        height={core.height}
+        href={core.href}
+        preserveAspectRatio="none"
+        data-part="shared-intel-core"
         aria-hidden="true"
       />
-      {[
-        [centerX, centerY - 38],
-        [centerX - 38, centerY],
-        [centerX, centerY],
-        [centerX + 38, centerY],
-        [centerX, centerY + 38],
-        [centerX - 24, centerY - 16],
-        [centerX + 24, centerY - 16],
-        [centerX - 24, centerY + 16],
-      ].map(([cx, cy], index) => (
-        <circle
-          key={index}
-          cx={cx}
-          cy={cy}
-          r={index < 5 ? 6 : 3}
-          fill={index < 5 ? 'var(--color-bg-base)' : 'var(--color-text-primary)'}
-          stroke={index < 5 ? 'var(--color-accent-text)' : undefined}
-          strokeWidth={index < 5 ? 1.5 : undefined}
-          aria-hidden="true"
-        />
-      ))}
       <rect x={x - 2} y={y + 96.03} width={3.001} height={41.012} fill="var(--color-accent-text)" aria-hidden="true" />
       <rect x={x - 2} y={y + 63.02} width={3.001} height={25.007} fill="var(--color-accent-text)" aria-hidden="true" />
       <rect x={x - 2} y={y + 55.02} width={3.001} height={5.001} fill="var(--color-accent-text)" aria-hidden="true" />
@@ -359,6 +373,7 @@ function SharedIntelPlate() {
       <rect x={x + 213.07} y={y + height - 2} width={14.004} height={3.001} fill="var(--color-accent-text)" aria-hidden="true" />
       <rect x={x + 230.07} y={y + height - 2} width={25.007} height={3.001} fill="var(--color-accent-text)" aria-hidden="true" />
       <rect x={x + 258.08} y={y + height - 2} width={5.001} height={3.001} fill="var(--color-accent-text)" aria-hidden="true" />
+      <rect x={x + 266.08} y={y + height - 2} width={14.004} height={3.001} fill="var(--color-accent-text)" aria-hidden="true" />
       <rect x={x + width - 2} y={y + 74.02} width={3.001} height={14.004} fill="var(--color-accent-text)" aria-hidden="true" />
       <rect x={x + width - 2} y={y + 99.02} width={3.001} height={25.007} fill="var(--color-accent-text)" aria-hidden="true" />
       <rect x={x + width - 2} y={y + 91.02} width={3.001} height={5.001} fill="var(--color-accent-text)" aria-hidden="true" />

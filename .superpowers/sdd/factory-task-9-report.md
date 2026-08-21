@@ -212,3 +212,52 @@ cd web && pnpm build
 
 - The platform port now uses the Figma slide-7 card copy exactly, while the `home` variant remains a compact teaser for the homepage section contract.
 - `web/tsconfig.tsbuildinfo` changed as a byproduct of repo verification and should stay out of the Task 9 commit.
+
+## Fidelity fix follow-up
+
+### Finding addressed
+
+- Review flagged the central Shared Intel plate in `OperationalContextGraph.tsx` as manually approximated.
+- Re-queried Figma node `1:7929` with `get_metadata`, `get_design_context`, and `get_screenshot` before editing.
+
+### Torbit reindex attempt
+
+- Required single scoped reindex attempt failed and was not retried:
+
+```text
+failed to open DuckDB: database error: Serialization Error: Failed to deserialize: field id mismatch, expected: 100, got: 26117: Serialization Error: Failed to deserialize: field id mismatch, expected: 100, got: 26117: Error code 1: Unknown error code
+```
+
+### Source-derived implementation
+
+- Downloaded the exact Figma-exported Shared Intel internals into `web/public/diagram-assets/operational-context-graph/`.
+- Replaced the hand-drawn rotated `rect` / `path` / `circle` center artwork with source-derived `<image>` layers for the three rotated stack plates plus the union and core glyph assets.
+- Preserved the public `variant` prop, both section callers, one accessible root SVG, `DiagramText` bounds, `data-part` hooks, panel ground, naming, and the fixed layout.
+- Adjusted the lower plate accent rail to include the missing measured segment from the Figma source.
+
+### TDD evidence for the follow-up
+
+#### RED
+
+Focused test command:
+
+```bash
+cd web && pnpm test components/diagrams/__tests__/OperationalContextGraph.test.tsx
+```
+
+Observed failure before implementation:
+
+- `shared-intel-stack-layer` count was `0` instead of `3`, proving the center plate still used approximated geometry
+
+#### GREEN
+
+Focused verification after the fix:
+
+```bash
+cd web && pnpm test components/diagrams/__tests__/OperationalContextGraph.test.tsx components/sections/home/__tests__/OperationalContextGraphSection.test.tsx components/sections/platform/__tests__/PlatformContextGraphSection.test.tsx
+```
+
+Result:
+
+- `3` files passed
+- `14` tests passed

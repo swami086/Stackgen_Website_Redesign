@@ -65,6 +65,27 @@ describe('OperationalContextGraph', () => {
     );
   });
 
+  it('uses source-derived shared-intel assets instead of approximated center geometry', () => {
+    const { container } = renderVariant('platform');
+    const plate = container.querySelector('[data-part="shared-intel-plate"]');
+
+    expect(plate).not.toBeNull();
+
+    const stackLayers = plate?.querySelectorAll('[data-part="shared-intel-stack-layer"]') ?? [];
+    expect(stackLayers).toHaveLength(3);
+    for (const layer of stackLayers) {
+      expect(layer.tagName.toLowerCase()).toBe('image');
+      expect(layer.getAttribute('transform')).toContain('rotate(-44.73');
+    }
+
+    expect(
+      plate?.querySelector('[data-part="shared-intel-union"]')?.tagName.toLowerCase(),
+    ).toBe('image');
+    expect(
+      plate?.querySelector('[data-part="shared-intel-core"]')?.tagName.toLowerCase(),
+    ).toBe('image');
+  });
+
   it('renders the Figma card copy for the platform variant', () => {
     const { container } = renderVariant('platform');
     const text = svgTextContent(container);

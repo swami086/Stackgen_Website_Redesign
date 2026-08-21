@@ -1,0 +1,29 @@
+services:
+  web-dev:
+    profiles: ["dev"]
+    build:
+      context: ./web
+      target: builder
+    command: pnpm dev
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_TELEMETRY_DISABLED=1
+    develop:
+      watch:
+        - action: sync
+          path: ./web
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./web/package.json
+
+  web-prod:
+    profiles: ["prod"]
+    build:
+      context: ./web
+      target: runner
+    ports:
+      - "3000:3000"
+    restart: unless-stopped

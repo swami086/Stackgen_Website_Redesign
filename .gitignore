@@ -1,0 +1,14 @@
+# OpenMemory - IDE/Assistant specific rules
+.cursor/rules/openmemory.mdc
+.firecrawl/
+.figma-assets/
+
+# Next.js app
+web/node_modules/
+web/.next/
+web/next-env.d.ts
+web/test-results/
+web/playwright-report/
+
+# Canvas parity exports (regenerable)
+design-reference/

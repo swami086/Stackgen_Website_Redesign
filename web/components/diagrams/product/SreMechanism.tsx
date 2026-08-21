@@ -1,7 +1,7 @@
 import type { DiagramProps } from '@/lib/types';
 import { DiagramText } from '../DiagramText';
 
-const VIEWBOX = '0 0 1240 820';
+const VIEWBOX = '66 275 1570 743';
 const DESC =
   'Aiden for SRE shows a bounded incident ladder from Infra Drift Present through P1 Alert Fires, Root Cause Established, Remediation Deployed, and Service Restored. The refusal boundary sits at deploy, bounded autonomy is intentional, and the policy boundary is enforced while Temporal orchestrates sequencing and OPA checks each action boundary.';
 
@@ -49,19 +49,32 @@ const LADDER_STEPS = [
 function LeftIncidentColumn() {
   return (
     <g data-part="incident-column">
-      <rect x={70} y={140} width={300} height={430} fill={PANEL_RAISED} stroke={BORDER} />
-      <rect x={40} y={110} width={330} height={490} fill="none" stroke="url(#sre-column-glow)" strokeWidth={20} />
-      <rect x={65} y={145} width={6} height={330} rx={999} fill={BORDER} />
+      <rect x={105} y={327} width={434} height={640} fill={PANEL_RAISED} stroke={BORDER} />
+      <rect
+        x={105}
+        y={327}
+        width={434}
+        height={640}
+        fill="none"
+        stroke="url(#sre-column-glow)"
+        strokeWidth={18}
+      />
+      <rect x={176} y={393} width={4} height={462} rx={999} fill={BORDER} />
 
       {INCIDENT_STEPS.map((step, index) => {
-        const y = 182 + index * 76;
+        const y = 393 + index * 112;
         return (
           <g key={step.label} data-part="incident-step" data-index={index}>
-            <rect x={95} y={y} width={40} height={40} rx={4} fill="none" stroke={HAIRLINE} />
-            <circle cx={68} cy={y + 20} r={6} fill={index === 4 ? ACCENT : index === 3 ? CYAN : PANEL_TEXT} />
+            <rect x={148} y={y} width={60} height={60} rx={4} fill="none" stroke={HAIRLINE} />
+            <circle
+              cx={178}
+              cy={y + 30}
+              r={6}
+              fill={index === 4 ? ACCENT : index === 3 ? CYAN : PANEL_TEXT}
+            />
             <text
-              x={158}
-              y={y + 1}
+              x={243}
+              y={y}
               fill={PANEL_TEXT}
               fontSize={16}
               fontFamily="var(--font-sans)"
@@ -70,11 +83,11 @@ function LeftIncidentColumn() {
               {step.label}
             </text>
             <DiagramText
-              x={158}
-              y={y + 22}
-              width={148}
+              x={243}
+              y={y + 30}
+              width={253}
               lineHeight={16}
-              maxLines={3}
+              maxLines={2}
               fill={PANEL_MUTED}
               fontSize={12}
               fontFamily="var(--font-sans)"
@@ -91,20 +104,20 @@ function LeftIncidentColumn() {
 
 function RightLadderColumn() {
   return (
-    <g data-part="automation-ladder">
+    <g data-part="investigation-ladder">
       {LADDER_STEPS.map((step, index) => {
-        const y = 112 + index * 82;
+        const y = 275 + index * 95.6554;
         const part = step.refusal ? 'refusal-boundary' : 'step';
         return (
           <g key={step.title} data-part={part} data-index={index}>
             <path
-              d={`M430 ${y} H570 L590 ${y + 14} V${y + 48} H430 Z`}
+              d={`M678 ${y + 2} H948 L968 ${y + 17} V${y + 67} H678 Z`}
               fill={PANEL_RAISED}
               stroke={BORDER}
             />
             <text
-              x={442}
-              y={y + 10}
+              x={694}
+              y={y + 17}
               fill={PANEL_MUTED}
               fontSize={10}
               fontFamily="var(--font-sans)"
@@ -113,8 +126,8 @@ function RightLadderColumn() {
               {step.tag}
             </text>
             <text
-              x={442}
-              y={y + 24}
+              x={694}
+              y={y + 42}
               fill={PANEL_TEXT}
               fontSize={12}
               fontFamily="var(--font-sans)"
@@ -122,21 +135,24 @@ function RightLadderColumn() {
             >
               {step.title}
             </text>
-            <text
-              x={442}
-              y={y + 38}
+            <DiagramText
+              x={694}
+              y={y + 56}
+              width={189}
+              lineHeight={11}
+              maxLines={2}
               fill={PANEL_MUTED}
               fontSize={9}
               fontFamily="var(--font-sans)"
               dominantBaseline="hanging"
             >
               {step.detail}
-            </text>
-            <rect x={545} y={y + 17} width={24} height={24} rx={4} fill="none" stroke={HAIRLINE} />
+            </DiagramText>
+            <rect x={917} y={y + 39} width={33} height={33} rx={4} fill="none" stroke={HAIRLINE} />
             {index < LADDER_STEPS.length - 1 ? (
               <>
-                <circle cx={500} cy={y + 52} r={7} fill={PANEL} stroke={BORDER} />
-                <rect x={499} y={y + 59} width={2} height={22} rx={999} fill={BORDER} />
+                <circle cx={814} cy={y + 90} r={7} fill={PANEL} stroke={BORDER} />
+                <rect x={813} y={y + 97} width={2} height={28} rx={999} fill={BORDER} />
               </>
             ) : null}
           </g>
@@ -144,10 +160,10 @@ function RightLadderColumn() {
       })}
 
       <g data-part="ocg-card">
-        <rect x={430} y={614} width={158} height={44} fill={PANEL_RAISED} stroke={BORDER} />
+        <rect x={678} y={850} width={290} height={69} fill={PANEL_RAISED} stroke={BORDER} />
         <text
-          x={444}
-          y={626}
+          x={694}
+          y={865}
           fill={PANEL_TEXT}
           fontSize={12}
           fontFamily="var(--font-sans)"
@@ -155,41 +171,50 @@ function RightLadderColumn() {
         >
           OCG - Operational Context Graph
         </text>
-        <text
-          x={444}
-          y={642}
+        <DiagramText
+          x={694}
+          y={887}
+          width={189}
+          lineHeight={11}
+          maxLines={1}
           fill={PANEL_MUTED}
           fontSize={9}
           fontFamily="var(--font-sans)"
           dominantBaseline="hanging"
         >
           Shared memory across all agents
-        </text>
+        </DiagramText>
       </g>
 
       <g data-part="policy-footer">
-        <rect x={430} y={676} width={158} height={50} fill={PANEL_RAISED} stroke={BORDER} />
-        <line x1={509} y1={676} x2={509} y2={726} stroke={BORDER} />
-        <text
-          x={440}
-          y={694}
+        <rect x={678} y={930} width={288} height={86} fill={PANEL_RAISED} stroke={BORDER} />
+        <line x1={822} y1={930} x2={822} y2={1016} stroke={BORDER} />
+        <DiagramText
+          x={694}
+          y={960}
+          width={130}
+          lineHeight={10}
+          maxLines={2}
           fill={PANEL_MUTED}
           fontSize={9}
           fontFamily="var(--font-sans)"
           dominantBaseline="hanging"
         >
           Temporal orchestrates sequencing
-        </text>
-        <text
-          x={520}
-          y={694}
+        </DiagramText>
+        <DiagramText
+          x={832}
+          y={959}
+          width={119}
+          lineHeight={10}
+          maxLines={3}
           fill={PANEL_MUTED}
           fontSize={7.5}
           fontFamily="var(--font-sans)"
           dominantBaseline="hanging"
         >
           OPA enforces policy at each action boundary
-        </text>
+        </DiagramText>
       </g>
     </g>
   );
@@ -210,17 +235,17 @@ export function SreMechanism({
       <title id={titleId}>SRE incident recovery mechanism</title>
       <desc>{DESC}</desc>
 
-      <rect width={1240} height={820} fill={PANEL} />
+      <rect x={66} y={275} width={1570} height={743} fill={PANEL} />
 
       <LeftIncidentColumn />
       <RightLadderColumn />
 
       <g data-part="product-lockup">
-        <rect x={936} y={676} width={214} height={56} fill="none" stroke={HAIRLINE} />
-        <rect x={936} y={676} width={62} height={56} fill={ACCENT} />
+        <rect x={1244} y={881} width={392} height={135} fill="none" stroke={HAIRLINE} />
+        <rect x={1244} y={933} width={98} height={83} fill={ACCENT} />
         <text
-          x={1016}
-          y={704}
+          x={1376}
+          y={975}
           fill={PANEL_TEXT}
           fontSize={20}
           fontFamily="var(--font-sans)"
@@ -231,7 +256,7 @@ export function SreMechanism({
       </g>
 
       <defs>
-        <linearGradient id="sre-column-glow" x1="20" y1="620" x2="360" y2="100" gradientUnits="userSpaceOnUse">
+        <linearGradient id="sre-column-glow" x1="105" y1="967" x2="539" y2="327" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor={CYAN} />
           <stop offset="0.55" stopColor="#b69df9" />
           <stop offset="1" stopColor="#f3f0ff" />

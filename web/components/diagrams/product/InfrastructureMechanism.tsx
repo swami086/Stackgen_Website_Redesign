@@ -1,7 +1,8 @@
 import type { DiagramProps } from '@/lib/types';
 import { DiagramText } from '../DiagramText';
 
-const VIEWBOX = '0 0 1240 820';
+const SOURCE_FRAME = { x: 66, y: 236, width: 1787, height: 780 } as const;
+const VIEWBOX = `${SOURCE_FRAME.x} ${SOURCE_FRAME.y} ${SOURCE_FRAME.width} ${SOURCE_FRAME.height}`;
 const DESC =
   'Aiden for Infrastructure shows a policy-bounded migration route across cloud providers, three supporting callouts, an Early Access migration marker, and a timeline-compression card. The diagram emphasizes translation, baseline capture, threshold rollback, and a bounded path from source infrastructure to live workloads.';
 
@@ -14,6 +15,11 @@ const HAIRLINE = 'var(--color-border-hairline)';
 const ACCENT = 'var(--color-accent)';
 const CYAN = 'var(--color-accent-cyan)';
 const HALT = 'var(--color-halt)';
+
+const sx = (value: number) => SOURCE_FRAME.x + (value / 1240) * SOURCE_FRAME.width;
+const sy = (value: number) => SOURCE_FRAME.y + (value / 820) * SOURCE_FRAME.height;
+const sw = (value: number) => (value / 1240) * SOURCE_FRAME.width;
+const sh = (value: number) => (value / 820) * SOURCE_FRAME.height;
 
 const CALLOUTS = [
   {
@@ -57,49 +63,55 @@ export function InfrastructureMechanism({
       <title id={titleId}>Infrastructure mechanism diagram</title>
       <desc>{DESC}</desc>
 
-      <rect width={1240} height={820} fill={PANEL} />
+      <rect
+        x={SOURCE_FRAME.x}
+        y={SOURCE_FRAME.y}
+        width={SOURCE_FRAME.width}
+        height={SOURCE_FRAME.height}
+        fill={PANEL}
+      />
 
       <g data-part="migration-map">
-        <rect x={36} y={86} width={710} height={530} rx={2} fill="none" stroke={BORDER} />
+        <rect x={sx(36)} y={sy(86)} width={sw(710)} height={sh(530)} rx={2} fill="none" stroke={BORDER} />
 
         <path
-          d="M36 190 H82 L132 238 L132 246 L82 296 H36"
+          d={`M${sx(36)} ${sy(190)} H${sx(82)} L${sx(132)} ${sy(238)} L${sx(132)} ${sy(246)} L${sx(82)} ${sy(296)} H${sx(36)}`}
           fill="none"
           stroke={BORDER}
           strokeWidth={1.4}
         />
         <path
-          d="M36 286 H82 L158 360 H400 L470 302"
+          d={`M${sx(36)} ${sy(286)} H${sx(82)} L${sx(158)} ${sy(360)} H${sx(400)} L${sx(470)} ${sy(302)}`}
           fill="none"
           stroke={BORDER}
           strokeWidth={1.4}
         />
         <path
-          d="M36 458 H82 L158 382"
+          d={`M${sx(36)} ${sy(458)} H${sx(82)} L${sx(158)} ${sy(382)}`}
           fill="none"
           stroke={BORDER}
           strokeWidth={1.4}
         />
         <path
-          d="M36 544 H82 L184 446"
+          d={`M${sx(36)} ${sy(544)} H${sx(82)} L${sx(184)} ${sy(446)}`}
           fill="none"
           stroke={BORDER}
           strokeWidth={1.4}
         />
         <path
-          d="M602 384 H690"
+          d={`M${sx(602)} ${sy(384)} H${sx(690)}`}
           fill="none"
           stroke={BORDER}
           strokeWidth={1.4}
         />
         <path
-          d="M276 258 H512"
+          d={`M${sx(276)} ${sy(258)} H${sx(512)}`}
           fill="none"
           stroke={BORDER}
           strokeWidth={1.4}
         />
         <path
-          d="M276 520 H512"
+          d={`M${sx(276)} ${sy(520)} H${sx(512)}`}
           fill="none"
           stroke={BORDER}
           strokeWidth={1.4}
@@ -108,17 +120,17 @@ export function InfrastructureMechanism({
         {NODES.map((node, index) => (
           <g key={node.label} data-part="cloud-node" data-index={index}>
             <rect
-              x={node.x}
-              y={node.y}
-              width={node.w}
-              height={node.h}
+              x={sx(node.x)}
+              y={sy(node.y)}
+              width={sw(node.w)}
+              height={sh(node.h)}
               rx={10}
               fill={PANEL_RAISED}
               stroke={BORDER}
             />
             <text
-              x={node.x + node.w / 2}
-              y={node.y + node.h / 2}
+              x={sx(node.x + node.w / 2)}
+              y={sy(node.y + node.h / 2)}
               fill={node.label === 'OCI' ? '#F33' : node.label === 'Azure' ? '#4EA7FF' : '#FFB74D'}
               fontSize={28}
               fontWeight={600}
@@ -131,15 +143,15 @@ export function InfrastructureMechanism({
           </g>
         ))}
 
-        <circle cx={118} cy={262} r={4} fill={ACCENT} data-part="junction" />
-        <circle cx={330} cy={342} r={4} fill={PANEL_TEXT} data-part="junction" />
-        <circle cx={344} cy={342} r={4} fill={ACCENT} data-part="junction" />
-        <circle cx={72} cy={400} r={4} fill={PANEL_TEXT} data-part="junction" />
-        <circle cx={74} cy={518} r={4} fill={PANEL_TEXT} data-part="junction" />
+        <circle cx={sx(118)} cy={sy(262)} r={4} fill={ACCENT} data-part="junction" />
+        <circle cx={sx(330)} cy={sy(342)} r={4} fill={PANEL_TEXT} data-part="junction" />
+        <circle cx={sx(344)} cy={sy(342)} r={4} fill={ACCENT} data-part="junction" />
+        <circle cx={sx(72)} cy={sy(400)} r={4} fill={PANEL_TEXT} data-part="junction" />
+        <circle cx={sx(74)} cy={sy(518)} r={4} fill={PANEL_TEXT} data-part="junction" />
 
         <text
-          x={36}
-          y={662}
+          x={sx(36)}
+          y={sy(662)}
           fill={CYAN}
           fontSize={16}
           fontFamily="var(--font-sans)"
@@ -148,10 +160,10 @@ export function InfrastructureMechanism({
           Policy-Bounded Migration Pipeline
         </text>
         <DiagramText
-          x={36}
-          y={692}
-          width={620}
-          lineHeight={24}
+          x={sx(36)}
+          y={sy(692)}
+          width={sw(620)}
+          lineHeight={sh(24)}
           maxLines={4}
           fill={PANEL_MUTED}
           fontSize={18}
@@ -166,8 +178,8 @@ export function InfrastructureMechanism({
         {CALLOUTS.map((callout, index) => (
           <g key={callout.label} data-part="callout" data-index={index}>
             <text
-              x={callout.x}
-              y={callout.y}
+              x={sx(callout.x)}
+              y={sy(callout.y)}
               fill={CYAN}
               fontSize={20}
               fontFamily="var(--font-mono)"
@@ -176,8 +188,8 @@ export function InfrastructureMechanism({
               {'{}'}
             </text>
             <text
-              x={callout.x}
-              y={callout.y + 36}
+              x={sx(callout.x)}
+              y={sy(callout.y + 36)}
               fill={PANEL_TEXT}
               fontSize={18}
               fontFamily="var(--font-sans)"
@@ -186,10 +198,10 @@ export function InfrastructureMechanism({
               {callout.label}
             </text>
             <DiagramText
-              x={callout.x}
-              y={callout.y + 68}
-              width={260}
-              lineHeight={22}
+              x={sx(callout.x)}
+              y={sy(callout.y + 68)}
+              width={sw(260)}
+              lineHeight={sh(22)}
               maxLines={4}
               fill={PANEL_MUTED}
               fontSize={16}
@@ -203,10 +215,10 @@ export function InfrastructureMechanism({
       </g>
 
       <g data-part="early-access">
-        <rect x={1064} y={48} width={102} height={28} fill="none" stroke={HAIRLINE} />
+        <rect x={sx(1064)} y={sy(48)} width={sw(102)} height={sh(28)} fill="none" stroke={HAIRLINE} />
         <text
-          x={1115}
-          y={62}
+          x={sx(1115)}
+          y={sy(62)}
           fill={PANEL_TEXT}
           fontSize={10}
           textAnchor="middle"
@@ -218,15 +230,22 @@ export function InfrastructureMechanism({
       </g>
 
       <g data-part="timeline-card">
-        <rect x={860} y={538} width={312} height={170} fill="rgba(255,255,255,0.03)" stroke="none" />
+        <rect
+          x={sx(860)}
+          y={sy(538)}
+          width={sw(312)}
+          height={sh(170)}
+          fill="rgba(255,255,255,0.03)"
+          stroke="none"
+        />
         <polygon
-          points="860,538 914,538 968,708 860,708"
+          points={`${sx(860)},${sy(538)} ${sx(914)},${sy(538)} ${sx(968)},${sy(708)} ${sx(860)},${sy(708)}`}
           fill="url(#infra-prism)"
           opacity="0.95"
         />
         <text
-          x={994}
-          y={574}
+          x={sx(994)}
+          y={sy(574)}
           fill={CYAN}
           fontSize={18}
           fontFamily="var(--font-sans)"
@@ -235,8 +254,8 @@ export function InfrastructureMechanism({
           Timeline Compression
         </text>
         <text
-          x={994}
-          y={618}
+          x={sx(994)}
+          y={sy(618)}
           fill={CYAN}
           fontSize={56}
           fontWeight={500}
@@ -245,10 +264,10 @@ export function InfrastructureMechanism({
         >
           6→9
         </text>
-        <rect x={1080} y={600} width={62} height={22} fill="none" stroke={HAIRLINE} />
+        <rect x={sx(1080)} y={sy(600)} width={sw(62)} height={sh(22)} fill="none" stroke={HAIRLINE} />
         <text
-          x={1111}
-          y={611}
+          x={sx(1111)}
+          y={sy(611)}
           fill={PANEL_TEXT}
           fontSize={10}
           textAnchor="middle"
@@ -258,10 +277,10 @@ export function InfrastructureMechanism({
           Months
         </text>
         <DiagramText
-          x={994}
-          y={642}
-          width={132}
-          lineHeight={20}
+          x={sx(994)}
+          y={sy(642)}
+          width={sw(132)}
+          lineHeight={sh(20)}
           maxLines={4}
           fill={PANEL_MUTED}
           fontSize={15}
@@ -273,11 +292,11 @@ export function InfrastructureMechanism({
       </g>
 
       <g data-part="product-lockup">
-        <rect x={860} y={732} width={314} height={62} fill="none" stroke={HAIRLINE} />
-        <rect x={860} y={732} width={82} height={62} fill={ACCENT} />
+        <rect x={sx(860)} y={sy(732)} width={sw(314)} height={sh(62)} fill="none" stroke={HAIRLINE} />
+        <rect x={sx(860)} y={sy(732)} width={sw(82)} height={sh(62)} fill={ACCENT} />
         <text
-          x={956}
-          y={763}
+          x={sx(956)}
+          y={sy(763)}
           fill={PANEL_TEXT}
           fontSize={20}
           fontFamily="var(--font-sans)"
@@ -288,7 +307,14 @@ export function InfrastructureMechanism({
       </g>
 
       <defs>
-        <linearGradient id="infra-prism" x1="860" y1="538" x2="968" y2="708" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id="infra-prism"
+          x1={sx(860)}
+          y1={sy(538)}
+          x2={sx(968)}
+          y2={sy(708)}
+          gradientUnits="userSpaceOnUse"
+        >
           <stop offset="0" stopColor={PANEL_TEXT} />
           <stop offset="0.45" stopColor={CYAN} />
           <stop offset="1" stopColor={ACCENT} />

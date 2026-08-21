@@ -1,7 +1,8 @@
 import type { DiagramProps } from '@/lib/types';
 import { DiagramText } from '../DiagramText';
 
-const VIEWBOX = '0 0 1240 820';
+const SOURCE_FRAME = { x: 66, y: 266, width: 1584, height: 751 } as const;
+const VIEWBOX = `${SOURCE_FRAME.x} ${SOURCE_FRAME.y} ${SOURCE_FRAME.width} ${SOURCE_FRAME.height}`;
 const DESC =
   'Aiden for Automation runs a self-verifying delivery path from source and build through staged validation, live application checks, monitoring, and an Operational Context Graph feedback loop. Active gating and self-verification cards describe how the pipeline blocks risky promotions and confirms post-release health.';
 
@@ -14,6 +15,11 @@ const PANEL_MUTED = 'var(--color-text-muted-panel)';
 const ACCENT = 'var(--color-accent)';
 const ACCENT_TEXT = 'var(--color-accent-text)';
 const ACCENT_CYAN = 'var(--color-accent-cyan)';
+
+const sx = (value: number) => SOURCE_FRAME.x + (value / 1240) * SOURCE_FRAME.width;
+const sy = (value: number) => SOURCE_FRAME.y + (value / 820) * SOURCE_FRAME.height;
+const sw = (value: number) => (value / 1240) * SOURCE_FRAME.width;
+const sh = (value: number) => (value / 820) * SOURCE_FRAME.height;
 
 const PIPELINE_BOXES = [
   { x: 102, y: 320, w: 92, h: 116, title: 'Code Repository', subtitle: 'git' },
@@ -63,11 +69,11 @@ function PipelineCard({
   subtitle,
 }: (typeof PIPELINE_BOXES)[number]) {
   return (
-    <g data-part="pipeline-card" transform={`translate(${x} ${y})`}>
-      <rect width={w} height={h} rx={4} fill="none" stroke={STROKE} strokeWidth={1} />
+    <g data-part="pipeline-card" transform={`translate(${sx(x)} ${sy(y)})`}>
+      <rect width={sw(w)} height={sh(h)} rx={4} fill="none" stroke={STROKE} strokeWidth={1} />
       <text
-        x={12}
-        y={14}
+        x={sw(12)}
+        y={sh(14)}
         fill={INK}
         fontSize={10}
         fontFamily="var(--font-sans)"
@@ -77,10 +83,10 @@ function PipelineCard({
       </text>
       {subtitle ? (
         <DiagramText
-          x={12}
-          y={34}
-          width={w - 24}
-          lineHeight={12}
+          x={sw(12)}
+          y={sh(34)}
+          width={sw(w - 24)}
+          lineHeight={sh(12)}
           maxLines={3}
           fill={MUTED}
           fontSize={8}
@@ -109,13 +115,19 @@ export function AutomationMechanism({
       <title id={titleId}>Automation mechanism diagram</title>
       <desc>{DESC}</desc>
 
-      <rect width={1240} height={820} fill="var(--color-bg-base)" />
+      <rect
+        x={SOURCE_FRAME.x}
+        y={SOURCE_FRAME.y}
+        width={SOURCE_FRAME.width}
+        height={SOURCE_FRAME.height}
+        fill="var(--color-bg-base)"
+      />
 
       <g data-part="cloud-providers" aria-hidden="true">
-        <rect x={454} y={184} width={244} height={46} rx={3} fill="none" stroke={STROKE} />
+        <rect x={sx(454)} y={sy(184)} width={sw(244)} height={sh(46)} rx={3} fill="none" stroke={STROKE} />
         <text
-          x={576}
-          y={201}
+          x={sx(576)}
+          y={sy(201)}
           fill={MUTED}
           fontSize={11}
           textAnchor="middle"
@@ -125,8 +137,8 @@ export function AutomationMechanism({
           Cloud Providers
         </text>
         <text
-          x={576}
-          y={216}
+          x={sx(576)}
+          y={sy(216)}
           fill={INK}
           fontSize={16}
           textAnchor="middle"
@@ -139,38 +151,38 @@ export function AutomationMechanism({
 
       <g data-part="pipeline-flow" aria-hidden="true">
         <path
-          d="M194 392 L224 392 L224 584 L1036 584 L1036 522 L1092 522"
+          d={`M${sx(194)} ${sy(392)} L${sx(224)} ${sy(392)} L${sx(224)} ${sy(584)} L${sx(1036)} ${sy(584)} L${sx(1036)} ${sy(522)} L${sx(1092)} ${sy(522)}`}
           fill="none"
           stroke={STROKE}
           strokeWidth={1.25}
         />
         <path
-          d="M314 378 L454 378 L454 244"
+          d={`M${sx(314)} ${sy(378)} L${sx(454)} ${sy(378)} L${sx(454)} ${sy(244)}`}
           fill="none"
           stroke={STROKE}
           strokeWidth={1.25}
           strokeDasharray="4 4"
         />
         <path
-          d="M814 418 L864 418"
+          d={`M${sx(814)} ${sy(418)} L${sx(864)} ${sy(418)}`}
           fill="none"
           stroke={STROKE}
           strokeWidth={1.25}
         />
         <path
-          d="M940 432 L968 432"
+          d={`M${sx(940)} ${sy(432)} L${sx(968)} ${sy(432)}`}
           fill="none"
           stroke={STROKE}
           strokeWidth={1.25}
         />
         <path
-          d="M1064 470 L1092 470"
+          d={`M${sx(1064)} ${sy(470)} L${sx(1092)} ${sy(470)}`}
           fill="none"
           stroke={STROKE}
           strokeWidth={1.25}
         />
         <path
-          d="M1064 544 L1092 544"
+          d={`M${sx(1064)} ${sy(544)} L${sx(1092)} ${sy(544)}`}
           fill="none"
           stroke={STROKE}
           strokeWidth={1.25}
@@ -185,8 +197,8 @@ export function AutomationMechanism({
 
       <g data-part="pipeline-labels">
         <text
-          x={252}
-          y={510}
+          x={sx(252)}
+          y={sy(510)}
           fill={INK}
           fontSize={11}
           fontWeight={500}
@@ -196,8 +208,8 @@ export function AutomationMechanism({
           Source
         </text>
         <text
-          x={376}
-          y={522}
+          x={sx(376)}
+          y={sy(522)}
           fill={INK}
           fontSize={11}
           fontWeight={500}
@@ -207,8 +219,8 @@ export function AutomationMechanism({
           Build
         </text>
         <text
-          x={500}
-          y={534}
+          x={sx(500)}
+          y={sy(534)}
           fill={INK}
           fontSize={11}
           fontWeight={500}
@@ -218,8 +230,8 @@ export function AutomationMechanism({
           Test &amp; Validation
         </text>
         <text
-          x={734}
-          y={560}
+          x={sx(734)}
+          y={sy(560)}
           fill={INK}
           fontSize={11}
           fontWeight={500}
@@ -229,8 +241,8 @@ export function AutomationMechanism({
           Staging Deploy
         </text>
         <text
-          x={858}
-          y={574}
+          x={sx(858)}
+          y={sy(574)}
           fill={INK}
           fontSize={11}
           fontWeight={500}
@@ -240,8 +252,8 @@ export function AutomationMechanism({
           UAT/PERF Test
         </text>
         <text
-          x={982}
-          y={588}
+          x={sx(982)}
+          y={sy(588)}
           fill={INK}
           fontSize={11}
           fontWeight={500}
@@ -253,8 +265,8 @@ export function AutomationMechanism({
         {CHECK_LABELS.map((check, index) => (
           <text
             key={check.text}
-            x={check.x}
-            y={check.y}
+            x={sx(check.x)}
+            y={sy(check.y)}
             fill={MUTED}
             fontSize={8}
             fontFamily="var(--font-sans)"
@@ -268,12 +280,12 @@ export function AutomationMechanism({
       </g>
 
       <g data-part="ocg-card">
-        <rect x={560} y={672} width={164} height={62} rx={3} fill="none" stroke={STROKE} />
+        <rect x={sx(560)} y={sy(672)} width={sw(164)} height={sh(62)} rx={3} fill="none" stroke={STROKE} />
         <DiagramText
-          x={574}
-          y={686}
-          width={136}
-          lineHeight={12}
+          x={sx(574)}
+          y={sy(686)}
+          width={sw(136)}
+          lineHeight={sh(12)}
           maxLines={3}
           fill={INK}
           fontSize={9}
@@ -288,8 +300,8 @@ export function AutomationMechanism({
         {CALLOUTS.map((callout, index) => (
           <g key={callout.label} data-part="callout" data-index={index}>
             <text
-              x={callout.x}
-              y={callout.y}
+              x={sx(callout.x)}
+              y={sy(callout.y)}
               fill={ACCENT}
               fontSize={22}
               fontFamily="var(--font-mono)"
@@ -298,8 +310,8 @@ export function AutomationMechanism({
               {index === 0 ? '[]' : '[]'}
             </text>
             <text
-              x={callout.x}
-              y={callout.y + 36}
+              x={sx(callout.x)}
+              y={sy(callout.y + 36)}
               fill={INK}
               fontSize={24}
               fontFamily="var(--font-sans)"
@@ -308,10 +320,10 @@ export function AutomationMechanism({
               {callout.label}
             </text>
             <DiagramText
-              x={callout.x}
-              y={callout.y + 78}
-              width={300}
-              lineHeight={26}
+              x={sx(callout.x)}
+              y={sy(callout.y + 78)}
+              width={sw(300)}
+              lineHeight={sh(26)}
               maxLines={4}
               fill={MUTED}
               fontSize={18}
@@ -325,12 +337,12 @@ export function AutomationMechanism({
       </g>
 
       <g data-part="metrics">
-        <text x={40} y={738} fill={INK} fontSize={56} fontWeight={500} fontFamily="var(--font-sans)">
+        <text x={sx(40)} y={sy(738)} fill={INK} fontSize={56} fontWeight={500} fontFamily="var(--font-sans)">
           {'<3%'}
         </text>
         <text
-          x={40}
-          y={754}
+          x={sx(40)}
+          y={sy(754)}
           fill={INK}
           fontSize={18}
           fontFamily="var(--font-sans)"
@@ -339,14 +351,14 @@ export function AutomationMechanism({
           Change Failure Rate
         </text>
 
-        <line x1={216} y1={732} x2={216} y2={786} stroke={ACCENT} strokeWidth={1} />
+        <line x1={sx(216)} y1={sy(732)} x2={sx(216)} y2={sy(786)} stroke={ACCENT} strokeWidth={1} />
 
-        <text x={256} y={738} fill={INK} fontSize={56} fontWeight={500} fontFamily="var(--font-sans)">
+        <text x={sx(256)} y={sy(738)} fill={INK} fontSize={56} fontWeight={500} fontFamily="var(--font-sans)">
           Zero
         </text>
         <text
-          x={402}
-          y={748}
+          x={sx(402)}
+          y={sy(748)}
           fill={INK}
           fontSize={22}
           fontFamily="var(--font-sans)"
@@ -355,8 +367,8 @@ export function AutomationMechanism({
           min
         </text>
         <text
-          x={256}
-          y={754}
+          x={sx(256)}
+          y={sy(754)}
           fill={INK}
           fontSize={18}
           fontFamily="var(--font-sans)"
@@ -367,11 +379,11 @@ export function AutomationMechanism({
       </g>
 
       <g data-part="product-lockup">
-        <rect x={866} y={706} width={306} height={74} fill={PANEL} />
-        <rect x={866} y={706} width={74} height={74} fill={ACCENT} />
+        <rect x={sx(866)} y={sy(706)} width={sw(306)} height={sh(74)} fill={PANEL} />
+        <rect x={sx(866)} y={sy(706)} width={sw(74)} height={sh(74)} fill={ACCENT} />
         <text
-          x={950}
-          y={752}
+          x={sx(950)}
+          y={sy(752)}
           fill={PANEL_TEXT}
           fontSize={20}
           fontFamily="var(--font-sans)"

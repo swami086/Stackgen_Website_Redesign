@@ -3,6 +3,11 @@ import { describe, expect, it } from 'vitest';
 import { InfrastructureMechanism } from '../InfrastructureMechanism';
 
 describe('InfrastructureMechanism', () => {
+  it('uses the source-derived cropped viewBox from the Figma slide bounds', () => {
+    const { container } = render(<InfrastructureMechanism />);
+    expect(container.querySelector('svg')).toHaveAttribute('viewBox', '66 236 1787 780');
+  });
+
   it('exposes an accessible name via title', () => {
     const { container } = render(<InfrastructureMechanism />);
     const svg = container.querySelector('svg')!;

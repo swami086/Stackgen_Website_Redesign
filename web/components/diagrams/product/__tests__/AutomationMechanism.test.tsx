@@ -3,6 +3,11 @@ import { describe, expect, it } from 'vitest';
 import { AutomationMechanism } from '../AutomationMechanism';
 
 describe('AutomationMechanism', () => {
+  it('uses the source-derived cropped viewBox from the Figma slide bounds', () => {
+    const { container } = render(<AutomationMechanism />);
+    expect(container.querySelector('svg')).toHaveAttribute('viewBox', '66 266 1584 751');
+  });
+
   it('exposes an accessible name via title', () => {
     const { container } = render(<AutomationMechanism />);
     const svg = container.querySelector('svg')!;

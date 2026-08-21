@@ -126,3 +126,23 @@ Requested commit message:
 
 - `web/tsconfig.tsbuildinfo` changed as a side effect of verification and was intentionally left out of the task scope / commit.
 - The Automation and Infrastructure deck frames use legacy deck naming; code ports intentionally use the approved product names required by the site content contract.
+
+## Review Fix Addendum
+
+2026-08-21 review-fix pass for branch `factory-t11-mechanisms`:
+
+- Replaced the remaining hand-estimated `1240x820` viewBoxes in `AutomationMechanism`, `InfrastructureMechanism`, and `SreMechanism` with source-derived cropped bounds from Figma nodes `1:14411`, `1:8591`, and `1:8055`.
+- Renamed the SRE ladder motion hook from `automation-ladder` to `investigation-ladder`.
+- Routed the SRE incident/footer body-copy blocks through `DiagramText` with explicit widths and line budgets, while preserving the existing `ObservabilityMechanism` implementation unchanged in structure.
+- Added regression coverage for source-derived viewBoxes, the truthful SRE hook name, and bounded wrapped text.
+
+Scoped Torbit reindex attempt:
+
+- `user-torbit.index` against `/Users/swami/Documents/Stackgen_Website_Redesign/.worktrees/t11-mechanisms` failed once with a shared DuckDB deserialization error: `Serialization Error: Failed to deserialize: field id mismatch, expected: 100, got: 26117`.
+- Left as a known external/tooling issue after the single required attempt.
+
+Verification for the review-fix pass:
+
+- Focused mechanism suites: `33/33` tests passed
+- Final verification: `pnpm typecheck`, full `pnpm test`, and `pnpm build` all passed
+- Full test suite after the regression additions: `60` files, `263/263` tests passed

@@ -38,6 +38,8 @@ The result should read as factory.ai's information architecture and editorial co
 | D11 | Surface mode is Persuade. Colour strategy is Committed: the iridescent field owns whole regions rather than accenting a neutral ground. |
 | D12 | Form derives from the deck alone. factory.ai contributes structure and copy discipline, never radii, colour or type. |
 | D13 | Every meaning-carrying colour is a ground-aware pair, because no single value clears both cream and plate. Status is never encoded by colour alone. |
+| D14 | Desktop-only is kept for this phase but re-argued rather than inherited: fluid primitives, touch handled now, breakpoints anticipated and unimplemented. |
+| D15 | Diagram copy is length-constrained content. `DiagramText` takes a `maxLines` bound and truncates rather than overflowing its plate. |
 
 ---
 
@@ -150,6 +152,21 @@ Tracking inverts from the current system. The deck tracks outward: +0.24px at 24
 
 Extreme scale contrast is the point: a 96px display against an 11px tracked-out label on the same screen. Headings are sentence case. ALL-CAPS is reserved for micro-labels and the hero eyebrow.
 
+**Reading measure.** Prose sits between 45 and 75 characters. Express it in `ch`, not px, so it survives the face swap: body prose `max-width: 68ch`, section intros `56ch`, display `18ch`. The current spec's px max-widths were derived from the deck's 1920 slides and do not transfer.
+
+**Light-on-dark compensation, binding.** Cream text on a dark plate needs correction on all three perceptual axes, because the same values that read correctly as ink on cream will look thin and tight when inverted. On plates: line height +0.05, tracking +0.01em, and one weight step up where the face offers it. A component that renders on both grounds carries both settings, exactly as it carries both colours.
+
+**Font loading.** This is the highest layout-shift risk in the whole system, because Haffer XH ships later than the build and Geist stands in until it does. Two faces with different metrics swapping at runtime will reflow every heading.
+
+- Self-host both, `woff2` only, subset to Latin, and load only the weights the scale uses: 400, 500, 600.
+- `font-display: swap`, never `block` or `auto`.
+- The fallback declares metric overrides so the swap does not move text: `size-adjust`, `ascent-override`, `descent-override` and `line-gap-override` measured against the real face, not guessed.
+- Verify with a CLS measurement across the swap, not by eye.
+
+**Stress behaviour.** Every type role is specified against its worst case, not its demo string: headings that run three lines, translations 30 to 40% longer, browser zoom at 200%, and the fallback face active. Nothing may depend on a heading fitting on one line.
+
+Numerals are tabular wherever figures align in a column or update in place. Metric figures, clip timestamps and policy counts all qualify.
+
 ### 3.4 Material inventory
 
 The deck's full material range, each material assigned a role. Using only the first two would be this world's softest rendition, which is the failure mode this section exists to prevent.
@@ -168,9 +185,29 @@ The deck's full material range, each material assigned a role. Using only the fi
 
 **Radii derive from the deck, not from factory.ai.** factory.ai contributes structure and copy discipline only; the deck owns form. The earlier draft imported factory.ai's 3px, which mixed two worlds on one page. Radii are sampled from the deck's own cards and plates during token extraction, and the observed range is small but not sharp: roughly 4 to 8px on cards and plates, tighter on chips than on containers, with concentric inner and outer values where a plate nests inside a frame.
 
-Base spacing unit 4px. Section padding 120 to 160px vertical on desktop, and the page varies density deliberately: a dense passage earns a quiet one.
+**Spacing scale**, documented rather than ad hoc. A 4-unit base because it supplies the middle steps an 8-only scale misses:
+
+`4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96 · 120 · 160`
+
+Section padding is 120 to 160 vertical on desktop. Rhythm comes from contrast between tight and generous intervals, never from one value repeated: a dense passage earns a quiet one, and there is always more space above a heading than below it, so the heading binds to the content it introduces.
+
+**Grid.** A 12-column grid on a 1240 content width with 24 gutters, inside the 100 page gutter. Diagrams and product plates may run to the full 1240; prose never does, because it is bound by measure. Full-bleed is reserved for the iridescent fields and the closing band.
 
 Iconography is thin line icons at the deck's stroke weight. No filled sets, no heavy strokes, and none of the default icon libraries whose shapes are recognisable as a default.
+
+### 3.5.1 Interaction states
+
+Every interactive element declares five states, not two. The current build defines hover and focus inconsistently and defines the rest not at all.
+
+| State | Treatment |
+|---|---|
+| Rest | As specified |
+| Hover | Ground shifts one step; `transform` and `opacity` only, 200ms |
+| Active | `scale(0.98)`, giving the press physical feedback |
+| Focus visible | 2px ring in the ground-aware focus colour from 3.1, 2px offset, never removed |
+| Disabled | Reduced opacity plus `cursor: not-allowed` plus an accessible name explaining why |
+
+Hover is an enhancement, never a carrier of information, because touch and keyboard users never receive it. Gate hover treatments behind `@media (hover: hover)` and give `@media (pointer: coarse)` larger targets: 44 × 44 minimum, regardless of how small the visible mark is.
 
 ### 3.6 Motion
 
@@ -216,6 +253,34 @@ AI-generated interfaces converge on a small number of looks regardless of subjec
 | Are the fonts training-data defaults? | No. Haffer XH is the deck's own face. Inter-as-display, the previous system's approach, is explicitly among the defaults being left behind |
 
 The failure mode to watch during build: cream ground plus dark cards plus a tasteful gradient, arriving at a competent page that any model would produce for this brief. The corrective is region-scale colour and the full material inventory, both binding.
+
+### 3.9 Interface states
+
+The site is a review prototype with stubbed forms, which is why the current build has almost no states beyond the happy path. That is a gap, not a licence: a prototype that only works with perfect input misrepresents the product.
+
+| Surface | Empty | Loading | Error |
+|---|---|---|---|
+| Product clip | Poster holds | Poster holds until the first frame decodes; never a spinner over video | Poster holds permanently, caption still readable. A clip that fails must be indistinguishable from a still |
+| Demo form | Labels and hint visible before input | Submit disabled with a "Sending" label, guarding double submission | Inline message adjacent to the field, `role="alert"`, input preserved |
+| Case study video | Poster with play control | Skeleton matching the poster's aspect, never a layout jump | Message with a link to the video's own page |
+| Logo and integration grids | Not applicable, content is static | Not applicable | Not applicable |
+| Route not found | Branded 404 carrying nav, a one-line explanation, and a route back to Home | — | — |
+
+A 404 page is required. The current app has none, so an unknown route renders the framework default, which breaks the world on the one page a visitor reaches by accident.
+
+### 3.10 Resilience
+
+**Text expansion is the live architectural risk.** `DiagramText` wraps SVG copy to a fixed canvas box width and the surrounding geometry assumes a fixed line count. German runs 30 to 40% longer than English, which adds lines the box was never sized for, and SVG does not reflow around it. Three consequences, all binding:
+
+1. Every wrapped block declares the maximum line count its geometry tolerates.
+2. `DiagramText` accepts a `maxLines` bound and truncates with an ellipsis at that bound rather than overflowing the plate silently.
+3. Diagram copy is treated as length-constrained content. A translation that exceeds the bound is a content problem to solve in copy, not a layout to stretch.
+
+**Overlong single tokens.** `wrapText` deliberately leaves a word longer than the box on its own line rather than breaking it, so a long resource identifier will overflow. Acceptable for prose; not acceptable for the mono identifiers that appear throughout the product surfaces. Mono content in SVG uses a character bound and truncates with an ellipsis.
+
+**Internationalisation.** No translation is planned in this phase, so the obligation is to avoid foreclosing it: no fixed-width text containers, logical properties (`padding-inline`, `margin-inline-start`) rather than physical ones, and `Intl` for any date or number that reaches the page. RTL is not supported and is recorded as a deviation rather than half-built.
+
+**Degradation.** Core content renders without JavaScript: the page is server-rendered, and the only client components are the nav, the demo form and clip playback. With JavaScript off, clips present their posters and the form falls back to native validation. Images and clips carry explicit `width` and `height` so nothing reflows on load.
 
 ## 4. Content system
 
@@ -370,6 +435,7 @@ A silent clip that carries meaning needs a non-visual equivalent. Each surface p
 | Component | Purpose |
 |---|---|
 | `NumberedSequence` | The `01–06` device. Used three times on home |
+| `NotFound` | Branded 404 carrying nav, one line of explanation, and a route home |
 | `ProductFrame` | Dark bezel plus iridescent glow. Accepts a still or a clip |
 | `ProductClip` | Client component. Autoplay loop, `IntersectionObserver` play and pause, poster under reduced motion |
 | `VideoFigure` | Click to play for the long case study video |
@@ -396,7 +462,16 @@ A silent clip that carries meaning needs a non-visual equivalent. Each surface p
 
 ## 9. Out of scope
 
-Industry vertical pages, an enterprise page, a security page, a news or articles hub, and a customers index. The IA anticipates them; this phase does not build them. Mobile remains deferred. Forms and analytics stay honestly stubbed.
+Industry vertical pages, an enterprise page, a security page, a news or articles hub, and a customers index. The IA anticipates them; this phase does not build them. Forms and analytics stay honestly stubbed. RTL is not supported.
+
+**Responsive, re-examined rather than inherited.** Desktop-only came from the retired canvas parity contract, so it does not survive automatically. It is nevertheless kept for this phase, on a narrower and honest basis: the audience evaluates from a workstation, and the build scope is already large. What changes is that the deferral must not foreclose the work:
+
+- Layout uses fluid primitives and `clamp()`, not fixed pixel widths, so narrowing degrades rather than breaks.
+- Content-driven breakpoints are anticipated at roughly 640, 768 and 1024, and left unimplemented.
+- Touch is handled now, because touch-capable desktops exist: 44 × 44 targets and no hover-only information, per 3.5.1.
+- Clips are the one mobile-hostile element. When the responsive phase lands they must not autoplay on `pointer: coarse` or under a Save-Data hint.
+
+SC 1.4.10 Reflow and SC 1.4.4 Resize Text remain accepted deviations, and full AA conformance is not claimed.
 
 ---
 
@@ -413,6 +488,9 @@ Industry vertical pages, an enterprise page, a security page, a news or articles
 | R7 | Clip weight on the critical path. Four clips at 3 MB is 12 MB per section | `preload="none"`, poster-first paint, `IntersectionObserver` gating, and clips never block first paint. Budget enforced in verification |
 | R8 | Motion sickness and distraction from four looping clips in one viewport | Only the clip in view plays. Loops are slow, contain no flashing, and respect reduced motion by holding on the poster |
 | R9 | Redacting moving footage is impractical frame by frame | Controlled by segment selection, not editing. Every frame of a candidate segment is scanned before use, per 7.4 |
+| R10 | The Haffer XH to Geist swap reflows every heading | Metric-overridden fallback and `font-display: swap`, per 3.3. CLS measured across the swap, not judged by eye |
+| R11 | Translated diagram copy overflows fixed SVG plates | `maxLines` bound with ellipsis truncation, per 3.10 and D15. Diagram copy is length-constrained content |
+| R12 | Committed colour plus large iridescent fields buries the CTA | `--color-action` is a separate value from the field, per 3.1. Squint test in verification item 16 catches it |
 
 ---
 
@@ -430,6 +508,12 @@ Industry vertical pages, an enterprise page, a security page, a news or articles
 8. Reduced motion: with `prefers-reduced-motion: reduce`, no clip autoplays, every poster is visible, `Reveal` content is present at final state, and no content is unreachable
 9. Autoplay correctness: every clip element carries `muted`, `playsInline`, `loop` and a `poster`
 10. Off-screen clips are paused, verified by asserting `paused === true` for clips outside the viewport
+11. Font swap causes no layout shift: CLS measured across the fallback-to-Haffer transition, target 0
+12. Type stress: every heading renders correctly at three lines, at 200% zoom, and with the fallback face active
+13. Prose measure is between 45 and 75 characters at 1440
+14. Every interactive element has all five states from 3.5.1, and focus is never removed
+15. States: the 404 renders in-world, a failed clip is indistinguishable from a still, and the demo form cannot be double-submitted
+16. Squint test: with detail blurred, the primary element, secondary element and major groups are still identifiable in order on every page
 
 ---
 

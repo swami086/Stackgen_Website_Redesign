@@ -31,7 +31,13 @@ export function ProductClip(props: ProductClipProps): JSX.Element {
   const captionId = useId();
 
   useEffect(() => {
-    if (reduced) {
+    const prefersReducedMotion =
+      reduced ||
+      (typeof window !== 'undefined' &&
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+    if (prefersReducedMotion) {
       return;
     }
 

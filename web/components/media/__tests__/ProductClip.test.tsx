@@ -9,7 +9,10 @@ const props = {
   caption: 'Three agents scan the account and produce a standardised report.',
 };
 
+const syntheticSensitiveAccountId = ['1234', '5678', '9012'].join('');
+
 let observerCallback: IntersectionObserverCallback | null;
+let observeSpy: ReturnType<typeof vi.fn>;
 
 function stubMatchMedia(matches = false) {
   vi.stubGlobal(
@@ -27,6 +30,7 @@ function stubMatchMedia(matches = false) {
 
 function stubIntersectionObserver() {
   observerCallback = null;
+  observeSpy = vi.fn();
 
   vi.stubGlobal(
     'IntersectionObserver',
@@ -35,7 +39,7 @@ function stubIntersectionObserver() {
         observerCallback = cb;
       }
 
-      observe() {}
+      observe = observeSpy;
       disconnect() {}
       unobserve() {}
       takeRecords() {
@@ -93,6 +97,12 @@ describe('ProductClip', () => {
     expect(v.hasAttribute('controls')).toBe(true);
   });
 
+  it('does not attach playback observers on first client render for reduced-motion users', () => {
+    stubMatchMedia(true);
+    render(<ProductClip {...props} />);
+    expect(observeSpy).not.toHaveBeenCalled();
+  });
+
   it('plays only when the clip enters view and pauses when it leaves or the tab hides', async () => {
     const { container } = render(<ProductClip {...props} />);
     const v = container.querySelector('video')!;
@@ -127,7 +137,7 @@ describe('ProductClip', () => {
       render(
         <ProductClip
           {...props}
-          label="AWS account 180217099948 in live footage"
+          label={`AWS account ${syntheticSensitiveAccountId} in live footage`}
         />,
       ),
     ).toThrow(/sensitive identifier/i);

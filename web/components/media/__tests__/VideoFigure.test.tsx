@@ -10,6 +10,8 @@ const props = {
   caption: 'Abhishek Gaurav, Head of Engineering and DevOps, greytHR.',
 };
 
+const syntheticSensitiveAccountId = ['1234', '5678', '9012'].join('');
+
 describe('VideoFigure', () => {
   it('shows a poster and a play control before anything loads', () => {
     render(<VideoFigure {...props} />);
@@ -33,7 +35,7 @@ describe('VideoFigure', () => {
       render(
         <VideoFigure
           {...props}
-          label="greytHR account 180217099948"
+          label={`greytHR account ${syntheticSensitiveAccountId}`}
         />,
       ),
     ).toThrow(/sensitive identifier/i);

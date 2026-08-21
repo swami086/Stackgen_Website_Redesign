@@ -1,13 +1,42 @@
-// components/sections/product/ProductHero.tsx — STUB
-import type { SectionProps } from '@/lib/types';
-import productInfrastructure from '@/content/product-infrastructure';
+import { ButtonPrimary } from '@/components/primitives/ButtonPrimary';
+import { Reveal } from '@/components/motion/Reveal';
+import { PRIMARY_CTA } from '@/lib/nav';
+import type { Cta, SectionProps } from '@/lib/types';
 
-type ProductHeroContent = typeof productInfrastructure.hero;
+type ProductHeroContent = {
+  h1: string;
+  sub: string;
+  support: string;
+  cta: Cta;
+};
 
 export function ProductHero({ content }: SectionProps<ProductHeroContent>) {
   return (
-    <section aria-labelledby="producthero-heading" data-stub="ProductHero">
-      <h1 id="producthero-heading">{content.h1}</h1>
+    <section
+      aria-labelledby="product-hero-heading"
+      className="bg-bg-base px-pad-x pt-24 pb-[72px]"
+    >
+      <Reveal>
+        <div className="mx-auto flex max-w-[1240px] flex-col gap-7">
+          <div className="flex flex-col gap-5">
+            <h1
+              id="product-hero-heading"
+              className="max-w-[900px] text-[48px] font-medium leading-[1.08] tracking-[-0.04em] text-balance text-text-primary"
+            >
+              {content.h1}
+            </h1>
+            <p className="max-w-[640px] text-[17px] leading-[1.55] text-text-secondary">
+              {content.sub}
+            </p>
+            <p className="max-w-[640px] text-[15px] leading-normal text-text-tertiary">
+              {content.support}
+            </p>
+          </div>
+          <div>
+            <ButtonPrimary href={PRIMARY_CTA.href}>{PRIMARY_CTA.label}</ButtonPrimary>
+          </div>
+        </div>
+      </Reveal>
     </section>
   );
 }

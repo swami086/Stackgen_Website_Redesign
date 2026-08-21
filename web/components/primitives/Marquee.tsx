@@ -1,24 +1,42 @@
 'use client';
 
+import type { CSSProperties } from 'react';
 import { useReducedMotion } from '@/components/motion/useReducedMotion';
+
+const viewportMaskStyle: CSSProperties = {
+  maskImage: 'linear-gradient(to right, transparent, black 12%, black 88%, transparent)',
+  WebkitMaskImage: 'linear-gradient(to right, transparent, black 12%, black 88%, transparent)',
+};
 
 export function Marquee({ items, label }: { items: string[]; label: string }) {
   const reduced = useReducedMotion();
   const animated = !reduced;
 
   return (
-    <ul
-      aria-label={label}
-      data-part="track"
-      data-animated={String(animated)}
-      className="flex gap-12 overflow-hidden"
-      style={animated ? { animation: 'marquee 40s linear infinite' } : undefined}
-    >
-      {items.map((item) => (
-        <li key={item} className="shrink-0 text-[15px] font-semibold text-text-secondary">
-          {item}
-        </li>
-      ))}
-    </ul>
+    <div data-part="viewport" className="overflow-hidden" style={viewportMaskStyle}>
+      <div
+        data-part="track"
+        data-animated={String(animated)}
+        className="flex w-max"
+        style={animated ? { animation: 'marquee 40s linear infinite' } : undefined}
+      >
+        <ul aria-label={label} data-part="list" className="flex w-max shrink-0 gap-12 pr-12">
+          {items.map((item) => (
+            <li key={item} className="shrink-0 text-[15px] font-semibold text-text-secondary">
+              {item}
+            </li>
+          ))}
+        </ul>
+        {animated ? (
+          <ul aria-hidden="true" data-part="list" className="flex w-max shrink-0 gap-12 pr-12">
+            {items.map((item) => (
+              <li key={item} className="shrink-0 text-[15px] font-semibold text-text-secondary">
+                {item}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </div>
+    </div>
   );
 }

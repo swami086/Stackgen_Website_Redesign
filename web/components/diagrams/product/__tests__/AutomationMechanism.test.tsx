@@ -8,6 +8,19 @@ describe('AutomationMechanism', () => {
     expect(container.querySelector('svg')).toHaveAttribute('viewBox', '66 266 1584 751');
   });
 
+  it('pins key geometry to source coordinates instead of a remapped scaffold', () => {
+    const { container } = render(<AutomationMechanism />);
+    const cloudPanel = container.querySelector('[data-part="cloud-providers"] rect');
+    const firstCard = container.querySelector('[data-part="pipeline-card"] rect');
+    const metric = container.querySelector('[data-part="metrics"] text');
+    expect(cloudPanel).toHaveAttribute('x', '418.093');
+    expect(cloudPanel).toHaveAttribute('y', '266');
+    expect(firstCard).toHaveAttribute('x', '69');
+    expect(firstCard).toHaveAttribute('y', '410.378');
+    expect(metric).toHaveAttribute('x', '66');
+    expect(metric).toHaveAttribute('y', '925');
+  });
+
   it('exposes an accessible name via title', () => {
     const { container } = render(<AutomationMechanism />);
     const svg = container.querySelector('svg')!;
@@ -50,13 +63,13 @@ describe('AutomationMechanism', () => {
     expect(text).toMatch(/Code Repository/i);
     expect(text).toMatch(/Source/i);
     expect(text).toMatch(/Build/i);
-    expect(text).toMatch(/Test & Validation/i);
-    expect(text).toMatch(/Staging Deploy/i);
-    expect(text).toMatch(/UAT\/PERF Test/i);
-    expect(text).toMatch(/Production Deploy/i);
-    expect(text).toMatch(/Live Application/i);
-    expect(text).toMatch(/Monitoring & logs/i);
-    expect(text).toMatch(/OCG Operational Context Graph/i);
+    expect(text).toMatch(/Test\s*&\s*Validation/i);
+    expect(text).toMatch(/Staging\s*Deploy/i);
+    expect(text).toMatch(/UAT\/PERF\s*Test/i);
+    expect(text).toMatch(/Production\s*Deploy/i);
+    expect(text).toMatch(/Live\s*Application/i);
+    expect(text).toMatch(/Monitoring\s*&\s*logs/i);
+    expect(text).toMatch(/OCG\s*Operational\s*Context Graph/i);
     expect(text).toMatch(/Active Gating/i);
     expect(text).toMatch(/Self-Verification/i);
     expect(text).toMatch(/<3%/);

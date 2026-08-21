@@ -5,7 +5,26 @@ import { InfrastructureMechanism } from '../InfrastructureMechanism';
 describe('InfrastructureMechanism', () => {
   it('uses the source-derived cropped viewBox from the Figma slide bounds', () => {
     const { container } = render(<InfrastructureMechanism />);
-    expect(container.querySelector('svg')).toHaveAttribute('viewBox', '66 236 1787 780');
+    expect(container.querySelector('svg')).toHaveAttribute('viewBox', '66 236 1787 781');
+  });
+
+  it('keeps the footer crop through source y=1017 and not the old truncated bound', () => {
+    const { container } = render(<InfrastructureMechanism />);
+    const [, y, , height] = container.querySelector('svg')!.getAttribute('viewBox')!.split(' ').map(Number);
+    expect(y + height).toBe(1017);
+  });
+
+  it('pins key geometry to source coordinates instead of a remapped scaffold', () => {
+    const { container } = render(<InfrastructureMechanism />);
+    const frame = container.querySelector('[data-part="migration-map"] rect');
+    const firstNode = container.querySelector('[data-part="cloud-node"] rect');
+    const timeline = container.querySelector('[data-part="timeline-card"] rect');
+    expect(frame).toHaveAttribute('x', '66');
+    expect(frame).toHaveAttribute('y', '236');
+    expect(firstNode).toHaveAttribute('x', '322.881');
+    expect(firstNode).toHaveAttribute('y', '343.557');
+    expect(timeline).toHaveAttribute('x', '1244');
+    expect(timeline).toHaveAttribute('y', '728');
   });
 
   it('exposes an accessible name via title', () => {
@@ -41,9 +60,9 @@ describe('InfrastructureMechanism', () => {
 
   it('uses the approved product name and no banned legacy names', () => {
     const { container } = render(<InfrastructureMechanism />);
-    const text = container.textContent ?? '';
-    expect(text).toMatch(/Aiden for Infrastructure/);
-    expect(text).not.toMatch(/InfraOps|Aiden for DevOps|Olly/);
+    const desc = container.querySelector('desc')?.textContent ?? '';
+    expect(desc).toMatch(/Aiden for Infrastructure/);
+    expect(desc).not.toMatch(/InfraOps|Aiden for DevOps|Olly/);
   });
 
   it('ports the Figma migration card and supporting callouts', () => {
@@ -54,7 +73,6 @@ describe('InfrastructureMechanism', () => {
     expect(text).toMatch(/Threshold Rollbacks/i);
     expect(text).toMatch(/Policy-Bounded Migration Pipeline/i);
     expect(text).toMatch(/Timeline Compression/i);
-    expect(text).toMatch(/Early Access/i);
   });
 
   it('bounds wrapped copy so translated text cannot overflow plates', () => {

@@ -26,7 +26,7 @@ function QuoteCard({ quote }: { quote: Quote }) {
       <p className="text-[15px] leading-6 tracking-[-0.01em] text-text-primary">
         {quote.text}
       </p>
-      <footer className="flex w-full flex-col gap-0.5 border-t border-border-hairline pt-3.5">
+      <div className="flex w-full flex-col gap-0.5 border-t border-border-hairline pt-3.5">
         <cite className="text-xs font-medium not-italic tracking-[-0.01em] text-text-secondary">
           {isPlaceholder && quote.attribution === 'PLACEHOLDER'
             ? quote.role
@@ -45,7 +45,7 @@ function QuoteCard({ quote }: { quote: Quote }) {
             Source
           </a>
         ) : null}
-      </footer>
+      </div>
     </blockquote>
   );
 }

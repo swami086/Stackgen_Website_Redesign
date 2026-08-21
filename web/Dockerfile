@@ -4,14 +4,16 @@ RUN corepack enable
 WORKDIR /app
 
 FROM base AS deps
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml .npmrc ./
 RUN pnpm install --frozen-lockfile
 
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN pnpm build
+RUN pnpm build \
+ && cp -a node_modules/.pnpm/@swc+helpers@*/node_modules/@swc/helpers/. \
+      .next/standalone/node_modules/.pnpm/@swc+helpers@*/node_modules/@swc/helpers/
 
 FROM base AS runner
 ENV NODE_ENV=production

@@ -4,6 +4,7 @@
 .figma-assets/
 
 # Next.js app
+*.tsbuildinfo
 web/node_modules/
 web/.next/
 web/next-env.d.ts

@@ -1,8 +1,14 @@
-import type { Metric, Cta } from '@/lib/types';
+import type { Metric, ProductPrompt, Cta } from '@/lib/types';
 
 const productSre = {
   slug: 'aiden-for-sre',
-  prompt: 'remediate the checkout latency incident inside policy',
+  prompt: {
+    status: 'unavailable',
+    sourceProduct: 'aiden-for-sre',
+    requiredSourceType: 'approved-demo-copy',
+    reason:
+      'Approved mechanism copy exists, but the repo does not carry a verbatim SRE demo prompt yet.',
+  } satisfies ProductPrompt,
   hero: {
     h1: 'Aiden for SRE',
     sub: 'Detect, triage, diagnose, and remediate within policy. Heal inside your SLOs.',
@@ -43,7 +49,6 @@ const productSre = {
   earlyAccess: null,
   finalCta: {
     heading: 'See bounded remediation on your stack.',
-    body: 'Schedule a demo to walk through drift detection, root cause, policy-validated deploy, and SLO recovery.',
     cta: { label: 'Schedule demo', href: '/schedule-demo' } satisfies Cta,
   },
 };

@@ -1,5 +1,5 @@
 import type { SequenceItem } from '@/components/primitives/NumberedSequence';
-import type { Metric, Quote, Cta, MomentumItem } from '@/lib/types';
+import type { FeaturedCase, Metric, Quote, Cta, MomentumItem } from '@/lib/types';
 
 const home = {
   hero: {
@@ -37,7 +37,53 @@ const home = {
   logos: {
     heading:
       "Gartner Cool Vendor in AI for IT Operations · Named in four Gartner Hype Cycles · AWS Advanced Technology Partner · Google Cloud Partner",
+    note: "Also on the live strip: SAP NS2, Lowe's, RocTop, Chamberlain.",
   },
+  integrationCategories: [
+    {
+      label: 'CLOUD',
+      subtitle: 'Run anywhere your workloads run.',
+      tools: ['AWS', 'Azure', 'Google Cloud', 'EKS', 'AKS', 'GKE'],
+    },
+    {
+      label: 'IaC',
+      subtitle: 'Generate in the language you already use.',
+      tools: ['Terraform', 'OpenTofu', 'Helm', 'CloudFormation'],
+    },
+    {
+      label: 'CI / CD',
+      subtitle: 'Ship through your existing pipelines.',
+      tools: ['GitHub', 'GitLab', 'Bitbucket', 'Jenkins', 'Argo CD'],
+    },
+    {
+      label: 'Observability',
+      subtitle: 'Read every signal you already collect.',
+      tools: [
+        'Grafana',
+        'Prometheus',
+        'Loki',
+        'Jaeger',
+        'OpenTelemetry',
+        'Datadog',
+        'New Relic',
+      ],
+    },
+    {
+      label: 'Security & Identity',
+      subtitle: 'Use the policy and identity you trust.',
+      tools: ['Wiz', 'HashiCorp Vault', 'Okta', 'OPA'],
+    },
+    {
+      label: 'ChatOps & ITSM',
+      subtitle: 'Slot into your incident workflow.',
+      tools: ['PagerDuty', 'Slack', 'ServiceNow', 'Jira'],
+    },
+    {
+      label: 'IDEs & MCP clients',
+      subtitle: 'Aiden lives where your developers live.',
+      tools: ['VS Code', 'Cursor', 'Amazon Kiro', 'Claude Code', 'Backstage'],
+    },
+  ],
   problem: {
     label: 'Gap',
     heading: 'Software creation now outpaces operations.',
@@ -122,6 +168,7 @@ const home = {
   integrations: {
     label: 'STACK-AGNOSTIC',
     heading: 'Stack-agnostic, by design.',
+    deck: 'StackGen runs on top of the tools your team already uses. No rip-and-replace, no proprietary lock-in.',
   },
   inTheirWords: {
     label: 'CUSTOMER VOICE',
@@ -198,9 +245,12 @@ const home = {
   ] satisfies SequenceItem[],
   featuredCase: {
     videoId: 'V0zsWdJz2rs',
-    poster: '/product/greythr.webp',
+    poster: {
+      status: 'pending',
+      note: 'No verified public greytHR poster path is approved in Task 5 scope yet.',
+    },
     quoteRef: 'case-greythr.hero.quote',
-  },
+  } satisfies FeaturedCase,
   momentum: [
     {
       kind: 'report',

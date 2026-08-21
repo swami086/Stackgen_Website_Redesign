@@ -8,14 +8,22 @@ const industries: Industry[] = [
     evidence:
       'One leading Latin American bank runs 53,000 deployments a week with a 60-day lead time. 24% of change effort is rework.',
     href: '/industries/financial-services',
+    provenance: {
+      kind: 'approved-evidence',
+      approvedEvidence: 'PRODUCT.md: anonymized bank proof on 53,000 weekly deployments and 24% rework.',
+    },
   },
   {
     slug: 'healthcare',
     name: 'Healthcare',
-    promise: 'Environments land in a day, aligned to the controls healthcare requires.',
+    promise: 'Multi-cloud delivery lands faster with compliance evidence already attached.',
     evidence:
-      'Innovaccer replaced days of cloud-specific glue with environments that land in under a day.',
+      'Innovaccer shipped 75% faster environment deployment. Script and environment toil fell by up to 80%. Compliance validation dropped from hours to minutes.',
     href: '/industries/healthcare',
+    provenance: {
+      kind: 'published-url',
+      sourceUrl: 'https://stackgen.com/case-studies/innovacer',
+    },
   },
 ];
 

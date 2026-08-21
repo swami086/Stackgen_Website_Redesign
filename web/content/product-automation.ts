@@ -1,8 +1,14 @@
-import type { Metric, Cta } from '@/lib/types';
+import type { Metric, ProductPrompt, Cta } from '@/lib/types';
 
 const productAutomation = {
   slug: 'aiden-for-automation',
-  prompt: 'approve the rollback for payments-api after the canary breach',
+  prompt: {
+    status: 'unavailable',
+    sourceProduct: 'aiden-for-automation',
+    requiredSourceType: 'approved-demo-copy',
+    reason:
+      'Approved mechanism copy exists, but the repo does not carry a verbatim Automation demo prompt yet.',
+  } satisfies ProductPrompt,
   hero: {
     h1: 'Aiden for Automation',
     sub: 'Pipeline-native delivery with governance in the path. Operate and maintain without the ticket tax.',
@@ -42,7 +48,6 @@ const productAutomation = {
   earlyAccess: null,
   finalCta: {
     heading: 'See governed pipelines on your stack.',
-    body: 'Schedule a demo to walk through commit, build, OCG checks, gating, deploy, and post-release verification.',
     cta: { label: 'Schedule demo', href: '/schedule-demo' } satisfies Cta,
   },
 };

@@ -1,8 +1,17 @@
-import type { Metric, Cta } from '@/lib/types';
+import type { Metric, ProductPrompt, Cta } from '@/lib/types';
 
 const productInfrastructure = {
   slug: 'aiden-for-infrastructure',
-  prompt: 'scan my prod AWS account and do a security audit',
+  prompt: {
+    status: 'approved',
+    text: 'scan my prod AWS account and do a security audit',
+    sourceProduct: 'aiden-for-infrastructure',
+    provenance: {
+      sourceProduct: 'aiden-for-infrastructure',
+      sourceType: 'approved-demo-copy',
+      artifact: 'docs/superpowers/specs/2026-08-20-factory-anchored-experience-design.md',
+    },
+  } satisfies ProductPrompt,
   hero: {
     h1: 'Aiden for Infrastructure',
     sub: 'Intent becomes policy-checked infrastructure change. Build with governance at every action boundary.',
@@ -47,7 +56,6 @@ const productInfrastructure = {
   },
   finalCta: {
     heading: 'See policy-checked Build on your stack.',
-    body: 'Schedule a demo to walk through intent, Factory Spec, policy evaluation, and bounded apply on your infrastructure.',
     cta: { label: 'Schedule demo', href: '/schedule-demo' } satisfies Cta,
   },
 };

@@ -10,7 +10,7 @@ import productAutomation from '../product-automation';
 import productObservability from '../product-observability';
 import productSre from '../product-sre';
 import industries from '../industries';
-import { CUSTOMER_LOGOS } from '../shared';
+import { CUSTOMER_WORDMARKS } from '../shared';
 import type { Quote, Metric } from '@/lib/types';
 
 const BANNED = [/\bOlly\b/i, /Aiden for InfraOps/i, /Aiden for DevOps/i,
@@ -27,7 +27,15 @@ const contentModules = {
   productAutomation,
   productObservability,
   productSre,
-  shared: { CUSTOMER_LOGOS },
+  industries,
+  shared: { CUSTOMER_WORDMARKS },
+};
+
+const productModules = {
+  productInfrastructure,
+  productAutomation,
+  productObservability,
+  productSre,
 };
 
 const quoteMetricModules = Object.fromEntries(
@@ -70,24 +78,87 @@ describe('content governance', () => {
   });
 });
 
-
 describe('new content surfaces', () => {
-  it('gives every product a copyable prompt from its own demo', () => {
-    for (const [name, mod] of Object.entries({
-      productInfrastructure,
-      productAutomation,
-      productObservability,
-      productSre,
-    })) {
-      expect(typeof (mod as { prompt?: string }).prompt, name).toBe('string');
+  it('gives every product an honest prompt record tied to its own source', () => {
+    for (const [name, mod] of Object.entries(productModules)) {
+      const prompt = (mod as {
+        slug: string;
+        prompt?:
+          | {
+              status: 'approved';
+              text: string;
+              sourceProduct: string;
+              provenance: {
+                sourceProduct: string;
+                sourceType: 'approved-demo-copy' | 'approved-mechanism-copy';
+                artifact: string;
+              };
+            }
+          | {
+              status: 'unavailable';
+              sourceProduct: string;
+              requiredSourceType: 'approved-demo-copy' | 'approved-mechanism-copy';
+              reason: string;
+            };
+      }).prompt;
+
+      expect(prompt, name).toBeDefined();
+      expect(prompt?.sourceProduct, name).toBe(mod.slug);
+
+      if (prompt?.status === 'approved') {
+        expect(prompt.text.trim().length, name).toBeGreaterThan(0);
+        expect(prompt.provenance.sourceProduct, name).toBe(mod.slug);
+        expect(prompt.provenance.artifact, name).toMatch(
+          /^(PRODUCT\.md|docs\/|web\/|Stack_Linear\.pen)/,
+        );
+      } else {
+        expect(prompt?.requiredSourceType, name).toBeDefined();
+        expect(prompt?.reason.trim().length, name).toBeGreaterThan(0);
+      }
     }
   });
 
-  it('ships an industry only where evidence exists', () => {
+  it('ships an industry only where evidence and provenance both exist', () => {
     expect(industries.length).toBeGreaterThan(0);
     for (const i of industries) {
       expect(i.evidence.length).toBeGreaterThan(20);
       expect(i.href).toBe(`/industries/${i.slug}`);
+      expect(i.provenance).toBeDefined();
+
+      if (i.provenance.kind === 'published-url') {
+        expect(i.provenance.sourceUrl).toMatch(/^https:\/\//);
+      } else {
+        expect(i.provenance.approvedEvidence.trim().length).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it('keeps healthcare on publishable case facts, not placeholder quote copy', () => {
+    const healthcare = industries.find((industry) => industry.slug === 'healthcare');
+
+    expect(healthcare).toBeDefined();
+    expect(healthcare?.provenance.kind).toBe('published-url');
+    if (healthcare?.provenance.kind === 'published-url') {
+      expect(healthcare.provenance.sourceUrl).toBe('https://stackgen.com/case-studies/innovacer');
+    }
+    expect(healthcare?.evidence).not.toMatch(/cloud-specific glue|under a day|controls healthcare requires/i);
+  });
+
+  it('models the featured-case poster as verified media or explicit pending work', () => {
+    const poster = (
+      home as {
+        featuredCase: {
+          poster:
+            | { status: 'verified'; src: string }
+            | { status: 'pending'; note: string };
+        };
+      }
+    ).featuredCase.poster;
+
+    if (poster.status === 'verified') {
+      expect(poster.src).toMatch(/^\/[a-z0-9/_.-]+\.(png|webp|jpg|jpeg)$/i);
+    } else {
+      expect(poster.note.trim().length).toBeGreaterThan(12);
     }
   });
 
@@ -106,7 +177,14 @@ function allQuotes(value: unknown): Quote[] {
   if (Array.isArray(value)) return value.flatMap(allQuotes);
   if (value && typeof value === 'object') {
     const v = value as Record<string, unknown>;
-    if (typeof v.text === 'string' && typeof v.status === 'string') return [v as unknown as Quote];
+    if (
+      typeof v.text === 'string' &&
+      typeof v.status === 'string' &&
+      typeof v.attribution === 'string' &&
+      typeof v.company === 'string'
+    ) {
+      return [v as unknown as Quote];
+    }
     return Object.values(v).flatMap(allQuotes);
   }
   return [];

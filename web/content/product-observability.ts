@@ -1,8 +1,17 @@
-import type { Metric, Quote, Cta } from '@/lib/types';
+import type { Metric, ProductPrompt, Quote, Cta } from '@/lib/types';
 
 const productObservability = {
   slug: 'aiden-for-observability',
-  prompt: 'What changed before the latency spike?',
+  prompt: {
+    status: 'approved',
+    text: 'What changed before the latency spike?',
+    sourceProduct: 'aiden-for-observability',
+    provenance: {
+      sourceProduct: 'aiden-for-observability',
+      sourceType: 'approved-mechanism-copy',
+      artifact: 'web/components/diagrams/product/ObservabilityMechanism.tsx',
+    },
+  } satisfies ProductPrompt,
   hero: {
     h1: 'Aiden for Observability',
     sub: 'Unified signal and AI-assisted insight that feeds Remediate. Natural language instead of dashboard archaeology.',
@@ -50,7 +59,6 @@ const productObservability = {
   earlyAccess: null,
   finalCta: {
     heading: 'See Observability with Aiden.',
-    body: 'Schedule a demo to correlate signals with infrastructure state and change history in plain language.',
     cta: { label: 'Schedule demo', href: '/schedule-demo' } satisfies Cta,
   },
 };

@@ -1,0 +1,184 @@
+import type { Metric, Quote, Cta } from '@/lib/types';
+
+const home = {
+  hero: {
+    h1: 'Autonomous DevOps Factory',
+    sub: 'Aiden sets the foundations for an Autonomous DevOps Factory: build, govern, observe, and remediate the agent-driven SDLC so velocity and governance move in the same path.',
+    support:
+      'StackGen is the company behind Aiden, the DevOps operating system for AI-native environments. Platform and SRE leaders scale autonomy at the pace their confidence supports.',
+    cta: { label: 'Schedule demo', href: '/schedule-demo' } satisfies Cta,
+  },
+  mechanism: {
+    label: 'aiden ‹for infrastructure›',
+    heading: 'TIRITH POLICY GATE',
+    body: 'Single-AZ exceeds the blast radius you set. Aiden held the change and routed it to the payments change owner with the plan and evidence attached.',
+    intent:
+      'Give payments-api a read replica in eu-west-1 with 30-day point-in-time recovery.',
+    diff: 'modules/payments-api/replica.tf',
+    verdict: 'Stopped at your limit.',
+    mergeTarget: 'acme-corp/infra · PR #2841',
+  },
+  logos: {
+    heading:
+      "Gartner Cool Vendor in AI for IT Operations · Named in four Gartner Hype Cycles · AWS Advanced Technology Partner · Google Cloud Partner",
+  },
+  problem: {
+    label: 'Gap',
+    heading: 'Software creation now outpaces operations.',
+    body: 'Agentic creation compounds change faster than teams can verify, govern, and ship it safely. The result is a widening gap between software creation and software operations.',
+    citations: [
+      {
+        claim:
+          'Independent analysis found AI-authored pull requests carry more defects, especially logic and correctness bugs that become production incidents.',
+        source: 'CodeRabbit / Stack Overflow Blog, State of AI vs Human Code Generation',
+      },
+      {
+        claim:
+          'Teams rate AI code highly in review, then see production failures after ship when line-by-line review is skipped.',
+        source: 'New Relic 2026 State of AI Coding',
+      },
+      {
+        claim:
+          'AI adoption raises individual productivity while hurting software delivery stability and throughput.',
+        source: 'DORA 2024 Accelerate State of DevOps Report',
+      },
+    ],
+  },
+  factoryProcess: {
+    label: '01',
+    heading: 'From intent to automated learning',
+    steps: [
+      { title: 'Intent', body: 'State the operational outcome in plain language.' },
+      {
+        title: 'Factory Spec',
+        body: 'Reviewable spec: agents, OCG data, SLOs, escalation boundaries.',
+      },
+      {
+        title: 'Factory Runtime',
+        body: 'Agents execute; novel cases escalate to humans with full context.',
+      },
+      {
+        title: 'Factory Learning',
+        body: 'Outcomes write back to the OCG and improve the next cycle.',
+      },
+    ],
+  },
+  adfLoop: {
+    label: 'THE FACTORY',
+    heading: 'Build, Operate, observe, remediate.',
+    stages: [
+      {
+        index: '01',
+        title: 'Build',
+        product: 'Aiden for Infrastructure',
+        body: 'Intent becomes policy-checked infrastructure change. Aiden for Infrastructure owns the Build pillar.',
+      },
+      {
+        index: '02',
+        title: 'Govern',
+        product: 'Aiden OS',
+        body: 'Policy is evaluated at every action boundary before execution: deterministic, replayable, attributable.',
+      },
+      {
+        index: '03',
+        title: 'Observe',
+        product: 'Aiden for Observability',
+        body: 'Signal, SLOs, and cost budgets stay in the loop. Aiden for Observability feeds what Remediate needs.',
+      },
+      {
+        index: '04',
+        title: 'Remediate',
+        product: 'Aiden for SRE',
+        body: 'Heal inside your limits. Aiden for SRE remediates within policy and pulls humans in with context assembled.',
+      },
+    ],
+  },
+  agenticOs: {
+    label: 'AGENTIC OS',
+    heading: 'Aiden is the Agentic OS for DevOps.',
+    body: 'Four surfaces for Platform Engineers, Developers, and SRE teams: Infrastructure, Automation, Observability, and SRE. Guardrails baked in. No organizational silos.',
+  },
+  contextGraph: {
+    label: 'OPERATIONAL CONTEXT GRAPH',
+    heading: 'Operational Context Graph',
+    body: 'Topology, change, drift, causality, and observability live in one shared memory layer. That is how the four Aiden surfaces act like one system.',
+  },
+  integrations: {
+    label: 'STACK-AGNOSTIC',
+    heading: 'Stack-agnostic, by design.',
+  },
+  inTheirWords: {
+    label: 'CUSTOMER VOICE',
+    heading: 'Built with the teams running it.',
+    quotes: [
+      {
+        text: 'Aiden transformed how our engineers interact with observability. Natural language insights replaced complex queries and reduced dependency on SREs.',
+        attribution: 'Abhishek Gaurav',
+        role: 'Head of Engineering and DevOps',
+        company: 'greytHR',
+        status: 'published',
+        sourceUrl: 'https://stackgen.com/case-studies/greythr',
+      },
+      {
+        text: 'Agents were shipping recommendations faster than our governance could absorb. Aiden put policy and audit on the same path as change.',
+        attribution: 'PLACEHOLDER',
+        role: 'VP Platform Engineering',
+        company: 'Nielsen',
+        status: 'placeholder',
+      },
+      {
+        text: 'Deployment used to take days of cloud-specific glue. Environments now land in under a day, aligned to the controls healthcare requires.',
+        attribution: 'PLACEHOLDER',
+        role: 'Cloud Platform Lead',
+        company: 'Healthcare Platform',
+        status: 'placeholder',
+      },
+      {
+        text: 'Every root cause comes back with its sources attached. My engineers stopped arguing about what happened and started arguing about what to do next.',
+        attribution: '[NAME]',
+        role: 'Principal SRE',
+        company: 'Manufacturer',
+        status: 'placeholder',
+      },
+      {
+        text: 'Provisioning went from a two-week ticket to an afternoon, and every deploy is policy-checked. Our auditors have stopped asking for screenshots.',
+        attribution: '[NAME]',
+        role: 'Head of Cloud Platform',
+        company: 'Innovaccer',
+        status: 'placeholder',
+      },
+    ] satisfies Quote[],
+  },
+  compliance: {
+    label: 'GOVERNANCE',
+    heading: 'Autonomy needs guardrails.',
+    badges: ['SOC 2', 'PCI', 'HIPAA'],
+  },
+  finalCta: {
+    heading: 'Scale autonomy with governance in the same path.',
+    body: 'Aiden is the Agentic OS for DevOps for Platform Engineers, Developers, and SRE teams. Schedule a demo to see build, govern, observe, and remediate under one operating system.',
+    cta: { label: 'Schedule demo', href: '/schedule-demo' } satisfies Cta,
+  },
+  metrics: [
+    {
+      value: '50%',
+      label: 'MTTR reduction',
+      mechanism:
+        'SLO-based alert triage and evidence-backed root cause analysis shorten incident resolution across the ADF loop.',
+    },
+    {
+      value: '60%',
+      label: 'lower IaC cost',
+      mechanism:
+        'Cloud discovery, drift detection, and policy-checked provisioning reduce rework and unused infrastructure spend.',
+    },
+    {
+      value: '10×',
+      label: 'provisioning velocity',
+      mechanism:
+        'AI IDE-based infra creation via MCP turns plain-language intent into reviewable, policy-checked infrastructure change in minutes.',
+    },
+  ] satisfies Metric[],
+};
+
+export default home;

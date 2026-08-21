@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Nav } from '@/components/primitives/Nav';
 import { Footer } from '@/components/primitives/Footer';
@@ -18,6 +19,23 @@ const PRODUCTS = {
   'aiden-for-sre': sre,
 } as const;
 
+const PRODUCT_TITLES: Record<keyof typeof PRODUCTS, string> = {
+  'aiden-for-infrastructure': 'Aiden for Infrastructure',
+  'aiden-for-automation': 'Aiden for Automation',
+  'aiden-for-observability': 'Aiden for Observability',
+  'aiden-for-sre': 'Aiden for SRE',
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const title = PRODUCT_TITLES[slug as keyof typeof PRODUCTS];
+  return title ? { title } : {};
+}
+
 export function generateStaticParams() {
   return Object.keys(PRODUCTS).map((slug) => ({ slug }));
 }
@@ -30,8 +48,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   return (
     <>
       <Nav />
-      <main>
-        <ProductHero content={product.hero} />
+      <main id="main-content">
+        <ProductHero content={{ ...product.hero, label: product.mechanism.label }} />
         <ProductMetrics content={product.metrics} />
         <ProductMechanism content={product.mechanism} slug={slug} />
         {product.earlyAccess && <EarlyAccessStrip content={product.earlyAccess} />}

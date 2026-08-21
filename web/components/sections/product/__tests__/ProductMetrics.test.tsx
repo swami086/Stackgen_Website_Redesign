@@ -4,11 +4,12 @@ import infrastructure from '@/content/product-infrastructure';
 import { ProductMetrics } from '../ProductMetrics';
 
 describe('ProductMetrics', () => {
-  it('renders each metric with its mechanism', () => {
+  it('renders each metric value and label in compact ribbon layout', () => {
     render(<ProductMetrics content={infrastructure.metrics} />);
     for (const metric of infrastructure.metrics) {
       expect(screen.getByText(metric.value)).toBeInTheDocument();
-      expect(screen.getByText(metric.mechanism)).toBeInTheDocument();
+      expect(screen.getByText(metric.label)).toBeInTheDocument();
+      expect(screen.queryByText(metric.mechanism)).not.toBeInTheDocument();
     }
   });
 

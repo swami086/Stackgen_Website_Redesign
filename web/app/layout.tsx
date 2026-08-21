@@ -16,7 +16,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'StackGen',
+  title: {
+    template: '%s · StackGen',
+    default: 'StackGen',
+  },
   description: 'Infrastructure change, safe at machine speed.',
 };
 

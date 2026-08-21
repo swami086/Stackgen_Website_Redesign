@@ -1,14 +1,16 @@
 import { ButtonPrimary } from '@/components/primitives/ButtonPrimary';
+import { MonoLabel } from '@/components/primitives/MonoLabel';
 import { Reveal } from '@/components/motion/Reveal';
 import type { SectionProps } from '@/lib/types';
 import caseGreythr from '@/content/case-greythr';
 import caseIndex from '@/content/case-index';
 import innovaccer from '@/content/case-innovaccer';
 
-type CaseHeroContent =
+type CaseHeroContent = (
   | typeof caseIndex.hero
   | typeof caseGreythr.hero
-  | typeof innovaccer.hero;
+  | typeof innovaccer.hero
+) & { label?: string };
 
 function isPublishedQuote(
   content: CaseHeroContent,
@@ -24,6 +26,7 @@ export function CaseHero({ content }: SectionProps<CaseHeroContent>) {
     >
       <Reveal>
         <div className="flex max-w-[1240px] flex-col gap-7">
+          {content.label ? <MonoLabel>{content.label}</MonoLabel> : null}
           <h1
             id="casehero-heading"
             className="max-w-[980px] text-[64px] font-medium leading-[1.06] tracking-[-0.02em] text-balance text-text-primary"
@@ -41,7 +44,7 @@ export function CaseHero({ content }: SectionProps<CaseHeroContent>) {
                   {' '}
                   <a
                     href={content.quote.sourceUrl}
-                    className="text-accent-text underline-offset-2 hover:underline"
+                    className="text-text-primary underline underline-offset-2"
                   >
                     Source
                   </a>

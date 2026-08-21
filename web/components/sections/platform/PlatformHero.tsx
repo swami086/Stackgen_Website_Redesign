@@ -1,9 +1,10 @@
 import { ButtonPrimary } from '@/components/primitives/ButtonPrimary';
+import { MonoLabel } from '@/components/primitives/MonoLabel';
 import { Reveal } from '@/components/motion/Reveal';
 import type { SectionProps } from '@/lib/types';
 import platform from '@/content/platform';
 
-type PlatformHeroContent = typeof platform.hero;
+type PlatformHeroContent = typeof platform.hero & { label?: string };
 
 export function PlatformHero({ content }: SectionProps<PlatformHeroContent>) {
   return (
@@ -13,6 +14,7 @@ export function PlatformHero({ content }: SectionProps<PlatformHeroContent>) {
     >
       <Reveal>
         <div className="flex max-w-[1240px] flex-col gap-7">
+          {content.label ? <MonoLabel>{content.label}</MonoLabel> : null}
           <h1
             id="platformhero-heading"
             className="max-w-[980px] text-[64px] font-medium leading-[1.06] tracking-[-0.02em] text-balance text-text-primary"

@@ -9,7 +9,7 @@ export function ProductMetrics({ content }: SectionProps<Metric[]>) {
         <ul className="mx-auto flex max-w-[1240px] gap-6">
           {content.map((metric) => (
             <li key={metric.label} className="min-w-0 flex-1 px-0 py-3">
-              <MetricCell metric={metric} />
+              <MetricCell metric={metric} compact />
             </li>
           ))}
         </ul>

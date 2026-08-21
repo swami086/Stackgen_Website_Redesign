@@ -12,7 +12,7 @@ export function CaseMetrics({ content }: SectionProps<Metric[]>) {
         <ul className="mx-auto flex max-w-[1240px] flex-wrap gap-12">
           {content.map((metric) => (
             <li key={`${metric.value}-${metric.label}`} className="min-w-[240px] flex-1">
-              <MetricCell metric={metric} />
+              <MetricCell metric={metric} compact />
             </li>
           ))}
         </ul>

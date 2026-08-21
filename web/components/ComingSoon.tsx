@@ -7,7 +7,7 @@ export function ComingSoon({ title }: { title: string }) {
   return (
     <>
       <Nav />
-      <main className="px-(--spacing-pad-x) py-(--spacing-pad-y)">
+      <main id="main-content" className="px-(--spacing-pad-x) py-(--spacing-pad-y)">
         <MonoLabel>Later wave</MonoLabel>
         <h1 className="mt-6 text-5xl font-medium text-(--color-text-primary)">{title}</h1>
         <p className="mt-4 max-w-xl text-lg text-(--color-text-secondary)">

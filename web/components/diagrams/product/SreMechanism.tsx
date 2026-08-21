@@ -1,237 +1,187 @@
-import type { ReactNode, SVGAttributes } from 'react';
-import productSre from '@/content/product-sre';
 import type { DiagramProps } from '@/lib/types';
 import sreGeometry from '../../../geometry/mechanism-sre.json';
 
 type GeometryNode = (typeof sreGeometry.nodes)[number];
 
-type SreStep = {
+const Y0 = -Math.min(...sreGeometry.nodes.map((n) => n.y));
+const VIEWBOX = sreGeometry.viewBox.join(' ');
+
+function fillVar(token: string | null | undefined): string {
+  if (!token?.startsWith('$')) return 'none';
+  return `var(--color-${token.slice(1)})`;
+}
+
+function fontVar(token: string | null | undefined): string {
+  if (token === '$font-mono') return 'var(--font-mono)';
+  return 'var(--font-sans)';
+}
+
+function absPositions(nodes: GeometryNode[]): Array<{ x: number; y: number }> {
+  const pos: Array<{ x: number; y: number }> = [{ x: 0, y: 0 }];
+  const stack = [0];
+  for (let i = 1; i < nodes.length; i++) {
+    const n = nodes[i]!;
+    while (stack.length > (n.depth ?? 0)) stack.pop();
+    const parent = pos[stack[stack.length - 1]!]!;
+    pos[i] = {
+      x: parent.x + n.x,
+      y: (n.depth ?? 0) === 0 ? n.y : parent.y + n.y + Y0,
+    };
+    stack.push(i);
+  }
+  return pos;
+}
+
+function frameChildren(nodes: GeometryNode[], frameId: string): GeometryNode[] {
+  const idx = nodes.findIndex((n) => n.id === frameId);
+  if (idx < 0) return [];
+  const frame = nodes[idx]!;
+  const out: GeometryNode[] = [];
+  for (let j = idx + 1; j < nodes.length; j++) {
+    const n = nodes[j]!;
+    if ((n.depth ?? 0) <= (frame.depth ?? 0)) break;
+    out.push(n);
+  }
+  return out;
+}
+
+type PipelineStep = {
   y: number;
+  borderTop: boolean;
   tag: string;
   tagWidth: number;
   title: string;
   detail: string;
   dotFill: string;
-  hasLine: boolean;
-  hasTopBorder: boolean;
+  isLast: boolean;
   isRefusalBoundary: boolean;
 };
 
-export type SreMechanismProps = DiagramProps & {
-  heading?: string;
-  body?: string;
-  footnote?: string;
-  steps?: readonly SreStep[];
-};
+function parseLayout() {
+  const nodes = sreGeometry.nodes;
+  const pos = absPositions(nodes);
 
-// Geometry from web/geometry/mechanism-sre.json (node k3S5j)
-const VIEW_BOX = sreGeometry.viewBox.join(' ');
-const Y_TOP = 657;
-const Y_ROW = 884;
+  const sequence = nodes.find((n) => n.name === 'Investigation Sequence')!;
+  const sequenceIdx = nodes.indexOf(sequence);
+  const sequencePos = pos[sequenceIdx]!;
 
-const CARD = {
-  x: 100,
-  y: -448 + Y_TOP,
-  width: 1040,
-  height: 822,
-  rx: 24,
-};
-
-const ROW_X = CARD.x + 28;
-const ROW_W = 984;
-const ROW_H = 129;
-const RAIL_X = ROW_X;
-const DOT = { x: RAIL_X + 9, y: -657 + Y_ROW, r: 5 };
-const LINE = { x: RAIL_X + 13, y: -639 + Y_ROW, width: 2, height: 74 };
-const CONTENT_X = ROW_X + 46;
-const TAG = { y: -657 + Y_ROW, height: 26, padX: 10, padY: 6, fontSize: 10.5 };
-const TITLE_Y = -623 + Y_ROW;
-const DETAIL_Y = -586 + Y_ROW;
-
-const FILL: Record<string, string> = {
-  '$surface-card': 'var(--color-surface-card)',
-  '$border-hairline': 'var(--color-border-hairline)',
-  '$border-card': 'var(--color-border-card)',
-  '$text-primary': 'var(--color-text-primary)',
-  '$text-secondary': 'var(--color-text-secondary)',
-  '$text-tertiary': 'var(--color-text-tertiary)',
-  '$accent': 'var(--color-accent)',
-  '$accent-text': 'var(--color-accent-text)',
-  '$accent-dim': 'var(--color-accent-dim)',
-  '$pass': 'var(--color-pass)',
-};
-
-const [DEFAULT_BODY, DEFAULT_FOOTNOTE] = productSre.mechanism.body.split(/(?<=\.)\s+/);
-
-function frameChildren(nodes: GeometryNode[], frameId: string, frameDepth: number): GeometryNode[] {
-  const idx = nodes.findIndex((n) => n.id === frameId);
-  if (idx < 0) return [];
-  const out: GeometryNode[] = [];
-  for (let j = idx + 1; j < nodes.length; j++) {
-    const node = nodes[j];
-    if ((node.depth ?? 0) <= frameDepth) break;
-    out.push(node);
-  }
-  return out;
-}
-
-function fill(token: string | null | undefined): string {
-  if (!token) return 'none';
-  return FILL[token] ?? 'none';
-}
-
-function accentFill(fontSize: number, token: string): string {
-  if (token !== '$accent') return fill(token);
-  return fontSize >= 24 ? 'var(--color-accent)' : 'var(--color-accent-text)';
-}
-
-function parseSteps(nodes: GeometryNode[]): SreStep[] {
-  const rowFrames = nodes.filter((n) => n.depth === 2 && n.name?.endsWith(' Row'));
-
-  return rowFrames.map((row, index) => {
-    const children = frameChildren(nodes, row.id!, row.depth!);
-    const tagFrame = children.find((n) => n.type === 'frame' && n.name?.includes(' Tag'));
+  const rowFrames = frameChildren(nodes, sequence.id!).filter((n) => n.name?.endsWith(' Row'));
+  const steps: PipelineStep[] = rowFrames.map((row) => {
+    const rowIdx = nodes.indexOf(row);
+    const rowPos = pos[rowIdx]!;
+    const children = frameChildren(nodes, row.id!);
+    const tagFrame = children.find((n) => n.name?.includes(' Tag') && n.type === 'frame');
     const tagLabel = children.find((n) => n.name?.includes('Tag Label'));
     const title = children.find((n) => n.name?.includes(' Title'));
     const detail = children.find((n) => n.name?.includes(' Detail'));
     const dot = children.find((n) => n.name?.includes(' Dot'));
-    const line = children.find((n) => n.name?.includes(' Line'));
+    const hasLine = children.some((n) => n.name?.includes(' Line'));
 
     return {
-      y: row.y + Y_ROW,
+      y: rowPos.y,
+      borderTop: typeof row.strokeWidth === 'object' && row.strokeWidth !== null,
       tag: tagLabel?.text ?? '',
       tagWidth: tagFrame?.width ?? 80,
       title: title?.text ?? '',
       detail: detail?.text ?? '',
       dotFill: dot?.fill ?? '$accent',
-      hasLine: Boolean(line),
-      hasTopBorder: index > 0,
+      isLast: !hasLine,
       isRefusalBoundary: row.name?.includes('Policy-validated') ?? false,
     };
   });
+
+  const footnoteNode = nodes.find((n) => n.name === 'Footnote')!;
+  const footnoteIdx = nodes.indexOf(footnoteNode);
+  const footnotePos = pos[footnoteIdx]!;
+
+  return {
+    sequence: {
+      x: sequencePos.x,
+      y: sequencePos.y,
+      width: sequence.width,
+      height: sequence.height,
+      rx: sequence.cornerRadius ?? 24,
+    },
+    steps,
+    footnote: {
+      x: footnotePos.x,
+      y: footnotePos.y,
+      text: footnoteNode.text ?? '',
+    },
+  };
 }
 
-const DEFAULT_STEPS = parseSteps(sreGeometry.nodes);
-const FIRST_ROW_Y = -633 + Y_ROW;
-const TAG_OFFSET = TAG.y - FIRST_ROW_Y;
-const TITLE_OFFSET = TITLE_Y - FIRST_ROW_Y;
-const DETAIL_OFFSET = DETAIL_Y - FIRST_ROW_Y;
-const DOT_OFFSET = DOT.y - FIRST_ROW_Y;
-const LINE_OFFSET = LINE.y - FIRST_ROW_Y;
+const LAYOUT = parseLayout();
 
-function SvgText({
-  x,
-  y,
-  fontSize,
-  fontWeight = 'normal',
-  fontFamily = 'sans',
-  fillToken,
-  children,
-  ...rest
-}: {
-  x: number;
-  y: number;
-  fontSize: number;
-  fontWeight?: 'normal' | '500';
-  fontFamily?: 'sans' | 'mono';
-  fillToken: string;
-  children: ReactNode;
-} & SVGAttributes<SVGTextElement>) {
-  return (
-    <text
-      x={x}
-      y={y + fontSize}
-      fontSize={fontSize}
-      fontWeight={fontWeight === '500' ? 500 : 400}
-      fontFamily={fontFamily === 'mono' ? 'var(--font-mono)' : 'var(--font-sans)'}
-      fill={accentFill(fontSize, fillToken)}
-      {...rest}
-    >
-      {children}
-    </text>
-  );
-}
+const DESC =
+  'Six steps run top to bottom: infra drift, P1 alert, root cause via the Operational Context Graph, remediation, policy-validated deploy at the refusal boundary, and SLO verification. Bounded autonomy is the product—refusal at the policy boundary you configured is the point, not a caveat.';
 
-function TimelineRow({
-  step,
-  index,
-}: {
-  step: SreStep;
-  index: number;
-}) {
+function PipelineStepRow({ step, index }: { step: PipelineStep; index: number }) {
+  const rowX = LAYOUT.sequence.x + 28;
   const part = step.isRefusalBoundary ? 'refusal-boundary' : 'step';
 
   return (
-    <g data-part={part} data-index={index}>
-      {step.hasTopBorder ? (
+    <g data-part={part} data-index={index} transform={`translate(${rowX} ${step.y})`}>
+      {step.borderTop ? (
         <line
-          x1={ROW_X}
-          y1={step.y}
-          x2={ROW_X + ROW_W}
-          y2={step.y}
-          stroke={fill('$border-hairline')}
+          x1={0}
+          y1={0}
+          x2={984}
+          y2={0}
+          stroke={fillVar('$border-hairline')}
           aria-hidden="true"
         />
       ) : null}
 
-      <circle
-        cx={DOT.x}
-        cy={step.y + DOT_OFFSET + DOT.r}
-        r={DOT.r}
-        fill={fill(step.dotFill)}
-        aria-hidden="true"
-      />
+      <g data-part="step-rail" aria-hidden="true">
+        <rect x={9} y={18} width={10} height={10} rx={999} fill={fillVar(step.dotFill)} />
+        {!step.isLast ? (
+          <rect x={13} y={36} width={2} height={74} rx={999} fill={fillVar('$border-card')} />
+        ) : null}
+      </g>
 
-      {step.hasLine ? (
+      <g data-part="step-content">
         <rect
-          x={LINE.x}
-          y={step.y + LINE_OFFSET}
-          width={LINE.width}
-          height={LINE.height}
-          rx={LINE.width / 2}
-          fill={fill('$border-card')}
-          aria-hidden="true"
+          x={46}
+          y={18}
+          width={step.tagWidth}
+          height={26}
+          rx={999}
+          fill={fillVar('$accent-dim')}
         />
-      ) : null}
-
-      <rect
-        x={CONTENT_X}
-        y={step.y + TAG_OFFSET}
-        width={step.tagWidth}
-        height={TAG.height}
-        rx={TAG.height / 2}
-        fill={fill('$accent-dim')}
-        aria-hidden="true"
-      />
-      <SvgText
-        x={CONTENT_X + TAG.padX}
-        y={step.y + TAG_OFFSET + TAG.padY}
-        fontSize={TAG.fontSize}
-        fontWeight="500"
-        fontFamily="mono"
-        fillToken="$accent-text"
-      >
-        {step.tag}
-      </SvgText>
-
-      <SvgText
-        x={CONTENT_X}
-        y={step.y + TITLE_OFFSET}
-        fontSize={24}
-        fontWeight="500"
-        fillToken="$text-primary"
-      >
-        {step.title}
-      </SvgText>
-
-      <SvgText
-        x={CONTENT_X}
-        y={step.y + DETAIL_OFFSET}
-        fontSize={14}
-        fillToken="$text-secondary"
-      >
-        {step.detail}
-      </SvgText>
+        <text
+          x={56}
+          y={24}
+          fill={fillVar('$accent-text')}
+          fontSize={10.5}
+          fontWeight={500}
+          fontFamily={fontVar('$font-mono')}
+          dominantBaseline="hanging"
+        >
+          {step.tag}
+        </text>
+        <text
+          x={46}
+          y={52}
+          fill={fillVar('$text-primary')}
+          fontSize={24}
+          fontWeight={500}
+          fontFamily={fontVar('$font-sans')}
+          dominantBaseline="hanging"
+        >
+          {step.title}
+        </text>
+        <text
+          x={46}
+          y={89}
+          fill={fillVar('$text-secondary')}
+          fontSize={14}
+          fontFamily={fontVar('$font-sans')}
+          dominantBaseline="hanging"
+        >
+          {step.detail}
+        </text>
+      </g>
     </g>
   );
 }
@@ -239,61 +189,40 @@ function TimelineRow({
 export function SreMechanism({
   className,
   titleId = 'sre-mechanism-title',
-  heading = productSre.mechanism.heading,
-  body = DEFAULT_BODY,
-  footnote = DEFAULT_FOOTNOTE,
-  steps = DEFAULT_STEPS,
-}: SreMechanismProps) {
-  const desc =
-    'Six steps run top to bottom: infra drift, P1 alert, root cause via the Operational Context Graph, remediation, policy-validated deploy at the refusal boundary, and SLO verification. Bounded autonomy is the product—refusal at the policy boundary you configured is the point, not a caveat.';
+}: DiagramProps) {
+  const { sequence, steps, footnote } = LAYOUT;
 
   return (
-    <svg
-      viewBox={VIEW_BOX}
-      className={className}
-      role="img"
-      aria-labelledby={titleId}
-    >
+    <svg viewBox={VIEWBOX} className={className} role="img" aria-labelledby={titleId}>
       <title id={titleId}>SRE incident recovery mechanism</title>
-      <desc>{desc}</desc>
-
-      <g data-part="header">
-        <SvgText x={100} y={-585 + Y_TOP} fontSize={32} fontWeight="500" fillToken="$text-primary">
-          {heading}
-        </SvgText>
-        <SvgText x={100} y={-522 + Y_TOP} fontSize={16} fillToken="$text-secondary">
-          {body}
-        </SvgText>
-      </g>
+      <desc>{DESC}</desc>
 
       <g data-part="sequence-card">
         <rect
-          x={CARD.x}
-          y={CARD.y}
-          width={CARD.width}
-          height={CARD.height}
-          rx={CARD.rx}
-          fill={fill('$surface-card')}
-          stroke={fill('$border-hairline')}
+          x={sequence.x}
+          y={sequence.y}
+          width={sequence.width}
+          height={sequence.height}
+          rx={sequence.rx}
+          fill={fillVar('$surface-card')}
+          stroke={fillVar('$border-hairline')}
           strokeWidth={1}
         />
-
-        <g data-part="timeline">
-          {steps.map((step, index) => (
-            <TimelineRow key={step.title} step={step} index={index} />
-          ))}
-        </g>
+        {steps.map((step, i) => (
+          <PipelineStepRow key={step.title} step={step} index={i} />
+        ))}
       </g>
 
-      <SvgText
-        x={100}
-        y={398 + Y_TOP}
-        fontSize={13}
-        fillToken="$text-tertiary"
+      <text
         data-part="footnote"
+        x={footnote.x}
+        y={footnote.y + 13}
+        fill={fillVar('$text-tertiary')}
+        fontSize={13}
+        fontFamily={fontVar('$font-sans')}
       >
-        {footnote}
-      </SvgText>
+        {footnote.text}
+      </text>
     </svg>
   );
 }

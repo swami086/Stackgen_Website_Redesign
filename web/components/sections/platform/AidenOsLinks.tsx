@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { AidenOsLinksDiagram } from '@/components/diagrams/AidenOsLinksDiagram';
 import { Reveal } from '@/components/motion/Reveal';
 import type { SectionProps } from '@/lib/types';
@@ -20,6 +21,23 @@ export function AidenOsLinks({ content }: SectionProps<AidenOsLinksContent>) {
           productLinks={content.productLinks}
           className="w-full"
         />
+        <nav
+          aria-label={content.productLinks.heading}
+          className="mx-auto mt-4 max-w-[1240px] pl-[100px]"
+        >
+          <ul className="flex flex-col gap-2">
+            {content.productLinks.products.map((product) => (
+              <li key={product.href}>
+                <Link
+                  href={product.href}
+                  className="text-lg text-text-secondary underline-offset-2 hover:text-text-primary hover:underline"
+                >
+                  {product.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </Reveal>
     </section>
   );

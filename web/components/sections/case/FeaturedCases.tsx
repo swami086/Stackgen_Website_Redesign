@@ -21,15 +21,25 @@ export function FeaturedCases({ content }: SectionProps<FeaturedCasesContent>) {
               <li key={item.slug}>
                 <Link
                   href={item.href}
+                  aria-labelledby={`case-${item.slug}-title`}
                   className="flex h-full flex-col gap-4 rounded-xl border border-border-card bg-surface-card p-6 transition-colors hover:border-border-hairline"
                 >
-                  <h3 className="text-lg font-semibold tracking-[-0.02em] text-text-primary">
+                  <h3
+                    id={`case-${item.slug}-title`}
+                    className="text-lg font-semibold tracking-[-0.02em] text-text-primary"
+                  >
                     {item.company}
                   </h3>
-                  <p className="flex-1 text-[15px] leading-6 tracking-[-0.01em] text-text-primary">
+                  <p
+                    aria-hidden="true"
+                    className="flex-1 text-[15px] leading-6 tracking-[-0.01em] text-text-primary"
+                  >
                     {item.summary}
                   </p>
-                  <p className="text-[11px] uppercase tracking-[0.05em] text-text-tertiary">
+                  <p
+                    aria-hidden="true"
+                    className="text-[11px] uppercase tracking-[0.05em] text-text-tertiary"
+                  >
                     {item.attribution}
                   </p>
                 </Link>

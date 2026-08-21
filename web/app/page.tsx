@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { Nav } from '@/components/primitives/Nav';
 import { Footer } from '@/components/primitives/Footer';
 import { Hero } from '@/components/sections/home/Hero';
@@ -14,11 +15,15 @@ import { Compliance } from '@/components/sections/home/Compliance';
 import { FinalCta } from '@/components/sections/home/FinalCta';
 import home from '@/content/home';
 
+export const metadata: Metadata = {
+  title: 'Autonomous DevOps Factory',
+};
+
 export default function HomePage() {
   return (
     <>
       <Nav />
-      <main>
+      <main id="main-content">
         <Hero content={home.hero} />
         <Mechanism content={home.mechanism} />
         <Logos content={home.logos} />

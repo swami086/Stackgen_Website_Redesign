@@ -2,9 +2,11 @@ import type { Metric } from '@/lib/types';
 
 export function MetricCell({
   metric,
+  compact = false,
   className,
 }: {
   metric: Metric;
+  compact?: boolean;
   className?: string;
 }) {
   return (
@@ -15,7 +17,9 @@ export function MetricCell({
         {metric.value}
       </p>
       <p className="text-sm text-text-secondary">{metric.label}</p>
-      <p className="text-sm text-text-tertiary">{metric.mechanism}</p>
+      {!compact ? (
+        <p className="text-sm text-text-tertiary">{metric.mechanism}</p>
+      ) : null}
     </div>
   );
 }

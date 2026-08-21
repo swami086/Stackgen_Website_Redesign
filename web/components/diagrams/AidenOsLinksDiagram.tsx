@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import platform from '@/content/platform';
 import type { DiagramProps } from '@/lib/types';
 
@@ -196,22 +195,18 @@ export function AidenOsLinksDiagram({
       </text>
 
       {productLinks.products.map((product, i) => (
-        <Link
+        <text
           key={product.href}
-          href={product.href}
-          data-part="product-link"
+          data-part="product-link-label"
           data-index={i}
+          x={LAYOUT.linkX}
+          y={LAYOUT.linkYs[i] + 18}
+          fill={FILL['$text-secondary']}
+          fontSize={18}
+          fontFamily="var(--font-sans)"
         >
-          <text
-            x={LAYOUT.linkX}
-            y={LAYOUT.linkYs[i] + 18}
-            fill={FILL['$text-secondary']}
-            fontSize={18}
-            fontFamily="var(--font-sans)"
-          >
-            {product.name}
-          </text>
-        </Link>
+          {product.name}
+        </text>
       ))}
     </svg>
   );

@@ -7,7 +7,14 @@ import { Logo } from './Logo';
 
 export function Nav({ className }: { className?: string }) {
   return (
-    <nav
+    <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-bg-base focus:text-text-primary"
+      >
+        Skip to main content
+      </a>
+      <nav
       className={[
         'flex h-[60px] items-center gap-10 border-b border-border-hairline bg-bg-base px-pad-x',
         className,
@@ -35,5 +42,6 @@ export function Nav({ className }: { className?: string }) {
         <ButtonPrimary href={PRIMARY_CTA.href}>{PRIMARY_CTA.label}</ButtonPrimary>
       </div>
     </nav>
+    </>
   );
 }

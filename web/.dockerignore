@@ -1,7 +1,0 @@
-node_modules
-.next
-.git
-e2e
-**/__tests__
-*.test.ts
-*.test.tsx

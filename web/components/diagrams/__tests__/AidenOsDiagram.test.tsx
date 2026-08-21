@@ -1,6 +1,30 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { AidenOsDiagram } from '../AidenOsDiagram';
+
+const LEFT_FRAME_ASSET_PATH = resolve(process.cwd(), 'public/diagram-assets/aiden-os-left-side-frame.svg');
+const FIGMA_LEFT_FRAME = {
+  width: 129.8968288977885,
+  height: 551.0742244279696,
+};
+
+function readSvgNumber(markup: string, attribute: string) {
+  const match = markup.match(new RegExp(`${attribute}="([0-9.]+)"`));
+  if (!match) {
+    throw new Error(`Missing ${attribute} in test SVG`);
+  }
+  return Number(match[1]);
+}
+
+function readViewBox(markup: string) {
+  const match = markup.match(/viewBox="([^"]+)"/);
+  if (!match) {
+    throw new Error('Missing viewBox in test SVG');
+  }
+  return match[1].split(/\s+/).map(Number);
+}
 
 describe('AidenOsDiagram', () => {
   it('exposes an accessible name through its title', () => {
@@ -56,12 +80,29 @@ describe('AidenOsDiagram', () => {
   it('renders the exact left-side frame assets from Figma', () => {
     const { container } = render(<AidenOsDiagram />);
     const imageHrefs = [...container.querySelectorAll('image')].map((node) => node.getAttribute('href'));
+    const leftFrame = container.querySelector('[data-part="visual-left-frame"]');
 
     expect(imageHrefs).toContain('/diagram-assets/aiden-os-center.svg');
     expect(imageHrefs).toContain('/diagram-assets/aiden-os-left-top-frame.svg');
     expect(imageHrefs).toContain('/diagram-assets/aiden-os-left-side-frame.svg');
     expect(container.querySelector('[data-part="visual-top-frame"]')).not.toBeNull();
-    expect(container.querySelector('[data-part="visual-left-frame"]')).not.toBeNull();
+    expect(leftFrame).not.toBeNull();
+    expect(leftFrame).toHaveAttribute('preserveAspectRatio', 'xMidYMid meet');
+  });
+
+  it('keeps the left-side frame asset portrait and aligned to the Figma slot ratio', () => {
+    const markup = readFileSync(LEFT_FRAME_ASSET_PATH, 'utf8');
+    const width = readSvgNumber(markup, 'width');
+    const height = readSvgNumber(markup, 'height');
+    const [, , viewBoxWidth, viewBoxHeight] = readViewBox(markup);
+    const figmaAspect = FIGMA_LEFT_FRAME.width / FIGMA_LEFT_FRAME.height;
+
+    expect(width).toBeLessThan(height);
+    expect(viewBoxWidth).toBeLessThan(viewBoxHeight);
+    expect(width).toBeCloseTo(FIGMA_LEFT_FRAME.width, 3);
+    expect(height).toBeCloseTo(FIGMA_LEFT_FRAME.height, 3);
+    expect(width / height).toBeCloseTo(figmaAspect, 5);
+    expect(viewBoxWidth / viewBoxHeight).toBeCloseTo(figmaAspect, 5);
   });
 
   it('bounds every wrapped block so translated copy cannot overflow its plate', () => {

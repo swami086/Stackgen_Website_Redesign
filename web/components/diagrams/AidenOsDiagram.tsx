@@ -311,7 +311,7 @@ export function AidenOsDiagram({
           y={LEFT_VISUAL.sideFrame.y}
           width={LEFT_VISUAL.sideFrame.width}
           height={LEFT_VISUAL.sideFrame.height}
-          preserveAspectRatio="none"
+          preserveAspectRatio="xMidYMid meet"
         />
         <g data-part="visual-pattern" clipPath="url(#aiden-os-visual-clip)">
           {Array.from({ length: patternRows }).map((_, row) =>

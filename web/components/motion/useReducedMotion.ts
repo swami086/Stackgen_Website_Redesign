@@ -6,7 +6,7 @@ export function useReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
-    if (typeof window.matchMedia !== 'function') {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
       return;
     }
 
@@ -15,9 +15,19 @@ export function useReducedMotion(): boolean {
     setReduced(query.matches);
 
     const onChange = (event: MediaQueryListEvent) => setReduced(event.matches);
-    query.addEventListener('change', onChange);
 
-    return () => query.removeEventListener('change', onChange);
+    if (
+      typeof query.addEventListener === 'function' &&
+      typeof query.removeEventListener === 'function'
+    ) {
+      query.addEventListener('change', onChange);
+      return () => query.removeEventListener('change', onChange);
+    }
+
+    if (typeof query.addListener === 'function' && typeof query.removeListener === 'function') {
+      query.addListener(onChange);
+      return () => query.removeListener(onChange);
+    }
   }, []);
 
   return reduced;

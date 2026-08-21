@@ -7,6 +7,7 @@ export function Reveal({ children, delay = 0 }: { children: ReactNode; delay?: n
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
   const reduced = useReducedMotion();
+  const hidden = !reduced && !shown;
 
   useEffect(() => {
     if (reduced || shown) return;
@@ -31,20 +32,15 @@ export function Reveal({ children, delay = 0 }: { children: ReactNode; delay?: n
     return () => observer.disconnect();
   }, [reduced, shown]);
 
-  const animate = !reduced;
-
   return (
     <div
       ref={ref}
-      style={
-        animate
-          ? {
-              opacity: shown ? 1 : 0,
-              transform: shown ? 'translateY(0)' : 'translateY(16px)',
-              transition: `opacity 600ms cubic-bezier(0.32,0.72,0,1) ${delay}ms, transform 600ms cubic-bezier(0.32,0.72,0,1) ${delay}ms`,
-            }
-          : undefined
-      }
+      className={[
+        hidden ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0',
+        'transition-[opacity,transform] duration-[600ms] ease-[cubic-bezier(0.32,0.72,0,1)]',
+        'motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none',
+      ].join(' ')}
+      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}
     </div>

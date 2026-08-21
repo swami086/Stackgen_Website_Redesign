@@ -116,6 +116,12 @@
   - Exact regression proof added:
     - `web/components/diagrams/__tests__/ProblemDiagram.test.tsx` asserts the operations badge rect and label coordinates instead of accepting the old left-badge clone.
 
+- Finding 3: the home-section regression test now proves `Problem.tsx` forwards `content.citations` instead of merely re-rendering `ProblemDiagram` defaults.
+  - `web/components/sections/home/__tests__/Problem.test.tsx` now renders the section with three distinctive citation pairs that do not appear in `ProblemDiagram`'s fallback evidence rail.
+  - Exact regression proof added:
+    - focused red proof came from temporarily removing `citations={content.citations}` in `web/components/sections/home/Problem.tsx`; the section test then failed on missing `Forwarding source alpha` and the output reverted to the default evidence sources.
+    - focused green restored the same single prop line and passed without touching `ProblemDiagram` behavior.
+
 - Verification after the fixes:
   - focused `ProblemDiagram` + `Problem` tests: 13 passed
   - `pnpm typecheck`: passed

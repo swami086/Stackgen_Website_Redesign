@@ -1,4 +1,5 @@
-// components/sections/home/Hero.tsx — STUB
+import { ButtonPrimary } from '@/components/primitives/ButtonPrimary';
+import { Reveal } from '@/components/motion/Reveal';
 import type { SectionProps } from '@/lib/types';
 import home from '@/content/home';
 
@@ -6,8 +7,29 @@ type HeroContent = typeof home.hero;
 
 export function Hero({ content }: SectionProps<HeroContent>) {
   return (
-    <section aria-labelledby="hero-heading" data-stub="Hero">
-      <h1 id="hero-heading">{content.h1}</h1>
+    <section
+      aria-labelledby="hero-heading"
+      className="bg-bg-base px-(--spacing-pad-x) pt-[88px] pb-12"
+    >
+      <Reveal>
+        <div className="flex max-w-[1240px] flex-col gap-7">
+          <h1
+            id="hero-heading"
+            className="max-w-[980px] text-[64px] font-medium leading-[1.06] tracking-[-0.02em] text-balance text-text-primary"
+          >
+            {content.h1}
+          </h1>
+          <p className="max-w-[680px] text-[17px] leading-normal text-text-secondary">
+            {content.sub}
+          </p>
+          <p className="max-w-[640px] text-[15px] leading-normal text-text-tertiary">
+            {content.support}
+          </p>
+          <div>
+            <ButtonPrimary href={content.cta.href}>{content.cta.label}</ButtonPrimary>
+          </div>
+        </div>
+      </Reveal>
     </section>
   );
 }

@@ -1,4 +1,5 @@
-// components/sections/home/FinalCta.tsx — STUB
+import { ButtonPrimary } from '@/components/primitives/ButtonPrimary';
+import { Reveal } from '@/components/motion/Reveal';
 import type { SectionProps } from '@/lib/types';
 import home from '@/content/home';
 
@@ -6,8 +7,24 @@ type FinalCtaContent = typeof home.finalCta;
 
 export function FinalCta({ content }: SectionProps<FinalCtaContent>) {
   return (
-    <section aria-labelledby="final-cta-heading" data-stub="FinalCta">
-      <h2 id="final-cta-heading">{content.heading}</h2>
+    <section
+      aria-labelledby="final-cta-heading"
+      className="bg-bg-base px-(--spacing-pad-x) pt-24 pb-30"
+    >
+      <Reveal>
+        <div className="mx-auto flex max-w-[1240px] flex-col items-center gap-[26px] px-(--spacing-pad-x) pt-32 text-center">
+          <h2
+            id="final-cta-heading"
+            className="max-w-[760px] text-[42px] font-medium leading-[1.12] tracking-[-0.018em] text-balance text-text-primary"
+          >
+            {content.heading}
+          </h2>
+          <p className="max-w-[660px] text-[17px] leading-normal text-text-secondary">
+            {content.body}
+          </p>
+          <ButtonPrimary href={content.cta.href}>{content.cta.label}</ButtonPrimary>
+        </div>
+      </Reveal>
     </section>
   );
 }

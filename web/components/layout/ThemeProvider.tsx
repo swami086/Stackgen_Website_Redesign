@@ -27,8 +27,14 @@ function applyTheme(theme: Theme) {
   }
 }
 
+function readThemeFromDocument(): Theme {
+  if (typeof document === "undefined") return "light";
+  const fromDom = document.documentElement.dataset.theme;
+  return fromDom === "light" || fromDom === "dark" ? fromDom : "light";
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("light");
+  const [theme, setThemeState] = useState<Theme>(readThemeFromDocument);
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);

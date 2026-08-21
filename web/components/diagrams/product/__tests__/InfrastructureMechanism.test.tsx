@@ -39,7 +39,11 @@ describe('InfrastructureMechanism', () => {
     const { container } = render(<InfrastructureMechanism />);
     const desc = container.querySelector('desc')?.textContent ?? '';
     expect(desc.length).toBeGreaterThan(40);
-    expect(desc).toMatch(/policy|migration|rollback|Factory Spec|intent/i);
+    expect(desc).toMatch(/policy-bounded migration map/i);
+    expect(desc).toMatch(/AWS, Azure, and OCI/i);
+    expect(desc).toMatch(/IaC translation|performance baselines|threshold rollbacks/i);
+    expect(desc).toMatch(/timeline-compression card/i);
+    expect(desc).not.toMatch(/Early Access/i);
   });
 
   it('renders a single accessible SVG on a panel ground', () => {

@@ -4,7 +4,7 @@ import { DiagramText } from '../DiagramText';
 const SOURCE_FRAME = { x: 66, y: 236, width: 1787, height: 781 } as const;
 const VIEWBOX = `${SOURCE_FRAME.x} ${SOURCE_FRAME.y} ${SOURCE_FRAME.width} ${SOURCE_FRAME.height}`;
 const DESC =
-  'Aiden for Infrastructure shows a policy-bounded migration route across cloud providers, three supporting callouts, an Early Access migration marker, and a timeline-compression card. The diagram emphasizes translation, baseline capture, threshold rollback, and a bounded path from source infrastructure to live workloads.';
+  'Aiden for Infrastructure shows a policy-bounded migration map across AWS, Azure, and OCI, three supporting callouts, and a timeline-compression card. The diagram highlights IaC translation, performance baselines, threshold rollbacks, and guarded movement through the migration pipeline.';
 
 const PANEL = 'var(--color-panel)';
 const PANEL_RAISED = 'var(--color-panel-raised)';

@@ -9,13 +9,19 @@ type Stage = {
 };
 
 export type AdfLoopDiagramProps = DiagramProps & {
-  stages: Stage[];
+  stages: readonly Stage[];
 };
 
 export function AdfLoopDiagram({
   className,
   titleId = 'adf-loop-diagram-title',
-  stages: _stages,
+  stages,
 }: AdfLoopDiagramProps) {
-  return <AdfLifecycleDiagram className={className} titleId={titleId} />;
+  return (
+    <AdfLifecycleDiagram
+      className={className}
+      titleId={titleId}
+      steps={stages.map(({ title, body }) => ({ title, body }))}
+    />
+  );
 }

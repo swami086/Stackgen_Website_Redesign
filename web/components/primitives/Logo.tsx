@@ -19,7 +19,7 @@ export function Logo({
   variant = 'wordmark',
 }: {
   className?: string;
-  variant?: 'wordmark' | 'mark';
+  variant?: 'wordmark' | 'mark' | 'full';
 }) {
   const showWordmark = variant !== 'mark';
   const showMark = variant !== 'wordmark';
@@ -30,8 +30,8 @@ export function Logo({
       role="img"
       aria-label="StackGen"
       viewBox={VIEWBOX}
-      width={90}
-      height={18}
+      width={variant === 'full' ? 140 : 90}
+      height={variant === 'full' ? 28 : 18}
       className={className}
     >
       <title>StackGen</title>

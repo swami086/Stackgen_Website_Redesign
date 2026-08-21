@@ -1,4 +1,5 @@
 import type { DiagramProps } from '@/lib/types';
+import { DiagramText } from '../DiagramText';
 import mechanismAutomationGeometry from '../../../geometry/mechanism-automation.json';
 
 type GeometryNode = (typeof mechanismAutomationGeometry.nodes)[number];
@@ -141,6 +142,14 @@ function parseLayout() {
 
 const LAYOUT = parseLayout();
 
+// The canvas mechanism frame reserves a band for its own heading and body. The
+// section renders those as real DOM text instead, so crop the band out rather
+// than shipping ~200px of empty SVG above the first callout.
+const CROP_PAD = 40;
+const CROP_TOP = Math.min(...LAYOUT.callouts.map((c) => c.y)) - CROP_PAD;
+const CROP_HEIGHT = LAYOUT.footnote.y + 19 + CROP_PAD - CROP_TOP;
+const CROPPED_VIEWBOX = `0 ${CROP_TOP} 1240 ${CROP_HEIGHT}`;
+
 const DESC =
   'Six pipeline stages run top to bottom: code commit, build and test, infra checks against the operational context graph, active gating, deploy, and monitoring confirms release health.';
 
@@ -227,7 +236,7 @@ export function AutomationMechanism({
   const { callouts, sequence, steps, footnote } = LAYOUT;
 
   return (
-    <svg viewBox={VIEWBOX} className={className} role="img" aria-labelledby={titleId}>
+    <svg viewBox={CROPPED_VIEWBOX} className={className} role="img" aria-labelledby={titleId}>
       <title id={titleId}>Automation mechanism diagram</title>
       <desc>{DESC}</desc>
 
@@ -255,16 +264,18 @@ export function AutomationMechanism({
             >
               {callout.label}
             </text>
-            <text
+            <DiagramText
               x={callout.x + 18}
               y={callout.y + 43}
+              width={474}
+              lineHeight={22}
               fill={fillVar('$text-secondary')}
               fontSize={15}
               fontFamily={fontVar('$font-sans')}
               dominantBaseline="hanging"
             >
               {callout.detail}
-            </text>
+            </DiagramText>
           </g>
         ))}
       </g>

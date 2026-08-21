@@ -28,15 +28,13 @@ describe('Nav', () => {
     expect(screen.getByRole('navigation')).toBeInTheDocument();
 
     for (const item of NAV_ITEMS) {
-      expect(screen.getByRole('link', { name: item.label })).toHaveAttribute(
-        'href',
-        item.href,
-      );
+      expect(screen.getAllByRole('link', { name: item.label }).some((link) => (
+        link.getAttribute('href') === item.href
+      ))).toBe(true);
     }
 
-    expect(screen.getByRole('link', { name: 'Schedule demo' })).toHaveAttribute(
-      'href',
-      '/schedule-demo',
-    );
+    expect(screen.getAllByRole('link', { name: 'Schedule demo' }).some((link) => (
+      link.getAttribute('href') === '/schedule-demo'
+    ))).toBe(true);
   });
 });

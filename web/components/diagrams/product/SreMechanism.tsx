@@ -113,6 +113,13 @@ function parseLayout() {
 
 const LAYOUT = parseLayout();
 
+// See InfrastructureMechanism: the canvas heading/body band is rendered as DOM
+// text by the section, so it is cropped out of the SVG here.
+const CROP_PAD = 40;
+const CROP_TOP = LAYOUT.sequence.y - CROP_PAD;
+const CROP_HEIGHT = LAYOUT.footnote.y + 19 + CROP_PAD - CROP_TOP;
+const CROPPED_VIEWBOX = `0 ${CROP_TOP} 1240 ${CROP_HEIGHT}`;
+
 const DESC =
   'Six steps run top to bottom: infra drift, P1 alert, root cause via the Operational Context Graph, remediation, policy-validated deploy at the refusal boundary, and SLO verification. Bounded autonomy is the product: refusal at the policy boundary you configured is the point, not a caveat.';
 
@@ -193,7 +200,7 @@ export function SreMechanism({
   const { sequence, steps, footnote } = LAYOUT;
 
   return (
-    <svg viewBox={VIEWBOX} className={className} role="img" aria-labelledby={titleId}>
+    <svg viewBox={CROPPED_VIEWBOX} className={className} role="img" aria-labelledby={titleId}>
       <title id={titleId}>SRE incident recovery mechanism</title>
       <desc>{DESC}</desc>
 

@@ -13,8 +13,8 @@ export function AdfLoop({ content }: SectionProps<AdfLoopContent>) {
       className="bg-bg-raised px-(--spacing-pad-x) py-(--spacing-pad-y)"
     >
       <Reveal>
-        <div className="flex gap-12">
-          <div className="w-[520px] shrink-0">
+        <div className="flex gap-12 max-[1023px]:flex-col max-[1023px]:gap-5">
+          <div className="w-[520px] shrink-0 max-[1023px]:w-auto">
             <p className="text-sm text-text-tertiary">{content.label}</p>
             <h2
               id="adf-loop-heading"

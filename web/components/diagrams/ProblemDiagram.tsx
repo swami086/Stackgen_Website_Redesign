@@ -1,5 +1,6 @@
-import type { ReactNode, SVGAttributes } from 'react';
+import type { SVGAttributes } from 'react';
 import type { DiagramProps } from '@/lib/types';
+import { DiagramText } from './DiagramText';
 
 /** Normalized Y origin: Creation Ops frame top in problem.json (y=-1037). */
 const Y0 = 1037;
@@ -87,6 +88,8 @@ function SvgText({
   fontWeight = 'normal',
   fontFamily = 'sans',
   fill,
+  width,
+  lineHeight,
   children,
   ...rest
 }: {
@@ -96,20 +99,24 @@ function SvgText({
   fontWeight?: 'normal' | '500';
   fontFamily?: 'sans' | 'mono';
   fill: string;
-  children: ReactNode;
+  width?: number;
+  lineHeight?: number;
+  children: string;
 } & SVGAttributes<SVGTextElement>) {
   return (
-    <text
+    <DiagramText
       x={x}
       y={y + fontSize}
+      width={width}
+      lineHeight={lineHeight}
       fontSize={fontSize}
       fontWeight={fontWeight === '500' ? 500 : 400}
-      fontFamily={fontFamily === 'mono' ? 'var(--font-mono)' : 'var(--font-sans)'}
+      mono={fontFamily === 'mono'}
       fill={accentFill(fontSize, fill)}
       {...rest}
     >
       {children}
-    </text>
+    </DiagramText>
   );
 }
 
@@ -167,6 +174,8 @@ export function ProblemDiagram({
           <SvgText
             x={CARD.x + PAD}
             y={CARD.y + PAD + 34}
+            width={510}
+            lineHeight={21}
             fontSize={14}
             fill="$text-secondary"
           >
@@ -215,6 +224,8 @@ export function ProblemDiagram({
           <SvgText
             x={CARD.x + OPS_X}
             y={CARD.y + PAD + 34}
+            width={510}
+            lineHeight={21}
             fontSize={14}
             fill="$text-secondary"
           >
@@ -294,6 +305,8 @@ export function ProblemDiagram({
             <SvgText
               x={CARD.x + 256}
               y={EVIDENCE_TOP + i * EVIDENCE_ROW_H + 65}
+              width={640}
+              lineHeight={24}
               fontSize={15}
               fill="$text-secondary"
             >
@@ -323,6 +336,8 @@ export function ProblemDiagram({
         <SvgText
           x={CARD.x}
           y={PULL_Y}
+          width={860}
+          lineHeight={35}
           fontSize={26}
           fontWeight="500"
           fill="$text-primary"

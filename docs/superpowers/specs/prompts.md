@@ -1,0 +1,1 @@
+Replicate the existing written content on stackgen.com and all the pages ( create additional pages on the pencil canvas as necessay ) content on the webpage ( pencil canvas ) be guided by /using-superpowers and prompt for inputs as needed.. Identify the right skills for the tasks as necessary before beginning the work.. 

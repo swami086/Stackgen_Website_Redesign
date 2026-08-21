@@ -42,22 +42,23 @@ export function Footer({ className }: { className?: string }) {
         .filter(Boolean)
         .join(' ')}
     >
-      <div className="flex gap-16">
-        <div className="flex w-[280px] flex-col gap-3">
-          <Logo />
-          <p className="text-[13px] text-text-tertiary">
+      <div className="flex gap-16 max-[1023px]:flex-wrap max-[1023px]:gap-x-8 max-[1023px]:gap-y-10">
+        <div className="flex w-[280px] flex-col gap-3 max-[1023px]:w-full">
+          <Logo variant="full" className="max-[1023px]:hidden" />
+          <Logo variant="wordmark" className="hidden max-[1023px]:block" />
+          <p className="text-[13px] leading-4 text-text-tertiary">
             Infrastructure that ships itself.
           </p>
         </div>
 
         {FOOTER_COLUMNS.map((column) => (
-          <div key={column.title} className="flex w-64 flex-col gap-2.5">
-            <p className="text-[13px] font-medium text-text-primary">{column.title}</p>
+          <div key={column.title} className="flex w-64 flex-col gap-2.5 max-[1023px]:w-[calc(50%-16px)]">
+            <p className="text-[13px] font-medium leading-4 text-text-primary">{column.title}</p>
             {column.links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-[13px] text-text-secondary hover:text-text-primary"
+                className="text-[13px] leading-4 text-text-secondary hover:text-text-primary"
               >
                 {link.label}
               </Link>
@@ -66,7 +67,7 @@ export function Footer({ className }: { className?: string }) {
         ))}
       </div>
 
-      <p className="text-xs text-text-tertiary">© StackGen. All rights reserved.</p>
+      <p className="text-xs leading-[15px] text-text-tertiary">© StackGen. All rights reserved.</p>
     </footer>
   );
 }

@@ -53,8 +53,8 @@ export function ProductMechanism({
     >
       <Reveal>
         <div className="mx-auto flex max-w-[1240px] flex-col gap-12">
-          <div className="flex gap-12">
-            <div className="w-[520px] shrink-0">
+          <div className="flex gap-12 max-[1023px]:flex-col max-[1023px]:gap-5">
+            <div className="w-[520px] shrink-0 max-[1023px]:w-auto">
               <p className="text-sm text-text-tertiary">{content.label}</p>
               <h2
                 id="product-mechanism-heading"
@@ -63,7 +63,7 @@ export function ProductMechanism({
                 {content.heading}
               </h2>
             </div>
-            <p className="w-[480px] text-base leading-normal text-text-secondary">
+            <p className="w-[480px] text-base leading-normal text-text-secondary max-[1023px]:w-auto">
               {content.body}
             </p>
           </div>

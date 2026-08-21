@@ -1,6 +1,7 @@
 // components/diagrams/AdfLoopDiagram.tsx
 import type { ReactNode } from 'react';
 import type { DiagramProps } from '@/lib/types';
+import { DiagramText } from './DiagramText';
 
 type Stage = {
   index: string;
@@ -60,13 +61,15 @@ function canvasFill(token: string | null | undefined): string {
   return 'none';
 }
 
-function DiagramText({
+function StageText({
   x,
   y,
   fontSize,
   fill,
   fontWeight = 'normal',
   fontFamily = 'var(--font-sans)',
+  width,
+  lineHeight,
   children,
 }: {
   x: number;
@@ -75,19 +78,23 @@ function DiagramText({
   fill: string;
   fontWeight?: string | number;
   fontFamily?: string;
-  children: ReactNode;
+  width?: number;
+  lineHeight?: number;
+  children: string;
 }) {
   return (
-    <text
+    <DiagramText
       x={x}
       y={y + fontSize}
+      width={width}
+      lineHeight={lineHeight}
       fill={fill}
       fontSize={fontSize}
       fontWeight={fontWeight}
       fontFamily={fontFamily}
     >
       {children}
-    </text>
+    </DiagramText>
   );
 }
 
@@ -170,26 +177,26 @@ export function AdfLoopDiagram({
           data-part="schematic-panel"
         />
 
-        <DiagramText x={128} y={313} fontSize={10.5} fill="var(--color-text-tertiary)" fontWeight={500}>
+        <StageText x={128} y={313} fontSize={10.5} fill="var(--color-text-tertiary)" fontWeight={500}>
           INPUTS
-        </DiagramText>
+        </StageText>
 
         <g data-part="intent-card">
           <HairlineBottom x={128} y={340} width={180} height={47} />
-          <DiagramText x={130} y={340} fontSize={13.5} fill="var(--color-text-primary)" fontWeight={500}>
+          <StageText x={130} y={340} fontSize={13.5} fill="var(--color-text-primary)" fontWeight={500}>
             Factory Spec
-          </DiagramText>
-          <DiagramText x={130} y={361} fontSize={11.5} fill="var(--color-text-tertiary)">
+          </StageText>
+          <StageText x={130} y={361} fontSize={11.5} fill="var(--color-text-tertiary)">
             Reviewable. Diffable.
-          </DiagramText>
+          </StageText>
         </g>
 
         {INPUT_CHIPS.map((chip, i) => (
           <g key={chip.label} data-part="input" data-index={i}>
             <HairlineBottom x={128} y={chip.y} width={180} height={32} />
-            <DiagramText x={130} y={chip.y + 9} fontSize={11.5} fill="var(--color-text-secondary)">
+            <StageText x={130} y={chip.y + 9} fontSize={11.5} fill="var(--color-text-secondary)">
               {chip.label}
-            </DiagramText>
+            </StageText>
           </g>
         ))}
 
@@ -197,16 +204,16 @@ export function AdfLoopDiagram({
           <Chevron x={308} y={414} />
         </g>
 
-        <DiagramText x={338} y={298} fontSize={10.5} fill="var(--color-text-tertiary)" fontWeight={500}>
+        <StageText x={338} y={298} fontSize={10.5} fill="var(--color-text-tertiary)" fontWeight={500}>
           THE FACTORY
-        </DiagramText>
+        </StageText>
 
         {FACTORY_STAGES.map((stage, i) => (
           <g key={stage.label} data-part="factory-stage" data-index={i}>
             <HairlineBottom x={338} y={stage.y} width={334} height={42} />
-            <DiagramText x={340} y={stage.y + 13} fontSize={13.5} fill="var(--color-text-primary)" fontWeight={500}>
+            <StageText x={340} y={stage.y + 13} fontSize={13.5} fill="var(--color-text-primary)" fontWeight={500}>
               {stage.label}
-            </DiagramText>
+            </StageText>
           </g>
         ))}
 
@@ -219,21 +226,21 @@ export function AdfLoopDiagram({
             rx={6}
             fill={canvasFill('$accent-dim')}
           />
-          <DiagramText x={350} y={489} fontSize={12} fill="var(--color-accent-text)" fontWeight={600}>
+          <StageText x={350} y={489} fontSize={12} fill="var(--color-accent-text)" fontWeight={600}>
             Aiden OS
-          </DiagramText>
-          <DiagramText x={350} y={506} fontSize={11} fill="var(--color-text-tertiary)">
+          </StageText>
+          <StageText x={350} y={506} fontSize={11} fill="var(--color-text-tertiary)">
             One Operational Context Graph. Policy gate at every action.
-          </DiagramText>
+          </StageText>
         </g>
 
         <g data-part="connector" data-index={1} aria-hidden="true">
           <Chevron x={672} y={414} />
         </g>
 
-        <DiagramText x={702} y={325} fontSize={10.5} fill="var(--color-text-tertiary)" fontWeight={500}>
+        <StageText x={702} y={325} fontSize={10.5} fill="var(--color-text-tertiary)" fontWeight={500}>
           MEASURED OUTCOMES
-        </DiagramText>
+        </StageText>
 
         {OUTCOMES.map((outcome, i) => (
           <g key={outcome.label} data-part="outcome" data-index={i}>
@@ -247,7 +254,7 @@ export function AdfLoopDiagram({
               stroke={canvasFill('$border-card')}
               strokeWidth={1}
             />
-            <DiagramText
+            <StageText
               x={715}
               y={outcome.y + 12}
               fontSize={17}
@@ -255,10 +262,10 @@ export function AdfLoopDiagram({
               fontFamily="var(--font-mono)"
             >
               {outcome.value}
-            </DiagramText>
-            <DiagramText x={757} y={outcome.y + 15} fontSize={12} fill="var(--color-text-secondary)">
+            </StageText>
+            <StageText x={757} y={outcome.y + 15} fontSize={12} fill="var(--color-text-secondary)">
               {outcome.label}
-            </DiagramText>
+            </StageText>
           </g>
         ))}
       </g>
@@ -281,7 +288,7 @@ export function AdfLoopDiagram({
                 stroke={layout.accent ? canvasFill('$accent') : canvasFill('$border-hairline')}
                 strokeWidth={1}
               />
-              <DiagramText
+              <StageText
                 x={1037}
                 y={titleY}
                 fontSize={15}
@@ -289,10 +296,17 @@ export function AdfLoopDiagram({
                 fontWeight={500}
               >
                 {stage.title}
-              </DiagramText>
-              <DiagramText x={1037} y={bodyY} fontSize={12.5} fill={layout.bodyFill}>
+              </StageText>
+              <StageText
+                x={1037}
+                y={bodyY}
+                width={286}
+                lineHeight={19}
+                fontSize={12.5}
+                fill={layout.bodyFill}
+              >
                 {stage.body}
-              </DiagramText>
+              </StageText>
             </g>
           );
         })}

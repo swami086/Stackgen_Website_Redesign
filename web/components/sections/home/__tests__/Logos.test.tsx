@@ -1,38 +1,46 @@
-import { render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { render, screen, within } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { Logos } from '../Logos';
 import home from '@/content/home';
-import { CUSTOMER_LOGOS } from '@/content/shared';
-
-vi.mock('next/image', () => ({
-  default: ({
-    alt,
-    width,
-    height,
-    src,
-  }: {
-    alt: string;
-    width: number;
-    height: number;
-    src: string;
-  }) => <img alt={alt} width={width} height={height} src={src} />,
-}));
+import { CUSTOMER_WORDMARKS } from '@/content/shared';
 
 describe('Home Logos', () => {
-  it('renders every customer logo with an accessible name', () => {
+  it('renders the eight canvas wordmarks as text', () => {
     render(<Logos content={home.logos} />);
-    for (const logo of CUSTOMER_LOGOS) {
-      expect(screen.getByAltText(logo.name)).toBeInTheDocument();
+    const items = screen.getAllByRole('listitem');
+    expect(items).toHaveLength(CUSTOMER_WORDMARKS.length);
+    for (const name of CUSTOMER_WORDMARKS) {
+      expect(screen.getByText(name)).toBeInTheDocument();
     }
   });
 
-  it('renders exactly twelve logos', () => {
+  it('uses no images, so nothing can disappear against the dark strip', () => {
+    const { container } = render(<Logos content={home.logos} />);
+    expect(container.querySelectorAll('img')).toHaveLength(0);
+  });
+
+  it('names the remaining customers in the note line', () => {
     render(<Logos content={home.logos} />);
-    expect(screen.getAllByRole('img')).toHaveLength(12);
+    expect(screen.getByText(home.logos.note)).toBeInTheDocument();
+  });
+
+  it('renders the credentials line', () => {
+    render(<Logos content={home.logos} />);
+    expect(screen.getByText(home.logos.heading)).toBeInTheDocument();
   });
 
   it('is no longer a stub', () => {
     const { container } = render(<Logos content={home.logos} />);
     expect(container.querySelector('[data-stub]')).toBeNull();
+  });
+
+  it('keeps every wordmark in the tertiary token, never a raw hex', () => {
+    render(<Logos content={home.logos} />);
+    const list = screen.getAllByRole('listitem');
+    for (const item of list) {
+      expect(item.className).toContain('text-text-tertiary');
+      expect(item.className).not.toMatch(/#[0-9a-f]{3,6}/i);
+    }
+    expect(within(list[0]).queryByRole('img')).toBeNull();
   });
 });

@@ -70,9 +70,9 @@ export function ChangeSurface({
         </div>
       </header>
 
-      <div className="flex min-h-[420px]">
+      <div className="flex min-h-[420px] max-[1023px]:min-h-0 max-[1023px]:flex-col">
         <div
-          className="w-[340px] shrink-0 border-r border-border-hairline p-5"
+          className="w-[340px] shrink-0 border-r border-border-hairline p-5 max-[1023px]:w-auto max-[1023px]:border-r-0 max-[1023px]:border-b"
           data-part="intent"
         >
           <p className="font-mono text-[10.5px] uppercase text-text-tertiary">
@@ -83,7 +83,7 @@ export function ChangeSurface({
           </p>
         </div>
 
-        <div className="w-[538px] shrink-0 border-r border-border-hairline p-5">
+        <div className="w-[538px] shrink-0 border-r border-border-hairline p-5 max-[1023px]:w-auto max-[1023px]:border-r-0 max-[1023px]:border-b">
           <div className="mb-4 flex items-center gap-3">
             <p className="font-mono text-[10.5px] uppercase text-text-tertiary">
               Generated plan

@@ -23,7 +23,7 @@ export function AidenOsLinks({ content }: SectionProps<AidenOsLinksContent>) {
         />
         <nav
           aria-label={content.productLinks.heading}
-          className="mx-auto mt-4 max-w-[1240px] pl-[100px]"
+          className="mx-auto mt-4 max-w-[1240px] pl-[100px] max-[767px]:pl-0"
         >
           <ul className="flex flex-col gap-2">
             {content.productLinks.products.map((product) => (

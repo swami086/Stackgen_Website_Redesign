@@ -1,5 +1,6 @@
 import home from '@/content/home';
 import type { DiagramProps } from '@/lib/types';
+import { DiagramText } from './DiagramText';
 
 type FactoryStep = (typeof home.factoryProcess.steps)[number];
 
@@ -14,7 +15,15 @@ const STEPS_ORIGIN = { x: 100, y: -2548 + Y_OFFSET };
 const STEP = { width: 292, height: 236, rx: 10 };
 const STEP_X = [0, 316, 632, 948] as const;
 const CONNECTOR_X = [292, 608, 924] as const;
-const INNER = { x: 18, numberY: 18, titleY: 47, dividerY: 79, bodyY: 94, dividerW: 256 };
+const INNER = {
+  x: 18,
+  numberY: 18,
+  titleY: 47,
+  dividerY: 79,
+  bodyY: 94,
+  dividerW: 256,
+  bodyW: 256,
+};
 const CONNECTOR_HAIRLINE_Y = 118;
 
 const FILL: Record<string, string> = {
@@ -105,16 +114,17 @@ export function FactoryProcessDiagram({
                 fill={FILL['$accent-dim']}
                 aria-hidden="true"
               />
-              <text
+              <DiagramText
                 x={x + INNER.x}
                 y={y + INNER.bodyY}
+                width={INNER.bodyW}
+                lineHeight={20}
                 fill={FILL['$text-secondary']}
                 fontSize={13}
-                fontFamily="var(--font-sans)"
                 dominantBaseline="hanging"
               >
                 {step.body}
-              </text>
+              </DiagramText>
             </g>
           );
         })}

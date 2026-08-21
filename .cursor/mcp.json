@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "pencil-docker": {
+      "command": "/Users/swami/.cursor/bin/pencil-mcp-docker-launcher.sh",
+      "args": [],
+      "env": {
+        "PENCIL_PROJECT_SLUG": "stackgen_website_redesign"
+      }
+    },
+    "openmemory": {
+      "url": "http://100.71.169.23:8771/mcp/cursor/sse/StackgenWebsite",
+      "alwaysAllow": [
+        "add_memories",
+        "search_memory",
+        "list_memories",
+        "delete_all_memories"
+      ]
+    },
+    "webflow": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.webflow.com/mcp"]
+    },
+    "sybill": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.sybill.ai/mcp"]
+    },
+    "figma-desktop": {
+      "url": "http://127.0.0.1:3845/mcp"
+    }
+  }
+}

@@ -6,7 +6,7 @@ export function ProductMetrics({ content }: SectionProps<Metric[]>) {
   return (
     <section aria-label="Product metrics" className="bg-bg-raised px-pad-x py-10">
       <Reveal>
-        <ul className="mx-auto flex max-w-[1240px] gap-6">
+        <ul className="mx-auto grid max-w-[1240px] grid-cols-2 gap-6 min-[768px]:flex">
           {content.map((metric) => (
             <li key={metric.label} className="min-w-0 flex-1 px-0 py-3">
               <MetricCell metric={metric} compact />

@@ -87,7 +87,7 @@ export function DemoForm({ className }: { className?: string }) {
           <form
             noValidate
             onSubmit={handleSubmit}
-            className="flex items-end gap-4"
+            className="flex items-end gap-4 max-[767px]:flex-col max-[767px]:items-stretch"
           >
             <div className="flex min-w-0 flex-1 flex-col gap-2">
               <label htmlFor={workEmailId} className={labelClassName}>
@@ -147,7 +147,7 @@ export function DemoForm({ className }: { className?: string }) {
 
             <button
               type="submit"
-              className="inline-flex h-10 shrink-0 items-center justify-center rounded-lg bg-accent px-[14px] text-[13.5px] font-medium tracking-[-0.01em] text-text-primary"
+              className="inline-flex h-10 shrink-0 items-center justify-center rounded-lg bg-accent px-[14px] text-[13.5px] font-medium tracking-[-0.01em] text-text-primary max-[767px]:w-full"
             >
               Request demo
             </button>

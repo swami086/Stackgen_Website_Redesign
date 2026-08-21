@@ -1,6 +1,7 @@
 import productObservability from '@/content/product-observability';
 import type { DiagramProps } from '@/lib/types';
 import mechanismObservabilityGeometry from '../../../geometry/mechanism-observability.json';
+import { DiagramText } from '../DiagramText';
 
 type GeometryNode = (typeof mechanismObservabilityGeometry.nodes)[number];
 
@@ -168,8 +169,21 @@ export function ObservabilityMechanism({
   const desc =
     'A plain-language prompt flows from live signals through correlated insight to infrastructure state and change history, giving SRE a starting point with attribution before remediation.';
 
+  // The canvas frame reserves a heading/body band that the section renders as
+  // DOM text; crop it so the diagram does not sit under a slab of empty SVG.
+  const cropTop = Math.min(corr.absY, promptStrip.absY) - 40;
+  const cropHeight =
+    Math.max(corr.absY + corr.height, handoffStrip.absY + handoffStrip.height) +
+    40 -
+    cropTop;
+
   return (
-    <svg viewBox={VIEWBOX} className={className} role="img" aria-labelledby={titleId}>
+    <svg
+      viewBox={`0 ${cropTop} 1240 ${cropHeight}`}
+      className={className}
+      role="img"
+      aria-labelledby={titleId}
+    >
       <title id={titleId}>Observability mechanism diagram</title>
       <desc>{desc}</desc>
 
@@ -299,16 +313,17 @@ export function ObservabilityMechanism({
                   {labels.title}
                 </text>
                 {bodyName && labels.body ? (
-                  <text
+                  <DiagramText
                     x={frame.absX + 18}
                     y={frame.absY + bodyY}
+                    width={frame.width - 36}
+                    lineHeight={16}
                     fill={canvasFill('#8A8F98')}
                     fontSize={12}
-                    fontFamily="var(--font-sans)"
                     dominantBaseline="hanging"
                   >
                     {labels.body}
-                  </text>
+                  </DiagramText>
                 ) : null}
               </g>
             );

@@ -1,22 +1,15 @@
-import Image from 'next/image';
-import { MonoLabel } from '@/components/primitives/MonoLabel';
 import { Reveal } from '@/components/motion/Reveal';
 import type { SectionProps } from '@/lib/types';
 import home from '@/content/home';
 
 type IntegrationsContent = typeof home.integrations;
 
-export const FEATURED_TOOL_LOGOS = [
-  { name: 'AWS', file: '/logos/tools/aws.svg', width: 24, height: 24 },
-  { name: 'Azure', file: '/logos/tools/azure.svg', width: 24, height: 24 },
-  { name: 'Google Cloud', file: '/logos/tools/googlecloud.svg', width: 24, height: 24 },
-  { name: 'Kubernetes', file: '/logos/tools/kubernetes.svg', width: 24, height: 24 },
-  { name: 'Docker', file: '/logos/tools/docker.svg', width: 24, height: 24 },
-  { name: 'Terraform', file: '/logos/tools/terraform.svg', width: 24, height: 24 },
-  { name: 'Git', file: '/logos/tools/git.svg', width: 24, height: 24 },
-  { name: 'SonarQube', file: '/logos/tools/sonarqube.svg', width: 24, height: 24 },
-] as const;
-
+/**
+ * Canvas `K1zfG` is a 1278px section: seven categories, each a 12px label plus
+ * an 18px subtitle over a row of 52px bordered tiles carrying plain text
+ * wordmarks. Brand icons are deliberately not used — monochrome vendor SVGs
+ * render as black-on-black against `--color-bg-base`.
+ */
 export function Integrations({ content, className }: SectionProps<IntegrationsContent>) {
   return (
     <section
@@ -25,34 +18,45 @@ export function Integrations({ content, className }: SectionProps<IntegrationsCo
     >
       <Reveal>
         <div className="mx-auto flex max-w-[1240px] flex-col gap-12">
-          <div className="flex max-w-[560px] flex-col gap-5">
-            <MonoLabel>{content.label}</MonoLabel>
+          {/* Canvas Header is a 52px split: heading left, deck right. */}
+          <div className="flex items-start justify-between gap-10 max-[767px]:flex-col max-[767px]:gap-5">
             <h2
               id="integrations-heading"
-              className="text-[42px] font-medium leading-[1.12] tracking-[-0.03em] text-text-primary"
+              className="max-w-[560px] text-[42px] font-medium leading-[47px] tracking-[-0.03em] text-text-primary max-[767px]:text-[32px] max-[767px]:leading-9"
             >
               {content.heading}
             </h2>
+            <p className="max-w-[600px] text-base leading-[26px] text-text-secondary max-[767px]:max-w-none">
+              {content.deck}
+            </p>
           </div>
 
-          <div className="border-t border-border-hairline">
-            <ul className="grid grid-cols-8">
-              {FEATURED_TOOL_LOGOS.map((logo) => (
-                <li
-                  key={logo.name}
-                  className="flex h-[52px] items-center justify-center border-r border-b border-border-hairline last:border-r-0"
-                >
-                  <Image
-                    src={logo.file}
-                    alt={logo.name}
-                    width={logo.width}
-                    height={logo.height}
-                    className="h-6 w-6 object-contain opacity-70"
-                  />
-                </li>
-              ))}
-            </ul>
-          </div>
+          {home.integrationCategories.map((category) => (
+            <section
+              key={category.label}
+              aria-label={category.label}
+              className="flex flex-col gap-4"
+            >
+              <div className="flex gap-4 max-[767px]:flex-col max-[767px]:gap-1">
+                <p className="w-[140px] shrink-0 text-xs leading-4 tracking-[0.04em] text-text-tertiary uppercase max-[767px]:w-auto">
+                  {category.label}
+                </p>
+                <p className="text-lg leading-[22px] tracking-[-0.01em] text-text-primary">
+                  {category.subtitle}
+                </p>
+              </div>
+              <ul className="grid grid-cols-2 border-t border-l border-border-card min-[768px]:flex">
+                {category.tools.map((tool) => (
+                  <li
+                    key={tool}
+                    className="flex h-[52px] min-w-0 items-center justify-center border-r border-b border-border-card px-2 text-center text-[13px] text-text-tertiary"
+                  >
+                    {tool}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
         </div>
       </Reveal>
     </section>

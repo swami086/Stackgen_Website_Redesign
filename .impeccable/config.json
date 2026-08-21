@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "web/components/sections/home/__tests__/Logos.test.tsx"
+        ],
+        "createdAt": "2026-08-21T02:44:06.758Z",
+        "reason": "agent: vitest next/image mock omits src by design"
+      }
+    ]
+  }
+}

@@ -1,5 +1,6 @@
 import platform from '@/content/platform';
 import type { DiagramProps } from '@/lib/types';
+import { DiagramText } from './DiagramText';
 
 type TwoPlanesContent = typeof platform.twoPlanes;
 
@@ -59,15 +60,16 @@ export function TwoPlanesDiagram({
             >
               {plane.title}
             </text>
-            <text
+            <DiagramText
               x={x}
               y={y + INNER.bodyY + 15}
+              width={520}
+              lineHeight={23}
               fill={FILL['$text-secondary']}
               fontSize={15}
-              fontFamily="var(--font-sans)"
             >
               {plane.body}
-            </text>
+            </DiagramText>
           </g>
         );
       })}

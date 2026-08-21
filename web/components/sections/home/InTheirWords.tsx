@@ -57,14 +57,14 @@ export function InTheirWords({ content, className }: SectionProps<InTheirWordsCo
     <section
       aria-labelledby="in-their-words-heading"
       className={[
-        'border-y border-border-hairline bg-bg-raised py-pad-y pl-pad-x',
+        'border-y border-border-hairline bg-bg-raised py-pad-y pl-pad-x overflow-x-hidden',
         className,
       ]
         .filter(Boolean)
         .join(' ')}
     >
       <Reveal>
-        <div className="flex max-w-[1240px] flex-col gap-12">
+        <div className="flex w-full max-w-[1240px] min-w-0 flex-col gap-12">
           <div className="flex w-full max-w-[1240px] items-end gap-20">
             <h2
               id="in-their-words-heading"
@@ -83,7 +83,7 @@ export function InTheirWords({ content, className }: SectionProps<InTheirWordsCo
             </p>
           ) : null}
 
-          <div className="flex gap-[18px] overflow-x-auto pb-1">
+          <div className="flex min-w-0 gap-[18px] overflow-x-auto pb-1">
             {content.quotes.map((quote) => (
               <QuoteCard key={`${quote.company}-${quote.role}`} quote={quote} />
             ))}

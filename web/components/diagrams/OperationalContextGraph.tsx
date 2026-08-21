@@ -1,4 +1,5 @@
 import type { DiagramProps } from '@/lib/types';
+import { DiagramText } from './DiagramText';
 import contextGraphHomeGeometry from '../../geometry/context-graph-home.json';
 import contextGraphPlatformGeometry from '../../geometry/context-graph-platform.json';
 
@@ -149,23 +150,24 @@ function HomeVariant({ titleId }: { titleId: string }) {
             <text x={16} y={38} fill="var(--color-text-primary)" fontSize={22} fontWeight={500} fontFamily="var(--font-sans)">
               {node.label}
             </text>
-            <text x={16} y={72} fill="var(--color-text-secondary)" fontSize={13.5} fontFamily="var(--font-sans)">
+            <DiagramText x={16} y={72} width={216} lineHeight={20} fill="var(--color-text-secondary)" fontSize={13.5}>
               {node.body}
-            </text>
+            </DiagramText>
           </g>
         ))}
       </g>
-      <text
+      <DiagramText
         data-part="platform-pull"
         x={HOME_PULL.x}
         y={HOME_PULL.y + 28}
+        width={900}
+        lineHeight={35}
         fill="var(--color-text-primary)"
         fontSize={26}
         fontWeight={500}
-        fontFamily="var(--font-sans)"
       >
         {HOME_PULL.text}
-      </text>
+      </DiagramText>
     </>
   );
 }
@@ -203,9 +205,9 @@ function PlatformVariant() {
           <text x={node.x + 18} y={node.y + 38} fill="var(--color-text-primary)" fontSize={21} fontWeight={500} fontFamily="var(--font-sans)">
             {node.label}
           </text>
-          <text x={node.x + 18} y={node.y + 72} fill="var(--color-text-secondary)" fontSize={13.5} fontFamily="var(--font-sans)">
+          <DiagramText x={node.x + 18} y={node.y + 72} width={244} lineHeight={20} fill="var(--color-text-secondary)" fontSize={13.5}>
             {node.body}
-          </text>
+          </DiagramText>
         </g>
       ))}
       <g data-part="ocg-hub">
@@ -213,9 +215,9 @@ function PlatformVariant() {
         <text x={hub.x + 28} y={hub.y + 48} fill="var(--color-text-primary)" fontSize={34} fontWeight={500} fontFamily="var(--font-sans)">
           {hub.title}
         </text>
-        <text x={hub.x + 28} y={hub.y + 99} fill="var(--color-text-secondary)" fontSize={15} fontFamily="var(--font-sans)">
+        <DiagramText x={hub.x + 28} y={hub.y + 99} width={324} lineHeight={23} fill="var(--color-text-secondary)" fontSize={15}>
           {hub.body}
-        </text>
+        </DiagramText>
         <text x={hub.x + 28} y={hub.y + 182} fill="var(--color-accent-text)" fontSize={13} fontWeight={500} fontFamily="var(--font-sans)">
           {hub.footnote}
         </text>

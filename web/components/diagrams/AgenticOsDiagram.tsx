@@ -1,5 +1,6 @@
 import type { DiagramProps } from '@/lib/types';
 import agenticOsGeometry from '../../geometry/agentic-os.json';
+import { DiagramText } from './DiagramText';
 
 type GeometryNode = (typeof agenticOsGeometry.nodes)[number];
 
@@ -24,8 +25,11 @@ type AgentCard = {
   width: number;
   height: number;
   promise: string;
+  promiseW: number;
   metrics: Array<{ value: string; label: string; rowY: number }>;
+  metricLabelW: number;
   capabilities: string[];
+  capabilityW: number;
   cta: string;
   ctaY: number;
 };
@@ -46,8 +50,11 @@ function parseAgentCards(): AgentCard[] {
       width: frame.width,
       height: frame.height,
       promise: '',
+      promiseW: frame.width,
       metrics: [],
+      metricLabelW: frame.width - 66,
       capabilities: [],
+      capabilityW: frame.width - 22,
       cta: '',
       ctaY: frame.height - 49,
     };
@@ -58,6 +65,13 @@ function parseAgentCards(): AgentCard[] {
 
       if (n.name === 'Promise' && n.type === 'text' && n.text) {
         card.promise = n.text;
+        card.promiseW = n.width;
+      }
+
+      // Text nodes carry an unresolved y; only container frames hold the real
+      // offset, so the CTA row must be positioned from its frame.
+      if (n.type === 'frame' && n.name === 'Card CTA') {
+        card.ctaY = n.y - frame.y;
       }
 
       if (
@@ -71,6 +85,7 @@ function parseAgentCards(): AgentCard[] {
         const value = nodes[j + 1];
         const label = nodes[j + 2];
         if (value?.name === 'Value' && label?.name === 'Label') {
+          card.metricLabelW = label.width;
           card.metrics.push({
             value: value.text ?? '',
             label: label.text ?? '',
@@ -81,11 +96,11 @@ function parseAgentCards(): AgentCard[] {
 
       if (n.name === 'Label' && n.type === 'text' && n.fontSize === 12.5 && n.x >= 22) {
         card.capabilities.push(n.text ?? '');
+        card.capabilityW = n.width;
       }
 
       if (n.name === 'Label' && n.type === 'text' && n.fill === '$accent-text') {
         card.cta = n.text ?? '';
-        card.ctaY = n.y - frame.y;
       }
     }
 
@@ -146,15 +161,16 @@ function AgentCardSvg({ card, index }: { card: AgentCard; index: number }) {
       >
         {card.name}
       </text>
-      <text
+      <DiagramText
         x={padX}
         y={55}
+        width={card.promiseW}
+        lineHeight={20}
         fill="var(--color-text-secondary)"
         fontSize={13.5}
-        fontFamily="var(--font-sans)"
       >
         {card.promise}
-      </text>
+      </DiagramText>
       <line
         x1={padX}
         y1={90}
@@ -182,29 +198,31 @@ function AgentCardSvg({ card, index }: { card: AgentCard; index: number }) {
           >
             {metric.value}
           </text>
-          <text
+          <DiagramText
             x={padX + 66}
             y={metric.rowY}
+            width={card.metricLabelW}
+            lineHeight={15}
             fill="var(--color-text-tertiary)"
             fontSize={11.5}
-            fontFamily="var(--font-sans)"
           >
             {metric.label}
-          </text>
+          </DiagramText>
         </g>
       ))}
       {card.capabilities.map((cap, i) => (
         <g key={cap} data-part="capability" data-index={i}>
           <Tick x={padX} y={246 + i * 27} />
-          <text
+          <DiagramText
             x={padX + 22}
             y={262 + i * 27}
+            width={card.capabilityW}
+            lineHeight={17}
             fill="var(--color-text-secondary)"
             fontSize={12.5}
-            fontFamily="var(--font-sans)"
           >
             {cap}
-          </text>
+          </DiagramText>
         </g>
       ))}
       <text
@@ -262,17 +280,18 @@ export function AgenticOsDiagram({
           <AgentCardSvg key={card.name} card={card} index={i} />
         ))}
       </g>
-      <text
+      <DiagramText
         data-part="band-closer"
         x={CLOSER.x}
         y={CLOSER.y + 48}
+        width={900}
+        lineHeight={34}
         fill="var(--color-text-primary)"
         fontSize={24}
         fontWeight={500}
-        fontFamily="var(--font-sans)"
       >
         {CLOSER.text}
-      </text>
+      </DiagramText>
     </svg>
   );
 }

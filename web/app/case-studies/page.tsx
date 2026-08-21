@@ -3,7 +3,7 @@ import { Nav } from '@/components/primitives/Nav';
 import { Footer } from '@/components/primitives/Footer';
 import { CaseHero } from '@/components/sections/case/CaseHero';
 import { FeaturedCases } from '@/components/sections/case/FeaturedCases';
-import { FinalCta } from '@/components/sections/home/FinalCta';
+import { FinalCtaCompact } from '@/components/sections/FinalCtaCompact';
 import caseIndex from '@/content/case-index';
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export default function CaseStudiesPage() {
       <main id="main-content">
         <CaseHero content={{ ...caseIndex.hero, label: 'PROOF' }} />
         <FeaturedCases content={caseIndex.cases} />
-        <FinalCta content={caseIndex.finalCta} />
+        <FinalCtaCompact content={caseIndex.finalCta} headingId="case-index-final-cta-heading" />
       </main>
       <Footer />
     </>

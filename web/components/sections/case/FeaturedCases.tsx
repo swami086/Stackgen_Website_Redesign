@@ -9,14 +9,14 @@ export function FeaturedCases({ content }: SectionProps<FeaturedCasesContent>) {
   return (
     <section
       aria-labelledby="featured-cases-heading"
-      className="border-y border-border-hairline bg-bg-raised px-pad-x py-pad-y"
+      className="border-y border-border-hairline bg-bg-raised px-pad-x pt-6 pb-12"
     >
       <Reveal>
-        <div className="mx-auto flex max-w-[1240px] flex-col gap-12">
+        <div className="mx-auto flex max-w-[1240px] flex-col">
           <h2 id="featured-cases-heading" className="sr-only">
             Featured cases
           </h2>
-          <ul className="grid gap-[18px] md:grid-cols-2">
+          <ul className="grid grid-cols-2 gap-8 max-[767px]:grid-cols-1">
             {content.map((item) => (
               <li key={item.slug}>
                 <Link

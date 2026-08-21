@@ -1,30 +1,46 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-base: #08090A;
-  --color-bg-raised: #0E0F11;
-  --color-surface-card: #101113;
-  --color-surface-sunken: #050506;
-  --color-border-hairline: #1F2023;
-  --color-border-card: #26272B;
-  --color-text-primary: #F7F8F8;
-  --color-text-secondary: #8A8F98;
-  --color-text-tertiary: #7E838C;
-  --color-accent: #9437FF;
-  --color-accent-text: #C9A2FF;
-  --color-accent-dim: #2A1447;
-  --color-accent-glow: #9437FF40;
-  --color-accent-subtle: #9437FF1A;
-  --color-glass-bg: #08090ACC;
-  --color-glass-border: #FFFFFF14;
-  --color-pass: #4ADE80;
-  --color-halt: #F0883E;
+  /* Grounds */
+  --color-bg-base: #F0E8E0;
+  --color-bg-raised: #E7DED4;
+  --color-panel: #181810;
+  --color-panel-raised: #202018;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* Lines */
+  --color-border-hairline: #D0C8C0;
+  --color-border-panel: #2A2820;
+
+  /* Text */
+  --color-text-primary: #181810;
+  --color-text-secondary: #6B6154;
+  --color-text-on-panel: #F0E8E0;
+  --color-text-muted-panel: #96897C;
+
+  /* Accents: fields and graphics */
+  --color-accent: #B898F8;
+  --color-accent-cyan: #A8E0F8;
+
+  /* Ground-aware pairs */
+  --color-accent-text: #6D28D9;
+  --color-action: #4C1D95;
+  --color-focus: #4C1D95;
+  --color-focus-on-panel: #B898F8;
+  --color-pass: #4ADE80;
+  --color-pass-ink: #166534;
+  --color-halt: #F0883E;
+  --color-halt-ink: #9A3412;
+  --color-info-ink: #155E75;
+
+  --font-sans: var(--font-haffer), var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 
   --spacing-pad-x: 100px;
   --spacing-pad-y: 120px;
+
+  --radius-chip: 3px;
+  --radius-card: 4px;
+  --radius-plate: 8px;
 }
 
 @layer base {
@@ -32,24 +48,38 @@
     background-color: var(--color-bg-base);
     color: var(--color-text-primary);
     -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
   }
 
   body {
     font-family: var(--font-sans);
-    min-width: 1440px;
+    min-width: 0;
+    overflow-x: hidden;
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent-text);
+    outline: 2px solid var(--color-focus);
     outline-offset: 2px;
+  }
+
+  /* Plates invert the focus ring, per spec 3.1. */
+  [data-ground="panel"] :focus-visible {
+    outline-color: var(--color-focus-on-panel);
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+@media (max-width: 767px) {
+  :root {
+    --spacing-pad-x: 20px;
+    --spacing-pad-y: 72px;
   }
+}
+
+/*
+ * Reduced motion substitutes a calm alternative rather than suppressing
+ * feedback. Components read the preference and render final state; clips hold
+ * their poster. No blanket duration override, per spec 3.6.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }

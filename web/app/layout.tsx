@@ -1,12 +1,17 @@
 import type { Metadata } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
+import { JetBrains_Mono } from 'next/font/google';
 import { MotionProvider } from '@/components/motion/MotionProvider';
 import './globals.css';
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
+const geist = localFont({
+  variable: '--font-geist',
   display: 'swap',
+  src: [
+    { path: '../public/fonts/Geist-Regular.woff2', weight: '400', style: 'normal' },
+    { path: '../public/fonts/Geist-Medium.woff2', weight: '500', style: 'normal' },
+    { path: '../public/fonts/Geist-SemiBold.woff2', weight: '600', style: 'normal' },
+  ],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -25,7 +30,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${geist.variable} ${jetbrainsMono.variable}`}>
       <body>
         <MotionProvider>{children}</MotionProvider>
       </body>

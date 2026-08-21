@@ -145,7 +145,7 @@ cd web && pnpm exec vitest run components/diagrams/__tests__/AidenOsDiagram.test
 Result:
 
 - `3` files passed
-- `17` tests passed
+- `20` tests passed
 
 ## Verification commands
 
@@ -154,6 +154,29 @@ Focused Task 10 tests:
 ```bash
 cd web && pnpm exec vitest run components/diagrams/__tests__/AidenOsDiagram.test.tsx components/diagrams/__tests__/AidenOsLinksDiagram.test.tsx components/sections/platform/__tests__/AidenOsLinks.test.tsx
 ```
+
+Result:
+
+- `3` files passed
+- `20` tests passed
+
+## Review follow-up
+
+- Re-queried Figma node `1:8708` and its missing left-side vector sublayers `1:13674` and `1:13675`.
+- Downloaded the exact vector assets to `web/public/diagram-assets/aiden-os-left-top-frame.svg` and `web/public/diagram-assets/aiden-os-left-side-frame.svg`, then mounted them as SVG `<image>` nodes on the fixed deck layout instead of recreating the frame lines by hand.
+- Restored `AidenOsLinksDiagram`'s legacy `aidenOs` and `productLinks` prop contract so compatibility is content-driven again, not import-path-only.
+- Kept the live platform section on `AidenOsDiagram`, but restored the dropped `aidenOs.body`, feature cards, and roadmap content in `AidenOsLinks.tsx` so current content is not silently discarded.
+
+Follow-up RED:
+
+- `AidenOsDiagram.test.tsx` failed because the left-side frame assets were missing.
+- `AidenOsLinksDiagram.test.tsx` failed because the thin wrapper ignored distinctive legacy props.
+
+Follow-up GREEN:
+
+- Added the exact left-side frame assets from Figma to `AidenOsDiagram.tsx`.
+- Reinstated the legacy content-driven `AidenOsLinksDiagram` implementation.
+- Added a section-level regression that fails if the live platform body, governance, and roadmap content disappear again.
 
 Project checks:
 
@@ -164,10 +187,11 @@ cd web && pnpm typecheck && pnpm test && pnpm build
 Result:
 
 - `pnpm typecheck` passed
-- `pnpm test` passed with `61` files and `254` tests green
+- `pnpm test` passed with `61` files and `257` tests green
 - `pnpm build` passed on Next.js `16.3.1`
 
 ## Concerns
 
-- The dense left binary texture frame `1:8713` overflowed Figma `get_design_context`, so the center ring was ported from an exact exported SVG asset and the surrounding binary field was recreated from the measured square/step geometry instead of per-glyph literal transcription.
+- The dense left binary texture frame `1:8713` still overflowed `get_design_context`, so the binary field remains a measured reconstruction from the source grid spacing while the surrounding frame vectors and center mark now come from exact exported assets.
+- A scoped Torbit reindex was attempted once on `/Users/swami/Documents/Stackgen_Website_Redesign/.worktrees/t10-aiden-os` and failed with DuckDB deserialization (`field id mismatch, expected: 100, got: 26117`). The branch is still validated by direct file search and the full local test/build pass.
 - `web/tsconfig.tsbuildinfo` was refreshed by verification commands. It is outside Task 10 ownership and should stay out of the commit unless explicitly requested.

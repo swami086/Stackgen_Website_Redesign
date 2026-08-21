@@ -53,6 +53,17 @@ describe('AidenOsDiagram', () => {
     expect(container.querySelector('[data-part="panel-ground"]')).not.toBeNull();
   });
 
+  it('renders the exact left-side frame assets from Figma', () => {
+    const { container } = render(<AidenOsDiagram />);
+    const imageHrefs = [...container.querySelectorAll('image')].map((node) => node.getAttribute('href'));
+
+    expect(imageHrefs).toContain('/diagram-assets/aiden-os-center.svg');
+    expect(imageHrefs).toContain('/diagram-assets/aiden-os-left-top-frame.svg');
+    expect(imageHrefs).toContain('/diagram-assets/aiden-os-left-side-frame.svg');
+    expect(container.querySelector('[data-part="visual-top-frame"]')).not.toBeNull();
+    expect(container.querySelector('[data-part="visual-left-frame"]')).not.toBeNull();
+  });
+
   it('bounds every wrapped block so translated copy cannot overflow its plate', () => {
     const { container } = render(<AidenOsDiagram />);
     const wrapped = [...container.querySelectorAll('text')].filter(

@@ -35,4 +35,15 @@ describe('AidenOsLinks', () => {
       '/product/aiden-for-sre',
     );
   });
+
+  it('renders the current roadmap and governance copy instead of dropping it', () => {
+    render(<AidenOsLinks content={content} />);
+
+    expect(screen.getByText(platform.aidenOs.body)).toBeInTheDocument();
+    expect(screen.getByText('Workflow orchestration')).toBeInTheDocument();
+    expect(screen.getByText('Financial governance')).toBeInTheDocument();
+    expect(screen.getByText(platform.aidenOs.roadmap.label)).toBeInTheDocument();
+    expect(screen.getByText(platform.aidenOs.roadmap.note)).toBeInTheDocument();
+    expect(screen.getByText(platform.aidenOs.roadmap.items[0])).toBeInTheDocument();
+  });
 });

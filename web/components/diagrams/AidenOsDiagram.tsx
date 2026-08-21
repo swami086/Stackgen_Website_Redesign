@@ -2,6 +2,8 @@ import type { DiagramProps } from '@/lib/types';
 import { DiagramText } from './DiagramText';
 
 const CENTER_ASSET = '/diagram-assets/aiden-os-center.svg';
+const LEFT_TOP_FRAME_ASSET = '/diagram-assets/aiden-os-left-top-frame.svg';
+const LEFT_SIDE_FRAME_ASSET = '/diagram-assets/aiden-os-left-side-frame.svg';
 
 const VIEW_BOX = '0 0 1920 1080';
 
@@ -26,6 +28,18 @@ const HEADER = {
 } as const;
 
 const LEFT_VISUAL = {
+  topFrame: {
+    x: -62.74758257070425,
+    y: 464.8550218032324,
+    width: 606.508056640625,
+    height: 73.64153289794922,
+  },
+  sideFrame: {
+    x: -64,
+    y: 1015.0750008510076,
+    width: 129.8968288977885,
+    height: 551.0742244279696,
+  },
   panel: { x: 1.6364569505131, y: 538.2189370082342, size: 476.8750915527344 },
   orbit: { x: 65.6364569505131, y: 538.2189370082342, size: 476.8750915527344 },
   core: {
@@ -281,6 +295,24 @@ export function AidenOsDiagram({
             height={LEFT_VISUAL.panel.size}
           />
         </clipPath>
+        <image
+          data-part="visual-top-frame"
+          href={LEFT_TOP_FRAME_ASSET}
+          x={LEFT_VISUAL.topFrame.x}
+          y={LEFT_VISUAL.topFrame.y}
+          width={LEFT_VISUAL.topFrame.width}
+          height={LEFT_VISUAL.topFrame.height}
+          preserveAspectRatio="none"
+        />
+        <image
+          data-part="visual-left-frame"
+          href={LEFT_SIDE_FRAME_ASSET}
+          x={LEFT_VISUAL.sideFrame.x}
+          y={LEFT_VISUAL.sideFrame.y}
+          width={LEFT_VISUAL.sideFrame.width}
+          height={LEFT_VISUAL.sideFrame.height}
+          preserveAspectRatio="none"
+        />
         <g data-part="visual-pattern" clipPath="url(#aiden-os-visual-clip)">
           {Array.from({ length: patternRows }).map((_, row) =>
             Array.from({ length: patternColumns }).map((__, column) => (

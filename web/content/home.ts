@@ -110,18 +110,21 @@ const home = {
     label: '01',
     heading: 'From intent to automated learning',
     steps: [
-      { title: 'Intent', body: 'State the operational outcome in plain language.' },
+      {
+        title: 'Intent',
+        body: 'State the operational problem in plain language. (e.g. "reduce SRE on-call time for infra incidents").',
+      },
       {
         title: 'Factory Spec',
-        body: 'Reviewable spec: agents, OCG data, SLOs, escalation boundaries.',
+        body: 'ADF translates intent into a reviewable spec defining agents, OCG data, SLOs, and escalation boundaries.',
       },
       {
         title: 'Factory Runtime',
-        body: 'Agents execute; novel cases escalate to humans with full context.',
+        body: 'Agents execute their configured tasks, escalating novel edge cases to humans with full context.',
       },
       {
         title: 'Factory Learning',
-        body: 'Outcomes write back to the OCG and improve the next cycle.',
+        body: 'Every cycle writes incident patterns and remediation outcomes back to the OCG, improving the system automatically.',
       },
     ],
   },

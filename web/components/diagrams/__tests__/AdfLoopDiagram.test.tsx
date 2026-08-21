@@ -10,8 +10,8 @@ describe('AdfLoopDiagram', () => {
     );
     const svg = container.querySelector('svg')!;
     expect(svg).toHaveAttribute('role', 'img');
-    const titleId = svg.getAttribute('aria-labelledby')!;
-    expect(container.querySelector(`#${titleId}`)?.textContent).toBeTruthy();
+    const labelledBy = svg.getAttribute('aria-labelledby')?.split(/\s+/) ?? [];
+    expect(container.querySelector(`#${labelledBy[0]}`)?.textContent).toBeTruthy();
   });
 
   it('describes the flow for screen readers', () => {

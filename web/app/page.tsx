@@ -6,7 +6,6 @@ import { Mechanism } from '@/components/sections/home/Mechanism';
 import { Logos } from '@/components/sections/home/Logos';
 import { Problem } from '@/components/sections/home/Problem';
 import { FactoryProcess } from '@/components/sections/home/FactoryProcess';
-import { AdfLoop } from '@/components/sections/home/AdfLoop';
 import { AgenticOs } from '@/components/sections/home/AgenticOs';
 import { OperationalContextGraphSection } from '@/components/sections/home/OperationalContextGraphSection';
 import { Integrations } from '@/components/sections/home/Integrations';
@@ -29,7 +28,6 @@ export default function HomePage() {
         <Logos content={home.logos} />
         <Problem content={home.problem} />
         <FactoryProcess content={home.factoryProcess} />
-        <AdfLoop content={home.adfLoop} />
         <AgenticOs content={home.agenticOs} />
         <OperationalContextGraphSection content={home.contextGraph} />
         <Integrations content={home.integrations} />

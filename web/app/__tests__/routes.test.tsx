@@ -16,6 +16,19 @@ describe('routes', () => {
     expect(screen.getByRole('contentinfo')).toBeInTheDocument();
   });
 
+  it('home renders the lifecycle section once without the old loop heading', () => {
+    render(<HomePage />);
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'From intent to automated learning' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole('heading', {
+        level: 2,
+        name: 'Build, Operate, observe, remediate.',
+      }),
+    ).not.toBeInTheDocument();
+  });
+
   it('coming-soon pages still offer the primary CTA', () => {
     render(<PricingPage />);
     expect(screen.getAllByRole('link', { name: 'Schedule demo' }).length).toBeGreaterThan(0);

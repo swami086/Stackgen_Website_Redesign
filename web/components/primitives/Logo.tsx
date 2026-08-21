@@ -16,7 +16,7 @@ const ICON_MARK_PATH =
 
 export function Logo({
   className,
-  variant,
+  variant = 'wordmark',
 }: {
   className?: string;
   variant?: 'wordmark' | 'mark';

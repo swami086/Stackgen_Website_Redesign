@@ -16,7 +16,7 @@ export function Nav({ className }: { className?: string }) {
         .join(' ')}
     >
       <Link href="/" aria-label="StackGen home">
-        <Logo />
+        <Logo variant="wordmark" />
       </Link>
 
       <div className="flex items-center gap-[26px]">

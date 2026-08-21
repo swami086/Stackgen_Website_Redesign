@@ -7,4 +7,14 @@ describe('Logo', () => {
     render(<Logo />);
     expect(screen.getByRole('img', { name: 'StackGen' })).toBeInTheDocument();
   });
+
+  it('renders wordmark only by default', () => {
+    const { container } = render(<Logo />);
+    expect(container.querySelectorAll('path')).toHaveLength(8);
+  });
+
+  it('renders mark only when variant is mark', () => {
+    const { container } = render(<Logo variant="mark" />);
+    expect(container.querySelectorAll('path')).toHaveLength(1);
+  });
 });

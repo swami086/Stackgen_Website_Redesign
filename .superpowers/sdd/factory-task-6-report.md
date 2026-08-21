@@ -8,6 +8,7 @@
 - Replaced `home-automation` with a clean alternate segment from the approved source manifest.
 - Adopted the verified featured-case poster into the runtime content model at `/product/greythr.webp`.
 - Normalized the sign-off/report evidence for every cleared asset and hardened tests so missing media evidence cannot pass silently.
+- Hardened the drift guards so the sign-off must stay `blocked`, must list the same 14 uncleared segments as the report, and must reject duplicate/conflicting cleared-asset stanzas.
 - Verified two real cleared clips and one real cleared poster, but the full manifest is still blocked because the remaining `14` planned clip segments still lack exact 30fps gate evidence.
 
 ## Skills and guidance read
@@ -33,6 +34,7 @@ Result:
 
 - failed before returning rows
 - shared DuckDB error: `Serialization Error: Failed to deserialize: field id mismatch, expected: 100, got: 26117`
+- follow-up review-fix attempt reproduced the same shared error
 
 ### Scoped reindex attempt
 
@@ -46,6 +48,7 @@ Result:
 
 - failed with the same shared DuckDB deserialization error
 - no manifest or definition data was readable after the reindex attempt
+- follow-up review-fix attempt reproduced the same shared error
 
 ### Fallback source inspection
 
@@ -101,6 +104,7 @@ Implemented the minimum fix:
 - switched `home.featuredCase.poster` to the typed verified shape with `src: '/product/greythr.webp'`
 - normalized `home-audit`, `home-automation`, and `greythr` evidence in both Task 6 markdown artifacts
 - hardened `clips.test.ts` so the suite now fails if `public/product` is missing or if the sign-off/report drift from the actual media facts on disk
+- hardened `clips.test.ts` so the sign-off must remain `blocked`, list the same 14 uncleared segments as the report, and reject duplicate/conflicting cleared-asset stanzas
 - kept Task 6 honestly `blocked` on the remaining `14` unsigned planned segments
 
 Verification:
@@ -228,11 +232,15 @@ Meaning:
 Focused suite:
 
 ```bash
+cd web && pnpm exec vitest run scripts/__tests__/clips.test.ts
+cd web && pnpm typecheck
 cd web && pnpm exec vitest run content/__tests__/governance.test.ts
 cd web && pnpm exec vitest run scripts/__tests__/clips.test.ts
 cd web && pnpm exec vitest run scripts/__tests__/redaction.test.ts
 ```
 
+- follow-up drift-guard verification pass: `1` file, `13` tests
+- follow-up `pnpm typecheck`: pass
 - clip/redaction verification pass: `2` files, `25` tests
 - focused governance verification pass: `1` file, `19` tests
 

@@ -66,6 +66,51 @@ function formatTimestamp(seconds: number): string {
   return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 }
 
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function countLinesWithPrefix(text: string, prefix: string): number {
+  return (text.match(new RegExp(`^${escapeRegExp(prefix)}.*$`, 'gm')) ?? []).length;
+}
+
+function expectSingleEvidenceLine(section: string, prefix: string, expectedLine: string) {
+  const count = countLinesWithPrefix(section, prefix);
+  if (count !== 1) {
+    throw new Error(`${prefix} must appear exactly once per cleared-asset section.`);
+  }
+  expect(section).toContain(expectedLine);
+}
+
+function extractSection(markdown: string, heading: string): string {
+  const marker = `### \`${heading}\``;
+  const count = countLinesWithPrefix(markdown, marker);
+  if (count !== 1) {
+    throw new Error(`${marker} must appear in exactly 1 section.`);
+  }
+  const parts = markdown.split(marker);
+  expect(parts).toHaveLength(2);
+  const tail = parts[1] ?? '';
+  const nextHeadingIndex = tail.search(/^### |^## /m);
+  return (nextHeadingIndex === -1 ? tail : tail.slice(0, nextHeadingIndex)).trim();
+}
+
+function extractUnclearedSegments(markdown: string, introLine: string): string[] {
+  const count = countLinesWithPrefix(markdown, introLine);
+  if (count !== 1) {
+    throw new Error(`${introLine} must appear exactly once.`);
+  }
+  const parts = markdown.split(introLine);
+  expect(parts).toHaveLength(2);
+  const tail = parts[1] ?? '';
+  const nextHeadingIndex = tail.search(/^## /m);
+  const block = nextHeadingIndex === -1 ? tail : tail.slice(0, nextHeadingIndex);
+  const segments = [...block.matchAll(/^\s+- `([^`]+)`$/gm)].map((match) => match[1]);
+
+  expect(new Set(segments).size).toBe(segments.length);
+  return segments;
+}
+
 function probeMedia(path: string): {
   width: number;
   height: number;
@@ -110,34 +155,44 @@ function expectClearedClipEvidence(markdown: string, clip: ClipDef) {
   const clipProbe = probeMedia(clipPath);
   const posterProbe = probeMedia(posterPath);
   const frameCount = clip.durationSeconds * 30;
+  const section = extractSection(markdown, clip.name);
 
-  expect(markdown).toContain(`### \`${clip.name}\``);
-  expect(markdown).toContain(`- source video: \`${clip.videoId}\` (\`${clip.title}\`)`);
-  expect(markdown).toContain(
+  expectSingleEvidenceLine(section, '- source video:', `- source video: \`${clip.videoId}\` (\`${clip.title}\`)`);
+  expectSingleEvidenceLine(
+    section,
+    '- timecodes:',
     `- timecodes: \`${formatTimestamp(clip.startSeconds)}-${formatTimestamp(clip.startSeconds + clip.durationSeconds)}\``,
   );
-  expect(markdown).toContain(`- frame scan result: \`${frameCount}\` frames scanned, \`0\` hits from \`findSensitive\``);
-  expect(markdown).toContain(`- dimensions / fps:`);
-  expect(markdown).toContain(`  - clip: \`${clipProbe.width}x${clipProbe.height} @ ${clipProbe.fps}fps\``);
-  expect(markdown).toContain(`  - poster: \`${posterProbe.width}x${posterProbe.height}\``);
-  expect(markdown).toContain(`- byte sizes:`);
-  expect(markdown).toContain(`  - \`${clip.name}.webm\`: \`${statSync(clipPath).size}\``);
-  expect(markdown).toContain(`  - \`${clip.name}.mp4\`: \`${statSync(mp4Path).size}\``);
-  expect(markdown).toContain(`  - \`${clip.name}.webp\`: \`${statSync(posterPath).size}\``);
+  expectSingleEvidenceLine(
+    section,
+    '- frame scan result:',
+    `- frame scan result: \`${frameCount}\` frames scanned, \`0\` hits from \`findSensitive\``,
+  );
+  expectSingleEvidenceLine(section, '- dimensions / fps:', '- dimensions / fps:');
+  expectSingleEvidenceLine(section, '  - clip:', `  - clip: \`${clipProbe.width}x${clipProbe.height} @ ${clipProbe.fps}fps\``);
+  expectSingleEvidenceLine(section, '  - poster:', `  - poster: \`${posterProbe.width}x${posterProbe.height}\``);
+  expectSingleEvidenceLine(section, '- byte sizes:', '- byte sizes:');
+  expectSingleEvidenceLine(section, `  - \`${clip.name}.webm\`:`, `  - \`${clip.name}.webm\`: \`${statSync(clipPath).size}\``);
+  expectSingleEvidenceLine(section, `  - \`${clip.name}.mp4\`:`, `  - \`${clip.name}.mp4\`: \`${statSync(mp4Path).size}\``);
+  expectSingleEvidenceLine(section, `  - \`${clip.name}.webp\`:`, `  - \`${clip.name}.webp\`: \`${statSync(posterPath).size}\``);
 }
 
 function expectPosterEvidence(markdown: string, poster: PosterDef) {
   const posterPath = join(dir, `${poster.name}.webp`);
   const posterProbe = probeMedia(posterPath);
+  const section = extractSection(markdown, poster.name);
 
-  expect(markdown).toContain(`### \`${poster.name}\``);
-  expect(markdown).toContain(`- source video: \`${poster.videoId}\` (\`${poster.title}\`)`);
-  expect(markdown).toContain(`- timecode: \`${formatTimestamp(poster.atSeconds)}\``);
-  expect(markdown).toContain(`- frame scan result: \`1\` frame scanned, \`0\` hits from \`findSensitive\``);
-  expect(markdown).toContain(`- dimensions:`);
-  expect(markdown).toContain(`  - poster: \`${posterProbe.width}x${posterProbe.height}\``);
-  expect(markdown).toContain(`- byte sizes:`);
-  expect(markdown).toContain(`  - \`${poster.name}.webp\`: \`${statSync(posterPath).size}\``);
+  expectSingleEvidenceLine(section, '- source video:', `- source video: \`${poster.videoId}\` (\`${poster.title}\`)`);
+  expectSingleEvidenceLine(section, '- timecode:', `- timecode: \`${formatTimestamp(poster.atSeconds)}\``);
+  expectSingleEvidenceLine(
+    section,
+    '- frame scan result:',
+    '- frame scan result: `1` frame scanned, `0` hits from `findSensitive`',
+  );
+  expectSingleEvidenceLine(section, '- dimensions:', '- dimensions:');
+  expectSingleEvidenceLine(section, '  - poster:', `  - poster: \`${posterProbe.width}x${posterProbe.height}\``);
+  expectSingleEvidenceLine(section, '- byte sizes:', '- byte sizes:');
+  expectSingleEvidenceLine(section, `  - \`${poster.name}.webp\`:`, `  - \`${poster.name}.webp\`: \`${statSync(posterPath).size}\``);
 }
 
 describe('clips script plan', () => {
@@ -295,5 +350,25 @@ describe('product clip budget', () => {
     for (const clipName of uncleared) {
       expect(report).toContain(`- \`${clipName}\``);
     }
+  });
+
+  it('keeps the sign-off blocked on exactly the same 14 uncleared segments as the report', () => {
+    const signoff = readMarkdown(signoffPath);
+    const report = readMarkdown(reportPath);
+
+    expect(signoff).toContain('- `blocked`');
+    expect(extractUnclearedSegments(signoff, '- Remaining planned clip segments are still unsigned:')).toEqual(
+      extractUnclearedSegments(report, '- No clearance evidence yet for these remaining planned clip segments:'),
+    );
+  });
+
+  it('rejects duplicate cleared-asset evidence stanzas before they can contradict each other', async () => {
+    const { CLIPS } = await loadClipsModule();
+    const signoff = readMarkdown(signoffPath);
+    const clip = CLIPS.find((entry) => entry.name === 'home-audit');
+
+    expect(clip).toBeDefined();
+    const duplicated = `${signoff}\n\n### \`home-audit\`\n- source video: \`i31kMgVn_Xk\` (\`Conflicting duplicate\`)`;
+    expect(() => expectClearedClipEvidence(duplicated, clip!)).toThrow(/exactly 1 section/i);
   });
 });

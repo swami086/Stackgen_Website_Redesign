@@ -37,6 +37,7 @@ The result should read as factory.ai's information architecture and editorial co
 | D10 | Clip weight budget is 3 MB per encode, prioritising fidelity. |
 | D11 | Surface mode is Persuade. Colour strategy is Committed: the iridescent field owns whole regions rather than accenting a neutral ground. |
 | D12 | Form derives from the deck alone. factory.ai contributes structure and copy discipline, never radii, colour or type. |
+| D13 | Every meaning-carrying colour is a ground-aware pair, because no single value clears both cream and plate. Status is never encoded by colour alone. |
 
 ---
 
@@ -80,32 +81,57 @@ Light-first. Sampled from the deck's own pixels, then calibrated for web contras
 | `--color-text-secondary` | `#6B6154` | Muted on cream (web-calibrated) |
 | `--color-text-on-panel` | `#F0E8E0` | Cream text on panels |
 | `--color-text-muted-panel` | `#96897C` | Deck muted, valid on panels only |
-| `--color-accent` | `#B898F8` | Violet, fills and graphics |
-| `--color-accent-cyan` | `#A8E0F8` | Cyan, fills and graphics |
-| `--color-accent-text` | `#6D28D9` | Accent text on cream |
-| `--color-pass` | `#4ADE80` | Retained |
-| `--color-halt` | `#F0883E` | Retained |
+| `--color-accent` | `#B898F8` | Violet, fields and graphics |
+| `--color-accent-cyan` | `#A8E0F8` | Cyan, fields and graphics |
+
+**Every role that carries meaning is a pair**, because no single value clears both grounds. This was verified by computation, not by eye: every dark value tested passes on cream and fails on plate, and every bright value does the reverse.
+
+| Role | On cream | Ratio | On plate | Ratio |
+|---|---|---:|---|---:|
+| Accent text | `--color-accent-text` `#6D28D9` | 5.86 | `--color-accent` `#B898F8` | 7.55 |
+| Primary action fill | `--color-action` `#4C1D95` with cream label | 9.04 | `#B898F8` with ink label | 7.55 |
+| Focus ring | `--color-focus` `#4C1D95` | 9.04 | `#B898F8` | 7.55 |
+| Success / cleared | `--color-pass-ink` `#166534` | 5.88 | `--color-pass` `#4ADE80` | 10.24 |
+| Held / escalated | `--color-halt-ink` `#9A3412` | 6.03 | `--color-halt` `#F0883E` | 7.05 |
+| Information | `--color-info-ink` `#155E75` | 5.99 | `--color-accent-cyan` `#A8E0F8` | 12.47 |
 
 The iridescent lavender to cyan to pink wash is the signature. It is a **structural field**, not a glow: it holds whole regions with its own hard edges, in the deck's diagonal geometry. It never carries meaning alone, and no text sits on it without a solid plate beneath.
 
+**The action colour is not the decorative colour.** `#4C1D95` exists so the primary action stays findable against a page where pastel violet already owns large regions. Spending the field's colour on the button would bury the CTA in its own background, which is the failure the Committed strategy invites if left unguarded.
+
+Values are recorded as hex to match the existing `@theme` block. Where a ramp is derived during implementation, derive it in OKLCH and reduce chroma near both extremes rather than holding chroma flat.
+
 ### 3.2 Contrast rules (binding)
 
-Measured against WCAG 2.2 AA.
+Computed against WCAG 2.2 AA over the whole palette, every foreground against every ground, rather than a chosen subset.
 
-| Pair | Ratio | Verdict |
-|---|---:|---|
-| Ink `#181810` on cream | 14.7:1 | Pass |
-| Muted `#6B6154` on cream | 5.0:1 | Pass |
-| Deck muted `#96897C` on cream | 2.8:1 | **Fail — never use** |
-| Violet `#B898F8` on cream | 2.0:1 | **Fail — fills only** |
-| Cyan `#A8E0F8` on cream | 1.2:1 | **Fail — fills only** |
-| Accent text `#6D28D9` on cream | 5.9:1 | Pass |
-| Cream `#F0E8E0` on panel `#181810` | 14.7:1 | Pass |
-| Deck muted `#96897C` on panel | 5.2:1 | Pass |
-| Violet `#B898F8` on panel | 7.5:1 | Pass |
-| Cyan `#A8E0F8` on panel | 12.5:1 | Pass |
+| Foreground | cream `#F0E8E0` | cream raised `#E7DED4` | plate `#181810` | plate raised `#202018` |
+|---|---:|---:|---:|---:|
+| Ink `#181810` | **14.72** | **13.42** | 1.00 | 1.09 |
+| Muted `#6B6154` | **5.00** | **4.56** | 2.94 | 2.70 |
+| On-plate `#F0E8E0` | 1.00 | 1.10 | **14.72** | **13.52** |
+| Deck muted `#96897C` | 2.81 | 2.56 | **5.24** | **4.81** |
+| Violet `#B898F8` | 1.95 | 1.78 | **7.55** | **6.93** |
+| Cyan `#A8E0F8` | 1.18 | 1.08 | **12.47** | **11.46** |
+| Accent text `#6D28D9` | **5.86** | **5.34** | 2.51 | 2.31 |
+| Pass `#4ADE80` | 1.44 | 1.31 | **10.24** | **9.41** |
+| Halt `#F0883E` | 2.09 | 1.90 | **7.05** | **6.48** |
 
-**The rule:** the deck's own muted and accent colours are valid inside dark panels and invalid on cream. On cream, use `#6B6154` for muted text and `#6D28D9` for accent text. This replaces the old accent-text constraint and is enforced by an extension of the governance test.
+Bold passes AA body text at 4.5. Everything else is barred from carrying text on that ground.
+
+**The rule:** the deck's own muted, accent and semantic colours are valid inside dark plates and invalid on cream; their cream counterparts from 3.1 are invalid on plates. A component that appears on both grounds reads its colours from the ground, never from a single global value.
+
+`#6B6154` on cream raised is 4.56, which passes but has almost no headroom. Do not darken that surface further without re-deriving the muted value.
+
+### 3.2.1 Colour vision and non-colour encoding
+
+Simulated across protanopia, deuteranopia and tritanopia rather than assumed.
+
+**Pass and halt converge under deuteranopia**, the most common deficiency: `#4ADE80` and `#F0883E` render as `#BEBD85` and `#B3B331`, a contrast of 1.15 with a luminance difference of 0.07. They are effectively the same olive.
+
+Therefore, binding: **status is never encoded by colour alone.** Every pass, halt or escalation state also carries a text label, a glyph, or a position. The existing `ChangeSurface` already satisfies this, using `+` and `-` prefixes and the written verdict rather than red and green, and that pattern is the standard for every new status surface.
+
+Violet and cyan hold up better, separated by lightness rather than hue (difference 0.24 to 0.32 across all three simulations), so they survive as a decorative pair. They still may not be the sole encoder of a data category; vary lightness, shape or label as well.
 
 ### 3.3 Typography
 
@@ -398,6 +424,8 @@ Industry vertical pages, an enterprise page, a security page, a news or articles
 4. Governance test extended to assert the contrast rules in 3.2 and the banned names in 4.5
 5. Copy audit: at least 85% of sentences in content modules are 15 words or fewer
 6. Every committed product frame and clip has a redaction sign-off recorded in the deviation log
+6a. Colour: the contrast matrix in 3.2 is regenerated against the shipped tokens and every text pair on its own ground passes 4.5, controls and focus rings pass 3.0
+6b. No status is encoded by colour alone; every pass, halt or escalation state carries a label, glyph or position as well
 7. Media budget: no clip encode exceeds 3 MB. Enforced by a check over `web/public/product/`
 8. Reduced motion: with `prefers-reduced-motion: reduce`, no clip autoplays, every poster is visible, `Reveal` content is present at final state, and no content is unreachable
 9. Autoplay correctness: every clip element carries `muted`, `playsInline`, `loop` and a `poster`

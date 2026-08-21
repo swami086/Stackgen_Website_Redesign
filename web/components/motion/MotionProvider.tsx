@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 
-// Wave 1: inert pass-through. Wave 2 hosts motion config and reduced-motion context here.
+// Reduced-motion is read per component for now, so this stays a no-op wrapper.
 export function MotionProvider({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }

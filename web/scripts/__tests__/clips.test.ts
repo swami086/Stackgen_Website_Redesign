@@ -95,6 +95,27 @@ function extractSection(markdown: string, heading: string): string {
   return (nextHeadingIndex === -1 ? tail : tail.slice(0, nextHeadingIndex)).trim();
 }
 
+function extractTopLevelSection(markdown: string, heading: string): string {
+  const marker = `## ${heading}`;
+  const count = countLinesWithPrefix(markdown, marker);
+  if (count !== 1) {
+    throw new Error(`${marker} must appear in exactly 1 section.`);
+  }
+  const parts = markdown.split(marker);
+  expect(parts).toHaveLength(2);
+  const tail = parts[1] ?? '';
+  const nextHeadingIndex = tail.search(/^## /m);
+  return (nextHeadingIndex === -1 ? tail : tail.slice(0, nextHeadingIndex)).trim();
+}
+
+function extractCanonicalStatuses(markdown: string): string[] {
+  const section = extractTopLevelSection(markdown, 'Status');
+  const statuses = [...section.matchAll(/^- `([^`]+)`$/gm)].map((match) => match[1]);
+
+  expect(statuses).toEqual(['blocked']);
+  return statuses;
+}
+
 function extractUnclearedSegments(markdown: string, introLine: string): string[] {
   const count = countLinesWithPrefix(markdown, introLine);
   if (count !== 1) {
@@ -109,6 +130,13 @@ function extractUnclearedSegments(markdown: string, introLine: string): string[]
 
   expect(new Set(segments).size).toBe(segments.length);
   return segments;
+}
+
+function expectExactUnclearedSegments(markdown: string, introLine: string, expectedSegments: string[]) {
+  const actualSegments = extractUnclearedSegments(markdown, introLine);
+
+  expect(actualSegments).toEqual(expectedSegments);
+  expect(new Set(actualSegments)).toEqual(new Set(expectedSegments));
 }
 
 function probeMedia(path: string): {
@@ -345,18 +373,31 @@ describe('product clip budget', () => {
       .map((clip) => clip.name);
 
     expect(uncleared).toHaveLength(14);
-    expect(report).toContain('- `blocked`');
+    extractCanonicalStatuses(report);
     expect(report).toContain('remaining `14` planned clip segments');
-    for (const clipName of uncleared) {
-      expect(report).toContain(`- \`${clipName}\``);
-    }
+    expectExactUnclearedSegments(
+      report,
+      '- No clearance evidence yet for these remaining planned clip segments:',
+      uncleared,
+    );
   });
 
-  it('keeps the sign-off blocked on exactly the same 14 uncleared segments as the report', () => {
+  it('keeps the sign-off blocked on exactly the same 14 uncleared segments as the report', async () => {
+    const { CLIPS } = await loadClipsModule();
     const signoff = readMarkdown(signoffPath);
     const report = readMarkdown(reportPath);
+    const uncleared = CLIPS
+      .filter((clip) => !['home-audit', 'home-automation'].includes(clip.name))
+      .map((clip) => clip.name);
 
-    expect(signoff).toContain('- `blocked`');
+    expect(uncleared).toHaveLength(14);
+    extractCanonicalStatuses(signoff);
+    extractCanonicalStatuses(report);
+    expectExactUnclearedSegments(
+      signoff,
+      '- Remaining planned clip segments are still unsigned:',
+      uncleared,
+    );
     expect(extractUnclearedSegments(signoff, '- Remaining planned clip segments are still unsigned:')).toEqual(
       extractUnclearedSegments(report, '- No clearance evidence yet for these remaining planned clip segments:'),
     );

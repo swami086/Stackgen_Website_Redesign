@@ -1,4 +1,5 @@
-// STUB
+import { TwoPlanesDiagram } from '@/components/diagrams/TwoPlanesDiagram';
+import { Reveal } from '@/components/motion/Reveal';
 import type { SectionProps } from '@/lib/types';
 import platform from '@/content/platform';
 
@@ -6,8 +7,10 @@ type TwoPlanesContent = typeof platform.twoPlanes;
 
 export function TwoPlanes({ content }: SectionProps<TwoPlanesContent>) {
   return (
-    <section aria-labelledby="two-planes-heading" data-stub="TwoPlanes">
-      <h2 id="two-planes-heading">{content.deterministic.title}</h2>
+    <section aria-label="Deterministic and agentic planes" className="bg-bg-raised px-pad-x">
+      <Reveal>
+        <TwoPlanesDiagram planes={content} className="w-full" />
+      </Reveal>
     </section>
   );
 }

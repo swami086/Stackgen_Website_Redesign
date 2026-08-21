@@ -183,9 +183,12 @@ export function ObservabilityMechanism({
       className={className}
       role="img"
       aria-labelledby={titleId}
+      data-ground="panel"
     >
       <title id={titleId}>Observability mechanism diagram</title>
       <desc>{desc}</desc>
+
+      <rect x={0} y={cropTop} width={1240} height={cropHeight} fill="var(--color-panel)" />
 
       <g data-part="correlation-panel">
         <rect

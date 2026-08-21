@@ -1,301 +1,291 @@
 import type { DiagramProps } from '@/lib/types';
 import { DiagramText } from '../DiagramText';
-import infrastructureGeometry from '../../../geometry/mechanism-infrastructure.json';
 
-type GeometryNode = (typeof infrastructureGeometry.nodes)[number];
-
-const Y0 = -Math.min(...infrastructureGeometry.nodes.map((n) => n.y));
-const VIEWBOX = infrastructureGeometry.viewBox.join(' ');
-
-function fillVar(token: string | null | undefined): string {
-  if (!token?.startsWith('$')) return 'none';
-  return `var(--color-${token.slice(1)})`;
-}
-
-function fontVar(token: string | null | undefined): string {
-  if (token === '$font-mono') return 'var(--font-mono)';
-  return 'var(--font-sans)';
-}
-
-function absPositions(nodes: GeometryNode[]): Array<{ x: number; y: number }> {
-  const pos: Array<{ x: number; y: number }> = [{ x: 0, y: 0 }];
-  const stack = [0];
-  for (let i = 1; i < nodes.length; i++) {
-    const n = nodes[i]!;
-    while (stack.length > (n.depth ?? 0)) stack.pop();
-    const parent = pos[stack[stack.length - 1]!]!;
-    pos[i] = {
-      x: parent.x + n.x,
-      y: (n.depth ?? 0) === 0 ? n.y : parent.y + n.y + Y0,
-    };
-    stack.push(i);
-  }
-  return pos;
-}
-
-function frameChildren(nodes: GeometryNode[], frameId: string): GeometryNode[] {
-  const idx = nodes.findIndex((n) => n.id === frameId);
-  if (idx < 0) return [];
-  const frame = nodes[idx]!;
-  const out: GeometryNode[] = [];
-  for (let j = idx + 1; j < nodes.length; j++) {
-    const n = nodes[j]!;
-    if ((n.depth ?? 0) <= (frame.depth ?? 0)) break;
-    out.push(n);
-  }
-  return out;
-}
-
-type Callout = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  label: string;
-  detail: string;
-};
-
-type PipelineStep = {
-  y: number;
-  borderTop: boolean;
-  tag: string;
-  tagWidth: number;
-  title: string;
-  detail: string;
-  dotFill: string;
-  isLast: boolean;
-};
-
-function parseLayout() {
-  const nodes = infrastructureGeometry.nodes;
-  const pos = absPositions(nodes);
-
-  const calloutFrame = nodes.find((n) => n.name === 'Pipeline Callouts')!;
-  const calloutCards = frameChildren(nodes, calloutFrame.id!).filter((n) => n.type === 'frame');
-
-  const callouts: Callout[] = calloutCards.map((card) => {
-    const cardIdx = nodes.indexOf(card);
-    const cardPos = pos[cardIdx]!;
-    const texts = frameChildren(nodes, card.id!).filter((n) => n.type === 'text');
-    return {
-      x: cardPos.x,
-      y: cardPos.y,
-      width: card.width,
-      height: card.height,
-      label: texts.find((n) => n.name?.includes('Label'))?.text ?? '',
-      detail: texts.find((n) => n.name?.includes('Detail'))?.text ?? '',
-    };
-  });
-
-  const sequence = nodes.find((n) => n.name === 'Pipeline Sequence')!;
-  const sequenceIdx = nodes.indexOf(sequence);
-  const sequencePos = pos[sequenceIdx]!;
-
-  const rowFrames = frameChildren(nodes, sequence.id!).filter((n) => n.name?.endsWith(' Row'));
-  const steps: PipelineStep[] = rowFrames.map((row, i) => {
-    const rowIdx = nodes.indexOf(row);
-    const rowPos = pos[rowIdx]!;
-    const children = frameChildren(nodes, row.id!);
-    const tagFrame = children.find((n) => n.name?.includes(' Tag') && n.type === 'frame');
-    const tagLabel = children.find((n) => n.name?.includes('Tag Label'));
-    const title = children.find((n) => n.name?.includes(' Title'));
-    const detail = children.find((n) => n.name?.includes(' Detail'));
-    const dot = children.find((n) => n.name?.includes(' Dot'));
-    const hasLine = children.some((n) => n.name?.includes(' Line'));
-
-    return {
-      y: rowPos.y,
-      borderTop: typeof row.strokeWidth === 'object' && row.strokeWidth !== null,
-      tag: tagLabel?.text ?? '',
-      tagWidth: tagFrame?.width ?? 80,
-      title: title?.text ?? '',
-      detail: detail?.text ?? '',
-      dotFill: dot?.fill ?? '$accent',
-      isLast: !hasLine,
-    };
-  });
-
-  const footnoteNode = nodes.find((n) => n.name === 'Footnote')!;
-  const footnoteIdx = nodes.indexOf(footnoteNode);
-  const footnotePos = pos[footnoteIdx]!;
-
-  return {
-    callouts,
-    sequence: {
-      x: sequencePos.x,
-      y: sequencePos.y,
-      width: sequence.width,
-      height: sequence.height,
-      rx: sequence.cornerRadius ?? 24,
-    },
-    steps,
-    footnote: {
-      x: footnotePos.x,
-      y: footnotePos.y,
-      text: footnoteNode.text ?? '',
-    },
-  };
-}
-
-const LAYOUT = parseLayout();
-
-// The canvas mechanism frame reserves a band for its own heading and body. The
-// section renders those as real DOM text instead, so crop the band out rather
-// than shipping ~200px of empty SVG above the first callout.
-const CROP_PAD = 40;
-const CROP_TOP = Math.min(...LAYOUT.callouts.map((c) => c.y)) - CROP_PAD;
-const CROP_HEIGHT = LAYOUT.footnote.y + 19 + CROP_PAD - CROP_TOP;
-const CROPPED_VIEWBOX = `0 ${CROP_TOP} 1240 ${CROP_HEIGHT}`;
-
+const SOURCE_FRAME = { x: 66, y: 236, width: 1787, height: 781 } as const;
+const VIEWBOX = `${SOURCE_FRAME.x} ${SOURCE_FRAME.y} ${SOURCE_FRAME.width} ${SOURCE_FRAME.height}`;
 const DESC =
-  'Six steps run top to bottom: plain-language intent, Factory Spec assembly, policy-checked plan review, bounded apply, post-change watch, and threshold rollback. Intent becomes infrastructure change only inside the policy boundary you configured.';
+  'Aiden for Infrastructure shows a policy-bounded migration map across AWS, Azure, and OCI, three supporting callouts, and a timeline-compression card. The diagram highlights IaC translation, performance baselines, threshold rollbacks, and guarded movement through the migration pipeline.';
 
-function PipelineStepRow({ step, index }: { step: PipelineStep; index: number }) {
-  const rowX = LAYOUT.sequence.x + 28;
+const PANEL = 'var(--color-panel)';
+const PANEL_RAISED = 'var(--color-panel-raised)';
+const PANEL_TEXT = 'var(--color-text-on-panel)';
+const PANEL_MUTED = 'var(--color-text-muted-panel)';
+const BORDER = 'var(--color-border-panel)';
+const HAIRLINE = 'var(--color-border-hairline)';
+const ACCENT = 'var(--color-accent)';
+const CYAN = 'var(--color-accent-cyan)';
 
-  return (
-    <g data-part="step" data-index={index} transform={`translate(${rowX} ${step.y})`}>
-      {step.borderTop ? (
-        <line
-          x1={0}
-          y1={0}
-          x2={984}
-          y2={0}
-          stroke={fillVar('$border-hairline')}
-          aria-hidden="true"
-        />
-      ) : null}
+const CALLOUTS = [
+  {
+    x: 1236,
+    y: 277,
+    label: 'IaC Translation',
+    body: 'Automatically translates IaC configurations for AWS to OCI.',
+  },
+  {
+    x: 1570,
+    y: 282,
+    label: 'Performance Baselines',
+    body: 'Captures baseline metrics prior to execution.',
+  },
+  {
+    x: 1236,
+    y: 485,
+    label: 'Threshold Rollbacks',
+    body: 'Instantly triggers rollback if safety thresholds are breached.',
+  },
+] as const;
 
-      <g data-part="step-rail" aria-hidden="true">
-        <rect x={9} y={18} width={10} height={10} rx={999} fill={fillVar(step.dotFill)} />
-        {!step.isLast ? (
-          <rect x={13} y={36} width={2} height={74} rx={999} fill={fillVar('$border-card')} />
-        ) : null}
-      </g>
-
-      <g data-part="step-content">
-        <rect
-          x={46}
-          y={18}
-          width={step.tagWidth}
-          height={26}
-          rx={999}
-          fill={fillVar('$accent-dim')}
-        />
-        <text
-          x={56}
-          y={24}
-          fill={fillVar('$accent-text')}
-          fontSize={10.5}
-          fontWeight={500}
-          fontFamily={fontVar('$font-mono')}
-          dominantBaseline="hanging"
-        >
-          {step.tag}
-        </text>
-        <text
-          x={46}
-          y={52}
-          fill={fillVar('$text-primary')}
-          fontSize={24}
-          fontWeight={500}
-          fontFamily={fontVar('$font-sans')}
-          dominantBaseline="hanging"
-        >
-          {step.title}
-        </text>
-        <text
-          x={46}
-          y={89}
-          fill={fillVar('$text-secondary')}
-          fontSize={14}
-          fontFamily={fontVar('$font-sans')}
-          dominantBaseline="hanging"
-        >
-          {step.detail}
-        </text>
-      </g>
-    </g>
-  );
-}
+const NODES = [
+  { x: 322.881, y: 343.557, w: 130.529, h: 142.016, label: 'AWS', fill: '#FFB74D' },
+  { x: 218.459, y: 666.224, w: 123.22, h: 142.016, label: 'Azure', fill: '#4EA7FF' },
+  { x: 619.447, y: 488.705, w: 124.264, h: 144.105, label: 'OCI', fill: '#F33' },
+] as const;
 
 export function InfrastructureMechanism({
   className,
   titleId = 'infrastructure-mechanism-title',
 }: DiagramProps) {
-  const { callouts, sequence, steps, footnote } = LAYOUT;
-
   return (
-    <svg viewBox={CROPPED_VIEWBOX} className={className} role="img" aria-labelledby={titleId}>
+    <svg
+      viewBox={VIEWBOX}
+      className={className}
+      role="img"
+      aria-labelledby={titleId}
+      data-ground="panel"
+    >
       <title id={titleId}>Infrastructure mechanism diagram</title>
       <desc>{DESC}</desc>
 
-      <g data-part="callouts-row">
-        {callouts.map((callout, i) => (
-          <g key={callout.label} data-part="callout" data-index={i}>
+      <rect
+        x={SOURCE_FRAME.x}
+        y={SOURCE_FRAME.y}
+        width={SOURCE_FRAME.width}
+        height={SOURCE_FRAME.height}
+        fill={PANEL}
+      />
+
+      <g data-part="migration-map">
+        <rect x={66} y={236} width={779} height={639.072} rx={2} fill="none" stroke={BORDER} />
+
+        <path
+          d="M66 369 H147 L218.459 414.5"
+          fill="none"
+          stroke={BORDER}
+          strokeWidth={1.4}
+        />
+        <path
+          d="M66 463 H149 L218.459 559 H619.447"
+          fill="none"
+          stroke={BORDER}
+          strokeWidth={1.4}
+        />
+        <path
+          d="M66 635 H160 L218.459 590"
+          fill="none"
+          stroke={BORDER}
+          strokeWidth={1.4}
+        />
+        <path
+          d="M66 721 H175 L218.459 699"
+          fill="none"
+          stroke={BORDER}
+          strokeWidth={1.4}
+        />
+        <path
+          d="M453.41 414.565 H619.447"
+          fill="none"
+          stroke={BORDER}
+          strokeWidth={1.4}
+        />
+        <path
+          d="M341.679 737.232 H619.447"
+          fill="none"
+          stroke={BORDER}
+          strokeWidth={1.4}
+        />
+        <path
+          d="M453.41 414.565 L619.447 560.758"
+          fill="none"
+          stroke={BORDER}
+          strokeWidth={1.4}
+        />
+
+        {NODES.map((node, index) => (
+          <g key={node.label} data-part="cloud-node" data-index={index}>
             <rect
-              x={callout.x}
-              y={callout.y}
-              width={callout.width}
-              height={callout.height}
-              rx={16}
-              fill={fillVar('$surface-card')}
-              stroke={fillVar('$border-card')}
-              strokeWidth={1}
+              x={node.x}
+              y={node.y}
+              width={node.w}
+              height={node.h}
+              rx={10}
+              fill={PANEL_RAISED}
+              stroke={BORDER}
             />
             <text
-              x={callout.x + 18}
-              y={callout.y + 18}
-              fill={fillVar('$accent-text')}
-              fontSize={11}
-              fontWeight={500}
-              fontFamily={fontVar('$font-mono')}
+              x={node.x + node.w / 2}
+              y={node.y + node.h / 2}
+              fill={node.fill}
+              fontSize={28}
+              fontWeight={600}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fontFamily="var(--font-sans)"
+            >
+              {node.label}
+            </text>
+          </g>
+        ))}
+
+        <circle cx={194.236} cy={457.508} r={7.79} fill={ACCENT} data-part="junction" />
+        <circle cx={316.793} cy={426.393} r={9.109} fill={PANEL_TEXT} data-part="junction" />
+        <circle cx={513.107} cy={570.496} r={9.109} fill={ACCENT} data-part="junction" />
+        <circle cx={522.863} cy={569.451} r={9.109} fill={PANEL_TEXT} data-part="junction" />
+        <circle cx={114.473} cy={571.537} r={7.79} fill={PANEL_TEXT} data-part="junction" />
+        <circle cx={121.808} cy={749.061} r={9.109} fill={PANEL_TEXT} data-part="junction" />
+
+        <rect x={117.622} y={304.648} width={24.16} height={22.702} rx={1.044} fill={ACCENT} opacity={0.9} />
+        <rect x={183.088} y={449.711} width={14.44} height={13.865} rx={1.044} fill={ACCENT} opacity={0.9} />
+        <rect x={147.19} y={482.439} width={25.532} height={23.949} rx={1.044} fill="#6a6a6a" opacity={0.9} />
+        <rect x={130.792} y={714.76} width={29.285} height={5.744} rx={1.044} fill="#6a6a6a" opacity={0.9} />
+        <rect x={379.483} y={496.538} width={19.84} height={6.265} rx={1.044} fill="#6a6a6a" opacity={0.9} />
+        <rect x={667.69} y={471.997} width={19.84} height={6.265} rx={1.044} fill="#6a6a6a" opacity={0.9} />
+        <rect x={786.195} y={560.758} width={6.265} height={32.371} rx={1.044} fill="#6a6a6a" opacity={0.9} />
+
+        <text
+          x={66}
+          y={954}
+          fill={CYAN}
+          fontSize={16}
+          fontFamily="var(--font-sans)"
+          dominantBaseline="hanging"
+        >
+          Policy-Bounded Migration Pipeline
+        </text>
+        <DiagramText
+          x={66}
+          y={981}
+          width={833}
+          lineHeight={24}
+          maxLines={4}
+          fill={PANEL_MUTED}
+          fontSize={18}
+          fontFamily="var(--font-sans)"
+          dominantBaseline="hanging"
+        >
+          Automatic drift detection, continuous baseline audits, and instant performance rollbacks safeguard the integrity of live workloads in transit.
+        </DiagramText>
+      </g>
+
+      <g data-part="callouts">
+        {CALLOUTS.map((callout, index) => (
+          <g key={callout.label} data-part="callout" data-index={index}>
+            <text
+              x={callout.x}
+              y={callout.y}
+              fill={CYAN}
+              fontSize={20}
+              fontFamily="var(--font-mono)"
+              dominantBaseline="hanging"
+            >
+              {'{}'}
+            </text>
+            <text
+              x={callout.x}
+              y={callout.y + 67}
+              fill={PANEL_TEXT}
+              fontSize={24}
+              fontFamily="var(--font-sans)"
               dominantBaseline="hanging"
             >
               {callout.label}
             </text>
             <DiagramText
-              x={callout.x + 18}
-              y={callout.y + 43}
-              width={474}
-              lineHeight={22}
-              fill={fillVar('$text-secondary')}
-              fontSize={15}
-              fontFamily={fontVar('$font-sans')}
+              x={callout.x}
+              y={callout.y + 104}
+              width={index === 2 ? 310 : 277}
+              lineHeight={25}
+              maxLines={4}
+              fill={PANEL_MUTED}
+              fontSize={18}
+              fontFamily="var(--font-sans)"
               dominantBaseline="hanging"
             >
-              {callout.detail}
+              {callout.body}
             </DiagramText>
           </g>
         ))}
       </g>
 
-      <g data-part="sequence-card">
-        <rect
-          x={sequence.x}
-          y={sequence.y}
-          width={sequence.width}
-          height={sequence.height}
-          rx={sequence.rx}
-          fill={fillVar('$surface-card')}
-          stroke={fillVar('$border-hairline')}
-          strokeWidth={1}
+      <g data-part="timeline-card">
+        <rect x={1244} y={728} width={609} height={288} fill={PANEL_RAISED} stroke="none" />
+        <polygon
+          points="1426 686 1488 686 1542 1016 1426 1016"
+          fill="url(#infra-prism)"
+          opacity="0.95"
         />
-        {steps.map((step, i) => (
-          <PipelineStepRow key={step.title} step={step} index={i} />
-        ))}
+        <text
+          x={1490.136}
+          y={781.109}
+          fill={CYAN}
+          fontSize={28.96}
+          fontFamily="var(--font-sans)"
+          dominantBaseline="middle"
+        >
+          Timeline Compression
+        </text>
+        <text
+          x={1490.136}
+          y={839.109}
+          fill={CYAN}
+          fontSize={68}
+          fontWeight={500}
+          fontFamily="var(--font-sans)"
+          dominantBaseline="middle"
+        >
+          6→9
+        </text>
+        <rect x={1616.083} y={783.109} width={91} height={40} fill="none" stroke={HAIRLINE} />
+        <text
+          x={1661.583}
+          y={803.109}
+          fill={PANEL_TEXT}
+          fontSize={15.962}
+          textAnchor="middle"
+          fontFamily="var(--font-sans)"
+          dominantBaseline="middle"
+        >
+          Months
+        </text>
+        <DiagramText
+          x={1490.136}
+          y={850}
+          width={292}
+          lineHeight={24}
+          maxLines={4}
+          fill={PANEL_MUTED}
+          fontSize={18.957}
+          fontFamily="var(--font-sans)"
+          dominantBaseline="hanging"
+        >
+          AWS-to-OCI migration factory execution (versus 12-18 month industry standard).
+        </DiagramText>
       </g>
 
-      <text
-        data-part="footnote"
-        x={footnote.x}
-        y={footnote.y + 13}
-        fill={fillVar('$text-tertiary')}
-        fontSize={13}
-        fontFamily={fontVar('$font-sans')}
-      >
-        {footnote.text}
-      </text>
+      <defs>
+        <linearGradient
+          id="infra-prism"
+          x1="1426"
+          y1="686"
+          x2="1542"
+          y2="1016"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0" stopColor={PANEL_TEXT} />
+          <stop offset="0.45" stopColor={CYAN} />
+          <stop offset="1" stopColor={ACCENT} />
+        </linearGradient>
+      </defs>
     </svg>
   );
 }

@@ -1,193 +1,220 @@
 import type { DiagramProps } from '@/lib/types';
-import sreGeometry from '../../../geometry/mechanism-sre.json';
+import { DiagramText } from '../DiagramText';
 
-type GeometryNode = (typeof sreGeometry.nodes)[number];
-
-const Y0 = -Math.min(...sreGeometry.nodes.map((n) => n.y));
-const VIEWBOX = sreGeometry.viewBox.join(' ');
-
-function fillVar(token: string | null | undefined): string {
-  if (!token?.startsWith('$')) return 'none';
-  return `var(--color-${token.slice(1)})`;
-}
-
-function fontVar(token: string | null | undefined): string {
-  if (token === '$font-mono') return 'var(--font-mono)';
-  return 'var(--font-sans)';
-}
-
-function absPositions(nodes: GeometryNode[]): Array<{ x: number; y: number }> {
-  const pos: Array<{ x: number; y: number }> = [{ x: 0, y: 0 }];
-  const stack = [0];
-  for (let i = 1; i < nodes.length; i++) {
-    const n = nodes[i]!;
-    while (stack.length > (n.depth ?? 0)) stack.pop();
-    const parent = pos[stack[stack.length - 1]!]!;
-    pos[i] = {
-      x: parent.x + n.x,
-      y: (n.depth ?? 0) === 0 ? n.y : parent.y + n.y + Y0,
-    };
-    stack.push(i);
-  }
-  return pos;
-}
-
-function frameChildren(nodes: GeometryNode[], frameId: string): GeometryNode[] {
-  const idx = nodes.findIndex((n) => n.id === frameId);
-  if (idx < 0) return [];
-  const frame = nodes[idx]!;
-  const out: GeometryNode[] = [];
-  for (let j = idx + 1; j < nodes.length; j++) {
-    const n = nodes[j]!;
-    if ((n.depth ?? 0) <= (frame.depth ?? 0)) break;
-    out.push(n);
-  }
-  return out;
-}
-
-type PipelineStep = {
-  y: number;
-  borderTop: boolean;
-  tag: string;
-  tagWidth: number;
-  title: string;
-  detail: string;
-  dotFill: string;
-  isLast: boolean;
-  isRefusalBoundary: boolean;
-};
-
-function parseLayout() {
-  const nodes = sreGeometry.nodes;
-  const pos = absPositions(nodes);
-
-  const sequence = nodes.find((n) => n.name === 'Investigation Sequence')!;
-  const sequenceIdx = nodes.indexOf(sequence);
-  const sequencePos = pos[sequenceIdx]!;
-
-  const rowFrames = frameChildren(nodes, sequence.id!).filter((n) => n.name?.endsWith(' Row'));
-  const steps: PipelineStep[] = rowFrames.map((row) => {
-    const rowIdx = nodes.indexOf(row);
-    const rowPos = pos[rowIdx]!;
-    const children = frameChildren(nodes, row.id!);
-    const tagFrame = children.find((n) => n.name?.includes(' Tag') && n.type === 'frame');
-    const tagLabel = children.find((n) => n.name?.includes('Tag Label'));
-    const title = children.find((n) => n.name?.includes(' Title'));
-    const detail = children.find((n) => n.name?.includes(' Detail'));
-    const dot = children.find((n) => n.name?.includes(' Dot'));
-    const hasLine = children.some((n) => n.name?.includes(' Line'));
-
-    return {
-      y: rowPos.y,
-      borderTop: typeof row.strokeWidth === 'object' && row.strokeWidth !== null,
-      tag: tagLabel?.text ?? '',
-      tagWidth: tagFrame?.width ?? 80,
-      title: title?.text ?? '',
-      detail: detail?.text ?? '',
-      dotFill: dot?.fill ?? '$accent',
-      isLast: !hasLine,
-      isRefusalBoundary: row.name?.includes('Policy-validated') ?? false,
-    };
-  });
-
-  const footnoteNode = nodes.find((n) => n.name === 'Footnote')!;
-  const footnoteIdx = nodes.indexOf(footnoteNode);
-  const footnotePos = pos[footnoteIdx]!;
-
-  return {
-    sequence: {
-      x: sequencePos.x,
-      y: sequencePos.y,
-      width: sequence.width,
-      height: sequence.height,
-      rx: sequence.cornerRadius ?? 24,
-    },
-    steps,
-    footnote: {
-      x: footnotePos.x,
-      y: footnotePos.y,
-      text: footnoteNode.text ?? '',
-    },
-  };
-}
-
-const LAYOUT = parseLayout();
-
-// See InfrastructureMechanism: the canvas heading/body band is rendered as DOM
-// text by the section, so it is cropped out of the SVG here.
-const CROP_PAD = 40;
-const CROP_TOP = LAYOUT.sequence.y - CROP_PAD;
-const CROP_HEIGHT = LAYOUT.footnote.y + 19 + CROP_PAD - CROP_TOP;
-const CROPPED_VIEWBOX = `0 ${CROP_TOP} 1240 ${CROP_HEIGHT}`;
-
+const VIEWBOX = '66 275 1570 743';
 const DESC =
-  'Six steps run top to bottom: infra drift, P1 alert, root cause via the Operational Context Graph, remediation, policy-validated deploy at the refusal boundary, and SLO verification. Bounded autonomy is the product: refusal at the policy boundary you configured is the point, not a caveat.';
+  'Aiden for SRE shows a bounded incident ladder from Infra Drift Present through P1 Alert Fires, Root Cause Established, Remediation Deployed, and Service Restored. The refusal boundary sits at deploy, bounded autonomy is intentional, and the policy boundary is enforced while Temporal orchestrates sequencing and OPA checks each action boundary.';
 
-function PipelineStepRow({ step, index }: { step: PipelineStep; index: number }) {
-  const rowX = LAYOUT.sequence.x + 28;
-  const part = step.isRefusalBoundary ? 'refusal-boundary' : 'step';
+const PANEL = 'var(--color-panel)';
+const PANEL_RAISED = 'var(--color-panel-raised)';
+const PANEL_TEXT = 'var(--color-text-on-panel)';
+const PANEL_MUTED = 'var(--color-text-muted-panel)';
+const BORDER = 'var(--color-border-panel)';
+const HAIRLINE = 'var(--color-border-hairline)';
+const ACCENT = 'var(--color-accent)';
+const CYAN = 'var(--color-accent-cyan)';
 
+const INCIDENT_STEPS = [
+  {
+    label: 'Infra Drift Present',
+    detail: 'Autoscaling config deviates from desired state',
+  },
+  {
+    label: 'P1 Alert Fires',
+    detail: 'Memory pressure detected on dependent services',
+  },
+  {
+    label: 'Root Cause Established',
+    detail: 'Infrastructure change traced via OCG history',
+  },
+  {
+    label: 'Remediation Deployed',
+    detail: 'Fix generated, policy-validated and applied',
+  },
+  {
+    label: 'Service Restored',
+    detail: 'SLO Recovered. 13min MTTR 0 Engineers Paged.',
+  },
+] as const;
+
+const LADDER_STEPS = [
+  { tag: 'Detection', title: 'Infrawatch', detail: 'Monitors IaC drift and scores risk', refusal: false },
+  { tag: 'Observability', title: 'ChangeCorrelation', detail: 'Links drift to alert signals', refusal: false },
+  { tag: 'Root Cause', title: 'RootCause', detail: 'Queries OCG', refusal: false },
+  { tag: 'Remediation', title: 'Remediation', detail: 'Generates fix', refusal: false },
+  { tag: 'Deploy', title: 'DeployAgent', detail: 'Run pipeline', refusal: true },
+  { tag: 'Verification', title: 'Verification', detail: 'Confirms SLO recovery', refusal: false },
+] as const;
+
+function LeftIncidentColumn() {
   return (
-    <g data-part={part} data-index={index} transform={`translate(${rowX} ${step.y})`}>
-      {step.borderTop ? (
-        <line
-          x1={0}
-          y1={0}
-          x2={984}
-          y2={0}
-          stroke={fillVar('$border-hairline')}
-          aria-hidden="true"
-        />
-      ) : null}
+    <g data-part="incident-column">
+      <rect x={105} y={327} width={434} height={640} fill={PANEL_RAISED} stroke={BORDER} />
+      <rect
+        x={105}
+        y={327}
+        width={434}
+        height={640}
+        fill="none"
+        stroke="url(#sre-column-glow)"
+        strokeWidth={18}
+      />
+      <rect x={176} y={393} width={4} height={462} rx={999} fill={BORDER} />
 
-      <g data-part="step-rail" aria-hidden="true">
-        <rect x={9} y={18} width={10} height={10} rx={999} fill={fillVar(step.dotFill)} />
-        {!step.isLast ? (
-          <rect x={13} y={36} width={2} height={74} rx={999} fill={fillVar('$border-card')} />
-        ) : null}
+      {INCIDENT_STEPS.map((step, index) => {
+        const y = 393 + index * 112;
+        return (
+          <g key={step.label} data-part="incident-step" data-index={index}>
+            <rect x={148} y={y} width={60} height={60} rx={4} fill="none" stroke={HAIRLINE} />
+            <circle
+              cx={178}
+              cy={y + 30}
+              r={6}
+              fill={index === 4 ? ACCENT : index === 3 ? CYAN : PANEL_TEXT}
+            />
+            <text
+              x={243}
+              y={y}
+              fill={PANEL_TEXT}
+              fontSize={16}
+              fontFamily="var(--font-sans)"
+              dominantBaseline="hanging"
+            >
+              {step.label}
+            </text>
+            <DiagramText
+              x={243}
+              y={y + 30}
+              width={253}
+              lineHeight={16}
+              maxLines={2}
+              fill={PANEL_MUTED}
+              fontSize={12}
+              fontFamily="var(--font-sans)"
+              dominantBaseline="hanging"
+            >
+              {step.detail}
+            </DiagramText>
+          </g>
+        );
+      })}
+    </g>
+  );
+}
+
+function RightLadderColumn() {
+  return (
+    <g data-part="investigation-ladder">
+      {LADDER_STEPS.map((step, index) => {
+        const y = 275 + index * 95.6554;
+        const part = step.refusal ? 'refusal-boundary' : 'step';
+        return (
+          <g key={step.title} data-part={part} data-index={index}>
+            <path
+              d={`M678 ${y + 2} H948 L968 ${y + 17} V${y + 67} H678 Z`}
+              fill={PANEL_RAISED}
+              stroke={BORDER}
+            />
+            <text
+              x={694}
+              y={y + 17}
+              fill={PANEL_MUTED}
+              fontSize={10}
+              fontFamily="var(--font-sans)"
+              dominantBaseline="hanging"
+            >
+              {step.tag}
+            </text>
+            <text
+              x={694}
+              y={y + 42}
+              fill={PANEL_TEXT}
+              fontSize={12}
+              fontFamily="var(--font-sans)"
+              dominantBaseline="hanging"
+            >
+              {step.title}
+            </text>
+            <DiagramText
+              x={694}
+              y={y + 56}
+              width={189}
+              lineHeight={11}
+              maxLines={2}
+              fill={PANEL_MUTED}
+              fontSize={9}
+              fontFamily="var(--font-sans)"
+              dominantBaseline="hanging"
+            >
+              {step.detail}
+            </DiagramText>
+            <rect x={917} y={y + 39} width={33} height={33} rx={4} fill="none" stroke={HAIRLINE} />
+            {index < LADDER_STEPS.length - 1 ? (
+              <>
+                <circle cx={814} cy={y + 90} r={7} fill={PANEL} stroke={BORDER} />
+                <rect x={813} y={y + 97} width={2} height={28} rx={999} fill={BORDER} />
+              </>
+            ) : null}
+          </g>
+        );
+      })}
+
+      <g data-part="ocg-card">
+        <rect x={678} y={850} width={290} height={69} fill={PANEL_RAISED} stroke={BORDER} />
+        <text
+          x={694}
+          y={865}
+          fill={PANEL_TEXT}
+          fontSize={12}
+          fontFamily="var(--font-sans)"
+          dominantBaseline="hanging"
+        >
+          OCG - Operational Context Graph
+        </text>
+        <DiagramText
+          x={694}
+          y={887}
+          width={189}
+          lineHeight={11}
+          maxLines={1}
+          fill={PANEL_MUTED}
+          fontSize={9}
+          fontFamily="var(--font-sans)"
+          dominantBaseline="hanging"
+        >
+          Shared memory across all agents
+        </DiagramText>
       </g>
 
-      <g data-part="step-content">
-        <rect
-          x={46}
-          y={18}
-          width={step.tagWidth}
-          height={26}
-          rx={999}
-          fill={fillVar('$accent-dim')}
-        />
-        <text
-          x={56}
-          y={24}
-          fill={fillVar('$accent-text')}
-          fontSize={10.5}
-          fontWeight={500}
-          fontFamily={fontVar('$font-mono')}
+      <g data-part="policy-footer">
+        <rect x={678} y={930} width={288} height={86} fill={PANEL_RAISED} stroke={BORDER} />
+        <line x1={822} y1={930} x2={822} y2={1016} stroke={BORDER} />
+        <DiagramText
+          x={694}
+          y={960}
+          width={130}
+          lineHeight={10}
+          maxLines={2}
+          fill={PANEL_MUTED}
+          fontSize={9}
+          fontFamily="var(--font-sans)"
           dominantBaseline="hanging"
         >
-          {step.tag}
-        </text>
-        <text
-          x={46}
-          y={52}
-          fill={fillVar('$text-primary')}
-          fontSize={24}
-          fontWeight={500}
-          fontFamily={fontVar('$font-sans')}
+          Temporal orchestrates sequencing
+        </DiagramText>
+        <DiagramText
+          x={832}
+          y={959}
+          width={119}
+          lineHeight={10}
+          maxLines={3}
+          fill={PANEL_MUTED}
+          fontSize={7.5}
+          fontFamily="var(--font-sans)"
           dominantBaseline="hanging"
         >
-          {step.title}
-        </text>
-        <text
-          x={46}
-          y={89}
-          fill={fillVar('$text-secondary')}
-          fontSize={14}
-          fontFamily={fontVar('$font-sans')}
-          dominantBaseline="hanging"
-        >
-          {step.detail}
-        </text>
+          OPA enforces policy at each action boundary
+        </DiagramText>
       </g>
     </g>
   );
@@ -197,39 +224,44 @@ export function SreMechanism({
   className,
   titleId = 'sre-mechanism-title',
 }: DiagramProps) {
-  const { sequence, steps, footnote } = LAYOUT;
-
   return (
-    <svg viewBox={CROPPED_VIEWBOX} className={className} role="img" aria-labelledby={titleId}>
+    <svg
+      viewBox={VIEWBOX}
+      className={className}
+      role="img"
+      aria-labelledby={titleId}
+      data-ground="panel"
+    >
       <title id={titleId}>SRE incident recovery mechanism</title>
       <desc>{DESC}</desc>
 
-      <g data-part="sequence-card">
-        <rect
-          x={sequence.x}
-          y={sequence.y}
-          width={sequence.width}
-          height={sequence.height}
-          rx={sequence.rx}
-          fill={fillVar('$surface-card')}
-          stroke={fillVar('$border-hairline')}
-          strokeWidth={1}
-        />
-        {steps.map((step, i) => (
-          <PipelineStepRow key={step.title} step={step} index={i} />
-        ))}
+      <rect x={66} y={275} width={1570} height={743} fill={PANEL} />
+
+      <LeftIncidentColumn />
+      <RightLadderColumn />
+
+      <g data-part="product-lockup">
+        <rect x={1244} y={881} width={392} height={135} fill="none" stroke={HAIRLINE} />
+        <rect x={1244} y={933} width={98} height={83} fill={ACCENT} />
+        <text
+          x={1376}
+          y={975}
+          fill={PANEL_TEXT}
+          fontSize={20}
+          fontFamily="var(--font-sans)"
+          dominantBaseline="middle"
+        >
+          Aiden for SRE
+        </text>
       </g>
 
-      <text
-        data-part="footnote"
-        x={footnote.x}
-        y={footnote.y + 13}
-        fill={fillVar('$text-tertiary')}
-        fontSize={13}
-        fontFamily={fontVar('$font-sans')}
-      >
-        {footnote.text}
-      </text>
+      <defs>
+        <linearGradient id="sre-column-glow" x1="105" y1="967" x2="539" y2="327" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor={CYAN} />
+          <stop offset="0.55" stopColor="#b69df9" />
+          <stop offset="1" stopColor="#f3f0ff" />
+        </linearGradient>
+      </defs>
     </svg>
   );
 }

@@ -20,6 +20,20 @@ describe('Marquee', () => {
     expect(container.querySelector('[data-part="track"]')?.getAttribute('data-animated')).toBe('false');
   });
 
+  it('renders a fully readable static list under reduced motion', () => {
+    const items = ['AWS', 'Azure', 'Google Cloud', 'Kubernetes', 'Terraform', 'Docker'];
+    const { container } = render(<Marquee items={items} label="Clouds" />);
+
+    expect(container.querySelector('[data-part="viewport"]')).toBeNull();
+
+    const lists = container.querySelectorAll('[data-part="list"]');
+    expect(lists).toHaveLength(1);
+
+    for (const item of items) {
+      expect(screen.getByText(item)).toBeInTheDocument();
+    }
+  });
+
   it('duplicates the list into a masked animated lane for seamless looping', () => {
     setReducedMotion(false);
     const { container } = render(<Marquee items={['AWS', 'Azure']} label="Clouds" />);

@@ -282,3 +282,58 @@ Finished TypeScript in 259ms ...
 
 - `Marquee` now renders a masked viewport plus a duplicated hidden track on the animated path, so the existing `translateX(-50%)` loop can wrap cleanly without a visible snap.
 - Reduced-motion users still get a single, still list with no duplicate announcements.
+
+## Remaining important finding fix
+
+- Scope:
+  - Fixed the reduced-motion fallback in `web/components/primitives/Marquee.tsx`.
+  - Added a focused reduced-motion regression test in `web/components/primitives/__tests__/Marquee.test.tsx`.
+  - Kept the public `Marquee({ items, label })` API unchanged, preserved the animated duplicate path for normal motion, and kept the duplicate hidden from assistive tech.
+
+### Red
+
+```bash
+cd web && pnpm exec vitest run components/primitives/__tests__/Marquee.test.tsx
+```
+
+```text
+ RUN  v4.1.11 /Users/swami/Documents/Stackgen_Website_Redesign/web
+
+ ❯ components/primitives/__tests__/Marquee.test.tsx (4 tests | 1 failed) 68ms
+     × renders a fully readable static list under reduced motion 5ms
+
+ FAIL  components/primitives/__tests__/Marquee.test.tsx > Marquee > renders a fully readable static list under reduced motion
+ AssertionError: expected <div data-part="viewport" …(2)>…(1)</div> to be null
+```
+
+### Green
+
+```bash
+cd web && pnpm exec vitest run components/primitives/__tests__/Marquee.test.tsx
+```
+
+```text
+ RUN  v4.1.11 /Users/swami/Documents/Stackgen_Website_Redesign/web
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+```
+
+### Requested verification
+
+```bash
+cd web && pnpm exec vitest run components/primitives/__tests__/Marquee.test.tsx && pnpm exec vitest run components/primitives && pnpm typecheck && pnpm test && pnpm build
+```
+
+```text
+Marquee test:     1 file passed, 4 tests passed
+Primitive tests:  12 files passed, 24 tests passed
+Typecheck:        passed
+Full test:        59 files passed, 231 tests passed
+Build:            Next.js production build passed
+```
+
+### Outcome
+
+- Reduced-motion now renders a single unmasked list outside the overflow-hidden viewport, so trailing items remain fully readable instead of being clipped in a horizontal lane.
+- Normal motion still uses the masked viewport plus duplicated `aria-hidden` list for seamless looping, preserving the accessible label on the primary list only.

@@ -4,8 +4,7 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
-  useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import { STORAGE_KEY, type Theme } from "@/lib/theme";
@@ -18,6 +17,16 @@ type ThemeContextValue = {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
+const THEME_CHANGE_EVENT = "stackgen-theme-change";
+
+function validateTheme(value: string | null | undefined): Theme {
+  return value === "light" || value === "dark" ? value : "light";
+}
+
+function readThemeFromDocument(): Theme {
+  return validateTheme(document.documentElement.dataset.theme);
+}
+
 function applyTheme(theme: Theme) {
   document.documentElement.dataset.theme = theme;
   try {
@@ -25,37 +34,52 @@ function applyTheme(theme: Theme) {
   } catch {
     /* ponytail: private mode may block storage */
   }
+  window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
 }
 
-function readThemeFromDocument(): Theme {
-  if (typeof document === "undefined") return "light";
-  const fromDom = document.documentElement.dataset.theme;
-  return fromDom === "light" || fromDom === "dark" ? fromDom : "light";
+function subscribe(onStoreChange: () => void) {
+  const onStorage = (e: StorageEvent) => {
+    if (e.key !== STORAGE_KEY && e.key !== null) return;
+    try {
+      document.documentElement.dataset.theme = validateTheme(
+        localStorage.getItem(STORAGE_KEY),
+      );
+    } catch {
+      /* ponytail: private mode may block storage */
+    }
+    onStoreChange();
+  };
+
+  window.addEventListener("storage", onStorage);
+  window.addEventListener(THEME_CHANGE_EVENT, onStoreChange);
+  return () => {
+    window.removeEventListener("storage", onStorage);
+    window.removeEventListener(THEME_CHANGE_EVENT, onStoreChange);
+  };
+}
+
+function getSnapshot(): Theme {
+  return readThemeFromDocument();
+}
+
+function getServerSnapshot(): Theme {
+  return "light";
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>(readThemeFromDocument);
-
-  useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    const initial: Theme =
-      stored === "light" || stored === "dark" ? stored : "light";
-    setThemeState(initial);
-    applyTheme(initial);
-  }, []);
+  const theme = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot,
+  );
 
   const setTheme = useCallback((t: Theme) => {
-    setThemeState(t);
     applyTheme(t);
   }, []);
 
   const toggle = useCallback(() => {
-    setThemeState((current) => {
-      const next: Theme = current === "light" ? "dark" : "light";
-      applyTheme(next);
-      return next;
-    });
-  }, []);
+    applyTheme(theme === "light" ? "dark" : "light");
+  }, [theme]);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, toggle }}>

@@ -144,7 +144,7 @@ describe('new content surfaces', () => {
     expect(healthcare?.evidence).not.toMatch(/cloud-specific glue|under a day|controls healthcare requires/i);
   });
 
-  it('models the featured-case poster as verified media or explicit pending work', () => {
+  it('ships the featured-case poster as the verified greythr media asset', () => {
     const poster = (
       home as {
         featuredCase: {
@@ -155,10 +155,9 @@ describe('new content surfaces', () => {
       }
     ).featuredCase.poster;
 
+    expect(poster.status).toBe('verified');
     if (poster.status === 'verified') {
-      expect(poster.src).toMatch(/^\/[a-z0-9/_.-]+\.(png|webp|jpg|jpeg)$/i);
-    } else {
-      expect(poster.note.trim().length).toBeGreaterThan(12);
+      expect(poster.src).toBe('/product/greythr.webp');
     }
   });
 

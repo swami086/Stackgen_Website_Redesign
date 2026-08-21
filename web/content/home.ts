@@ -246,8 +246,8 @@ const home = {
   featuredCase: {
     videoId: 'V0zsWdJz2rs',
     poster: {
-      status: 'pending',
-      note: 'No verified public greytHR poster path is approved in Task 5 scope yet.',
+      status: 'verified',
+      src: '/product/greythr.webp',
     },
     quoteRef: 'case-greythr.hero.quote',
   } satisfies FeaturedCase,

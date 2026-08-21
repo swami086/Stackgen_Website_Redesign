@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { AidenOsLinksDiagram } from '@/components/diagrams/AidenOsLinksDiagram';
+import { AidenOsDiagram } from '@/components/diagrams/AidenOsDiagram';
 import { Reveal } from '@/components/motion/Reveal';
 import type { SectionProps } from '@/lib/types';
 import platform from '@/content/platform';
@@ -16,11 +16,7 @@ export function AidenOsLinks({ content }: SectionProps<AidenOsLinksContent>) {
         {content.aidenOs.heading}
       </h2>
       <Reveal>
-        <AidenOsLinksDiagram
-          aidenOs={content.aidenOs}
-          productLinks={content.productLinks}
-          className="w-full"
-        />
+        <AidenOsDiagram className="w-full" />
         <nav
           aria-label={content.productLinks.heading}
           className="mx-auto mt-4 max-w-[1240px] pl-[100px] max-[767px]:pl-0"

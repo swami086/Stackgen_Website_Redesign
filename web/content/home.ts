@@ -14,8 +14,23 @@ const home = {
     body: 'Single-AZ exceeds the blast radius you set. Aiden held the change and routed it to the payments change owner with the plan and evidence attached.',
     intent:
       'Give payments-api a read replica in eu-west-1 with 30-day point-in-time recovery.',
-    diff: 'modules/payments-api/replica.tf',
-    verdict: 'Stopped at your limit.',
+    planFile: 'modules/payments-api/replica.tf',
+    diff: [
+      '+ resource "aws_db_instance" "payments_replica" {',
+      '+   identifier              = "payments-api-euw1-ro"',
+      '+   replicate_source_db     = aws_db_instance.payments.arn',
+      '+   backup_retention_period = 30',
+      '+   storage_encrypted       = true',
+      '+   tags = { owner = "payments", slo = "99.95" }',
+      '+ }',
+      '',
+      '~ output "payments_replica_endpoint" { sensitive = true }',
+    ].join('\n'),
+    verdict: {
+      state: 'halt' as const,
+      label: 'Stopped at your limit.',
+      rule: 'blast-radius: single-az',
+    },
     mergeTarget: 'acme-corp/infra · PR #2841',
   },
   logos: {

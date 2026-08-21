@@ -2,10 +2,36 @@ import { describe, expect, it } from 'vitest';
 import home from '../home';
 import platform from '../platform';
 import caseGreythr from '../case-greythr';
+import caseInnovaccer from '../case-innovaccer';
+import caseIndex from '../case-index';
+import scheduleDemo from '../schedule-demo';
+import productInfrastructure from '../product-infrastructure';
+import productAutomation from '../product-automation';
+import productObservability from '../product-observability';
+import productSre from '../product-sre';
+import { CUSTOMER_LOGOS } from '../shared';
 import type { Quote, Metric } from '@/lib/types';
 
 const BANNED = [/\bOlly\b/i, /Aiden for InfraOps/i, /Aiden for DevOps/i,
                 /single pane of glass/i, /\u2014/];
+
+const contentModules = {
+  home,
+  platform,
+  caseGreythr,
+  caseInnovaccer,
+  caseIndex,
+  scheduleDemo,
+  productInfrastructure,
+  productAutomation,
+  productObservability,
+  productSre,
+  shared: { CUSTOMER_LOGOS },
+};
+
+const quoteMetricModules = Object.fromEntries(
+  Object.entries(contentModules).filter(([name]) => name !== 'shared'),
+);
 
 function allStrings(value: unknown): string[] {
   if (typeof value === 'string') return [value];
@@ -15,9 +41,7 @@ function allStrings(value: unknown): string[] {
 }
 
 describe('content governance', () => {
-  const modules = { home, platform, caseGreythr };
-
-  for (const [name, mod] of Object.entries(modules)) {
+  for (const [name, mod] of Object.entries(contentModules)) {
     it(`${name} contains no banned terms`, () => {
       for (const text of allStrings(mod)) {
         for (const pattern of BANNED) {
@@ -28,7 +52,7 @@ describe('content governance', () => {
   }
 
   it('every quote declares its status', () => {
-    const quotes = allQuotes(home);
+    const quotes = Object.values(quoteMetricModules).flatMap(allQuotes);
     expect(quotes.length).toBeGreaterThan(0);
     for (const q of quotes) {
       expect(['published', 'placeholder']).toContain(q.status);
@@ -37,7 +61,9 @@ describe('content governance', () => {
   });
 
   it('every metric cites a mechanism', () => {
-    for (const m of allMetrics(home)) {
+    const metrics = Object.values(quoteMetricModules).flatMap(allMetrics);
+    expect(metrics.length).toBeGreaterThan(0);
+    for (const m of metrics) {
       expect(m.mechanism.trim().length).toBeGreaterThan(0);
     }
   });

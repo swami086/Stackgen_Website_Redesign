@@ -1,6 +1,6 @@
 import type { DiagramProps } from '@/lib/types';
-import contextGraphHomeGeometry from '../../../design-reference/geometry/context-graph-home.json';
-import contextGraphPlatformGeometry from '../../../design-reference/geometry/context-graph-platform.json';
+import contextGraphHomeGeometry from '../../geometry/context-graph-home.json';
+import contextGraphPlatformGeometry from '../../geometry/context-graph-platform.json';
 
 export type ContextGraphProps = DiagramProps & { variant: 'home' | 'platform' };
 

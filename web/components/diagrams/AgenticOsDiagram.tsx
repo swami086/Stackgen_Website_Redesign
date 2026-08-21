@@ -1,5 +1,5 @@
 import type { DiagramProps } from '@/lib/types';
-import agenticOsGeometry from '../../../design-reference/geometry/agentic-os.json';
+import agenticOsGeometry from '../../geometry/agentic-os.json';
 
 type GeometryNode = (typeof agenticOsGeometry.nodes)[number];
 

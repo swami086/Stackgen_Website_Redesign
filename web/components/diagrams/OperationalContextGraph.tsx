@@ -233,7 +233,7 @@ export function OperationalContextGraph({
   const viewBox = geo.viewBox.join(' ');
   const desc =
     variant === 'home'
-      ? 'Five operational domains — topology, change, drift, causality, and observability — form one shared memory layer connecting the four Aiden surfaces.'
+      ? 'Five operational domains (topology, change, drift, causality, and observability) form one shared memory layer connecting the four Aiden surfaces.'
       : 'Infrastructure, change, drift, incident, and observability nodes feed a central OCG shared-intel hub for cross-domain reasoning.';
 
   return (

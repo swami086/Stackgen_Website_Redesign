@@ -114,7 +114,7 @@ function parseLayout() {
 const LAYOUT = parseLayout();
 
 const DESC =
-  'Six steps run top to bottom: infra drift, P1 alert, root cause via the Operational Context Graph, remediation, policy-validated deploy at the refusal boundary, and SLO verification. Bounded autonomy is the product—refusal at the policy boundary you configured is the point, not a caveat.';
+  'Six steps run top to bottom: infra drift, P1 alert, root cause via the Operational Context Graph, remediation, policy-validated deploy at the refusal boundary, and SLO verification. Bounded autonomy is the product: refusal at the policy boundary you configured is the point, not a caveat.';
 
 function PipelineStepRow({ step, index }: { step: PipelineStep; index: number }) {
   const rowX = LAYOUT.sequence.x + 28;

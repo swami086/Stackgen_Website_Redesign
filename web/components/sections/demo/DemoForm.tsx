@@ -60,7 +60,7 @@ export function DemoForm({ className }: { className?: string }) {
               role="status"
               className="text-[15px] leading-normal text-text-secondary"
             >
-              This is a prototype — nothing was sent. A real demo request will connect to
+              This is a prototype. Nothing was sent. A real demo request will connect to
               StackGen when the site ships.
             </p>
           </div>

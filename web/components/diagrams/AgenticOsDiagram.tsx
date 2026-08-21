@@ -246,7 +246,7 @@ export function AgenticOsDiagram({
     >
       <title id={titleId}>Agentic OS diagram</title>
       <desc>
-        Four Aiden product surfaces — Infrastructure, Automation, Observability, and SRE —
+        Four Aiden product surfaces (Infrastructure, Automation, Observability, and SRE)
         share one Agentic OS; each card lists metrics, capabilities, and an explore label.
       </desc>
       <g data-part="agent-grid">

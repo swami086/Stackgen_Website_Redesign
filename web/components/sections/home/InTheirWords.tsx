@@ -79,7 +79,7 @@ export function InTheirWords({ content, className }: SectionProps<InTheirWordsCo
               className="inline-flex w-fit items-center gap-2 rounded-md border border-halt/30 bg-halt/10 px-3 py-1.5 text-xs text-halt"
               role="status"
             >
-              Quotes below are unapproved placeholders — review before publish
+              Quotes below are unapproved placeholders. Review before publish.
             </p>
           ) : null}
 

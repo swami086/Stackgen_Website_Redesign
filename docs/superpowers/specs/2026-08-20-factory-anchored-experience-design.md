@@ -35,6 +35,8 @@ The result should read as factory.ai's information architecture and editorial co
 | D8 | Observability keeps its existing SVG, restyled to the deck's language. |
 | D9 | Motion is partially implemented in this phase, because the proof is temporal. `Reveal`, `MotionProvider` and clip playback ship now. Diagram `data-part` choreography stays Wave 2. |
 | D10 | Clip weight budget is 3 MB per encode, prioritising fidelity. |
+| D11 | Surface mode is Persuade. Colour strategy is Committed: the iridescent field owns whole regions rather than accenting a neutral ground. |
+| D12 | Form derives from the deck alone. factory.ai contributes structure and copy discipline, never radii, colour or type. |
 
 ---
 
@@ -51,6 +53,16 @@ The Wave 5 parity harness (`web/e2e/parity.spec.ts`) measured against the canvas
 ---
 
 ## 3. Design system
+
+### 3.0 Mode, scene, and colour strategy
+
+**Mode: Persuade.** Home, the four product pages, and Platform are all surfaces where the visitor decides and acts. Design is the product here. Expression is permitted to lead, provided the offer and the primary action stay legible.
+
+**Physical scene, which forces the light decision.** The SRE evaluates from inside a running estate, at night, in a dark terminal beside a dark dashboard. The executive buyer reads in a lit room, often from a deck someone sent them. A dark site would disappear into the SRE's existing screens and read as one more tool; a light site with the product rendered in dark panels puts the page in the buyer's register and the product in the SRE's. **The ground is light because the page is a document about the product, not an imitation of it.** That is the argument for cream, not a default.
+
+**Colour strategy: Committed.** The iridescent field carries whole regions, not accents scattered on neutral ground. On the deck's title slide the prism occupies roughly forty percent of the frame as a hard-edged diagonal, and that is the licence this system inherits. Restrained is rejected explicitly: it is the strategy that would make this world's softest rendition.
+
+Region-scale colour appears in at least three places: the hero, one mid-page transition, and the closing band. Anything less and the accents have been demoted to decoration.
 
 ### 3.1 Palette
 
@@ -74,7 +86,7 @@ Light-first. Sampled from the deck's own pixels, then calibrated for web contras
 | `--color-pass` | `#4ADE80` | Retained |
 | `--color-halt` | `#F0883E` | Retained |
 
-The iridescent lavender to cyan to pink wash is the signature motif. It appears as a soft glow frame behind product screenshots and as the closing CTA band, matching deck slides 0 and 5. It is decorative and never carries meaning alone.
+The iridescent lavender to cyan to pink wash is the signature. It is a **structural field**, not a glow: it holds whole regions with its own hard edges, in the deck's diagonal geometry. It never carries meaning alone, and no text sits on it without a solid plate beneath.
 
 ### 3.2 Contrast rules (binding)
 
@@ -112,13 +124,29 @@ Tracking inverts from the current system. The deck tracks outward: +0.24px at 24
 
 Extreme scale contrast is the point: a 96px display against an 11px tracked-out label on the same screen. Headings are sentence case. ALL-CAPS is reserved for micro-labels and the hero eyebrow.
 
-### 3.4 Form
+### 3.4 Material inventory
 
-Radii sharpen from `rounded-xl` to **4px** on cards and panels, **3px** on buttons and chips, matching both the deck's hard panel edges and factory.ai's 3px. Base spacing unit 4px. Section padding grows to 120–160px vertical on desktop.
+The deck's full material range, each material assigned a role. Using only the first two would be this world's softest rendition, which is the failure mode this section exists to prevent.
 
-Iconography moves to thin line icons matching the deck's stroke weight. No filled or heavy-stroke icon sets.
+| Material | Deck source | Role on the site |
+|---|---|---|
+| **Iridescent prism field** | Slide 0 | Hard-edged diagonal field owning whole regions: hero, one mid-page transition, closing band |
+| **Dark plate on cream** | Slides 2, 5 | The ground for every product clip, screenshot and ported diagram |
+| **Architectural wireframe line art** | Slide 2 | Section transitions and empty regions; thin cream strokes on the dark plate |
+| **Isometric layered object** | Slide 7 | The Operational Context Graph's own form; the one dimensional object in the system |
+| **Glow-framed product plate** | Slide 5 | `ProductFrame`, where iridescence meets the dark plate |
+| **Dot-grid canvas** | Product UI | Backdrop for pipeline and node diagrams, inherited from the real product |
+| **Step chip** | Slide 12 | `NumberedSequence` markers, violet border when active, hairline when not |
 
-### 3.5 Motion
+### 3.5 Form
+
+**Radii derive from the deck, not from factory.ai.** factory.ai contributes structure and copy discipline only; the deck owns form. The earlier draft imported factory.ai's 3px, which mixed two worlds on one page. Radii are sampled from the deck's own cards and plates during token extraction, and the observed range is small but not sharp: roughly 4 to 8px on cards and plates, tighter on chips than on containers, with concentric inner and outer values where a plate nests inside a frame.
+
+Base spacing unit 4px. Section padding 120 to 160px vertical on desktop, and the page varies density deliberately: a dense passage earns a quiet one.
+
+Iconography is thin line icons at the deck's stroke weight. No filled sets, no heavy strokes, and none of the default icon libraries whose shapes are recognisable as a default.
+
+### 3.6 Motion
 
 Motion is **partially implemented in this phase**, because the proof layer is temporal. A still frame of three agents scanning an AWS account does not prove the claim; the running does. Deferring all motion would leave the central argument unproved.
 
@@ -143,11 +171,25 @@ Only `transform`, `opacity`, `filter` and `clip-path` may be animated. No animat
 
 **Reduced motion.** Under `prefers-reduced-motion: reduce`, `Reveal` renders content immediately in its final state, clips do not autoplay and present their poster with a visible play control, and the marquee holds still. Nothing is hidden and no state change is lost. The existing global `0.01ms` override in `globals.css` is removed, because it destroys useful feedback rather than replacing it with a calmer alternative.
 
-### 3.6 Logo
+### 3.7 Logo
 
 The mark and wordmark geometry are unchanged. Colour adapts: ink `#181810` on cream, cream `#F0E8E0` on panels. The gradient icon variant may use the iridescent palette.
 
 ---
+
+### 3.8 Calibration self-check
+
+AI-generated interfaces converge on a small number of looks regardless of subject. The first of them is *warm cream ground, high-contrast display, muted accent*. **This system sits inside that cluster**, and the check is not whether it does but whether it earned the place.
+
+| Test | Answer |
+|---|---|
+| Is the aesthetic guessable from the category alone? | No. The category default for agentic DevOps is near-black with a neon accent, which is what the current site already is |
+| Is the ground a taste default? | No. It is pinned by the positioning deck and argued from the physical scene in 3.0 |
+| Is this the pinned world's softest rendition? | Guarded against by 3.0's Committed strategy and 3.4's material inventory. Cream plus one pastel glow would have been the soft rendition |
+| Does one world own the page? | Yes, after the 3.5 correction. factory.ai supplies structure and copy only; the deck supplies all form |
+| Are the fonts training-data defaults? | No. Haffer XH is the deck's own face. Inter-as-display, the previous system's approach, is explicitly among the defaults being left behind |
+
+The failure mode to watch during build: cream ground plus dark cards plus a tasteful gradient, arriving at a competent page that any model would produce for this brief. The corrective is region-scale colour and the full material inventory, both binding.
 
 ## 4. Content system
 
@@ -360,3 +402,21 @@ Industry vertical pages, an enterprise page, a security page, a news or articles
 8. Reduced motion: with `prefers-reduced-motion: reduce`, no clip autoplays, every poster is visible, `Reveal` content is present at final state, and no content is unreachable
 9. Autoplay correctness: every clip element carries `muted`, `playsInline`, `loop` and a `poster`
 10. Off-screen clips are paused, verified by asserting `paused === true` for clips outside the viewport
+
+---
+
+## 12. Design process contract
+
+This is a replacement visual world, so the impeccable new-work flow governs the build.
+
+**The direction is pinned, not rolled.** A replacement world normally requires a concept-seed direction round. A user-pinned or brief-pinned direction beats the roll, and the positioning deck is pinned by the user. The roll is therefore not run, and this line is the record of why.
+
+**Direction contract in the markup.** Before code, the chosen direction is written as a five-block comment in the root layout, emitted as an HTML comment in the built output so it survives production build: THESIS, OWN-WORLD, STORY, FIRST VIEWPORT, FORM. It closes with the FINISH line stating that unreviewed and undocumented is unfinished. After the first production build, grep the output for it; a contract the build strips is a contract nobody can audit.
+
+**Detector.** No design hook is active in this project, so `node .cursor/skills/impeccable/scripts/detect.mjs --json <changed targets>` runs once over the changed surfaces after the build, not during concept work. Mechanical findings are fixed; the rest goes to the reviewer.
+
+**Finish review.** The build ends with the `impeccable-finish-reviewer` spawned fresh with no inherited history, given the request, the artifact paths, screenshots in `.impeccable/review/`, the direction contract, detector findings, and the craft-floor reference. Its disposition word governs: recapture, rebuild, ship, or fix. Two fix rounds is the budget.
+
+**DESIGN.md.** Written at finish by the `impeccable-documenter` from the built world, not before the build from intention. A new world shipped without DESIGN.md is an incomplete run.
+
+**PRODUCT.md drift, reported not repaired.** `PRODUCT.md` still records the superseded commitment: the visual world pinned to Linear, and `#9437FF` retained as the single accent, confirmed 18 Aug 2026. The decisions in section 1 supersede both. This spec does not edit `PRODUCT.md`, because drift is reported rather than repaired as a side effect of design work. Updating its Brand Commitments to record the deck-pinned world is a separate, explicit action the user should authorise.

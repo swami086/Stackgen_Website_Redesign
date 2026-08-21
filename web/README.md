@@ -4,7 +4,7 @@ Desktop-only, pixel-parity review build of the StackGen marketing redesign. This
 
 **Branch:** `wave1-nextjs`  
 **Spec:** `docs/superpowers/specs/2026-08-20-stackgen-nextjs-app-design.md`  
-**Accepted departures:** `.superpowers/sdd/wave1-deviations.md` (local; folder is gitignored)
+**Accepted departures:** `../docs/superpowers/wave1-deviations.md` (local; folder is gitignored)
 
 ---
 

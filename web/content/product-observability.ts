@@ -1,7 +1,8 @@
-import type { Metric, Cta } from '@/lib/types';
+import type { Metric, Quote, Cta } from '@/lib/types';
 
 const productObservability = {
   slug: 'aiden-for-observability',
+  prompt: 'What changed before the latency spike?',
   hero: {
     h1: 'Aiden for Observability',
     sub: 'Unified signal and AI-assisted insight that feeds Remediate. Natural language instead of dashboard archaeology.',
@@ -38,6 +39,14 @@ const productObservability = {
     heading: 'Ask production in plain language.',
     body: 'greytHR used Aiden to replace complex queries with natural language insights and cut observability support tickets by 90 percent. The OCG links live signals to infrastructure state and change history before SRE takes over. Observe hands SRE a correlated starting point with state and recent changes already attached.',
   },
+  testimonial: {
+    text: 'Aiden transformed how our engineers interact with observability. Natural language insights replaced complex queries and reduced dependency on SREs.',
+    attribution: 'Abhishek Gaurav',
+    role: 'Head of Engineering and DevOps',
+    company: 'greytHR',
+    status: 'published',
+    sourceUrl: 'https://stackgen.com/case-studies/greythr',
+  } satisfies Quote,
   earlyAccess: null,
   finalCta: {
     heading: 'See Observability with Aiden.',

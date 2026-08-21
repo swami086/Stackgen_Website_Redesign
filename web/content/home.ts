@@ -1,4 +1,5 @@
-import type { Metric, Quote, Cta } from '@/lib/types';
+import type { SequenceItem } from '@/components/primitives/NumberedSequence';
+import type { Metric, Quote, Cta, MomentumItem } from '@/lib/types';
 
 const home = {
   hero: {
@@ -169,6 +170,59 @@ const home = {
     heading: 'Autonomy needs guardrails.',
     badges: ['SOC 2', 'PCI', 'HIPAA'],
   },
+  useCases: [
+    {
+      title: 'Provision compliant infrastructure change',
+      body: 'State the outcome. Aiden plans, checks policy, and applies the bounded change.',
+    },
+    {
+      title: 'Verify a release before promotion',
+      body: 'Pipelines compare build output to live context before promotion.',
+    },
+    {
+      title: 'Explain a production spike fast',
+      body: 'Signals, infra state, and change history line up before anyone guesses.',
+    },
+    {
+      title: 'Remediate an incident inside policy',
+      body: 'Aiden assembles context, proposes the fix, and stops at your refusal line.',
+    },
+    {
+      title: 'Generate audit evidence on demand',
+      body: 'Audits pull control evidence from the same runtime and policy path.',
+    },
+    {
+      title: 'Learn from the last failure',
+      body: 'Outcomes write back to the OCG so the next run starts informed.',
+    },
+  ] satisfies SequenceItem[],
+  featuredCase: {
+    videoId: 'V0zsWdJz2rs',
+    poster: '/product/greythr.webp',
+    quoteRef: 'case-greythr.hero.quote',
+  },
+  momentum: [
+    {
+      kind: 'report',
+      title: 'State of Reliability 2026',
+      detail: '178,000 incidents show how often AI coding reaches production before teams are ready.',
+    },
+    {
+      kind: 'event',
+      title: 'AI SRE meetup series',
+      detail: 'Meetups turn recent incidents, controls, and operating patterns into live discussion.',
+    },
+    {
+      kind: 'credential',
+      title: 'Gartner Cool Vendor',
+      detail: 'Cool Vendor status anchors the category claim with named analyst recognition.',
+    },
+    {
+      kind: 'credential',
+      title: 'Four Gartner Hype Cycles',
+      detail: 'Four Gartner Hype Cycles keep Aiden visible in the markets buyers track.',
+    },
+  ] satisfies MomentumItem[],
   finalCta: {
     heading: 'Scale autonomy with governance in the same path.',
     body: 'Aiden is the Agentic OS for DevOps for Platform Engineers, Developers, and SRE teams. Schedule a demo to see build, govern, observe, and remediate under one operating system.',

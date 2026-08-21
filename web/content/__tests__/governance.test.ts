@@ -9,6 +9,7 @@ import productInfrastructure from '../product-infrastructure';
 import productAutomation from '../product-automation';
 import productObservability from '../product-observability';
 import productSre from '../product-sre';
+import industries from '../industries';
 import { CUSTOMER_LOGOS } from '../shared';
 import type { Quote, Metric } from '@/lib/types';
 
@@ -66,6 +67,38 @@ describe('content governance', () => {
     for (const m of metrics) {
       expect(m.mechanism.trim().length).toBeGreaterThan(0);
     }
+  });
+});
+
+
+describe('new content surfaces', () => {
+  it('gives every product a copyable prompt from its own demo', () => {
+    for (const [name, mod] of Object.entries({
+      productInfrastructure,
+      productAutomation,
+      productObservability,
+      productSre,
+    })) {
+      expect(typeof (mod as { prompt?: string }).prompt, name).toBe('string');
+    }
+  });
+
+  it('ships an industry only where evidence exists', () => {
+    expect(industries.length).toBeGreaterThan(0);
+    for (const i of industries) {
+      expect(i.evidence.length).toBeGreaterThan(20);
+      expect(i.href).toBe(`/industries/${i.slug}`);
+    }
+  });
+
+  it('keeps copy inside the discipline: 85% of sentences at 15 words or fewer', () => {
+    const strings = allStrings(contentModules);
+    const sentences = strings
+      .flatMap((s) => s.split(/(?<=[.?!])\s+/))
+      .map((s) => s.trim().split(/\s+/).length)
+      .filter((n) => n > 3);
+    const short = sentences.filter((n) => n <= 15).length;
+    expect(short / sentences.length).toBeGreaterThanOrEqual(0.85);
   });
 });
 

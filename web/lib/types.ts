@@ -1,4 +1,17 @@
 export type Metric = { value: string; label: string; mechanism: string };
+export type Industry = {
+  slug: string;
+  name: string;
+  promise: string;
+  evidence: string;
+  href: string;
+};
+export type MomentumItem = {
+  kind: 'report' | 'event' | 'credential';
+  title: string;
+  detail: string;
+  href?: string;
+};
 export type Quote =
   | { text: string; attribution: string; role: string; company: string;
       status: 'published'; sourceUrl: string }

@@ -2,6 +2,7 @@ import type { Metric, Cta } from '@/lib/types';
 
 const productSre = {
   slug: 'aiden-for-sre',
+  prompt: 'remediate the checkout latency incident inside policy',
   hero: {
     h1: 'Aiden for SRE',
     sub: 'Detect, triage, diagnose, and remediate within policy. Heal inside your SLOs.',

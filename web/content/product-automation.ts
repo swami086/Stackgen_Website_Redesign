@@ -2,6 +2,7 @@ import type { Metric, Cta } from '@/lib/types';
 
 const productAutomation = {
   slug: 'aiden-for-automation',
+  prompt: 'approve the rollback for payments-api after the canary breach',
   hero: {
     h1: 'Aiden for Automation',
     sub: 'Pipeline-native delivery with governance in the path. Operate and maintain without the ticket tax.',

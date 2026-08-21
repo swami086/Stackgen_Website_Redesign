@@ -2,6 +2,7 @@ import type { Metric, Cta } from '@/lib/types';
 
 const productInfrastructure = {
   slug: 'aiden-for-infrastructure',
+  prompt: 'scan my prod AWS account and do a security audit',
   hero: {
     h1: 'Aiden for Infrastructure',
     sub: 'Intent becomes policy-checked infrastructure change. Build with governance at every action boundary.',

@@ -98,3 +98,26 @@
 ## Concerns
 
 - The port keeps the source geometry and copy hierarchy, but the tiny decorative icons and gap ticks are simplified SVG primitives rather than exported Figma asset vectors. The accessible structure, panel grounding, proportions, and text layout are preserved.
+
+## Review Fixes
+
+- Finding 1: live `citations` caller behavior is restored as visible output.
+  - `ProblemDiagram` now renders a static evidence rail inside the same SVG using the existing `citations: { claim, source }[]` prop shape.
+  - Exact regression proof added:
+    - `web/components/diagrams/__tests__/ProblemDiagram.test.tsx` now fails if caller-provided claim/source strings do not appear in visible SVG text.
+    - `web/components/sections/home/__tests__/Problem.test.tsx` now fails if the home section stops surfacing its three live citation sources or if the evidence rail item count diverges from `home.problem.citations.length`.
+  - Focused red evidence: the first run failed because claims and sources only appeared in `<desc>`, not in visible diagram text.
+
+- Finding 2: the right-side `Software Operations` badge/header now uses source-derived geometry from Figma node `1:7514`, nested frame `1:7604`.
+  - Exact Figma metadata now encoded in the SVG:
+    - badge origin `x=982.5`, `y=100.67906188964844`
+    - badge size `29 x 29`
+    - label offset `x + 39.13603591918945`, `y + 4.5`
+  - Exact regression proof added:
+    - `web/components/diagrams/__tests__/ProblemDiagram.test.tsx` asserts the operations badge rect and label coordinates instead of accepting the old left-badge clone.
+
+- Verification after the fixes:
+  - focused `ProblemDiagram` + `Problem` tests: 13 passed
+  - `pnpm typecheck`: passed
+  - `pnpm test`: 60 files, 250 tests passed
+  - `pnpm build`: passed

@@ -67,4 +67,35 @@ describe('ProblemDiagram', () => {
     expect(container).toHaveTextContent('Reliability Gap:');
     expect(container).toHaveTextContent('Gap');
   });
+
+  it('renders citations as visible evidence text when callers provide them', () => {
+    const citations = [
+      { claim: 'Claim one stays visible.', source: 'Source one' },
+      { claim: 'Claim two stays visible.', source: 'Source two' },
+      { claim: 'Claim three stays visible.', source: 'Source three' },
+    ] as const;
+
+    const { container } = render(<ProblemDiagram citations={citations} />);
+
+    expect(container).toHaveTextContent('Claim one stays visible.');
+    expect(container).toHaveTextContent('Source one');
+    expect(container).toHaveTextContent('Claim two stays visible.');
+    expect(container).toHaveTextContent('Source two');
+    expect(container).toHaveTextContent('Claim three stays visible.');
+    expect(container).toHaveTextContent('Source three');
+  });
+
+  it('uses the source-derived operations badge geometry', () => {
+    const { container } = render(<ProblemDiagram />);
+    const badge = container.querySelector('[data-part="operations-title-badge"]');
+    const icon = badge?.querySelector('rect');
+    const label = badge?.querySelector('text');
+
+    expect(icon).toHaveAttribute('x', '982.5');
+    expect(icon).toHaveAttribute('y', '100.67906188964844');
+    expect(icon).toHaveAttribute('width', '29');
+    expect(icon).toHaveAttribute('height', '29');
+    expect(label).toHaveAttribute('x', '1021.6360359191895');
+    expect(label).toHaveTextContent('Software Operations');
+  });
 });

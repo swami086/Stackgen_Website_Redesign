@@ -15,4 +15,15 @@ describe('Problem section', () => {
     const { container } = render(<Problem content={home.problem} />);
     expect(container.querySelector('[data-stub]')).toBeNull();
   });
+
+  it('keeps the live home citations visible in the rendered diagram', () => {
+    const { container } = render(<Problem content={home.problem} />);
+    const evidenceItems = container.querySelectorAll('[data-part="evidence-item"]');
+
+    expect(evidenceItems).toHaveLength(home.problem.citations.length);
+    expect(container).toHaveTextContent(home.problem.citations[0]!.source);
+    expect(container).toHaveTextContent(home.problem.citations[1]!.source);
+    expect(container).toHaveTextContent(home.problem.citations[2]!.source);
+    expect(container).toHaveTextContent('Independent analysis found AI-authored pull requests carry more');
+  });
 });

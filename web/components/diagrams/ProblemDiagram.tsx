@@ -41,6 +41,28 @@ const OPERATIONS_ROWS = [
   },
 ] as const;
 
+const DEFAULT_CITATIONS = [
+  {
+    claim:
+      'Independent analysis found AI-authored pull requests carry more defects, especially logic and correctness bugs that become production incidents.',
+    source: 'CodeRabbit / Stack Overflow Blog, State of AI vs Human Code Generation',
+  },
+  {
+    claim:
+      'Teams rate AI code highly in review, then see production failures after ship when line-by-line review is skipped.',
+    source: 'New Relic 2026 State of AI Coding',
+  },
+  {
+    claim:
+      'AI adoption raises individual productivity while hurting software delivery stability and throughput.',
+    source: 'DORA 2024 Accelerate State of DevOps Report',
+  },
+] as const;
+
+const EVIDENCE_Y = 611;
+const EVIDENCE_WIDTH = 392;
+const EVIDENCE_GAP = 42;
+
 function SvgText({
   x,
   y,
@@ -84,13 +106,15 @@ function TitleBadge({
   x,
   y,
   label,
+  dataPart = 'title-badge',
 }: {
   x: number;
   y: number;
   label: string;
+  dataPart?: string;
 }) {
   return (
-    <g data-part="title-badge">
+    <g data-part={dataPart}>
       <rect
         x={x}
         y={y}
@@ -105,6 +129,41 @@ function TitleBadge({
       <circle cx={x + 10} cy={y + 11.108832359313965} r={4.1} fill="none" stroke={COLORS.accent} strokeWidth={1.2} aria-hidden="true" />
       <SvgText x={x + 30.136035919189453} y={y + 1.1088323593139648} fontSize={28.96} fill={COLORS.text}>
         {label}
+      </SvgText>
+    </g>
+  );
+}
+
+function OperationsTitleBadge() {
+  const x = RIGHT_COLUMN.x;
+  const y = RIGHT_COLUMN.y;
+
+  return (
+    <g data-part="operations-title-badge">
+      <rect
+        x={x}
+        y={y}
+        width={29}
+        height={29}
+        rx={2.951}
+        fill="none"
+        stroke={COLORS.accent}
+        strokeWidth={1.2}
+        aria-hidden="true"
+      />
+      <rect
+        x={x + 8.0625}
+        y={y + 8.0625}
+        width={12.875}
+        height={12.875}
+        rx={1.5}
+        fill="none"
+        stroke={COLORS.accent}
+        strokeWidth={1}
+        aria-hidden="true"
+      />
+      <SvgText x={x + 39.13603591918945} y={y + 4.5} fontSize={28.96} fill={COLORS.text}>
+        Software Operations
       </SvgText>
     </g>
   );
@@ -154,7 +213,8 @@ export function ProblemDiagram({
   titleId = 'problem-diagram-title',
   citations,
 }: ProblemDiagramProps) {
-  const citationSummary = citations?.map((citation) => citation.source).filter(Boolean).join(', ');
+  const evidence = citations?.length ? citations : DEFAULT_CITATIONS;
+  const citationSummary = evidence.map((citation) => citation.source).filter(Boolean).join(', ');
 
   return (
     <svg
@@ -195,7 +255,12 @@ export function ProblemDiagram({
       />
 
       <g data-part="creation-column">
-        <TitleBadge x={69} y={96.00007629394531} label="Software Creation (Dev)" />
+        <TitleBadge
+          x={69}
+          y={96.00007629394531}
+          label="Software Creation (Dev)"
+          dataPart="creation-title-badge"
+        />
         <SvgText
           x={69.00009694998153}
           y={135.59371818284853}
@@ -265,7 +330,7 @@ export function ProblemDiagram({
       </SvgText>
 
       <g data-part="operations-column">
-        <TitleBadge x={RIGHT_COLUMN.x} y={RIGHT_COLUMN.y} label="Software Operations" />
+        <OperationsTitleBadge />
         <SvgText
           x={RIGHT_COLUMN.x + 0.00009694998152554035}
           y={RIGHT_COLUMN.y + 46.37605155687197}
@@ -320,6 +385,41 @@ export function ProblemDiagram({
                 fill={COLORS.muted}
               >
                 {row.body}
+              </SvgText>
+            </g>
+          );
+        })}
+      </g>
+
+      <g data-part="evidence-rail">
+        <path d="M 69 609 H 1369" stroke={COLORS.panelBorder} strokeWidth={1} aria-hidden="true" />
+        {evidence.map((citation, index) => {
+          const x = 69 + index * (EVIDENCE_WIDTH + EVIDENCE_GAP);
+
+          return (
+            <g key={`${citation.source}-${index}`} data-part="evidence-item" data-index={index}>
+              <SvgText
+                x={x}
+                y={EVIDENCE_Y}
+                width={EVIDENCE_WIDTH}
+                lineHeight={16}
+                maxLines={1}
+                fontSize={11}
+                fontWeight={500}
+                fill={COLORS.text}
+              >
+                {citation.source}
+              </SvgText>
+              <SvgText
+                x={x}
+                y={EVIDENCE_Y + 21}
+                width={EVIDENCE_WIDTH}
+                lineHeight={18}
+                maxLines={3}
+                fontSize={13}
+                fill={COLORS.muted}
+              >
+                {citation.claim}
               </SvgText>
             </g>
           );

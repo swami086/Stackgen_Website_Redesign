@@ -146,12 +146,12 @@ export function ChangeSurface({
         </div>
       </div>
 
-      <footer className="border-t border-border-hairline bg-bg-base px-[18px] py-3">
+      <div className="border-t border-border-hairline bg-bg-base px-[18px] py-3">
         <p className="font-mono text-[11px] text-text-tertiary">
           3 of 4 policies auto-cleared · 1 escalated to the change owner · 0 actions
           executed outside policy
         </p>
-      </footer>
+      </div>
     </div>
   );
 }

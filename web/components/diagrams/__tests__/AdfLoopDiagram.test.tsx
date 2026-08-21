@@ -1,0 +1,46 @@
+import { render } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import home from '@/content/home';
+import { AdfLoopDiagram } from '../AdfLoopDiagram';
+
+describe('AdfLoopDiagram', () => {
+  it('exposes an accessible name via title', () => {
+    const { container } = render(
+      <AdfLoopDiagram stages={home.adfLoop.stages} />,
+    );
+    const svg = container.querySelector('svg')!;
+    expect(svg).toHaveAttribute('role', 'img');
+    const titleId = svg.getAttribute('aria-labelledby')!;
+    expect(container.querySelector(`#${titleId}`)?.textContent).toBeTruthy();
+  });
+
+  it('describes the flow for screen readers', () => {
+    const { container } = render(
+      <AdfLoopDiagram stages={home.adfLoop.stages} />,
+    );
+    expect(container.querySelector('desc')?.textContent?.length ?? 0).toBeGreaterThan(
+      40,
+    );
+  });
+
+  it('carries motion hooks on every animatable part', () => {
+    const { container } = render(
+      <AdfLoopDiagram stages={home.adfLoop.stages} />,
+    );
+    expect(container.querySelectorAll('[data-part]').length).toBeGreaterThan(2);
+  });
+
+  it('renders diagram labels as real SVG text, not paths', () => {
+    const { container } = render(
+      <AdfLoopDiagram stages={home.adfLoop.stages} />,
+    );
+    expect(container.querySelectorAll('text').length).toBeGreaterThan(0);
+  });
+
+  it('is no longer a stub', () => {
+    const { container } = render(
+      <AdfLoopDiagram stages={home.adfLoop.stages} />,
+    );
+    expect(container.querySelector('[data-stub]')).toBeNull();
+  });
+});

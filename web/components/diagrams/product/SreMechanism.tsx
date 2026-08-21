@@ -1,192 +1,194 @@
 import type { DiagramProps } from '@/lib/types';
-import sreGeometry from '../../../geometry/mechanism-sre.json';
+import { DiagramText } from '../DiagramText';
 
-type GeometryNode = (typeof sreGeometry.nodes)[number];
-
-const Y0 = -Math.min(...sreGeometry.nodes.map((n) => n.y));
-const VIEWBOX = sreGeometry.viewBox.join(' ');
-
-function fillVar(token: string | null | undefined): string {
-  if (!token?.startsWith('$')) return 'none';
-  return `var(--color-${token.slice(1)})`;
-}
-
-function fontVar(token: string | null | undefined): string {
-  if (token === '$font-mono') return 'var(--font-mono)';
-  return 'var(--font-sans)';
-}
-
-function absPositions(nodes: GeometryNode[]): Array<{ x: number; y: number }> {
-  const pos: Array<{ x: number; y: number }> = [{ x: 0, y: 0 }];
-  const stack = [0];
-  for (let i = 1; i < nodes.length; i++) {
-    const n = nodes[i]!;
-    while (stack.length > (n.depth ?? 0)) stack.pop();
-    const parent = pos[stack[stack.length - 1]!]!;
-    pos[i] = {
-      x: parent.x + n.x,
-      y: (n.depth ?? 0) === 0 ? n.y : parent.y + n.y + Y0,
-    };
-    stack.push(i);
-  }
-  return pos;
-}
-
-function frameChildren(nodes: GeometryNode[], frameId: string): GeometryNode[] {
-  const idx = nodes.findIndex((n) => n.id === frameId);
-  if (idx < 0) return [];
-  const frame = nodes[idx]!;
-  const out: GeometryNode[] = [];
-  for (let j = idx + 1; j < nodes.length; j++) {
-    const n = nodes[j]!;
-    if ((n.depth ?? 0) <= (frame.depth ?? 0)) break;
-    out.push(n);
-  }
-  return out;
-}
-
-type PipelineStep = {
-  y: number;
-  borderTop: boolean;
-  tag: string;
-  tagWidth: number;
-  title: string;
-  detail: string;
-  dotFill: string;
-  isLast: boolean;
-  isRefusalBoundary: boolean;
-};
-
-function parseLayout() {
-  const nodes = sreGeometry.nodes;
-  const pos = absPositions(nodes);
-
-  const sequence = nodes.find((n) => n.name === 'Investigation Sequence')!;
-  const sequenceIdx = nodes.indexOf(sequence);
-  const sequencePos = pos[sequenceIdx]!;
-
-  const rowFrames = frameChildren(nodes, sequence.id!).filter((n) => n.name?.endsWith(' Row'));
-  const steps: PipelineStep[] = rowFrames.map((row) => {
-    const rowIdx = nodes.indexOf(row);
-    const rowPos = pos[rowIdx]!;
-    const children = frameChildren(nodes, row.id!);
-    const tagFrame = children.find((n) => n.name?.includes(' Tag') && n.type === 'frame');
-    const tagLabel = children.find((n) => n.name?.includes('Tag Label'));
-    const title = children.find((n) => n.name?.includes(' Title'));
-    const detail = children.find((n) => n.name?.includes(' Detail'));
-    const dot = children.find((n) => n.name?.includes(' Dot'));
-    const hasLine = children.some((n) => n.name?.includes(' Line'));
-
-    return {
-      y: rowPos.y,
-      borderTop: typeof row.strokeWidth === 'object' && row.strokeWidth !== null,
-      tag: tagLabel?.text ?? '',
-      tagWidth: tagFrame?.width ?? 80,
-      title: title?.text ?? '',
-      detail: detail?.text ?? '',
-      dotFill: dot?.fill ?? '$accent',
-      isLast: !hasLine,
-      isRefusalBoundary: row.name?.includes('Policy-validated') ?? false,
-    };
-  });
-
-  const footnoteNode = nodes.find((n) => n.name === 'Footnote')!;
-  const footnoteIdx = nodes.indexOf(footnoteNode);
-  const footnotePos = pos[footnoteIdx]!;
-
-  return {
-    sequence: {
-      x: sequencePos.x,
-      y: sequencePos.y,
-      width: sequence.width,
-      height: sequence.height,
-      rx: sequence.cornerRadius ?? 24,
-    },
-    steps,
-    footnote: {
-      x: footnotePos.x,
-      y: footnotePos.y,
-      text: footnoteNode.text ?? '',
-    },
-  };
-}
-
-const LAYOUT = parseLayout();
-
-// See InfrastructureMechanism: the canvas heading/body band is rendered as DOM
-// text by the section, so it is cropped out of the SVG here.
-const CROP_PAD = 40;
-const CROP_TOP = LAYOUT.sequence.y - CROP_PAD;
-const CROP_HEIGHT = LAYOUT.footnote.y + 19 + CROP_PAD - CROP_TOP;
-const CROPPED_VIEWBOX = `0 ${CROP_TOP} 1240 ${CROP_HEIGHT}`;
-
+const VIEWBOX = '0 0 1240 820';
 const DESC =
-  'Six steps run top to bottom: infra drift, P1 alert, root cause via the Operational Context Graph, remediation, policy-validated deploy at the refusal boundary, and SLO verification. Bounded autonomy is the product: refusal at the policy boundary you configured is the point, not a caveat.';
+  'Aiden for SRE shows a bounded incident ladder from Infra Drift Present through P1 Alert Fires, Root Cause Established, Remediation Deployed, and Service Restored. The refusal boundary sits at deploy, bounded autonomy is intentional, and the policy boundary is enforced while Temporal orchestrates sequencing and OPA checks each action boundary.';
 
-function PipelineStepRow({ step, index }: { step: PipelineStep; index: number }) {
-  const rowX = LAYOUT.sequence.x + 28;
-  const part = step.isRefusalBoundary ? 'refusal-boundary' : 'step';
+const PANEL = 'var(--color-panel)';
+const PANEL_RAISED = 'var(--color-panel-raised)';
+const PANEL_TEXT = 'var(--color-text-on-panel)';
+const PANEL_MUTED = 'var(--color-text-muted-panel)';
+const BORDER = 'var(--color-border-panel)';
+const HAIRLINE = 'var(--color-border-hairline)';
+const ACCENT = 'var(--color-accent)';
+const CYAN = 'var(--color-accent-cyan)';
 
+const INCIDENT_STEPS = [
+  {
+    label: 'Infra Drift Present',
+    detail: 'Autoscaling config deviates from desired state',
+  },
+  {
+    label: 'P1 Alert Fires',
+    detail: 'Memory pressure detected on dependent services',
+  },
+  {
+    label: 'Root Cause Established',
+    detail: 'Infrastructure change traced via OCG history',
+  },
+  {
+    label: 'Remediation Deployed',
+    detail: 'Fix generated, policy-validated and applied',
+  },
+  {
+    label: 'Service Restored',
+    detail: 'SLO Recovered. 13min MTTR 0 Engineers Paged.',
+  },
+] as const;
+
+const LADDER_STEPS = [
+  { tag: 'Detection', title: 'Infrawatch', detail: 'Monitors IaC drift and scores risk', refusal: false },
+  { tag: 'Observability', title: 'ChangeCorrelation', detail: 'Links drift to alert signals', refusal: false },
+  { tag: 'Root Cause', title: 'RootCause', detail: 'Queries OCG', refusal: false },
+  { tag: 'Remediation', title: 'Remediation', detail: 'Generates fix', refusal: false },
+  { tag: 'Deploy', title: 'DeployAgent', detail: 'Run pipeline', refusal: true },
+  { tag: 'Verification', title: 'Verification', detail: 'Confirms SLO recovery', refusal: false },
+] as const;
+
+function LeftIncidentColumn() {
   return (
-    <g data-part={part} data-index={index} transform={`translate(${rowX} ${step.y})`}>
-      {step.borderTop ? (
-        <line
-          x1={0}
-          y1={0}
-          x2={984}
-          y2={0}
-          stroke={fillVar('$border-hairline')}
-          aria-hidden="true"
-        />
-      ) : null}
+    <g data-part="incident-column">
+      <rect x={70} y={140} width={300} height={430} fill={PANEL_RAISED} stroke={BORDER} />
+      <rect x={40} y={110} width={330} height={490} fill="none" stroke="url(#sre-column-glow)" strokeWidth={20} />
+      <rect x={65} y={145} width={6} height={330} rx={999} fill={BORDER} />
 
-      <g data-part="step-rail" aria-hidden="true">
-        <rect x={9} y={18} width={10} height={10} rx={999} fill={fillVar(step.dotFill)} />
-        {!step.isLast ? (
-          <rect x={13} y={36} width={2} height={74} rx={999} fill={fillVar('$border-card')} />
-        ) : null}
+      {INCIDENT_STEPS.map((step, index) => {
+        const y = 182 + index * 76;
+        return (
+          <g key={step.label} data-part="incident-step" data-index={index}>
+            <rect x={95} y={y} width={40} height={40} rx={4} fill="none" stroke={HAIRLINE} />
+            <circle cx={68} cy={y + 20} r={6} fill={index === 4 ? ACCENT : index === 3 ? CYAN : PANEL_TEXT} />
+            <text
+              x={158}
+              y={y + 1}
+              fill={PANEL_TEXT}
+              fontSize={16}
+              fontFamily="var(--font-sans)"
+              dominantBaseline="hanging"
+            >
+              {step.label}
+            </text>
+            <DiagramText
+              x={158}
+              y={y + 22}
+              width={148}
+              lineHeight={16}
+              maxLines={3}
+              fill={PANEL_MUTED}
+              fontSize={12}
+              fontFamily="var(--font-sans)"
+              dominantBaseline="hanging"
+            >
+              {step.detail}
+            </DiagramText>
+          </g>
+        );
+      })}
+    </g>
+  );
+}
+
+function RightLadderColumn() {
+  return (
+    <g data-part="automation-ladder">
+      {LADDER_STEPS.map((step, index) => {
+        const y = 112 + index * 82;
+        const part = step.refusal ? 'refusal-boundary' : 'step';
+        return (
+          <g key={step.title} data-part={part} data-index={index}>
+            <path
+              d={`M430 ${y} H570 L590 ${y + 14} V${y + 48} H430 Z`}
+              fill={PANEL_RAISED}
+              stroke={BORDER}
+            />
+            <text
+              x={442}
+              y={y + 10}
+              fill={PANEL_MUTED}
+              fontSize={10}
+              fontFamily="var(--font-sans)"
+              dominantBaseline="hanging"
+            >
+              {step.tag}
+            </text>
+            <text
+              x={442}
+              y={y + 24}
+              fill={PANEL_TEXT}
+              fontSize={12}
+              fontFamily="var(--font-sans)"
+              dominantBaseline="hanging"
+            >
+              {step.title}
+            </text>
+            <text
+              x={442}
+              y={y + 38}
+              fill={PANEL_MUTED}
+              fontSize={9}
+              fontFamily="var(--font-sans)"
+              dominantBaseline="hanging"
+            >
+              {step.detail}
+            </text>
+            <rect x={545} y={y + 17} width={24} height={24} rx={4} fill="none" stroke={HAIRLINE} />
+            {index < LADDER_STEPS.length - 1 ? (
+              <>
+                <circle cx={500} cy={y + 52} r={7} fill={PANEL} stroke={BORDER} />
+                <rect x={499} y={y + 59} width={2} height={22} rx={999} fill={BORDER} />
+              </>
+            ) : null}
+          </g>
+        );
+      })}
+
+      <g data-part="ocg-card">
+        <rect x={430} y={614} width={158} height={44} fill={PANEL_RAISED} stroke={BORDER} />
+        <text
+          x={444}
+          y={626}
+          fill={PANEL_TEXT}
+          fontSize={12}
+          fontFamily="var(--font-sans)"
+          dominantBaseline="hanging"
+        >
+          OCG - Operational Context Graph
+        </text>
+        <text
+          x={444}
+          y={642}
+          fill={PANEL_MUTED}
+          fontSize={9}
+          fontFamily="var(--font-sans)"
+          dominantBaseline="hanging"
+        >
+          Shared memory across all agents
+        </text>
       </g>
 
-      <g data-part="step-content">
-        <rect
-          x={46}
-          y={18}
-          width={step.tagWidth}
-          height={26}
-          rx={999}
-          fill={fillVar('$accent-dim')}
-        />
+      <g data-part="policy-footer">
+        <rect x={430} y={676} width={158} height={50} fill={PANEL_RAISED} stroke={BORDER} />
+        <line x1={509} y1={676} x2={509} y2={726} stroke={BORDER} />
         <text
-          x={56}
-          y={24}
-          fill={fillVar('$accent-text')}
-          fontSize={10.5}
-          fontWeight={500}
-          fontFamily={fontVar('$font-mono')}
+          x={440}
+          y={694}
+          fill={PANEL_MUTED}
+          fontSize={9}
+          fontFamily="var(--font-sans)"
           dominantBaseline="hanging"
         >
-          {step.tag}
+          Temporal orchestrates sequencing
         </text>
         <text
-          x={46}
-          y={52}
-          fill={fillVar('$text-primary')}
-          fontSize={24}
-          fontWeight={500}
-          fontFamily={fontVar('$font-sans')}
+          x={520}
+          y={694}
+          fill={PANEL_MUTED}
+          fontSize={7.5}
+          fontFamily="var(--font-sans)"
           dominantBaseline="hanging"
         >
-          {step.title}
-        </text>
-        <text
-          x={46}
-          y={89}
-          fill={fillVar('$text-secondary')}
-          fontSize={14}
-          fontFamily={fontVar('$font-sans')}
-          dominantBaseline="hanging"
-        >
-          {step.detail}
+          OPA enforces policy at each action boundary
         </text>
       </g>
     </g>
@@ -197,39 +199,44 @@ export function SreMechanism({
   className,
   titleId = 'sre-mechanism-title',
 }: DiagramProps) {
-  const { sequence, steps, footnote } = LAYOUT;
-
   return (
-    <svg viewBox={CROPPED_VIEWBOX} className={className} role="img" aria-labelledby={titleId}>
+    <svg
+      viewBox={VIEWBOX}
+      className={className}
+      role="img"
+      aria-labelledby={titleId}
+      data-ground="panel"
+    >
       <title id={titleId}>SRE incident recovery mechanism</title>
       <desc>{DESC}</desc>
 
-      <g data-part="sequence-card">
-        <rect
-          x={sequence.x}
-          y={sequence.y}
-          width={sequence.width}
-          height={sequence.height}
-          rx={sequence.rx}
-          fill={fillVar('$surface-card')}
-          stroke={fillVar('$border-hairline')}
-          strokeWidth={1}
-        />
-        {steps.map((step, i) => (
-          <PipelineStepRow key={step.title} step={step} index={i} />
-        ))}
+      <rect width={1240} height={820} fill={PANEL} />
+
+      <LeftIncidentColumn />
+      <RightLadderColumn />
+
+      <g data-part="product-lockup">
+        <rect x={936} y={676} width={214} height={56} fill="none" stroke={HAIRLINE} />
+        <rect x={936} y={676} width={62} height={56} fill={ACCENT} />
+        <text
+          x={1016}
+          y={704}
+          fill={PANEL_TEXT}
+          fontSize={20}
+          fontFamily="var(--font-sans)"
+          dominantBaseline="middle"
+        >
+          Aiden for SRE
+        </text>
       </g>
 
-      <text
-        data-part="footnote"
-        x={footnote.x}
-        y={footnote.y + 13}
-        fill={fillVar('$text-tertiary')}
-        fontSize={13}
-        fontFamily={fontVar('$font-sans')}
-      >
-        {footnote.text}
-      </text>
+      <defs>
+        <linearGradient id="sre-column-glow" x1="20" y1="620" x2="360" y2="100" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor={CYAN} />
+          <stop offset="0.55" stopColor="#b69df9" />
+          <stop offset="1" stopColor="#f3f0ff" />
+        </linearGradient>
+      </defs>
     </svg>
   );
 }

@@ -13,3 +13,6 @@ web/playwright-report/
 
 # Canvas parity exports (regenerable)
 design-reference/
+
+# Linked git worktrees
+.worktrees/

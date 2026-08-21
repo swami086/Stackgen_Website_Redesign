@@ -40,6 +40,9 @@ The result should read as factory.ai's information architecture and editorial co
 | D13 | Every meaning-carrying colour is a ground-aware pair, because no single value clears both cream and plate. Status is never encoded by colour alone. |
 | D14 | Desktop-only is kept for this phase but re-argued rather than inherited: fluid primitives, touch handled now, breakpoints anticipated and unimplemented. |
 | D15 | Diagram copy is length-constrained content. `DiagramText` takes a `maxLines` bound and truncates rather than overflowing its plate. |
+| D16 | Product heroes carry a copyable prompt taken verbatim from that product's demo, so the first viewport demonstrates rather than asserts. |
+| D17 | Home gains a featured case study built from the greytHR video and its matching published quote, an industries grid, and a momentum band. |
+| D18 | Industry pages are in scope, but only for verticals backed by real evidence. No card without a page, no page without proof. |
 
 ---
 
@@ -309,7 +312,7 @@ Rules, binding on all content modules:
 
 ### 5.1 Home
 
-Thirteen sections following factory.ai's claim, proof, mechanism, breadth, trust, close rhythm.
+Sixteen sections following factory.ai's claim, proof, mechanism, breadth, trust, close rhythm.
 
 | # | Section | Ground | Source | Status |
 |---|---|---|---|---|
@@ -321,11 +324,20 @@ Thirteen sections following factory.ai's claim, proof, mechanism, breadth, trust
 | 6 | Four-step ADF lifecycle | Dark panel | Deck slide 12 | Numbered `STEP 01–04` |
 | 7 | Operational Context Graph | Dark panel | Deck slide 7 | Hub and five domains |
 | 8 | Integrations | Cream | Existing | Seven-category text grid |
-| 9 | Case studies | Cream | Existing | greytHR featured plus quote wall |
-| 10 | Enterprise trust | Cream | Existing | SOC 2, PCI, HIPAA plus capability chips |
-| 11 | Use cases `01–06` | Cream | New | What Aiden runs autonomously |
-| 12 | Final CTA | Iridescent | New | Gradient band |
-| 13 | Footer | Cream | Existing | Simplified |
+| 9 | Featured case study | Cream, dark plate | New | greytHR, with the Abhishek Gaurav video click-to-play beside the published quote |
+| 10 | Case study wall | Cream | Existing | The remaining quotes, placeholders visibly marked |
+| 11 | Industries | Cream | New | Grid of the verticals we can prove, each linking to a real page |
+| 12 | Enterprise trust | Cream | Existing | SOC 2, PCI, HIPAA plus capability chips |
+| 13 | Use cases `01–06` | Cream | New | What Aiden runs autonomously |
+| 14 | Momentum | Cream | New | State of Reliability 2026, the AI SRE meetup series, analyst credentials |
+| 15 | Final CTA | Iridescent | New | Gradient band |
+| 16 | Footer | Cream | Existing | Simplified |
+
+**Featured case study.** factory.ai leads its case-study moment with a video and a pull quote, and we have the same pairing already: the one published quote in the entire project is Abhishek Gaurav, Head of Engineering and DevOps at greytHR, and the channel carries a 4:08 interview with the same person (`V0zsWdJz2rs`). Quote and speaker match, so the section is built from real material rather than assembled.
+
+**Industries, constrained by proof.** Product Principle 1 is prove with the artifact, and PRODUCT.md bars fabrication. An industry therefore earns a card only where real evidence exists: financial services (the anonymised Latin American bank, 53,000 deployments per week) and healthcare (Innovaccer). Additional verticals are added as evidence lands. A grid of six cards where two have substance would be the category default wearing our clothes.
+
+**Momentum.** A compact band, not a news hub: the State of Reliability 2026 report on 178,000 incidents, the AI SRE meetup series, and the analyst credentials. It signals velocity the way factory.ai's news carousel does, without committing to an articles system.
 
 ### 5.2 Product pages
 
@@ -333,18 +345,29 @@ Six sections, identical template across all four slugs:
 
 | # | Section | Ground | Note |
 |---|---|---|---|
-| 1 | Hero | Cream | Eyebrow, h1, one-sentence sub, Schedule demo |
+| 1 | Hero | Cream | Eyebrow, h1, one-sentence sub, Schedule demo, and a copyable prompt line |
 | 2 | Metrics | Cream | Four bare numbers as headings, noun and mechanism beneath |
-| 3 | Surface sequence `01–03` | Cream, dark panels | Exactly three product screenshots per page, drawn from that product's demo video |
+| 3 | Surface sequence `01–03` | Cream, dark panels | Exactly three product clips per page, drawn from that product's demo video |
 | 4 | Mechanism | Dark panel | The ported deck diagram for that product |
 | 5 | Early access | Cream | Infrastructure only; omitted on the other three |
-| 6 | Final CTA | Cream | `FinalCtaCompact` |
+| 6 | Testimonial | Cream | One customer quote, placed where it is true |
+| 7 | Final CTA | Cream | `FinalCtaCompact` |
+
+**The hero does something.** factory.ai's product hero carries a copyable install command rather than only a button, so the first viewport demonstrates rather than asserts. Ours carries the real prompt the demo video opens with, in mono on a dark plate with a copy control: `scan my prod AWS account and do a security audit`. It is the product's actual input, it matches footage the visitor is about to watch, and it costs no claim. Each product page uses the prompt from its own demo.
+
+**Testimonials are placed where they are true, not distributed evenly.** Only the greytHR quote is published, and it is about observability, so it belongs on Aiden for Observability. The other three product pages carry no testimonial until a real quote clears the approval tracker. An invented or relocated quote would breach PRODUCT.md.
 
 ### 5.3 Platform
 
 Hero, two planes, Operational Context Graph, Aiden OS, product links, close. Platform is the one page where abstraction beats a screenshot, so its diagrams lead.
 
 ---
+
+### 5.4 Known structural gap: case study depth
+
+factory.ai's case studies are long-form articles: cover image, date, read time, back link, share, and a consistent spine of story so far, what drove the shift, what changed, and measurable ROI. Ours are a hero, a metrics row and a close.
+
+This is a content constraint before it is a design one. Only greytHR carries a published named quote, and Innovaccer is metrics only, so an article template would mostly render empty headings. The gap is recorded rather than designed around: when approved customer narrative exists, the case pages adopt the article spine, and the featured case study on home already establishes the video-plus-quote pattern it would extend.
 
 ## 6. Diagram port
 
@@ -384,6 +407,9 @@ Source videos on the StackGen YouTube channel:
 | Infrastructure | Module Editor, MCP Server, IDE | `92UTOY9C1UY` | 3:13 |
 | Observability | StackOptimizer | `2PsieosSyAw` | 5:47 |
 | Platform | Introducing Autonomous Infrastructure Platform | `NBl7pkkxxZM` | 2:01 |
+| **Featured case study** | The Future of AI in SRE with Abhishek Gaurav from greytHR | `V0zsWdJz2rs` | 4:08 |
+
+The greytHR interview is the only source in this table that is not a product demo, and it is the most valuable: the speaker is the author of the one published quote in the project. It fills the click-to-play slot in 7.1.
 
 ### 7.1 Two proof formats
 
@@ -442,6 +468,10 @@ A silent clip that carries meaning needs a non-visual equivalent. Each surface p
 | `Marquee` | Logo and model scrollers, holds still under `prefers-reduced-motion` |
 | `StatBand` | Bare numbers as headings with nouns beneath |
 | `IridescentBand` | The closing CTA ground |
+| `PromptLine` | Copyable mono prompt on a dark plate, the product hero's actionable artifact |
+| `FeaturedCase` | Video click-to-play beside a published quote |
+| `IndustryGrid` | Vertical cards, one per industry backed by evidence |
+| `MomentumBand` | Report, meetup series and analyst credentials |
 
 **Rewritten**
 
@@ -462,7 +492,9 @@ A silent clip that carries meaning needs a non-visual equivalent. Each surface p
 
 ## 9. Out of scope
 
-Industry vertical pages, an enterprise page, a security page, a news or articles hub, and a customers index. The IA anticipates them; this phase does not build them. Forms and analytics stay honestly stubbed. RTL is not supported.
+An enterprise page, a security page, a news or articles hub, and a customers index. The IA anticipates them; this phase does not build them.
+
+**Industry pages move into scope** (decision g3): the home grid links to real pages, so a grid pointing at unbuilt routes is not acceptable. Scope is one page per industry we can prove, currently financial services and healthcare, each a compact page of hero, the evidence, and the close. Verticals without evidence get neither a card nor a page. Forms and analytics stay honestly stubbed. RTL is not supported.
 
 **Responsive, re-examined rather than inherited.** Desktop-only came from the retired canvas parity contract, so it does not survive automatically. It is nevertheless kept for this phase, on a narrower and honest basis: the audience evaluates from a workstation, and the build scope is already large. What changes is that the deferral must not foreclose the work:
 

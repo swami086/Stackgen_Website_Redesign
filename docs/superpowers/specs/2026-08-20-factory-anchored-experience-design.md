@@ -480,16 +480,16 @@ SC 1.4.10 Reflow and SC 1.4.4 Resize Text remain accepted deviations, and full A
 | # | Risk | Handling |
 |---|---|---|
 | R1 | Haffer XH web licence unconfirmed | Ship Geist until confirmed. Swap is a single token change |
-| R2 | Product frames leak internal identifiers | Mandatory redaction review, item 7. No frame ships unreviewed |
+| R2 | Product frames leak internal identifiers | **Mitigated in code.** `web/scripts/redaction.ts` gates every candidate string; verified against the real identifiers observed in `i31kMgVn_Xk`. Review still required, but it is now enforced rather than remembered |
 | R3 | Light ground inverts every existing component's tokens | Tokens are centralised in `@theme`; components already use tokens, not hex |
 | R4 | Deck diagrams are 1920-wide slides, the site is 1440 | Port geometry proportionally, do not scale a 1920 viewBox into a 1240 box. This caused the previous parity defects |
 | R5 | Product UI green against site violet and cyan | Accepted per D3. Screenshots are bounded inside `ProductFrame` |
 | R6 | Canvas drifts from shipped code | Accepted per D1. Canvas is updated after the build |
 | R7 | Clip weight on the critical path. Four clips at 3 MB is 12 MB per section | `preload="none"`, poster-first paint, `IntersectionObserver` gating, and clips never block first paint. Budget enforced in verification |
 | R8 | Motion sickness and distraction from four looping clips in one viewport | Only the clip in view plays. Loops are slow, contain no flashing, and respect reduced motion by holding on the poster |
-| R9 | Redacting moving footage is impractical frame by frame | Controlled by segment selection, not editing. Every frame of a candidate segment is scanned before use, per 7.4 |
+| R9 | Redacting moving footage is impractical frame by frame | **Mitigated in code.** Selection over editing, with `findSensitive` as the gate. Seven rule classes: account id, ARN, state bucket, email, token, infra resource, internal host |
 | R10 | The Haffer XH to Geist swap reflows every heading | Metric-overridden fallback and `font-display: swap`, per 3.3. CLS measured across the swap, not judged by eye |
-| R11 | Translated diagram copy overflows fixed SVG plates | `maxLines` bound with ellipsis truncation, per 3.10 and D15. Diagram copy is length-constrained content |
+| R11 | Translated diagram copy overflows fixed SVG plates | **Fixed in code.** `DiagramText` takes a `maxLines` bound, ellipsises at the bound, truncates overlong identifiers to the box width, and exposes the full string via `aria-label` so nothing is lost to assistive technology |
 | R12 | Committed colour plus large iridescent fields buries the CTA | `--color-action` is a separate value from the field, per 3.1. Squint test in verification item 16 catches it |
 
 ---

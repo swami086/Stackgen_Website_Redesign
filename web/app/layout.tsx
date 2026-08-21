@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { Nav } from "@/components/layout/Nav";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
-import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${jetbrains.variable}`}>
         <Script src="/theme-init.js" strategy="beforeInteractive" />
         <ThemeProvider>
-          <ThemeToggle />
+          <Nav />
           {children}
         </ThemeProvider>
       </body>

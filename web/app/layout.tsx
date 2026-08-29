@@ -3,6 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import Script from "next/script";
 import { ThemeProvider } from "@/components/replica/theme/ThemeProvider";
+import { MotionProvider } from "@/components/replica/motion/MotionProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -25,7 +26,9 @@ export default function RootLayout({
         <Script src="/theme-init.js" strategy="beforeInteractive" />
       </head>
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <MotionProvider>{children}</MotionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

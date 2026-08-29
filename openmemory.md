@@ -2,31 +2,27 @@
 
 ## Overview
 
-Stackgen Website Redesign workspace uses a **dedicated** OpenMemory cluster on Coolify, isolated from the global Zehra / GentleSpace / Swami clusters.
+This workspace's OpenMemory MCP **always** uses one VM: GCE `openmemory-uswest`. No Tailscale, no Coolify replica, no sibling clusters.
 
 - **project_id:** `Stackgen_Website_Redesign`
-- **Coolify service:** `openmemory-stackgen-website` (`u8jcwru10ekb3qdjcv0xd2tv`)
 - **USER namespace:** `StackgenWebsite`
-- **Host:** Tailscale `100.71.169.23` (Coolify server `attractive-anaconda`)
+- **Only host:** GCE `openmemory-uswest` (`us-west1-b`, tag `openmemory`, public `136.67.59.238`)
+- **Containers:** `openmemory-mcp-stackgenwebsite-uswest` (`mem0/openmemory-mcp:latest`, `USER=StackgenWebsite`) + `mem0_store-stackgenwebsite-uswest` (Qdrant, unpublished)
 - **MCP port:** `8771` → container `8765`
-- **Qdrant port:** `6339` → container `6333`
-- **Images:** `mem0/openmemory-mcp:latest` + `qdrant/qdrant:latest`
-- **Shared secrets env_file:** `/opt/migrated-stacks/openmemory-zehra/.env` (on Coolify host)
-- **Project MCP config (local, not global):** `.cursor/mcp.json`
-- **SSE URL:** `http://100.71.169.23:8771/mcp/cursor/sse/StackgenWebsite`
+- **Firewall:** `allow-openmemory-uswest` (`default` VPC, tcp/8771). Allowed source IPs: `12.3.77.187/32` (current) + `12.179.95.29/32` (prior). Update the rule when this workspace's egress IP changes — do not fail over to another VM.
+- **Workspace MCP only:** `.cursor/mcp.json` → `openmemory`. Do not change `~/.cursor/mcp.json` (that is Zehra / other workspaces).
+- **SSE URL:** `http://136.67.59.238:8771/mcp/cursor/sse/StackgenWebsite`
 
 ## Architecture
 
 ```
-Cursor (this workspace)
-  └─ .cursor/mcp.json → openmemory SSE
-       └─ Coolify service openmemory-stackgen-website
-            ├─ openmemory-mcp (USER=StackgenWebsite)
-            └─ mem0_store (Qdrant, isolated volume)
+Cursor (this workspace only)
+  └─ .cursor/mcp.json → openmemory
+       └─ http://136.67.59.238:8771/mcp/cursor/sse/StackgenWebsite
+            └─ GCE openmemory-uswest
+                 ├─ openmemory-mcp-stackgenwebsite-uswest (USER=StackgenWebsite)
+                 └─ mem0_store-stackgenwebsite-uswest
 ```
-
-Sibling clusters on the same host (do not share USER/volumes):
-`openmemory-zehra` (:8767), `openmemory-aiden` (:8768), `openmemory-swami` (:8769), `openmemory-gentlespace` (:8770).
 
 ## User Defined Namespaces
 
@@ -36,17 +32,24 @@ Sibling clusters on the same host (do not share USER/volumes):
 
 | Component | Location | Purpose |
 |---|---|---|
-| Project OpenMemory MCP | `.cursor/mcp.json` | Workspace-scoped Cursor MCP pointing at StackgenWebsite cluster |
+| Project OpenMemory MCP | `.cursor/mcp.json` | Workspace-only Cursor MCP. Always `http://136.67.59.238:8771/mcp/cursor/sse/StackgenWebsite` on GCE `openmemory-uswest`. |
 | Project Webflow MCP | `.cursor/mcp.json` | Workspace-scoped remote Webflow MCP for Webflow site/design operations |
 | Project Sybill MCP | `.cursor/mcp.json` | Workspace-scoped Sybill sales-intelligence MCP (calls, deals, accounts) via OAuth |
 | Project Figma MCP | `.cursor/mcp.json` | Official remote Figma Dev Mode MCP (design context, Code Connect, canvas write) via OAuth |
-| Torbit code graph | `user-torbit` MCP → `orbit mcp serve` (`~/.local/bin/orbit` **v0.105.0**) → `~/.orbit/graph.duckdb` (DuckDB **v1.5.5**) | Fixed 2026-08-21: upgraded Orbit `0.78.0`→`0.105.0`; quarantined corrupt DB to `~/.orbit/broken/`; reindexed main + worktrees. Query via `run_sql`; refresh with `index`. |
-| Coolify OpenMemory stack | `openmemory-stackgen-website` | Isolated Qdrant + openmemory-mcp for this redesign |
-| **App Replica scaffold (T1)** | `web/` (worktree `app-replica-next`) | Fresh Next.js 16.3 standalone: Pencil `ds-*` tokens in `app/globals.css` (`data-theme` light/dark), `theme-init.js` + `ThemeProvider`/`ThemeToggle`, Vitest theme smoke test, Docker multi-stage for compose `prod`. Stub home only; Nav/pages in later tasks. |
+| Project Pencil MCP | `.cursor/mcp.json` → `pencil-docker` | Workspace-only Pencil MCP. Launcher `~/.cursor/bin/pencil-mcp-docker-launcher.sh` with `PENCIL_PROJECT_SLUG=stackgen_website_redesign`. Official pen.dev docs auto-register a global `pencil` via the extension (`vscode.cursor.mcp.registerServer`); this workspace disables that and keeps Pencil in project mcp.json only. |
+| Torbit code graph | `user-torbit` MCP → `orbit mcp serve` (`~/.local/bin/orbit` **v0.105.0**) → `~/.orbit/graph.duckdb` (DuckDB **v1.5.5**) | Fixed 2026-08-21: upgraded Orbit `0.78.0`→`0.105.0`; quarantined corrupt DB to `~/.orbit/broken/`; reindexed main + worktrees. **2026-08-28:** also indexed sibling `/Users/swami/Documents/stackgen-vibe-ux` (`main` @ `0bb9b47`; 1651 files, 28831 defs). Query via `run_sql`; refresh with `index`. |
+| **stackgen-vibe-ux local Docker** | `/Users/swami/Documents/stackgen-vibe-ux` (`Dockerfile.local`, `src/iac/docker-compose.local.yaml`) | **2026-08-28:** production `Dockerfile` needs GitHub Packages `npm_token` (`read:packages`). Local image vendors sibling `/Users/swami/Documents/ui-kit` on branch `sagar/all-wip` (matches `@appcd-dev/ui-kit@0.2.11-sagar-all-wip.28`). Run `docker compose -f src/iac/docker-compose.local.yaml up --build` → container `stackgen-vibe-ux`, **http://localhost:3001** (host 3000 is website prod). |
+| GCE OpenMemory VM | `openmemory-uswest` (`136.67.59.238:8771`) | Sole OpenMemory host for this workspace. Isolated Qdrant + MCP (`USER=StackgenWebsite`). |
+| **Before/After diagram (`a75dC` / `uvKGu`)** | `web/components/sections/home/shelf/BeforeAfter.tsx`, `web/content/home-shelf.ts` | **2026-08-27 animation-ready 4/3-beat rail:** 420px panels. Today: signals → Context lost → Ops teams → Manual approval. Future: signals → Aiden OS (Shared context inside) → Policy gate. `data-animate` hooks on rail nodes. Pencil + React synced. Export: `exports/web-shelf/uvKGu-animation-ready-v4/uvKGu.png`. |
+| **Inner→Outer Loop diagram (`RBepL`)** | Pencil `C2kYT` Assemblies → `RBepL`; React `InnerOuterLoopDiagram.tsx` (needs sync) | **2026-08-28 richer landing diagram:** Aiden OS spanning shell (`$ds-surface` + border) with mono top bar. Inner Loop chips: IDE/Cursor, Git/GitHub, CI/GitLab, IaC/Terraform → Context Graph hub → Outer Loop: Runtime/EKS, Infrastructure/AWS, Observability/Datadog. Export: `exports/web-shelf/inner-outer-loop-v2/RBepL.png`. |
+| **Context Graph hub (`m3kuQ`)** | Pencil inside `RBepL` Main Flow | **2026-08-28 radial animated-ready rebuild:** 280×280 hub-and-spoke (Flourish radial + CSS orbit staging). Outer pulse ring, rotate orbit track 18s, hub core pulse 2.8s, 4 satellites (intent/entities/policies/memory) staggered enter, E/W spark dots. Export: `exports/web-shelf/inner-outer-loop-v2/m3kuQ.png`. Inspo notes in `.firecrawl/context-graph-inspo/`. |
+| **Offerings Diagram (`F4Jlp`)** | Pencil `C2kYT` → `F4Jlp` | **2026-08-28 AIOS-mapped animated rebuild:** Band A apps (SRE / DevOps / Infrastructure) + Band B Aiden OS double-bezel with Agent Platform / Governance / Shared Context chips from `AIOS - Product Features.md`. Never prints “AIOS”. Motion: tile stagger + bezel pulse + chip enters. Export: `exports/web-shelf/inner-outer-loop-v2/F4Jlp.png`. |
+| **Home Dark Footer (`Wp1Dh`)** | Pencil `CYfSl` after `ck4Dy` | **2026-08-28:** CTA strip (Schedule demo) + Brand / Product / Platform / Company columns + legal/socials bottom. Mobbin cues: Artlist/Savee/Unity. Export: `exports/web-shelf/home-footer-ck4Dy/Wp1Dh.png`. |
 | **App Replica Nav + primitives (T2)** | `web/` (worktree `app-replica-next`) | `lib/nav.ts` + `lib/products.ts`; primitives `Logo` (Pencil `mF7lt`), `ButtonPrimary`, `ButtonGhost`, `MonoLabel`, `SectionShell`; layout `Nav` (60px, replica pad, ThemeToggle in actions) + `Footer({ columns })`; nav smoke test. |
 | **App Replica product pages (T5)** | `web/` (worktree `app-replica-next`) | `content/products.ts` (4 slugs, verbatim Pencil copy); sections `components/sections/product/*` (Hero, Metrics, KeyCapabilities, Mechanism, EarlyAccessStrip, Testimonial, FinalCta); `app/product/[slug]/page.tsx` with `await params` + `notFound()`; media remapped to `public/media/aiden-*`; EarlyAccessStrip conditional on Infrastructure only. |
 | **App Replica Enterprise + Pricing + News (T7)** | `web/` (worktree `app-replica-next`) | `content/{enterprise,pricing,news}.ts` from frames `o8Fqkk`/`V8R69l`/`o303yj`; sections under `components/sections/{enterprise,pricing,news}/`; routes `/enterprise`, `/pricing`, `/news`; Pricing Public Web Rules + FAQ canvas-exact; News Placeholder Items unchanged. |
 | **Next.js web app (Wave 1 T1)** | `web/` | Next.js 16.3 standalone app: canvas tokens in `app/globals.css`, typed contracts `lib/types.ts` + `lib/nav.ts`, inert `MotionProvider`/`Reveal`, Vitest, Docker multi-stage + compose profiles (`dev`/`prod`) |
+| **CYfSl dark-only scaffold (Task 1)** | `web/lib/cyfsl-frames.ts`, `web/app/globals.css`, `web/app/layout.tsx` | Dark-only landing scaffold for the CYfSl replica: `CYFSL_FRAMES` frame ids, a single dark `:root` token set from the Pencil hexes, and a stripped root layout with only the font variables. |
 | **Primitive components (Wave 1 T2)** | `web/components/primitives/` | React port of canvas shelf: `Logo`, `ButtonPrimary`, `ButtonGhost`, `MonoLabel`, `MetricCell`, `SectionHeaderSplit`, `Nav` (client), `Footer` (server). Token-mapped Tailwind; Logo SVG from `JJx7F` path data; Nav consumes `NAV_ITEMS`/`PRIMARY_CTA`; MetricCell renders mechanism line |
 | **Factory structural primitives (Task 4)** | `web/components/primitives/` | Added `NumberedSequence`, `StatBand`, `IridescentBand`, `Marquee`, and `PromptLine` for the factory-anchored home/product sections. `Marquee` uses the shared `useReducedMotion` hook and CSS keyframes in `web/app/globals.css`; `PromptLine` confirms copy state in text and reserves status width to avoid layout shift |
 | **Content modules (Wave 1 T3)** | `web/content/` | Typed default-export objects per Wave 1 page (`home`, four `product-*`, `platform`, three case modules, `schedule-demo`, `shared`). Consumes `@/lib/types`; greytHR quote is sole `published` with `sourceUrl`; governance vitest (13 tests) bans Olly/InfraOps/DevOps/em-dash/single-pane-of-glass across all modules; quote/metric checks on all modules except `shared` logos |
@@ -105,6 +108,11 @@ Sibling clusters on the same host (do not share USER/volumes):
 - Product mechanism upgrades in W2 should be rebuilt as editable Linear-token diagrams rather than text-only copy blocks; `bEaQH` now uses a six-step vertical investigation sequence for drift → alert → OCG root cause → remediation → policy-validated deploy → verification.
 ## Recent edits
 
+- 2026-08-28: **Pencil MCP is workspace-only.** Official pen.dev docs (https://docs.pencil.dev/getting-started/installation#mcp-server, https://docs.pencil.dev/getting-started/ai-integration) auto-register a global Cursor server named `pencil` via the extension. This workspace does not use that. Pencil lives only in project `.cursor/mcp.json` as `pencil-docker` (Docker launcher + slugged socket `pencil-cursor_stackgen_website_redesign.sock`). `pencil-mcp-repair.sh` now skips `cursor.mcp.registerServer` so Cursor Tools & MCP does not show a global `extension-pencil`. Do not add Pencil to `~/.cursor/mcp.json`. After an extension update, re-run `PENCIL_PROJECT_SLUG=stackgen_website_redesign ~/.cursor/bin/pencil-mcp-repair.sh` and reload the window.
+
+- 2026-08-27: **OpenMemory host lock + MCP sync.** This workspace's OpenMemory MCP is **only** GCE `openmemory-uswest` (`136.67.59.238:8771`, USER `StackgenWebsite`). Workspace `.cursor/mcp.json` SSE URL set to `http://136.67.59.238:8771/mcp/cursor/sse/StackgenWebsite`. Firewall `allow-openmemory-uswest` updated to include current egress `12.3.77.187/32` (kept prior `12.179.95.29/32`). Guide and MCP memories synced: hard rule stored on the GCP VM; global `~/.cursor/mcp.json` Zehra entry left untouched. Do not fail over to Coolify replica or Tailscale.
+- 2026-08-29: **Task 1 CYfSl dark scaffold:** added `web/lib/cyfsl-frames.ts` with the dark-only CYfSl pencil ids, rewrote `web/app/globals.css` to a single dark `:root` token set using the extracted Pencil hexes, and simplified `web/app/layout.tsx` to font-only root markup with no theme providers or theme-init script. The smoke test in `web/__tests__/cyfsl-home.test.tsx` is intentionally red for Task 2 wiring.
+
 - 2026-08-21: **Task 6 blocked-manifest review fix:** `web/scripts/__tests__/clips.test.ts` now extracts the canonical `## Status` entry and requires both `.superpowers/sdd/factory-task-6-report.md` and `.superpowers/sdd/redaction-signoff.md` to have exactly one status value (`blocked`). The same suite now compares each artifact's uncleared-segment list directly against the `CLIPS`-derived 14-name manifest, rejecting extras and duplicates while preserving the existing duplicate/conflicting cleared-evidence guards. Verification passed with focused `scripts/__tests__/clips.test.ts` and `pnpm typecheck`. Commit: `2801f97`.
 - 2026-08-21: **Wave 3 Task 10 Aiden OS port:** added `web/components/diagrams/AidenOsDiagram.tsx` from Figma node `1:8708` with an accessible single-SVG contract (`role="img"`, title, desc, panel ground, `DiagramText` width/maxLines, `data-part` hooks), downloaded the center-ring asset to `web/public/diagram-assets/aiden-os-center.svg`, changed `web/components/sections/platform/AidenOsLinks.tsx` to import the new component directly, and kept `web/components/diagrams/AidenOsLinksDiagram.tsx` as a thin compatibility wrapper. TDD evidence: new `AidenOsDiagram.test.tsx` failed first on the missing module, then focused diagram/section specs passed, followed by `pnpm typecheck`, full `pnpm test`, and `pnpm build`.
 - 2026-08-21: **Task 11 review fixes:** `web/components/diagrams/product/AutomationMechanism.tsx`, `InfrastructureMechanism.tsx`, and `SreMechanism.tsx` now use source-derived cropped Figma viewBoxes instead of the hand-estimated `1240x820` layout, and `SreMechanism` renames the misleading `automation-ladder` hook to `investigation-ladder` while routing incident/policy body copy through bounded `DiagramText`. Added regression tests for source-derived viewBoxes, truthful SRE hook naming, wrapped-text bounds, and the final Infrastructure accessibility crop description. Verification passed with focused mechanism suites, `pnpm typecheck`, and `pnpm build`. Commits: `8d876ef`, `fbb212f`, `3573522`.
@@ -146,5 +154,6 @@ Sibling clusters on the same host (do not share USER/volumes):
 - Figma MCP (official remote): use native `"url": "https://mcp.figma.com/mcp"` in project `.cursor/mcp.json` — Figma MCP Catalog client only; OAuth via Cursor Connect (not mcp-remote CLI).
 - Coolify list status for these stacks often shows `running:unknown` / stale `exited`; verify with TCP + SSE probe on the MCP port.
 - Pencil MCP only for `.pen` — never Read/Grep encrypted pens.
+- **Pencil MCP is workspace-only (2026-08-28):** Official pen.dev docs auto-register a global Cursor server named `pencil`. This workspace disables that (`__pencilSkipGlobalMcpRegister` in `pencil-mcp-repair.sh`). The only Pencil MCP is project `.cursor/mcp.json` `pencil-docker` (`PENCIL_PROJECT_SLUG=stackgen_website_redesign`). Never add Pencil to `~/.cursor/mcp.json`. After a Pencil extension update, re-run the repair script and reload the window. A `.pen` file must be open in the Pencil canvas editor or tools return “file needs to be open.”
 - **Next.js Wave 1 foundation (T1, 2026-08-20):** `web/` on branch `wave1-nextjs`. Stack: Next 16.3, React 19.2, Tailwind v4 `@theme` tokens from `Stack_Linear.pen`, motion 13.1.0 (unused), Vitest+RTL. Shared types: `Metric`, `Quote`, `CustomerLogo`, `Cta`, `NavItem`, `DiagramProps`, `SectionProps<T>`. Nav: Product/Platform/Case Studies/Company + PRIMARY_CTA Schedule demo. Customer logos copied to `web/public/logos/customers/` (12 files). Docker compose profiles `dev`/`prod`. Known gaps: `postcss.config.mjs` not in T1 file ownership (Tailwind `@theme` build warning); pnpm standalone missing `@swc/helpers` symlink at runtime.
 - **2026-08-19 content reset (option C):** Deleted all Scope A marketing-core page frames beyond Home/Mobile. Removed `docs/content-inventory/` and `.firecrawl/scope-a/`. Foundation kept: Direction Contract, Home, Mobile, component shelf. Old plan `docs/superpowers/plans/2026-08-19-stackgen-marketing-core-canvas.md` is **superseded** until a new content process + plan is approved.

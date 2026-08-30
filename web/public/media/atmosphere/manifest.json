@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-08-30T00:32:27.920Z",
+  "model": "gemini-3.1-flash-image",
+  "files": [
+    "hero-field-light.png",
+    "hero-field-dark.png",
+    "video-still-light.png",
+    "ground-assemblies-dark.png",
+    "video-still-dark.png",
+    "ground-assemblies-light.png",
+    "ground-shell-light.png",
+    "ground-shell-dark.png",
+    "ground-who-light.png",
+    "ground-who-dark.png"
+  ]
+}

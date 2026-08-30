@@ -24,13 +24,23 @@ test("hosts the particle simulation canvas", () => {
   expect(container.querySelector('[data-motion-field="work-items"]')).toBeInTheDocument();
 });
 
-test("is an accessible figure and carries the pencil id", () => {
+test("is an accessible figure with puzzle assemble state", () => {
   const { container } = render(<InnerOuterLoop theme="dark" />);
   const fig = container.querySelector('[role="img"]');
-  expect(fig).toHaveAttribute("aria-label", expect.stringContaining("Inner loop"));
+  expect(fig).toHaveAttribute("aria-label", expect.stringContaining("puzzle"));
+  expect(fig).toHaveAttribute("data-diagram", "inner-outer-puzzle-stitch");
+  expect(fig).toHaveAttribute("data-assemble-phase");
+});
+
+test("renders interlocking puzzle shells on both halves", () => {
+  const { container } = render(<InnerOuterLoop theme="dark" />);
+  expect(container.querySelector('[data-puzzle-shell="inner"]')).toBeInTheDocument();
+  expect(container.querySelector('[data-puzzle-shell="outer"]')).toBeInTheDocument();
+  expect(container.querySelectorAll("[data-puzzle-facet]")).toHaveLength(7);
+  expect(container.querySelector("[data-stitch-seams]")).toBeInTheDocument();
 });
 
 test("no static arrow glyphs survive", () => {
   const { container } = render(<InnerOuterLoop theme="dark" />);
-  expect(container.querySelectorAll('[data-connector-arrow]')).toHaveLength(0);
+  expect(container.querySelectorAll("[data-connector-arrow]")).toHaveLength(0);
 });

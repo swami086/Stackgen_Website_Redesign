@@ -10,6 +10,12 @@ web/.next/
 web/next-env.d.ts
 web/test-results/
 web/playwright-report/
+web/.env
+web/.env.*
+!web/.env.example
+web/.open-next/
+web/.tmp/
+web/clouduser.*
 
 # Canvas parity exports (regenerable)
 design-reference/

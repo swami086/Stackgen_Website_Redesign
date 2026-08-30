@@ -2,21 +2,33 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { replicaContent } from "@/content/replica";
 import { ReplicaLogo } from "@/components/replica/shared/ReplicaLogo";
 import { ReplicaPrimaryPill } from "@/components/replica/shared/ReplicaPrimaryPill";
 import { ThemeToggle } from "@/components/replica/theme/ThemeToggle";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
+import { ProductMegaMenu } from "@/components/replica/nav/ProductMegaMenu";
 import { cn } from "@/lib/cn";
 import { EASE_CSS } from "@/lib/motion-tokens";
+
+const NAV_LINK_CLASS =
+  "whitespace-nowrap text-[13.5px] tracking-[-0.1px] text-text-secondary no-underline transition-colors hover:text-text-primary";
 
 type ReplicaNavProps = {
   theme: "light" | "dark";
   className?: string;
 };
 
+function isNavLinkActive(pathname: string | null, href: string) {
+  if (!pathname || href === "#") return false;
+  if (pathname === href) return true;
+  return pathname.startsWith(`${href}/`);
+}
+
 export function ReplicaNav({ theme, className }: ReplicaNavProps) {
   const { links, cta } = replicaContent.nav;
+  const pathname = usePathname();
   const [material, setMaterial] = useState<"glass" | "solid">("glass");
 
   useEffect(() => {
@@ -56,15 +68,26 @@ export function ReplicaNav({ theme, className }: ReplicaNavProps) {
         </Link>
 
         <nav aria-label="Primary" className="flex items-center gap-[26px]">
-          {links.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="whitespace-nowrap text-[13.5px] tracking-[-0.1px] text-text-secondary no-underline transition-colors hover:text-text-primary"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {links.map((item) =>
+            item.label === "Products" ? (
+              <ProductMegaMenu key={item.label}>
+                <button type="button" className={NAV_LINK_CLASS}>
+                  {item.label}
+                </button>
+              </ProductMegaMenu>
+            ) : (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={cn(
+                  NAV_LINK_CLASS,
+                  isNavLinkActive(pathname, item.href) && "text-text-primary",
+                )}
+              >
+                {item.label}
+              </Link>
+            ),
+          )}
         </nav>
 
         <div className="min-h-px min-w-px flex-1" aria-hidden />

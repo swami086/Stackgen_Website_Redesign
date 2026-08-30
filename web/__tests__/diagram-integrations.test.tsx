@@ -48,6 +48,14 @@ test("reduced motion collapses to a single static row", () => {
   expect(container.querySelector("[data-marquee]")).toBeNull();
 });
 
+test("vendor marks fill the pill at marquee scale", () => {
+  const { container } = render(<Integrations theme="light" />);
+  const mark = container.querySelector("[data-vendor-slug='github'] svg");
+  expect(mark).toHaveClass("size-6");
+  const pill = container.querySelector("[data-vendor-slug='github']");
+  expect(pill).toHaveClass("h-10");
+});
+
 test("two renders stay deterministic", () => {
   const a = render(<Integrations theme="dark" />).container.innerHTML;
   const b = render(<Integrations theme="dark" />).container.innerHTML;

@@ -1,0 +1,4401 @@
+{
+  "stackgen": {
+    "title": "StackGen",
+    "href": "/docs/stackgen",
+    "children": [
+      {
+        "title": "aiden mcp",
+        "href": "/docs/stackgen/aiden-mcp",
+        "children": [
+          {
+            "title": "Aiden Mcp",
+            "href": "/docs/stackgen/aiden-mcp",
+            "slug": [
+              "stackgen",
+              "aiden-mcp"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "analytics",
+        "href": "/docs/stackgen/analytics/tracked-events",
+        "children": [
+          {
+            "title": "Automatic Events",
+            "href": "/docs/stackgen/analytics/tracked-events",
+            "slug": [
+              "stackgen",
+              "analytics",
+              "tracked-events"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "cli guide",
+        "href": "/docs/stackgen/cli-guide",
+        "children": [
+          {
+            "title": "Prerequisites",
+            "href": "/docs/stackgen/cli-guide/cloud2code/aws",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "cloud2code",
+              "aws"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/cloud2code/awsflags",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "cloud2code",
+              "awsflags"
+            ]
+          },
+          {
+            "title": "Prerequisites",
+            "href": "/docs/stackgen/cli-guide/cloud2code/azure",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "cloud2code",
+              "azure"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/cloud2code/azureflags",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "cloud2code",
+              "azureflags"
+            ]
+          },
+          {
+            "title": "Prerequisites",
+            "href": "/docs/stackgen/cli-guide/cloud2code/gcp",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "cloud2code",
+              "gcp"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/cloud2code/gcpflags",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "cloud2code",
+              "gcpflags"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/cloud2code/globalflags",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "cloud2code",
+              "globalflags"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/cloud2code/import",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "cloud2code",
+              "import"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/cli-guide/cloud2code",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "cloud2code"
+            ]
+          },
+          {
+            "title": "Install",
+            "href": "/docs/stackgen/cli-guide/cloud2code/install",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "cloud2code",
+              "install"
+            ]
+          },
+          {
+            "title": "Install Homebrew",
+            "href": "/docs/stackgen/cli-guide/cloud2code/install/linux",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "cloud2code",
+              "install",
+              "linux"
+            ]
+          },
+          {
+            "title": "Install Homebrew",
+            "href": "/docs/stackgen/cli-guide/cloud2code/install/mac",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "cloud2code",
+              "install",
+              "mac"
+            ]
+          },
+          {
+            "title": "Docker",
+            "href": "/docs/stackgen/cli-guide/cloud2code/install/windows",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "cloud2code",
+              "install",
+              "windows"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/cloud2code/supportedresources",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "cloud2code",
+              "supportedresources"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/configuration/autocomplete/autocomplete-for-stackgen",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "configuration",
+              "autocomplete",
+              "autocomplete-for-stackgen"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/configuration/autocomplete/bash",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "configuration",
+              "autocomplete",
+              "bash"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/configuration/autocomplete/fish",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "configuration",
+              "autocomplete",
+              "fish"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/configuration/autocomplete/powershell",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "configuration",
+              "autocomplete",
+              "powershell"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/configuration/autocomplete/zsh",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "configuration",
+              "autocomplete",
+              "zsh"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/configuration/check-stackgen-version",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "configuration",
+              "check-stackgen-version"
+            ]
+          },
+          {
+            "title": "Use the StackGen Software as a Service",
+            "href": "/docs/stackgen/cli-guide/configuration/cloud",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "configuration",
+              "cloud"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/configuration/configure-stackgen-cli",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "configuration",
+              "configure-stackgen-cli"
+            ]
+          },
+          {
+            "title": "Choosing the Right Configuration",
+            "href": "/docs/stackgen/cli-guide/configuration",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "configuration"
+            ]
+          },
+          {
+            "title": "Connecting StackGen CLI to Your On-Prem StackGen Instance",
+            "href": "/docs/stackgen/cli-guide/configuration/on-prem",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "configuration",
+              "on-prem"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/configuration/preference-key",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "configuration",
+              "preference-key"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/get-help-for-stackgen-cli",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "get-help-for-stackgen-cli"
+            ]
+          },
+          {
+            "title": "AWS",
+            "href": "/docs/stackgen/cli-guide/get-started/cloud-provider-limitations",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "get-started",
+              "cloud-provider-limitations"
+            ]
+          },
+          {
+            "title": "Get Started",
+            "href": "/docs/stackgen/cli-guide/get-started",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "get-started"
+            ]
+          },
+          {
+            "title": "Install",
+            "href": "/docs/stackgen/cli-guide/get-started/install-and-uninstall",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "get-started",
+              "install-and-uninstall"
+            ]
+          },
+          {
+            "title": "What is StackGen CLI?",
+            "href": "/docs/stackgen/cli-guide",
+            "slug": [
+              "stackgen",
+              "cli-guide"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/cli-guide/terraform-importer",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "terraform-importer"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/ai",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "ai"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/ai/knowledge",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "ai",
+              "knowledge"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/appstack/create",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "appstack",
+              "create"
+            ]
+          },
+          {
+            "title": "Supported appStack CLI commands",
+            "href": "/docs/stackgen/cli-guide/usage/appstack/create-version",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "appstack",
+              "create-version"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/appstack/delete",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "appstack",
+              "delete"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/appstack/download-iac",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "appstack",
+              "download-iac"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/appstack",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "appstack"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/appstack/list-templates",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "appstack",
+              "list-templates"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/appstack/show",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "appstack",
+              "show"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/appstack/status",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "appstack",
+              "status"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/destroy-stackgen-infra",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "destroy-stackgen-infra"
+            ]
+          },
+          {
+            "title": "Drifts",
+            "href": "/docs/stackgen/cli-guide/usage/drifts",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "drifts"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/drifts/stackgendrift",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "drifts",
+              "stackgendrift"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/drifts/stackgendriftdetect",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "drifts",
+              "stackgendriftdetect"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/generate-iac",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "generate-iac"
+            ]
+          },
+          {
+            "title": "Available Flags",
+            "href": "/docs/stackgen/cli-guide/usage/global-flags",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "global-flags"
+            ]
+          },
+          {
+            "title": "Key Benefits",
+            "href": "/docs/stackgen/cli-guide/usage/import",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "import"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/import/stackgen-import",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "import",
+              "stackgen-import"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/import/stackgen-import-state",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "import",
+              "stackgen-import-state"
+            ]
+          },
+          {
+            "title": "Command Groups",
+            "href": "/docs/stackgen/cli-guide/usage",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/manage/manage-resources-in-cli",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "manage",
+              "manage-resources-in-cli"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/manage/type",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "manage",
+              "type"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/policies",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "policies"
+            ]
+          },
+          {
+            "title": "Prerequisites",
+            "href": "/docs/stackgen/cli-guide/usage/provision-infra-with-cli",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "provision-infra-with-cli"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/state",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "state"
+            ]
+          },
+          {
+            "title": "Aws Iam Permissions",
+            "href": "/docs/stackgen/cli-guide/usage/upload/aws-iam-permissions",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "upload",
+              "aws-iam-permissions"
+            ]
+          },
+          {
+            "title": "Custom Cloud Migration Mappings",
+            "href": "/docs/stackgen/cli-guide/usage/upload/custom-cloud-migration-mappings",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "upload",
+              "custom-cloud-migration-mappings"
+            ]
+          },
+          {
+            "title": "Supported Clouds",
+            "href": "/docs/stackgen/cli-guide/usage/upload/custom-modules",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "upload",
+              "custom-modules"
+            ]
+          },
+          {
+            "title": "Resource Iam Restriction Policy",
+            "href": "/docs/stackgen/cli-guide/usage/upload/resource-iam-restriction-policy",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "upload",
+              "resource-iam-restriction-policy"
+            ]
+          },
+          {
+            "title": "Resource Override Policy",
+            "href": "/docs/stackgen/cli-guide/usage/upload/resource-override-policy",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "upload",
+              "resource-override-policy"
+            ]
+          },
+          {
+            "title": "Resource Pack Policy",
+            "href": "/docs/stackgen/cli-guide/usage/upload/resource-pack-policy",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "upload",
+              "resource-pack-policy"
+            ]
+          },
+          {
+            "title": "Supported Clouds",
+            "href": "/docs/stackgen/cli-guide/usage/upload/resource-restriction-policy",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "upload",
+              "resource-restriction-policy"
+            ]
+          },
+          {
+            "title": "Prerequisites",
+            "href": "/docs/stackgen/cli-guide/usage/upload/security-rules",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "upload",
+              "security-rules"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/upload/upload-resources",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "upload",
+              "upload-resources"
+            ]
+          },
+          {
+            "title": "Usage",
+            "href": "/docs/stackgen/cli-guide/usage/viewprojects",
+            "slug": [
+              "stackgen",
+              "cli-guide",
+              "usage",
+              "viewprojects"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "cloud2code",
+        "href": "/docs/stackgen/cloud2code/install/readme",
+        "children": [
+          {
+            "title": "Readme",
+            "href": "/docs/stackgen/cloud2code/install/readme",
+            "slug": [
+              "stackgen",
+              "cloud2code",
+              "install",
+              "readme"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "concepts",
+        "href": "/docs/stackgen/concepts",
+        "children": [
+          {
+            "title": "Accessing Activity Logs",
+            "href": "/docs/stackgen/concepts/activity-logs",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "activity-logs"
+            ]
+          },
+          {
+            "title": "Project-Level Templates Are No Longer Available",
+            "href": "/docs/stackgen/concepts/appstacks/createappstacks/appstack-templates",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "appstacks",
+              "createappstacks",
+              "appstack-templates"
+            ]
+          },
+          {
+            "title": "Push Terraform state to a remote backend",
+            "href": "/docs/stackgen/concepts/appstacks/createappstacks/fromdiscovery",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "appstacks",
+              "createappstacks",
+              "fromdiscovery"
+            ]
+          },
+          {
+            "title": "Fromscratch",
+            "href": "/docs/stackgen/concepts/appstacks/createappstacks/fromscratch",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "appstacks",
+              "createappstacks",
+              "fromscratch"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/appstacks/createappstacks",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "appstacks",
+              "createappstacks"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/appstacks",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "appstacks"
+            ]
+          },
+          {
+            "title": "appStack listing",
+            "href": "/docs/stackgen/concepts/appstacks/manageappstacks",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "appstacks",
+              "manageappstacks"
+            ]
+          },
+          {
+            "title": "How Snapshots Work",
+            "href": "/docs/stackgen/concepts/appstacks/manageappstacks/snapshots",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "appstacks",
+              "manageappstacks",
+              "snapshots"
+            ]
+          },
+          {
+            "title": "Create an appStack Version",
+            "href": "/docs/stackgen/concepts/appstacks/manageappstacks/versioncontrol",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "appstacks",
+              "manageappstacks",
+              "versioncontrol"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/cliruns",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "cliruns"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/clouddiscovery",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "clouddiscovery"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/compliance",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "compliance"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/drift/detectdrift",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "drift",
+              "detectdrift"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/drift",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "drift"
+            ]
+          },
+          {
+            "title": "What you can configure",
+            "href": "/docs/stackgen/concepts/environment-configurations",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "environment-configurations"
+            ]
+          },
+          {
+            "title": "Accessing Git Configurations",
+            "href": "/docs/stackgen/concepts/gitconfigurations",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "gitconfigurations"
+            ]
+          },
+          {
+            "title": "Push to Git",
+            "href": "/docs/stackgen/concepts/iac/exporting-iac",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "iac",
+              "exporting-iac"
+            ]
+          },
+          {
+            "title": "View Import Logs",
+            "href": "/docs/stackgen/concepts/iac/import-iac/import-tf-logs",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "iac",
+              "import-iac",
+              "import-tf-logs"
+            ]
+          },
+          {
+            "title": "Import IaC",
+            "href": "/docs/stackgen/concepts/iac/import-iac/importing-iac",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "iac",
+              "import-iac",
+              "importing-iac"
+            ]
+          },
+          {
+            "title": "Directory Structure of IaC",
+            "href": "/docs/stackgen/concepts/iac",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "iac"
+            ]
+          },
+          {
+            "title": "Requirements",
+            "href": "/docs/stackgen/concepts/iac/plan-and-deploy-saas",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "iac",
+              "plan-and-deploy-saas"
+            ]
+          },
+          {
+            "title": "What Is Shared Infrastructure?",
+            "href": "/docs/stackgen/concepts/iac/shareinfra",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "iac",
+              "shareinfra"
+            ]
+          },
+          {
+            "title": "Concepts",
+            "href": "/docs/stackgen/concepts",
+            "slug": [
+              "stackgen",
+              "concepts"
+            ]
+          },
+          {
+            "title": "Key Features",
+            "href": "/docs/stackgen/concepts/modules/catalog",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "modules",
+              "catalog"
+            ]
+          },
+          {
+            "title": "Module Editor Overview",
+            "href": "/docs/stackgen/concepts/modules",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "modules"
+            ]
+          },
+          {
+            "title": "Dynamic Labels vs Pinned Versions",
+            "href": "/docs/stackgen/concepts/modules/labels",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "modules",
+              "labels"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/modules/module-catalog-assistant",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "modules",
+              "module-catalog-assistant"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/modules/modulemanagement",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "modules",
+              "modulemanagement"
+            ]
+          },
+          {
+            "title": "Why Use Open in IDE",
+            "href": "/docs/stackgen/concepts/modules/openinide",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "modules",
+              "openinide"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/modules/openinide/vscode",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "modules",
+              "openinide",
+              "vscode"
+            ]
+          },
+          {
+            "title": "Key Features",
+            "href": "/docs/stackgen/concepts/modules/scanmodules",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "modules",
+              "scanmodules"
+            ]
+          },
+          {
+            "title": "Quick Start",
+            "href": "/docs/stackgen/concepts/modules/stackgen-yaml",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "modules",
+              "stackgen-yaml"
+            ]
+          },
+          {
+            "title": "Governance Configurations",
+            "href": "/docs/stackgen/concepts/policies/custom-policies",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "policies",
+              "custom-policies"
+            ]
+          },
+          {
+            "title": "StackGen-provided Policies",
+            "href": "/docs/stackgen/concepts/policies",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "policies"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/project-dashboard",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "project-dashboard"
+            ]
+          },
+          {
+            "title": "Key Features",
+            "href": "/docs/stackgen/concepts/rbac/governance/governanceconfig",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "rbac",
+              "governance",
+              "governanceconfig"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/rbac/governance",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "rbac",
+              "governance"
+            ]
+          },
+          {
+            "title": "Define Governance for Terraform and Provider Versions",
+            "href": "/docs/stackgen/concepts/rbac/governance/tf-provider-versions",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "rbac",
+              "governance",
+              "tf-provider-versions"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/rbac",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "rbac"
+            ]
+          },
+          {
+            "title": "Why use groups",
+            "href": "/docs/stackgen/concepts/rbac/user-groups",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "rbac",
+              "user-groups"
+            ]
+          },
+          {
+            "title": "Types of Built-In Resources",
+            "href": "/docs/stackgen/concepts/resources/built-in-resource",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "resources",
+              "built-in-resource"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/resources/custom-module/appstack-owned-module-updates",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "resources",
+              "custom-module",
+              "appstack-owned-module-updates"
+            ]
+          },
+          {
+            "title": "Custom Module Versioning",
+            "href": "/docs/stackgen/concepts/resources/custom-module/custom-module-versioning",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "resources",
+              "custom-module",
+              "custom-module-versioning"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/resources/custom-module/customproviders",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "resources",
+              "custom-module",
+              "customproviders"
+            ]
+          },
+          {
+            "title": "Custom Module Actions",
+            "href": "/docs/stackgen/concepts/resources/custom-module",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "resources",
+              "custom-module"
+            ]
+          },
+          {
+            "title": "Custom Module Management",
+            "href": "/docs/stackgen/concepts/resources/custom-module/rbac-for-custom-modules",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "resources",
+              "custom-module",
+              "rbac-for-custom-modules"
+            ]
+          },
+          {
+            "title": "Key Characteristics",
+            "href": "/docs/stackgen/concepts/resources/data-source",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "resources",
+              "data-source"
+            ]
+          },
+          {
+            "title": "Resource Actions",
+            "href": "/docs/stackgen/concepts/resources",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "resources"
+            ]
+          },
+          {
+            "title": "Types of Resource Connections",
+            "href": "/docs/stackgen/concepts/resources/resource-connections",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "resources",
+              "resource-connections"
+            ]
+          },
+          {
+            "title": "Use Case",
+            "href": "/docs/stackgen/concepts/resources/resource-packs",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "resources",
+              "resource-packs"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/topology/appstack-agent",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "topology",
+              "appstack-agent"
+            ]
+          },
+          {
+            "title": "Why define appStack outputs",
+            "href": "/docs/stackgen/concepts/topology/appstack-outputs",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "topology",
+              "appstack-outputs"
+            ]
+          },
+          {
+            "title": "Configure Storage Backend in StackGen",
+            "href": "/docs/stackgen/concepts/topology/backend-configuration",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "topology",
+              "backend-configuration"
+            ]
+          },
+          {
+            "title": "Terraform Expressions",
+            "href": "/docs/stackgen/concepts/topology/configure-resource",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "topology",
+              "configure-resource"
+            ]
+          },
+          {
+            "title": "Requirements",
+            "href": "/docs/stackgen/concepts/topology/dynamic-resource-tagging-terraform-merge",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "topology",
+              "dynamic-resource-tagging-terraform-merge"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/topology/environment-profile",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "topology",
+              "environment-profile"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/concepts/topology",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "topology"
+            ]
+          },
+          {
+            "title": "Add Resources to Your Topology",
+            "href": "/docs/stackgen/concepts/topology/new-resource",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "topology",
+              "new-resource"
+            ]
+          },
+          {
+            "title": "Key Features",
+            "href": "/docs/stackgen/concepts/topology/resources-tab",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "topology",
+              "resources-tab"
+            ]
+          },
+          {
+            "title": "What is IaC?",
+            "href": "/docs/stackgen/concepts/whystackgen",
+            "slug": [
+              "stackgen",
+              "concepts",
+              "whystackgen"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "help center",
+        "href": "/docs/stackgen/help-center",
+        "children": [
+          {
+            "title": "Help Center",
+            "href": "/docs/stackgen/help-center",
+            "slug": [
+              "stackgen",
+              "help-center"
+            ]
+          },
+          {
+            "title": "Fixed Teams Are Incorrectly Displayed While Assigning Governance Configuration",
+            "href": "/docs/stackgen/help-center/known-issues/apr2025",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "apr2025"
+            ]
+          },
+          {
+            "title": "In-Progress Incorrect Navigation and URL While Switching Projects After a CLI Run",
+            "href": "/docs/stackgen/help-center/known-issues/apr2026",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "apr2026"
+            ]
+          },
+          {
+            "title": "In-ProgressPolicies for Complex Objects Are Completely Evaluated",
+            "href": "/docs/stackgen/help-center/known-issues/aug2025",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "aug2025"
+            ]
+          },
+          {
+            "title": "In-Progress Project Admin Cannot Add Members From Project Settings",
+            "href": "/docs/stackgen/help-center/known-issues/aug2026",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "aug2026"
+            ]
+          },
+          {
+            "title": "Topology",
+            "href": "/docs/stackgen/help-center/known-issues/dec2024",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "dec2024"
+            ]
+          },
+          {
+            "title": "In-ProgressGrouping Selection Persists When Going Back to Cloud Discovery to Create Another appStack",
+            "href": "/docs/stackgen/help-center/known-issues/dec2025",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "dec2025"
+            ]
+          },
+          {
+            "title": "Fixed Importing Custom Helm Charts Fails with an Internal Server Error",
+            "href": "/docs/stackgen/help-center/known-issues/feb2025",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "feb2025"
+            ]
+          },
+          {
+            "title": "In-Progress Module Usage in appStacks for MCP Returns Incorrect Results",
+            "href": "/docs/stackgen/help-center/known-issues/feb2026",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "feb2026"
+            ]
+          },
+          {
+            "title": "Topology",
+            "href": "/docs/stackgen/help-center/known-issues/jan2025",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "jan2025"
+            ]
+          },
+          {
+            "title": "Fixed Inferred Attribute Does Not Reset After Module Deletion",
+            "href": "/docs/stackgen/help-center/known-issues/jan2026",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "jan2026"
+            ]
+          },
+          {
+            "title": "In-ProgressCreating appstack From Discovery Does Not Include All Resources",
+            "href": "/docs/stackgen/help-center/known-issues/jul2025",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "jul2025"
+            ]
+          },
+          {
+            "title": "In-Progress Tenant Admin and Tenant DevOps Land on Project Dashboard Instead of Enterprise Dashboard",
+            "href": "/docs/stackgen/help-center/known-issues/july2026",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "july2026"
+            ]
+          },
+          {
+            "title": "In-Progress Module Names Are Not Referenced Correctly Causing Terraform Plan Failure",
+            "href": "/docs/stackgen/help-center/known-issues/jun2025",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "jun2025"
+            ]
+          },
+          {
+            "title": "Fixed Azure tfstate Misclassification in AWS-Based appStack",
+            "href": "/docs/stackgen/help-center/known-issues/mar2025",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "mar2025"
+            ]
+          },
+          {
+            "title": "Fixed appStack Templates Are Scoped Only to Project Level",
+            "href": "/docs/stackgen/help-center/known-issues/mar2026",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "mar2026"
+            ]
+          },
+          {
+            "title": "In-Progress Map Resources Window Overlaps Split Screen View",
+            "href": "/docs/stackgen/help-center/known-issues/may2025",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "may2025"
+            ]
+          },
+          {
+            "title": "In-Progress Mark as Template Button Does Not Add the Template Label",
+            "href": "/docs/stackgen/help-center/known-issues/may2026",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "may2026"
+            ]
+          },
+          {
+            "title": "In-ProgressappStack-Owned Module Creation Fails if You Use the Same Name Across appStacks",
+            "href": "/docs/stackgen/help-center/known-issues/nov2025",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "nov2025"
+            ]
+          },
+          {
+            "title": "Fixed GCP Modules Get Listed Under AWS Resources After Publishing",
+            "href": "/docs/stackgen/help-center/known-issues/oct2025",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "oct2025"
+            ]
+          },
+          {
+            "title": "In-ProgressUnable to Reset `Manage Master User Password` to `select` for AWS DB Instance",
+            "href": "/docs/stackgen/help-center/known-issues/sep2025",
+            "slug": [
+              "stackgen",
+              "help-center",
+              "known-issues",
+              "sep2025"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Overview",
+        "href": "/docs/stackgen",
+        "children": [
+          {
+            "title": "Get Started",
+            "href": "/docs/stackgen",
+            "slug": [
+              "stackgen"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "integrations",
+        "href": "/docs/stackgen/integrations",
+        "children": [
+          {
+            "title": "What Is Backstage?",
+            "href": "/docs/stackgen/integrations/backstage",
+            "slug": [
+              "stackgen",
+              "integrations",
+              "backstage"
+            ]
+          },
+          {
+            "title": "1\\. Set up Yarn Configuration",
+            "href": "/docs/stackgen/integrations/backstage-plugin",
+            "slug": [
+              "stackgen",
+              "integrations",
+              "backstage-plugin"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/integrations/backstage-userguide",
+            "slug": [
+              "stackgen",
+              "integrations",
+              "backstage-userguide"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/integrations/hcp-terraform",
+            "slug": [
+              "stackgen",
+              "integrations",
+              "hcp-terraform"
+            ]
+          },
+          {
+            "title": "Integrations",
+            "href": "/docs/stackgen/integrations",
+            "slug": [
+              "stackgen",
+              "integrations"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/integrations/selfserve",
+            "slug": [
+              "stackgen",
+              "integrations",
+              "selfserve"
+            ]
+          },
+          {
+            "title": "Use Cases for IaC Violations",
+            "href": "/docs/stackgen/integrations/wiz",
+            "slug": [
+              "stackgen",
+              "integrations",
+              "wiz"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "known issues",
+        "href": "/docs/stackgen/known-issues",
+        "children": [
+          {
+            "title": "Aiden",
+            "href": "/docs/stackgen/known-issues/aiden",
+            "slug": [
+              "stackgen",
+              "known-issues",
+              "aiden"
+            ]
+          },
+          {
+            "title": "Known Issues",
+            "href": "/docs/stackgen/known-issues",
+            "slug": [
+              "stackgen",
+              "known-issues"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "mcp",
+        "href": "/docs/stackgen/mcp",
+        "children": [
+          {
+            "title": "Deployment Runbook",
+            "href": "/docs/stackgen/mcp/deployment-runbook",
+            "slug": [
+              "stackgen",
+              "mcp",
+              "deployment-runbook"
+            ]
+          },
+          {
+            "title": "Mcp",
+            "href": "/docs/stackgen/mcp",
+            "slug": [
+              "stackgen",
+              "mcp"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/mcp/mcp/mcp-capabilities",
+            "slug": [
+              "stackgen",
+              "mcp",
+              "mcp",
+              "mcp-capabilities"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "quickstart",
+        "href": "/docs/stackgen/quickstart/appstacks",
+        "children": [
+          {
+            "title": "Log In to StackGen",
+            "href": "/docs/stackgen/quickstart/appstacks",
+            "slug": [
+              "stackgen",
+              "quickstart",
+              "appstacks"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "release notes",
+        "href": "/docs/stackgen/release-notes",
+        "children": [
+          {
+            "title": "What's Fixed",
+            "href": "/docs/stackgen/release-notes/aiden/2026/april/apr26-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aiden",
+              "2026",
+              "april",
+              "apr26-release"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aiden/2026/february/feb26-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aiden",
+              "2026",
+              "february",
+              "feb26-release"
+            ]
+          },
+          {
+            "title": "2026",
+            "href": "/docs/stackgen/release-notes/aiden/2026",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aiden",
+              "2026"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aiden/2026/january/jan26-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aiden",
+              "2026",
+              "january",
+              "jan26-release"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aiden/2026/july/v2026-7-3",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aiden",
+              "2026",
+              "july",
+              "v2026-7-3"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aiden/2026/july/v2026-7-7",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aiden",
+              "2026",
+              "july",
+              "v2026-7-7"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aiden/2026/july/v2026-7-9",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aiden",
+              "2026",
+              "july",
+              "v2026-7-9"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aiden/2026/june/v2026-6-8",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aiden",
+              "2026",
+              "june",
+              "v2026-6-8"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aiden/2026/march/mar26-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aiden",
+              "2026",
+              "march",
+              "mar26-release"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aiden/2026/may/v2026-5-5",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aiden",
+              "2026",
+              "may",
+              "v2026-5-5"
+            ]
+          },
+          {
+            "title": "[LLM Gateways, Alert Sources, Persona Agents, and Skills](/docs/stackgen/release-notes/aiden/2026/july/v2026-7-9)",
+            "href": "/docs/stackgen/release-notes/aiden",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aiden"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aip/2026/april/apr26-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026",
+              "april",
+              "apr26-release"
+            ]
+          },
+          {
+            "title": "Aiden Integration Parity, Chat Landing, Multi-Tenant Access, and Model Testing",
+            "href": "/docs/stackgen/release-notes/aip/2026/august/v2026-8-3",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026",
+              "august",
+              "v2026-8-3"
+            ]
+          },
+          {
+            "title": "User Groups, Policy Expressions, Integration Wizards, and SRE Alert UX",
+            "href": "/docs/stackgen/release-notes/aip/2026/august/v2026-8-4",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026",
+              "august",
+              "v2026-8-4"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aip/2026/february/feb26-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026",
+              "february",
+              "feb26-release"
+            ]
+          },
+          {
+            "title": "2026",
+            "href": "/docs/stackgen/release-notes/aip/2026",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aip/2026/january/jan26-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026",
+              "january",
+              "jan26-release"
+            ]
+          },
+          {
+            "title": "Aiden for DevOps, Slack App, Workspace Chat, GitHub Knowledge, and OCI Policies",
+            "href": "/docs/stackgen/release-notes/aip/2026/july/v2026-7-11",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026",
+              "july",
+              "v2026-7-11"
+            ]
+          },
+          {
+            "title": "Resource-Level Policies, OCI Early Access, Project Invites, and Product Switcher",
+            "href": "/docs/stackgen/release-notes/aip/2026/july/v2026-7-3",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026",
+              "july",
+              "v2026-7-3"
+            ]
+          },
+          {
+            "title": "In-Chat Help, Slack Notifications, Knowledge Hub Editing, and stackgen.yaml Validation",
+            "href": "/docs/stackgen/release-notes/aip/2026/july/v2026-7-7",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026",
+              "july",
+              "v2026-7-7"
+            ]
+          },
+          {
+            "title": "CLI Local Module Upload, HashiCorp Vault, LLM Gateways, and Aiden UX",
+            "href": "/docs/stackgen/release-notes/aip/2026/july/v2026-7-9",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026",
+              "july",
+              "v2026-7-9"
+            ]
+          },
+          {
+            "title": "Container Modules, Plan and Deploy Panel, and MCP Module Tools",
+            "href": "/docs/stackgen/release-notes/aip/2026/june/v2026-6-12",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026",
+              "june",
+              "v2026-6-12"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aip/2026/june/v2026-6-8",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026",
+              "june",
+              "v2026-6-8"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aip/2026/march/mar26-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026",
+              "march",
+              "mar26-release"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aip/2026/may/v2026-4-15",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026",
+              "may",
+              "v2026-4-15"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aip/2026/may/v2026-5-5",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026",
+              "may",
+              "v2026-5-5"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aip/2026/may/v2026-5-8",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "2026",
+              "may",
+              "v2026-5-8"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aip/archive/2024/dec24-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "archive",
+              "2024",
+              "dec24-release"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aip/archive/2025/apr25-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "archive",
+              "2025",
+              "apr25-release"
+            ]
+          },
+          {
+            "title": "Smarter Infra, Sharper Controls",
+            "href": "/docs/stackgen/release-notes/aip/archive/2025/aug25-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "archive",
+              "2025",
+              "aug25-release"
+            ]
+          },
+          {
+            "title": "Empowering Teams with Enhanced Governance, Automation, and Control",
+            "href": "/docs/stackgen/release-notes/aip/archive/2025/dec25-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "archive",
+              "2025",
+              "dec25-release"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aip/archive/2025/feb25-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "archive",
+              "2025",
+              "feb25-release"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aip/archive/2025/jan25-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "archive",
+              "2025",
+              "jan25-release"
+            ]
+          },
+          {
+            "title": "Faster Infrastructure, Stronger Governance",
+            "href": "/docs/stackgen/release-notes/aip/archive/2025/jul25-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "archive",
+              "2025",
+              "jul25-release"
+            ]
+          },
+          {
+            "title": "StackGen Intent-to-Infrastructure Platform",
+            "href": "/docs/stackgen/release-notes/aip/archive/2025/jun25-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "archive",
+              "2025",
+              "jun25-release"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aip/archive/2025/mar25-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "archive",
+              "2025",
+              "mar25-release"
+            ]
+          },
+          {
+            "title": "What's New",
+            "href": "/docs/stackgen/release-notes/aip/archive/2025/may25-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "archive",
+              "2025",
+              "may25-release"
+            ]
+          },
+          {
+            "title": "Accelerating Secure, Intelligent Infrastructure Automation",
+            "href": "/docs/stackgen/release-notes/aip/archive/2025/nov25-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "archive",
+              "2025",
+              "nov25-release"
+            ]
+          },
+          {
+            "title": "Reimagining How AI and Infrastructure Work Together",
+            "href": "/docs/stackgen/release-notes/aip/archive/2025/oct25-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "archive",
+              "2025",
+              "oct25-release"
+            ]
+          },
+          {
+            "title": "AI Wrote Your Code. Now It Runs Your Infra.",
+            "href": "/docs/stackgen/release-notes/aip/archive/2025/sep25-release",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "aip",
+              "archive",
+              "2025",
+              "sep25-release"
+            ]
+          },
+          {
+            "title": "Release Notes",
+            "href": "/docs/stackgen/release-notes",
+            "slug": [
+              "stackgen",
+              "release-notes"
+            ]
+          },
+          {
+            "title": "May 2026",
+            "href": "/docs/stackgen/release-notes/may-2026",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "may-2026"
+            ]
+          },
+          {
+            "title": "[User Groups, Entra ID Sync, and Policy Selection by Expression](/docs/stackgen/release-notes/aip/2026/august/v2026-8-4)",
+            "href": "/docs/stackgen/release-notes/versions",
+            "slug": [
+              "stackgen",
+              "release-notes",
+              "versions"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "setup",
+        "href": "/docs/stackgen/setup",
+        "children": [
+          {
+            "title": "Prerequisites",
+            "href": "/docs/stackgen/setup/alerts",
+            "slug": [
+              "stackgen",
+              "setup",
+              "alerts"
+            ]
+          },
+          {
+            "title": "Setup",
+            "href": "/docs/stackgen/setup",
+            "slug": [
+              "stackgen",
+              "setup"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/setup/pairedtoken",
+            "slug": [
+              "stackgen",
+              "setup",
+              "pairedtoken"
+            ]
+          },
+          {
+            "title": "Creating a PAT in StackGen",
+            "href": "/docs/stackgen/setup/pat",
+            "slug": [
+              "stackgen",
+              "setup",
+              "pat"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/setup/preferences",
+            "slug": [
+              "stackgen",
+              "setup",
+              "preferences"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/setup/project-onboarding",
+            "slug": [
+              "stackgen",
+              "setup",
+              "project-onboarding"
+            ]
+          },
+          {
+            "title": "Navigating to the Settings Page",
+            "href": "/docs/stackgen/setup/settings",
+            "slug": [
+              "stackgen",
+              "setup",
+              "settings"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/setup/stackgen-ui",
+            "slug": [
+              "stackgen",
+              "setup",
+              "stackgen-ui"
+            ]
+          },
+          {
+            "title": "Supported Resources",
+            "href": "/docs/stackgen/setup/supported-tech",
+            "slug": [
+              "stackgen",
+              "setup",
+              "supported-tech"
+            ]
+          },
+          {
+            "title": "Standalone Resources",
+            "href": "/docs/stackgen/setup/supported-tech/supported-technologies",
+            "slug": [
+              "stackgen",
+              "setup",
+              "supported-tech",
+              "supported-technologies"
+            ]
+          },
+          {
+            "title": "Supported Technologies List",
+            "href": "/docs/stackgen/setup/supported-tech/supported-technologies-list",
+            "slug": [
+              "stackgen",
+              "setup",
+              "supported-tech",
+              "supported-technologies-list"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "stackgen mcp",
+        "href": "/docs/stackgen/stackgen-mcp",
+        "children": [
+          {
+            "title": "StackGen MCP Capabilities",
+            "href": "/docs/stackgen/stackgen-mcp",
+            "slug": [
+              "stackgen",
+              "stackgen-mcp"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "support and kb",
+        "href": "/docs/stackgen/support-and-kb",
+        "children": [
+          {
+            "title": "Introduction",
+            "href": "/docs/stackgen/support-and-kb/how-tos/awsdeploymentguide",
+            "slug": [
+              "stackgen",
+              "support-and-kb",
+              "how-tos",
+              "awsdeploymentguide"
+            ]
+          },
+          {
+            "title": "Before You Begin",
+            "href": "/docs/stackgen/support-and-kb/how-tos/awssso",
+            "slug": [
+              "stackgen",
+              "support-and-kb",
+              "how-tos",
+              "awssso"
+            ]
+          },
+          {
+            "title": "Steps to Configure your Microsoft Entra ID (Azure AD) OAuth 2.0 [](/docs/stackgen/support-and-kb/how-tos/entra#steps-to-configure-your-microsoft-entra-id-azure-ad-oauth-20%20%22Direct%20link%20to%20Steps%20to%20Configure%20your%20Microsoft%20Entra%20ID%20(Azure%20AD) OAuth 2.0\")",
+            "href": "/docs/stackgen/support-and-kb/how-tos/entra",
+            "slug": [
+              "stackgen",
+              "support-and-kb",
+              "how-tos",
+              "entra"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/stackgen/support-and-kb/how-tos/resourceoverride",
+            "slug": [
+              "stackgen",
+              "support-and-kb",
+              "how-tos",
+              "resourceoverride"
+            ]
+          },
+          {
+            "title": "Introduction",
+            "href": "/docs/stackgen/support-and-kb",
+            "slug": [
+              "stackgen",
+              "support-and-kb"
+            ]
+          },
+          {
+            "title": "Key Features",
+            "href": "/docs/stackgen/support-and-kb/troubleshooting/actions-required",
+            "slug": [
+              "stackgen",
+              "support-and-kb",
+              "troubleshooting",
+              "actions-required"
+            ]
+          },
+          {
+            "title": "Key Features",
+            "href": "/docs/stackgen/support-and-kb/troubleshooting/policy-violation",
+            "slug": [
+              "stackgen",
+              "support-and-kb",
+              "troubleshooting",
+              "policy-violation"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "aiden": {
+    "title": "Aiden",
+    "href": "/docs/aiden",
+    "children": [
+      {
+        "title": "1.0",
+        "href": "/docs/aiden/1.0",
+        "children": [
+          {
+            "title": "Web Sign-up",
+            "href": "/docs/aiden/1.0/accessaiden",
+            "slug": [
+              "aiden",
+              "1.0",
+              "accessaiden"
+            ]
+          },
+          {
+            "title": "Start an Investigation",
+            "href": "/docs/aiden/1.0/aiden-sre/alerts",
+            "slug": [
+              "aiden",
+              "1.0",
+              "aiden-sre",
+              "alerts"
+            ]
+          },
+          {
+            "title": "Discovery Findings",
+            "href": "/docs/aiden/1.0/aiden-sre/discovery",
+            "slug": [
+              "aiden",
+              "1.0",
+              "aiden-sre",
+              "discovery"
+            ]
+          },
+          {
+            "title": "Investigation Details",
+            "href": "/docs/aiden/1.0/aiden-sre/investigations",
+            "slug": [
+              "aiden",
+              "1.0",
+              "aiden-sre",
+              "investigations"
+            ]
+          },
+          {
+            "title": "Concepts",
+            "href": "/docs/aiden/1.0/concepts",
+            "slug": [
+              "aiden",
+              "1.0",
+              "concepts"
+            ]
+          },
+          {
+            "title": "Knowledge Hub",
+            "href": "/docs/aiden/1.0/concepts/knowledge-hub",
+            "slug": [
+              "aiden",
+              "1.0",
+              "concepts",
+              "knowledge-hub"
+            ]
+          },
+          {
+            "title": "Augmenting Integrations",
+            "href": "/docs/aiden/1.0/concepts/knowledgehub",
+            "slug": [
+              "aiden",
+              "1.0",
+              "concepts",
+              "knowledgehub"
+            ]
+          },
+          {
+            "title": "Think in Outcomes, Not Prompts",
+            "href": "/docs/aiden/1.0/concepts/skills/skillsbestpractice",
+            "slug": [
+              "aiden",
+              "1.0",
+              "concepts",
+              "skills",
+              "skillsbestpractice"
+            ]
+          },
+          {
+            "title": "How Aiden Uses Knowledge Base Content",
+            "href": "/docs/aiden/1.0/concepts/writing-effective-knowledge-base",
+            "slug": [
+              "aiden",
+              "1.0",
+              "concepts",
+              "writing-effective-knowledge-base"
+            ]
+          },
+          {
+            "title": "Cloud",
+            "href": "/docs/aiden/1.0/deployment/cloud",
+            "slug": [
+              "aiden",
+              "1.0",
+              "deployment",
+              "cloud"
+            ]
+          },
+          {
+            "title": "Choose a deployment model",
+            "href": "/docs/aiden/1.0/deployment/deploymentoptions",
+            "slug": [
+              "aiden",
+              "1.0",
+              "deployment",
+              "deploymentoptions"
+            ]
+          },
+          {
+            "title": "Deployment",
+            "href": "/docs/aiden/1.0/deployment",
+            "slug": [
+              "aiden",
+              "1.0",
+              "deployment"
+            ]
+          },
+          {
+            "title": "Prerequisites",
+            "href": "/docs/aiden/1.0/deployment/private-saas/cluster-requirements",
+            "slug": [
+              "aiden",
+              "1.0",
+              "deployment",
+              "private-saas",
+              "cluster-requirements"
+            ]
+          },
+          {
+            "title": "Guides",
+            "href": "/docs/aiden/1.0/deployment/private-saas",
+            "slug": [
+              "aiden",
+              "1.0",
+              "deployment",
+              "private-saas"
+            ]
+          },
+          {
+            "title": "Prerequisites",
+            "href": "/docs/aiden/1.0/deployment/private-saas/remote-cluster",
+            "slug": [
+              "aiden",
+              "1.0",
+              "deployment",
+              "private-saas",
+              "remote-cluster"
+            ]
+          },
+          {
+            "title": "Prerequisites",
+            "href": "/docs/aiden/1.0/deployment/self-hosted/cluster-requirements",
+            "slug": [
+              "aiden",
+              "1.0",
+              "deployment",
+              "self-hosted",
+              "cluster-requirements"
+            ]
+          },
+          {
+            "title": "Step 1: Clone the Image-Override Script",
+            "href": "/docs/aiden/1.0/deployment/self-hosted/docker",
+            "slug": [
+              "aiden",
+              "1.0",
+              "deployment",
+              "self-hosted",
+              "docker"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/aiden/1.0/deployment/self-hosted",
+            "slug": [
+              "aiden",
+              "1.0",
+              "deployment",
+              "self-hosted"
+            ]
+          },
+          {
+            "title": "First Time Installation",
+            "href": "/docs/aiden/1.0/deployment/self-hosted/installation",
+            "slug": [
+              "aiden",
+              "1.0",
+              "deployment",
+              "self-hosted",
+              "installation"
+            ]
+          },
+          {
+            "title": "Creating a Functional Agent",
+            "href": "/docs/aiden/1.0/functional-agents",
+            "slug": [
+              "aiden",
+              "1.0",
+              "functional-agents"
+            ]
+          },
+          {
+            "title": "History",
+            "href": "/docs/aiden/1.0/history",
+            "slug": [
+              "aiden",
+              "1.0",
+              "history"
+            ]
+          },
+          {
+            "title": "1.0",
+            "href": "/docs/aiden/1.0",
+            "slug": [
+              "aiden",
+              "1.0"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/alertmanager",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "alertmanager"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/argocd",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "argocd"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/aws",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "aws"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/azure",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "azure"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/circleci",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "circleci"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/civo",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "civo"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/clickhouse",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "clickhouse"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/confluence",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "confluence"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/coralogix",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "coralogix"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/datadog",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "datadog"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/digitalocean",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "digitalocean"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/dynatrace",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "dynatrace"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/elasticsearch",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "elasticsearch"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/firehydrant",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "firehydrant"
+            ]
+          },
+          {
+            "title": "Integrations Capabilities",
+            "href": "/docs/aiden/1.0/integrations/gcp",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "gcp"
+            ]
+          },
+          {
+            "title": "Integrations Capabilities",
+            "href": "/docs/aiden/1.0/integrations/github",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "github"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/gitlab",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "gitlab"
+            ]
+          },
+          {
+            "title": "Integrations Capabilities",
+            "href": "/docs/aiden/1.0/integrations/grafana",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "grafana"
+            ]
+          },
+          {
+            "title": "Integrations Capabilities",
+            "href": "/docs/aiden/1.0/integrations/grafana-loki",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "grafana-loki"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/harness",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "harness"
+            ]
+          },
+          {
+            "title": "How Integrations Work",
+            "href": "/docs/aiden/1.0/integrations",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/jenkins",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "jenkins"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/jira",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "jira"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/jsm",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "jsm"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/kubernetes",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "kubernetes"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/model-context-protocol",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "model-context-protocol"
+            ]
+          },
+          {
+            "title": "Enable MySQL Integration",
+            "href": "/docs/aiden/1.0/integrations/mysql",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "mysql"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/new-relic",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "new-relic"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/pagerduty",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "pagerduty"
+            ]
+          },
+          {
+            "title": "Enable PostgreSQL Integration",
+            "href": "/docs/aiden/1.0/integrations/postgresql",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "postgresql"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/prismacloud",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "prismacloud"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/prometheus",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "prometheus"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/rest-api",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "rest-api"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/sentry",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "sentry"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/servicenow",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "servicenow"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/sonarqube",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "sonarqube"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/squadcast",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "squadcast"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/stackgen",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "stackgen"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/1.0/integrations/stackgen-observenow",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "stackgen-observenow"
+            ]
+          },
+          {
+            "title": "Infrastructure",
+            "href": "/docs/aiden/1.0/integrations/supported-integrations",
+            "slug": [
+              "aiden",
+              "1.0",
+              "integrations",
+              "supported-integrations"
+            ]
+          },
+          {
+            "title": "Enable Aiden SRE",
+            "href": "/docs/aiden/1.0/settings/aiden-sre",
+            "slug": [
+              "aiden",
+              "1.0",
+              "settings",
+              "aiden-sre"
+            ]
+          },
+          {
+            "title": "How APIs Work",
+            "href": "/docs/aiden/1.0/settings/api/aiden-api-access",
+            "slug": [
+              "aiden",
+              "1.0",
+              "settings",
+              "api",
+              "aiden-api-access"
+            ]
+          },
+          {
+            "title": "Authentication",
+            "href": "/docs/aiden/1.0/settings/api/aiden-apis",
+            "slug": [
+              "aiden",
+              "1.0",
+              "settings",
+              "api",
+              "aiden-apis"
+            ]
+          },
+          {
+            "title": "Configure MCP Clients to Access Aiden",
+            "href": "/docs/aiden/1.0/settings/api/aiden-mcp-server",
+            "slug": [
+              "aiden",
+              "1.0",
+              "settings",
+              "api",
+              "aiden-mcp-server"
+            ]
+          },
+          {
+            "title": "Prerequisites",
+            "href": "/docs/aiden/1.0/settings/api/get-started-with-apis",
+            "slug": [
+              "aiden",
+              "1.0",
+              "settings",
+              "api",
+              "get-started-with-apis"
+            ]
+          },
+          {
+            "title": "Api",
+            "href": "/docs/aiden/1.0/settings/api",
+            "slug": [
+              "aiden",
+              "1.0",
+              "settings",
+              "api"
+            ]
+          },
+          {
+            "title": "Use Cases",
+            "href": "/docs/aiden/1.0/settings/contactpoints",
+            "slug": [
+              "aiden",
+              "1.0",
+              "settings",
+              "contactpoints"
+            ]
+          },
+          {
+            "title": "Settings",
+            "href": "/docs/aiden/1.0/settings",
+            "slug": [
+              "aiden",
+              "1.0",
+              "settings"
+            ]
+          },
+          {
+            "title": "Roles and Access",
+            "href": "/docs/aiden/1.0/settings/orgusers",
+            "slug": [
+              "aiden",
+              "1.0",
+              "settings",
+              "orgusers"
+            ]
+          },
+          {
+            "title": "How Remote Runners Work",
+            "href": "/docs/aiden/1.0/settings/runners",
+            "slug": [
+              "aiden",
+              "1.0",
+              "settings",
+              "runners"
+            ]
+          },
+          {
+            "title": "Workspace",
+            "href": "/docs/aiden/1.0/settings/workspace",
+            "slug": [
+              "aiden",
+              "1.0",
+              "settings",
+              "workspace"
+            ]
+          },
+          {
+            "title": "What Is a Workspace?",
+            "href": "/docs/aiden/1.0/settings/workspaces",
+            "slug": [
+              "aiden",
+              "1.0",
+              "settings",
+              "workspaces"
+            ]
+          },
+          {
+            "title": "Create a Skill",
+            "href": "/docs/aiden/1.0/skills",
+            "slug": [
+              "aiden",
+              "1.0",
+              "skills"
+            ]
+          },
+          {
+            "title": "Steps to Create a Task in Aiden",
+            "href": "/docs/aiden/1.0/tasks",
+            "slug": [
+              "aiden",
+              "1.0",
+              "tasks"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "2.0",
+        "href": "/docs/aiden/2.0",
+        "children": [
+          {
+            "title": "Configure and Import Alerts",
+            "href": "/docs/aiden/2.0/aiden-sre/alerts",
+            "slug": [
+              "aiden",
+              "2.0",
+              "aiden-sre",
+              "alerts"
+            ]
+          },
+          {
+            "title": "Discovered Entities",
+            "href": "/docs/aiden/2.0/aiden-sre/discovery",
+            "slug": [
+              "aiden",
+              "2.0",
+              "aiden-sre",
+              "discovery"
+            ]
+          },
+          {
+            "title": "Where to start",
+            "href": "/docs/aiden/2.0/aiden-sre",
+            "slug": [
+              "aiden",
+              "2.0",
+              "aiden-sre"
+            ]
+          },
+          {
+            "title": "Infrastructure",
+            "href": "/docs/aiden/2.0/aiden-sre/infrastructure",
+            "slug": [
+              "aiden",
+              "2.0",
+              "aiden-sre",
+              "infrastructure"
+            ]
+          },
+          {
+            "title": "Investigations",
+            "href": "/docs/aiden/2.0/aiden-sre/investigations",
+            "slug": [
+              "aiden",
+              "2.0",
+              "aiden-sre",
+              "investigations"
+            ]
+          },
+          {
+            "title": "Reliability",
+            "href": "/docs/aiden/2.0/aiden-sre/reliability",
+            "slug": [
+              "aiden",
+              "2.0",
+              "aiden-sre",
+              "reliability"
+            ]
+          },
+          {
+            "title": "What You See in Conversation History",
+            "href": "/docs/aiden/2.0/history",
+            "slug": [
+              "aiden",
+              "2.0",
+              "history"
+            ]
+          },
+          {
+            "title": "What Aiden Helps You Do",
+            "href": "/docs/aiden/2.0",
+            "slug": [
+              "aiden",
+              "2.0"
+            ]
+          },
+          {
+            "title": "Prompt Structure Best Practice",
+            "href": "/docs/aiden/2.0/new-conversation",
+            "slug": [
+              "aiden",
+              "2.0",
+              "new-conversation"
+            ]
+          },
+          {
+            "title": "Activity",
+            "href": "/docs/aiden/2.0/settings/activity",
+            "slug": [
+              "aiden",
+              "2.0",
+              "settings",
+              "activity"
+            ]
+          },
+          {
+            "title": "Create a Skill",
+            "href": "/docs/aiden/2.0/settings/agent-skills",
+            "slug": [
+              "aiden",
+              "2.0",
+              "settings",
+              "agent-skills"
+            ]
+          },
+          {
+            "title": "Settings",
+            "href": "/docs/aiden/2.0/settings",
+            "slug": [
+              "aiden",
+              "2.0",
+              "settings"
+            ]
+          },
+          {
+            "title": "Role hierarchy",
+            "href": "/docs/aiden/2.0/settings/roles-and-access",
+            "slug": [
+              "aiden",
+              "2.0",
+              "settings",
+              "roles-and-access"
+            ]
+          },
+          {
+            "title": "What You Can Manage",
+            "href": "/docs/aiden/2.0/settings/workspace",
+            "slug": [
+              "aiden",
+              "2.0",
+              "settings",
+              "workspace"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "concepts",
+        "href": "/docs/aiden/concepts/knowledgehub",
+        "children": [
+          {
+            "title": "Augmenting Integrations",
+            "href": "/docs/aiden/concepts/knowledgehub",
+            "slug": [
+              "aiden",
+              "concepts",
+              "knowledgehub"
+            ]
+          },
+          {
+            "title": "Think in Outcomes, Not Prompts",
+            "href": "/docs/aiden/concepts/skills/skillsbestpractice",
+            "slug": [
+              "aiden",
+              "concepts",
+              "skills",
+              "skillsbestpractice"
+            ]
+          },
+          {
+            "title": "How Aiden Uses Knowledge Base Content",
+            "href": "/docs/aiden/concepts/writing-effective-knowledge-base",
+            "slug": [
+              "aiden",
+              "concepts",
+              "writing-effective-knowledge-base"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Overview",
+        "href": "/docs/aiden",
+        "children": [
+          {
+            "title": "Choose Your Aiden Version",
+            "href": "/docs/aiden",
+            "slug": [
+              "aiden"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "integrations",
+        "href": "/docs/aiden/integrations/gcp",
+        "children": [
+          {
+            "title": "Integrations Capabilities",
+            "href": "/docs/aiden/integrations/gcp",
+            "slug": [
+              "aiden",
+              "integrations",
+              "gcp"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/integrations/jenkins",
+            "slug": [
+              "aiden",
+              "integrations",
+              "jenkins"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/integrations/jira",
+            "slug": [
+              "aiden",
+              "integrations",
+              "jira"
+            ]
+          },
+          {
+            "title": "Enable MySQL Integration",
+            "href": "/docs/aiden/integrations/mysql",
+            "slug": [
+              "aiden",
+              "integrations",
+              "mysql"
+            ]
+          },
+          {
+            "title": "Integration Capabilities",
+            "href": "/docs/aiden/integrations/rest-api",
+            "slug": [
+              "aiden",
+              "integrations",
+              "rest-api"
+            ]
+          },
+          {
+            "title": "Infrastructure",
+            "href": "/docs/aiden/integrations/supported-integrations",
+            "slug": [
+              "aiden",
+              "integrations",
+              "supported-integrations"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "settings",
+        "href": "/docs/aiden/settings/api",
+        "children": [
+          {
+            "title": "Api",
+            "href": "/docs/aiden/settings/api",
+            "slug": [
+              "aiden",
+              "settings",
+              "api"
+            ]
+          },
+          {
+            "title": "How Remote Runners Work",
+            "href": "/docs/aiden/settings/runners",
+            "slug": [
+              "aiden",
+              "settings",
+              "runners"
+            ]
+          },
+          {
+            "title": "Workspace",
+            "href": "/docs/aiden/settings/workspace",
+            "slug": [
+              "aiden",
+              "settings",
+              "workspace"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "skills",
+        "href": "/docs/aiden/skills",
+        "children": [
+          {
+            "title": "Create a Skill",
+            "href": "/docs/aiden/skills",
+            "slug": [
+              "aiden",
+              "skills"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "observenow": {
+    "title": "ObserveNow",
+    "href": "/docs/observenow",
+    "children": [
+      {
+        "title": "alerting",
+        "href": "/docs/observenow/alerting/alert-groups",
+        "children": [
+          {
+            "title": "Working with Alert Groups",
+            "href": "/docs/observenow/alerting/alert-groups",
+            "slug": [
+              "observenow",
+              "alerting",
+              "alert-groups"
+            ]
+          },
+          {
+            "title": "Alert Routing Tree",
+            "href": "/docs/observenow/alerting/alert-routing-tree",
+            "slug": [
+              "observenow",
+              "alerting",
+              "alert-routing-tree"
+            ]
+          },
+          {
+            "title": "Creating Apm Based Alerts",
+            "href": "/docs/observenow/alerting/alert-rules/creating-apm-based-alerts",
+            "slug": [
+              "observenow",
+              "alerting",
+              "alert-rules",
+              "creating-apm-based-alerts"
+            ]
+          },
+          {
+            "title": "Creating an Alert Rule",
+            "href": "/docs/observenow/alerting/alert-rules",
+            "slug": [
+              "observenow",
+              "alerting",
+              "alert-rules"
+            ]
+          },
+          {
+            "title": "Email",
+            "href": "/docs/observenow/alerting/contact-points/email",
+            "slug": [
+              "observenow",
+              "alerting",
+              "contact-points",
+              "email"
+            ]
+          },
+          {
+            "title": "Create a space on Google Hangouts Chat",
+            "href": "/docs/observenow/alerting/contact-points/google-hangouts",
+            "slug": [
+              "observenow",
+              "alerting",
+              "contact-points",
+              "google-hangouts"
+            ]
+          },
+          {
+            "title": "Contact Points",
+            "href": "/docs/observenow/alerting/contact-points",
+            "slug": [
+              "observenow",
+              "alerting",
+              "contact-points"
+            ]
+          },
+          {
+            "title": "Microsoft Teams",
+            "href": "/docs/observenow/alerting/contact-points/microsoft-teams",
+            "slug": [
+              "observenow",
+              "alerting",
+              "contact-points",
+              "microsoft-teams"
+            ]
+          },
+          {
+            "title": "Other Systems",
+            "href": "/docs/observenow/alerting/contact-points/other-systems",
+            "slug": [
+              "observenow",
+              "alerting",
+              "contact-points",
+              "other-systems"
+            ]
+          },
+          {
+            "title": "Slack",
+            "href": "/docs/observenow/alerting/contact-points/slack",
+            "slug": [
+              "observenow",
+              "alerting",
+              "contact-points",
+              "slack"
+            ]
+          },
+          {
+            "title": "Notification Policies",
+            "href": "/docs/observenow/alerting/notification-policies",
+            "slug": [
+              "observenow",
+              "alerting",
+              "notification-policies"
+            ]
+          },
+          {
+            "title": "Comprehensive Telemetry Support",
+            "href": "/docs/observenow/alerting/overview",
+            "slug": [
+              "observenow",
+              "alerting",
+              "overview"
+            ]
+          },
+          {
+            "title": "Pre Packaged Alerts",
+            "href": "/docs/observenow/alerting/pre-packaged-alerts",
+            "slug": [
+              "observenow",
+              "alerting",
+              "pre-packaged-alerts"
+            ]
+          },
+          {
+            "title": "Creating a Silence",
+            "href": "/docs/observenow/alerting/silences",
+            "slug": [
+              "observenow",
+              "alerting",
+              "silences"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "azure app services",
+        "href": "/docs/observenow/azure-app-services",
+        "children": [
+          {
+            "title": "Azure App Services",
+            "href": "/docs/observenow/azure-app-services",
+            "slug": [
+              "observenow",
+              "azure-app-services"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "azure logs",
+        "href": "/docs/observenow/azure-logs",
+        "children": [
+          {
+            "title": "Azure Logs",
+            "href": "/docs/observenow/azure-logs",
+            "slug": [
+              "observenow",
+              "azure-logs"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "collecting telemetry",
+        "href": "/docs/observenow/collecting-telemetry/install-the-opsverse-agent",
+        "children": [
+          {
+            "title": "Kubernetes",
+            "href": "/docs/observenow/collecting-telemetry/install-the-opsverse-agent",
+            "slug": [
+              "observenow",
+              "collecting-telemetry",
+              "install-the-opsverse-agent"
+            ]
+          },
+          {
+            "title": "Introduction",
+            "href": "/docs/observenow/collecting-telemetry/organizing-observability-telemetry-with-standard-metadata",
+            "slug": [
+              "observenow",
+              "collecting-telemetry",
+              "organizing-observability-telemetry-with-standard-metadata"
+            ]
+          },
+          {
+            "title": "Supported Observability Signals",
+            "href": "/docs/observenow/collecting-telemetry/overview",
+            "slug": [
+              "observenow",
+              "collecting-telemetry",
+              "overview"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "dashboards",
+        "href": "/docs/observenow/dashboards/managedashboard",
+        "children": [
+          {
+            "title": "Navigating to the Manage Dashboards Page",
+            "href": "/docs/observenow/dashboards/managedashboard",
+            "slug": [
+              "observenow",
+              "dashboards",
+              "managedashboard"
+            ]
+          },
+          {
+            "title": "How it Works",
+            "href": "/docs/observenow/dashboards/shared-dashboards",
+            "slug": [
+              "observenow",
+              "dashboards",
+              "shared-dashboards"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "deployment options",
+        "href": "/docs/observenow/deployment-options/flexible-options",
+        "children": [
+          {
+            "title": "Flexible Options",
+            "href": "/docs/observenow/deployment-options/flexible-options",
+            "slug": [
+              "observenow",
+              "deployment-options",
+              "flexible-options"
+            ]
+          },
+          {
+            "title": "Bootstrap the remote cluster",
+            "href": "/docs/observenow/deployment-options/privatesaas/add-a-remote-cluster",
+            "slug": [
+              "observenow",
+              "deployment-options",
+              "privatesaas",
+              "add-a-remote-cluster"
+            ]
+          },
+          {
+            "title": "Requirements",
+            "href": "/docs/observenow/deployment-options/privatesaas/cluster-requirements",
+            "slug": [
+              "observenow",
+              "deployment-options",
+              "privatesaas",
+              "cluster-requirements"
+            ]
+          },
+          {
+            "title": "Saasopsversecloud",
+            "href": "/docs/observenow/deployment-options/saasopsversecloud",
+            "slug": [
+              "observenow",
+              "deployment-options",
+              "saasopsversecloud"
+            ]
+          },
+          {
+            "title": "Requirements",
+            "href": "/docs/observenow/deployment-options/self-hosted/cluster-requirements",
+            "slug": [
+              "observenow",
+              "deployment-options",
+              "self-hosted",
+              "cluster-requirements"
+            ]
+          },
+          {
+            "title": "Self Hosted",
+            "href": "/docs/observenow/deployment-options/self-hosted",
+            "slug": [
+              "observenow",
+              "deployment-options",
+              "self-hosted"
+            ]
+          },
+          {
+            "title": "First Time Installation",
+            "href": "/docs/observenow/deployment-options/self-hosted/installation",
+            "slug": [
+              "observenow",
+              "deployment-options",
+              "self-hosted",
+              "installation"
+            ]
+          },
+          {
+            "title": "Step 1: Clone the image-override script",
+            "href": "/docs/observenow/deployment-options/self-hosted/pull-docker-images",
+            "slug": [
+              "observenow",
+              "deployment-options",
+              "self-hosted",
+              "pull-docker-images"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "enterprise configuration",
+        "href": "/docs/observenow/enterprise-configuration/azure-ad-oauth2-setup",
+        "children": [
+          {
+            "title": "Azure Ad Oauth2 Setup",
+            "href": "/docs/observenow/enterprise-configuration/azure-ad-oauth2-setup",
+            "slug": [
+              "observenow",
+              "enterprise-configuration",
+              "azure-ad-oauth2-setup"
+            ]
+          },
+          {
+            "title": "Ldap Setup For Grafana",
+            "href": "/docs/observenow/enterprise-configuration/ldap-setup-for-grafana",
+            "slug": [
+              "observenow",
+              "enterprise-configuration",
+              "ldap-setup-for-grafana"
+            ]
+          },
+          {
+            "title": "Smtp Setup For Grafana",
+            "href": "/docs/observenow/enterprise-configuration/smtp-setup-for-grafana",
+            "slug": [
+              "observenow",
+              "enterprise-configuration",
+              "smtp-setup-for-grafana"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "getting started",
+        "href": "/docs/observenow/getting-started/access-your-observenow-instance",
+        "children": [
+          {
+            "title": "Access Your Observenow Instance",
+            "href": "/docs/observenow/getting-started/access-your-observenow-instance",
+            "slug": [
+              "observenow",
+              "getting-started",
+              "access-your-observenow-instance"
+            ]
+          },
+          {
+            "title": "Launch An Observenow Instance",
+            "href": "/docs/observenow/getting-started/launch-an-observenow-instance",
+            "slug": [
+              "observenow",
+              "getting-started",
+              "launch-an-observenow-instance"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Overview",
+        "href": "/docs/observenow",
+        "children": [
+          {
+            "title": "Quickstart",
+            "href": "/docs/observenow",
+            "slug": [
+              "observenow"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "integrations",
+        "href": "/docs/observenow/integrations/application-profiling/language-specific-profiling",
+        "children": [
+          {
+            "title": "Java Instrumentation",
+            "href": "/docs/observenow/integrations/application-profiling/language-specific-profiling",
+            "slug": [
+              "observenow",
+              "integrations",
+              "application-profiling",
+              "language-specific-profiling"
+            ]
+          },
+          {
+            "title": "Getting Started",
+            "href": "/docs/observenow/integrations/application-profiling/linux-kernel-cpu-profiling",
+            "slug": [
+              "observenow",
+              "integrations",
+              "application-profiling",
+              "linux-kernel-cpu-profiling"
+            ]
+          },
+          {
+            "title": "Go Tracing Instrumentation",
+            "href": "/docs/observenow/integrations/applications/go",
+            "slug": [
+              "observenow",
+              "integrations",
+              "applications",
+              "go"
+            ]
+          },
+          {
+            "title": "SpringBoot Metrics Instrumentation",
+            "href": "/docs/observenow/integrations/applications/java",
+            "slug": [
+              "observenow",
+              "integrations",
+              "applications",
+              "java"
+            ]
+          },
+          {
+            "title": "NodeJS Metrics Instrumentation",
+            "href": "/docs/observenow/integrations/applications/javascript-node-js-and-browser",
+            "slug": [
+              "observenow",
+              "integrations",
+              "applications",
+              "javascript-node-js-and-browser"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/observenow/integrations/applications/netframework",
+            "slug": [
+              "observenow",
+              "integrations",
+              "applications",
+              "netframework"
+            ]
+          },
+          {
+            "title": "Auto Instrumenting via the OpenTelemetry Operator",
+            "href": "/docs/observenow/integrations/applications/opentelemetry-operator-for-kubernetes",
+            "slug": [
+              "observenow",
+              "integrations",
+              "applications",
+              "opentelemetry-operator-for-kubernetes"
+            ]
+          },
+          {
+            "title": "Grpc Vs Http",
+            "href": "/docs/observenow/integrations/applications/opentelemetry-reccommendations/grpc-vs-http",
+            "slug": [
+              "observenow",
+              "integrations",
+              "applications",
+              "opentelemetry-reccommendations",
+              "grpc-vs-http"
+            ]
+          },
+          {
+            "title": "Grpc Vs Http",
+            "href": "/docs/observenow/integrations/applications/opentelemetry-recommendations/grpc-vs-http",
+            "slug": [
+              "observenow",
+              "integrations",
+              "applications",
+              "opentelemetry-recommendations",
+              "grpc-vs-http"
+            ]
+          },
+          {
+            "title": "Instrumenting your app",
+            "href": "/docs/observenow/integrations/applications/python",
+            "slug": [
+              "observenow",
+              "integrations",
+              "applications",
+              "python"
+            ]
+          },
+          {
+            "title": "Ruby Tracing Instrumentation",
+            "href": "/docs/observenow/integrations/applications/ruby",
+            "slug": [
+              "observenow",
+              "integrations",
+              "applications",
+              "ruby"
+            ]
+          },
+          {
+            "title": "Prerequisites",
+            "href": "/docs/observenow/integrations/cloud-providers/amazon-web-services-aws/amazon-managed-workflows-for-apache-airflow-mwaa",
+            "slug": [
+              "observenow",
+              "integrations",
+              "cloud-providers",
+              "amazon-web-services-aws",
+              "amazon-managed-workflows-for-apache-airflow-mwaa"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/observenow/integrations/cloud-providers/amazon-web-services-aws/aws-lambda-functions",
+            "slug": [
+              "observenow",
+              "integrations",
+              "cloud-providers",
+              "amazon-web-services-aws",
+              "aws-lambda-functions"
+            ]
+          },
+          {
+            "title": "Collecting Logs from ECS",
+            "href": "/docs/observenow/integrations/cloud-providers/amazon-web-services-aws/elastic-container-service-ecs",
+            "slug": [
+              "observenow",
+              "integrations",
+              "cloud-providers",
+              "amazon-web-services-aws",
+              "elastic-container-service-ecs"
+            ]
+          },
+          {
+            "title": "Collecting AWS CloudWatch Logs",
+            "href": "/docs/observenow/integrations/cloud-providers/amazon-web-services-aws",
+            "slug": [
+              "observenow",
+              "integrations",
+              "cloud-providers",
+              "amazon-web-services-aws"
+            ]
+          },
+          {
+            "title": "Google Cloud Provider Gcp",
+            "href": "/docs/observenow/integrations/cloud-providers/google-cloud-provider-gcp",
+            "slug": [
+              "observenow",
+              "integrations",
+              "cloud-providers",
+              "google-cloud-provider-gcp"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/observenow/integrations/cloud-providers/microsoft-azure/azure-functions",
+            "slug": [
+              "observenow",
+              "integrations",
+              "cloud-providers",
+              "microsoft-azure",
+              "azure-functions"
+            ]
+          },
+          {
+            "title": "Kubernetes",
+            "href": "/docs/observenow/integrations/cloud-providers/microsoft-azure/azure-metrics/azure-cosmos-db",
+            "slug": [
+              "observenow",
+              "integrations",
+              "cloud-providers",
+              "microsoft-azure",
+              "azure-metrics",
+              "azure-cosmos-db"
+            ]
+          },
+          {
+            "title": "Azure Openai",
+            "href": "/docs/observenow/integrations/cloud-providers/microsoft-azure/azure-metrics/azure-openai",
+            "slug": [
+              "observenow",
+              "integrations",
+              "cloud-providers",
+              "microsoft-azure",
+              "azure-metrics",
+              "azure-openai"
+            ]
+          },
+          {
+            "title": "Kubernetes",
+            "href": "/docs/observenow/integrations/cloud-providers/microsoft-azure/azure-metrics/azure-sql-server",
+            "slug": [
+              "observenow",
+              "integrations",
+              "cloud-providers",
+              "microsoft-azure",
+              "azure-metrics",
+              "azure-sql-server"
+            ]
+          },
+          {
+            "title": "**Agent Integration for Azure Metrics**",
+            "href": "/docs/observenow/integrations/cloud-providers/microsoft-azure",
+            "slug": [
+              "observenow",
+              "integrations",
+              "cloud-providers",
+              "microsoft-azure"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/observenow/integrations/endpoint-monitoring/endpoint-monitoring-with-blackbox-exporter",
+            "slug": [
+              "observenow",
+              "integrations",
+              "endpoint-monitoring",
+              "endpoint-monitoring-with-blackbox-exporter"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/observenow/integrations/frontend-monitoring/flutter-web-instrumentation",
+            "slug": [
+              "observenow",
+              "integrations",
+              "frontend-monitoring",
+              "flutter-web-instrumentation"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/observenow/integrations/frontend-monitoring/web-application-instrumentation",
+            "slug": [
+              "observenow",
+              "integrations",
+              "frontend-monitoring",
+              "web-application-instrumentation"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/observenow/integrations/infrastructure/amazon-rds/amazon-rds-logs-ingester",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "amazon-rds",
+              "amazon-rds-logs-ingester"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/observenow/integrations/infrastructure/amazon-rds/aws-rds-logs-ingester",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "amazon-rds",
+              "aws-rds-logs-ingester"
+            ]
+          },
+          {
+            "title": "Single Machine",
+            "href": "/docs/observenow/integrations/infrastructure/amazon-rds",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "amazon-rds"
+            ]
+          },
+          {
+            "title": "Metrics",
+            "href": "/docs/observenow/integrations/infrastructure/ambassador-emissary-ingress",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "ambassador-emissary-ingress"
+            ]
+          },
+          {
+            "title": "Metrics",
+            "href": "/docs/observenow/integrations/infrastructure/apache-airflow",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "apache-airflow"
+            ]
+          },
+          {
+            "title": "Enable this section to pull metrics from kafka",
+            "href": "/docs/observenow/integrations/infrastructure/apache-kafka",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "apache-kafka"
+            ]
+          },
+          {
+            "title": "Metrics",
+            "href": "/docs/observenow/integrations/infrastructure/apache-spark",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "apache-spark"
+            ]
+          },
+          {
+            "title": "Metrics",
+            "href": "/docs/observenow/integrations/infrastructure/apache-tomcat",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "apache-tomcat"
+            ]
+          },
+          {
+            "title": "Prerequisites",
+            "href": "/docs/observenow/integrations/infrastructure/coredns",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "coredns"
+            ]
+          },
+          {
+            "title": "Enable this section to pull metrics from elasticsearch",
+            "href": "/docs/observenow/integrations/infrastructure/elasticsearch",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "elasticsearch"
+            ]
+          },
+          {
+            "title": "Install and Run",
+            "href": "/docs/observenow/integrations/infrastructure/individual-vms",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "individual-vms"
+            ]
+          },
+          {
+            "title": "Metrics",
+            "href": "/docs/observenow/integrations/infrastructure/istio",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "istio"
+            ]
+          },
+          {
+            "title": "Installation",
+            "href": "/docs/observenow/integrations/infrastructure/jenkins",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "jenkins"
+            ]
+          },
+          {
+            "title": "Metrics FAQs",
+            "href": "/docs/observenow/integrations/infrastructure/kubernetes",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "kubernetes"
+            ]
+          },
+          {
+            "title": "Enable Performance Counters on IIS",
+            "href": "/docs/observenow/integrations/infrastructure/microsoft-iis",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "microsoft-iis"
+            ]
+          },
+          {
+            "title": "Kubernetes",
+            "href": "/docs/observenow/integrations/infrastructure/microsoft-sql-server",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "microsoft-sql-server"
+            ]
+          },
+          {
+            "title": "Kubernetes",
+            "href": "/docs/observenow/integrations/infrastructure/mongodb",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "mongodb"
+            ]
+          },
+          {
+            "title": "Kubernetes",
+            "href": "/docs/observenow/integrations/infrastructure/mysql",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "mysql"
+            ]
+          },
+          {
+            "title": "Single Machine",
+            "href": "/docs/observenow/integrations/infrastructure/nginx",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "nginx"
+            ]
+          },
+          {
+            "title": "Verify `pg_stat_statements` is installed",
+            "href": "/docs/observenow/integrations/infrastructure/postgresql",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "postgresql"
+            ]
+          },
+          {
+            "title": "Prerequisites",
+            "href": "/docs/observenow/integrations/infrastructure/prometheus-compatible-metrics-endendpoints",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "prometheus-compatible-metrics-endendpoints"
+            ]
+          },
+          {
+            "title": "Prerequisites",
+            "href": "/docs/observenow/integrations/infrastructure/prometheus-compatible-metrics-endpoints",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "prometheus-compatible-metrics-endpoints"
+            ]
+          },
+          {
+            "title": "Kubernetes",
+            "href": "/docs/observenow/integrations/infrastructure/redis-elasticache",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "redis-elasticache"
+            ]
+          },
+          {
+            "title": "Kubernetes Agent Configuration",
+            "href": "/docs/observenow/integrations/infrastructure/snmp-enabled-hardware",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "snmp-enabled-hardware"
+            ]
+          },
+          {
+            "title": "Kubernetes",
+            "href": "/docs/observenow/integrations/infrastructure/vmware-vcenter",
+            "slug": [
+              "observenow",
+              "integrations",
+              "infrastructure",
+              "vmware-vcenter"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/observenow/integrations/real-user-monitoring-rum/browser-instrumentation",
+            "slug": [
+              "observenow",
+              "integrations",
+              "real-user-monitoring-rum",
+              "browser-instrumentation"
+            ]
+          },
+          {
+            "title": "Overview",
+            "href": "/docs/observenow/integrations/real-user-monitoring-rum/nodejs-instrumentation",
+            "slug": [
+              "observenow",
+              "integrations",
+              "real-user-monitoring-rum",
+              "nodejs-instrumentation"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "visualization",
+        "href": "/docs/observenow/visualization/overview",
+        "children": [
+          {
+            "title": "Overview",
+            "href": "/docs/observenow/visualization/overview",
+            "slug": [
+              "observenow",
+              "visualization",
+              "overview"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

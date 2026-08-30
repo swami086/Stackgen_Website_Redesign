@@ -1,0 +1,13 @@
+# Cloud Build upload ignore (gcloud builds submit from web/)
+.git
+.gitignore
+.gcloudignore
+node_modules
+.next
+next-env.d.ts
+**/*.test.tsx
+**/__tests__
+test-results
+playwright-report
+*.tsbuildinfo
+.DS_Store

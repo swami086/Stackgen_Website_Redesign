@@ -7,7 +7,7 @@ export const replicaContent = {
       { label: "Platform", href: "#" },
       { label: "Case Studies", href: "#" },
       { label: "Company", href: "#" },
-      { label: "Docs", href: "#" },
+      { label: "Docs", href: "/docs" },
     ],
     cta: { label: "Schedule demo", href: "#" },
   },
@@ -45,45 +45,45 @@ export const replicaContent = {
   whoItsFor: {
     eyebrow: "WHO IT'S FOR",
     heading: "Aiden is the Agentic OS for production teams",
-    sub: "SRE, platform, DevSecOps, and developers share one context layer. Every deploy, alert, and approval starts with the same context.",
+    sub: "One context layer for SRE, platform, DevSecOps, and developers.",
     pillars: [
       {
         label: "Build",
         title: "Aiden for Infrastructure",
-        body: "Infrastructure that provisions, governs, and heals through the OCG.",
+        body: "Provision, govern, and heal via the OCG.",
       },
       {
         label: "Operate",
         title: "Aiden for Automation",
-        body: "Deployments that verify themselves and gate on resilience.",
+        body: "Self-verifying deploys gated on resilience.",
       },
       {
         label: "Observe",
         title: "Aiden for Observability",
-        body: "Turn signals into correlated answers across the factory.",
+        body: "Signals into correlated answers.",
       },
       {
         label: "Remediate",
         title: "Aiden for SRE",
-        body: "Incidents that know what changed. Root cause in under 15 minutes.",
+        body: "Incidents that know what changed.",
       },
     ],
     roles: [
       {
         title: "Platform Engineering",
-        body: "Catch drift and failure patterns before the deploy lands",
+        body: "Catch drift before deploy lands",
       },
       {
         title: "Developers",
-        body: "Ship and provision without the platform ticket queue",
+        body: "Ship without the platform ticket queue",
       },
       {
         title: "DevSecOps",
-        body: "Keep agent actions inside policy, not around approvals",
+        body: "Keep agent actions inside policy",
       },
       {
         title: "SRE",
-        body: "Every alert arrives with deploys, drift, and dependencies attached",
+        body: "Alerts arrive with deploys and drift attached",
       },
     ],
     osTitle: "Aiden OS",

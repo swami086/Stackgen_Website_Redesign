@@ -1,13 +1,17 @@
 "use client";
 
 /**
- * Communicates: intent routes into factory assemblies, resolves against the
- * Operational Context Graph, then stays governed by Aiden OS. Pencil V2P0L.
+ * Communicates: signals enrich one Operational Context Graph; Aiden acts
+ * within policy. Option E — three bands in a Shell-scale plate (peer to
+ * Offerings / InnerOuterLoop height, not a full viewport).
  *
- * Motion thesis (execution wave): energy travels DOWN the spine —
- * prompt → Intent Router pulse → assemblies L→R → sources converge on
- * checkout-api → OS chips settle. Mobbin: n8n execute glow, Railway Online
- * pulse, FLORA/ElevenLabs path draw. Reduced motion = assembled final state.
+ * Spatial thesis (Mobbin Base / Railway / Midday): one framed card, short
+ * spines (~32px), dense mid graph as the peak.
+ *
+ * Motion thesis (signal drop): telemetry → spine → nodes → edges → hop
+ * beams → spine → router / assemblies / OS. Reduced = final state.
+ *
+ * Pencil V2P0L. Structure from option-E.png — not raster-as-live.
  */
 import { motion } from "motion/react";
 import { PhosphorIcon } from "@/components/primitives/PhosphorIcon";
@@ -22,46 +26,43 @@ import { cn } from "@/lib/cn";
 
 const PROMPT_CHIPS = ["auto-route", "world model", "guardrails"] as const;
 
+const TELEMETRY: { label: string; icon: PhosphorIconName }[] = [
+  { label: "Logs", icon: "terminal-window" },
+  { label: "Metrics", icon: "chart-line" },
+  { label: "Traces", icon: "broadcast" },
+];
+
 const ASSEMBLIES: {
   stage: string;
   title: string;
-  meta: string;
+  short: string;
   icon: PhosphorIconName;
 }[] = [
   {
     stage: "Build",
     title: "Aiden for Infrastructure",
-    meta: "Infrastructure · IaC",
+    short: "Infrastructure",
     icon: "cloud-arrow-down",
   },
   {
     stage: "Operate",
     title: "Aiden for Automation",
-    meta: "Automation · Pipelines",
+    short: "Automation",
     icon: "git-branch",
   },
   {
     stage: "Observe",
     title: "Aiden for Observability",
-    meta: "Traces · Metrics · Alerts",
+    short: "Observability",
     icon: "chart-line",
   },
   {
     stage: "Remediate",
     title: "Aiden for SRE",
-    meta: "Incidents · SLOs",
+    short: "SRE",
     icon: "heartbeat",
   },
 ];
-
-const SOURCES = [
-  "ecs-svc/checkout",
-  "module.checkout_api",
-  'job="checkout"',
-  "checkout-api",
-  "label: checkout",
-  "Checkout latency",
-] as const;
 
 const OS_CHIPS = [
   "Governance",
@@ -72,83 +73,211 @@ const OS_CHIPS = [
   "Integrations",
 ] as const;
 
-/** Vertical spine segment (viewBox units). Shared by DrawPath + Beam. */
-const SPINE_D = "M12 0 V40";
-const SPIDER_YS = [16, 40, 64, 88, 112, 136] as const;
+const GRAPH_NODES = [
+  { id: "latency", label: "Checkout latency", x: 280, y: 18 },
+  { id: "ecs", label: "ecs-svc/checkout", x: 72, y: 58 },
+  { id: "hub", label: "checkout-api", x: 280, y: 62, hub: true as const },
+  { id: "module", label: "module.checkout_api", x: 488, y: 58 },
+  { id: "job", label: 'job="checkout"', x: 120, y: 108 },
+  { id: "label", label: "label: checkout", x: 440, y: 108 },
+] as const;
 
-function SpineSegment({
-  delay = 0,
-  toneClassName = "text-border",
-  beamClassName = "fill-accent",
-  beamDuration = AMBIENT.sweep / 2,
-}: {
-  delay?: number;
-  toneClassName?: string;
-  beamClassName?: string;
-  beamDuration?: number;
-}) {
+const GRAPH_EDGES: {
+  from: (typeof GRAPH_NODES)[number]["id"];
+  to: (typeof GRAPH_NODES)[number]["id"];
+  rel: string;
+  active?: boolean;
+}[] = [
+  { from: "latency", to: "hub", rel: "monitors", active: true },
+  { from: "ecs", to: "hub", rel: "deploys" },
+  { from: "module", to: "hub", rel: "deploys" },
+  { from: "job", to: "hub", rel: "owns", active: true },
+  { from: "label", to: "hub", rel: "governs", active: true },
+];
+
+const SPINE_D = "M12 2 V30";
+
+function nodeById(id: string) {
+  return GRAPH_NODES.find((n) => n.id === id)!;
+}
+
+function edgePath(
+  from: (typeof GRAPH_NODES)[number]["id"],
+  to: (typeof GRAPH_NODES)[number]["id"],
+) {
+  const a = nodeById(from);
+  const b = nodeById(to);
+  const mx = (a.x + b.x) / 2;
+  const my = (a.y + b.y) / 2;
+  return `M${a.x} ${a.y} Q${mx} ${my} ${b.x} ${b.y}`;
+}
+
+function Spine({ delay, theme }: { delay: number; theme: "light" | "dark" }) {
   const reduced = useReducedMotionSafe();
+  const isLight = theme === "light";
   return (
-    <svg
-      width="24"
-      height="40"
-      viewBox="0 0 24 40"
-      className={cn("overflow-visible", toneClassName)}
-      aria-hidden
-    >
-      <DrawPath
-        d={SPINE_D}
-        className="stroke-current"
-        strokeWidth={1.25}
-        delay={delay}
-        duration={DUR.shell}
-      />
-      {!reduced && (
-        <Beam
+    <div className="flex justify-center py-0.5" aria-hidden>
+      <svg
+        width="24"
+        height="32"
+        viewBox="0 0 24 32"
+        className={cn(
+          "overflow-visible",
+          isLight ? "text-text-secondary" : "text-border",
+        )}
+        data-part="drop-rail"
+      >
+        <DrawPath
           d={SPINE_D}
-          className={beamClassName}
-          duration={beamDuration}
-          delay={delay + DUR.shell}
-          r={2.25}
+          className="stroke-current"
+          strokeWidth={1.25}
+          delay={delay}
+          duration={DUR.flow}
         />
-      )}
-    </svg>
+        {!reduced && (
+          <Beam
+            d={SPINE_D}
+            className={isLight ? "fill-accent/75" : "fill-accent"}
+            duration={AMBIENT.sweep / 2}
+            delay={delay + DUR.flow}
+            r={2}
+          />
+        )}
+      </svg>
+    </div>
   );
 }
 
-function FlowLabel({
-  children,
-  delay = 0,
-  theme,
-}: {
-  children: string;
-  delay?: number;
-  theme: "light" | "dark";
-}) {
+function ContextGraphSvg({ theme }: { theme: "light" | "dark" }) {
+  const reduced = useReducedMotionSafe();
   const isLight = theme === "light";
+
   return (
-    <div className="flex flex-col items-center gap-2 py-2">
-      <SpineSegment
-        delay={delay}
-        toneClassName={isLight ? "text-text-secondary" : "text-border"}
-        beamClassName={isLight ? "fill-accent/75" : "fill-accent"}
-        beamDuration={isLight ? AMBIENT.sweep * 0.8 : AMBIENT.sweep / 2}
-      />
-      <span
-        className={cn(
-          "font-mono text-[10px] font-medium uppercase tracking-[0.14em]",
-          isLight ? "text-text-secondary" : "text-text-tertiary",
-        )}
-      >
-        {children}
-      </span>
-      <SpineSegment
-        delay={delay + 0.12}
-        toneClassName={isLight ? "text-text-secondary" : "text-border"}
-        beamClassName={isLight ? "fill-accent/75" : "fill-accent"}
-        beamDuration={isLight ? AMBIENT.sweep * 0.8 : AMBIENT.sweep / 2}
-      />
-    </div>
+    <svg
+      viewBox="0 0 560 128"
+      className="mx-auto h-auto w-full max-w-xl overflow-visible"
+      role="presentation"
+      data-part="context-graph"
+    >
+      {GRAPH_EDGES.map((edge, i) => {
+        const d = edgePath(edge.from, edge.to);
+        return (
+          <g key={`${edge.from}-${edge.to}`}>
+            <DrawPath
+              d={d}
+              className={
+                edge.active
+                  ? isLight
+                    ? "stroke-accent/50"
+                    : "stroke-accent/65"
+                  : "stroke-border"
+              }
+              strokeWidth={edge.active ? 1.35 : 1}
+              delay={0.4 + i * 0.045}
+              duration={0.36}
+            />
+            {edge.active && !reduced && (
+              <Beam
+                d={d}
+                className={isLight ? "fill-accent/80" : "fill-accent"}
+                duration={2 + i * 0.1}
+                delay={0.8 + i * 0.05}
+                r={1.4}
+              />
+            )}
+            <motion.text
+              x={(nodeById(edge.from).x + nodeById(edge.to).x) / 2}
+              y={(nodeById(edge.from).y + nodeById(edge.to).y) / 2 - 4}
+              textAnchor="middle"
+              className="fill-current font-mono text-[8px] text-text-tertiary"
+              initial={reduced ? false : { opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{
+                delay: 0.55 + i * 0.045,
+                duration: DUR.chip,
+                ease: EASE.emphasize,
+              }}
+            >
+              {edge.rel}
+            </motion.text>
+          </g>
+        );
+      })}
+
+      {GRAPH_NODES.map((node, i) => {
+        const isHub = "hub" in node && node.hub;
+        const w = isHub ? 108 : 102;
+        const h = isHub ? 32 : 22;
+        return (
+          <motion.g
+            key={node.id}
+            initial={reduced ? false : { opacity: 0, scale: 0.94 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{
+              delay: 0.26 + i * STAGGER.chip,
+              duration: DUR.chip,
+              ease: EASE.emphasize,
+            }}
+            style={{ transformOrigin: `${node.x}px ${node.y}px` }}
+          >
+            <rect
+              x={node.x - w / 2}
+              y={node.y - h / 2}
+              width={w}
+              height={h}
+              rx={6}
+              fill={
+                isHub
+                  ? isLight
+                    ? "var(--ds-surface)"
+                    : "var(--ds-layer-intent-bg)"
+                  : "var(--ds-surface-raised)"
+              }
+              stroke={
+                isHub
+                  ? isLight
+                    ? "color-mix(in srgb, var(--ds-accent) 45%, transparent)"
+                    : "var(--ds-layer-intent-stroke)"
+                  : "var(--ds-border)"
+              }
+              strokeWidth={1}
+            />
+            <text
+              x={node.x}
+              y={node.y + (isHub ? -4 : 1)}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fill="var(--ds-text-primary)"
+              style={{
+                fontSize: isHub ? 11 : 9,
+                fontFamily: isHub
+                  ? "var(--font-sans, ui-sans-serif)"
+                  : "var(--font-mono, ui-monospace)",
+                fontWeight: isHub ? 600 : 500,
+              }}
+            >
+              {node.label}
+            </text>
+            {isHub && (
+              <text
+                x={node.x}
+                y={node.y + 9}
+                textAnchor="middle"
+                fill="var(--ds-text-tertiary)"
+                style={{
+                  fontSize: 8,
+                  fontFamily: "var(--font-mono, ui-monospace)",
+                }}
+              >
+                one entity · six sources
+              </text>
+            )}
+          </motion.g>
+        );
+      })}
+    </svg>
   );
 }
 
@@ -161,373 +290,242 @@ export function OperationalContextGraph({
 }) {
   const isLight = theme === "light";
   const reduced = useReducedMotionSafe();
-  const wave = isLight
-    ? {
-        beam: AMBIENT.sweep * 0.8,
-        cursor: 0.9,
-        intent: AMBIENT.hub * 0.85,
-        bezel: AMBIENT.bezel * 0.85,
-        ring: [0.3, 0.72, 0.3] as const,
-        shell: [0.34, 0.72, 0.34] as const,
-      }
-    : {
-        beam: AMBIENT.sweep / 2,
-        cursor: 1.1,
-        intent: AMBIENT.hub,
-        bezel: AMBIENT.bezel,
-        ring: [0.35, 1, 0.35] as const,
-        shell: [0.45, 0.95, 0.45] as const,
-      };
 
   return (
     <div
       role="img"
-      aria-label="Operational Context Graph: ask Aiden, route intent to factory assemblies, enrich from context sources into one entity, govern through Aiden OS"
+      aria-label="Operational Context Graph: ask Aiden first; telemetry signals enrich a shared context graph; Aiden routes intent to factory assemblies under Aiden OS"
+      data-motion-metaphor="signal-drop"
+      data-structure="three-layer"
       className={cn(
-        "glass-specular flex w-full max-w-4xl flex-col rounded-[20px] border p-5 md:p-8",
+        "glass-specular flex w-full max-w-3xl flex-col gap-0 rounded-[20px] border p-3",
         isLight ? "border-border/80 bg-surface/95" : "border-border bg-surface/90",
         className,
       )}
     >
-      {/* Prompt — wave starts here */}
-      <Reveal delay={0} y={10}>
+      {/* Intent chrome — diagram top, not nested inside Context Graph */}
+      <Reveal delay={0} y={4}>
         <div
+          data-part="ask-bar"
           className={cn(
-            "rounded-xl border p-3 md:p-4",
-            isLight ? "border-border/80 bg-surface" : "border-border bg-surface-raised",
+            "mb-2 flex items-center gap-2 rounded-md border px-2 py-1.5",
+            isLight
+              ? "border-border/70 bg-surface-raised"
+              : "border-border bg-surface-raised",
           )}
         >
-          <div className="flex flex-col gap-3 md:flex-row md:items-center">
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm text-text-secondary">
-                Ask Aiden to investigate latency spike in checkout…
-                {!reduced && (
-                  <motion.span
-                    aria-hidden
-                    className="ml-0.5 inline-block h-3.5 w-px align-middle bg-accent"
-                    animate={{ opacity: [1, isLight ? 0.3 : 0.15, 1] }}
-                    transition={{
-                      duration: wave.cursor,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                  />
-                )}
-              </p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {PROMPT_CHIPS.map((chip) => (
-                  <span
-                    key={chip}
-                    className={cn(
-                      "rounded-full border bg-surface px-2.5 py-1 font-mono text-[11px]",
-                      isLight ? "border-border/80 text-text-secondary" : "border-border text-text-tertiary",
-                    )}
-                  >
-                    {chip}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <span className="inline-flex shrink-0 items-center gap-2 self-start rounded-full bg-accent px-4 py-2 text-sm font-medium text-on-accent md:self-center">
-              Submit
-              <PhosphorIcon name="arrow-right" className="size-3.5" />
-            </span>
-          </div>
-        </div>
-      </Reveal>
-
-      {/* Intent Router — n8n-style active node pulse */}
-      <div className="flex flex-col items-center gap-2 py-3">
-        <SpineSegment
-          delay={0.15}
-          toneClassName={isLight ? "text-text-secondary" : "text-border"}
-          beamClassName={isLight ? "fill-accent/75" : "fill-accent"}
-          beamDuration={wave.beam}
-        />
-        <Reveal delay={0.22} y={8}>
-          <motion.div
-            className={cn(
-              "relative flex items-center gap-3 rounded-full border px-4 py-2",
-              isLight ? "border-border/80 bg-surface" : "border-border bg-surface",
-            )}
-            animate={
-              reduced
-                ? undefined
-                : {
-                    boxShadow: [
-                      "0 0 0 0 color-mix(in srgb, var(--ds-accent) 0%, transparent)",
-                      `0 0 0 ${isLight ? 6 : 8}px color-mix(in srgb, var(--ds-accent) ${isLight ? 12 : 18}%, transparent)`,
-                      "0 0 0 0 color-mix(in srgb, var(--ds-accent) 0%, transparent)",
-                    ],
-                  }
-            }
-            transition={{
-              duration: wave.intent,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <span
-              className={cn(
-                "flex size-8 items-center justify-center rounded-full",
-                isLight ? "bg-accent/12 text-accent-text" : "bg-accent/15 text-accent-text",
-              )}
-            >
-              <PhosphorIcon name="git-branch" className="size-4" />
-            </span>
-            <span className="text-sm font-semibold text-text-primary">
-              Intent Router
-            </span>
+          <p className="min-w-0 flex-1 truncate text-xs text-text-secondary">
+            Ask Aiden to investigate latency spike in checkout…
             {!reduced && (
               <motion.span
                 aria-hidden
-                className="absolute -right-1 -top-1 size-2 rounded-full bg-pass"
-                animate={{
-                  opacity: [wave.ring[0], wave.ring[1], wave.ring[2]],
-                  scale: [0.9, isLight ? 1.08 : 1.15, 0.9],
-                }}
+                className="ml-0.5 inline-block h-3 w-px align-middle bg-accent"
+                animate={{ opacity: [1, isLight ? 0.3 : 0.15, 1] }}
                 transition={{
-                  duration: wave.intent,
+                  duration: isLight ? 0.9 : 1.1,
                   repeat: Infinity,
-                  ease: "easeInOut",
+                  ease: "linear",
                 }}
               />
             )}
-          </motion.div>
-        </Reveal>
-      </div>
-
-      <FlowLabel delay={0.35} theme={theme}>
-        Route to assembly
-      </FlowLabel>
-
-      {/* Factory Assemblies — sequential L→R light-up */}
-      <Reveal delay={0.42} y={12}>
-        <div
-          className={cn(
-            "relative overflow-hidden rounded-xl border p-4",
-            isLight ? "border-border/80 bg-surface" : "border-border",
-          )}
-          style={{
-            borderColor: isLight ? "var(--ds-border)" : "var(--ds-layer-agent-stroke)",
-            backgroundColor: isLight ? "var(--ds-surface)" : "var(--ds-layer-agent-bg)",
-          }}
-        >
-          {!reduced && (
-            <motion.div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 rounded-xl"
-              style={{
-                boxShadow: isLight
-                  ? "inset 0 0 0 1px color-mix(in srgb, var(--ds-border) 78%, transparent)"
-                  : "inset 0 0 0 1px color-mix(in srgb, var(--ds-layer-agent-stroke) 70%, transparent)",
-              }}
-              animate={{ opacity: isLight ? [0.38, 0.75, 0.38] : [0.45, 0.95, 0.45] }}
-              transition={{
-                duration: wave.bezel,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          )}
-          <div className="relative z-10 mb-3 flex flex-wrap items-center justify-between gap-2">
-            <span
-              className={cn(
-                "font-mono text-[11px] font-semibold uppercase tracking-[0.14em]",
-                isLight ? "text-text-secondary" : "text-pass",
-              )}
-            >
-              Factory assemblies
-            </span>
-            <span className={cn("text-xs", isLight ? "text-text-secondary" : "text-text-tertiary")}>
-              Build · Operate · Observe · Remediate
-            </span>
-          </div>
-          <Stagger
-            step={STAGGER.orbit}
-            className="relative z-10 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
-          >
-            {ASSEMBLIES.map((card) => (
-              <div
-                key={card.stage}
-                className={cn(
-                  "flex flex-col gap-2 rounded-lg border p-3",
-                  isLight ? "border-border/80 bg-surface/90" : "border-border bg-surface/90",
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <PhosphorIcon
-                    name={card.icon}
-                    className="size-4 text-text-secondary"
-                  />
-                  <span
-                    className={cn(
-                      "font-mono text-[10px] uppercase tracking-[0.12em]",
-                      isLight ? "text-text-secondary" : "text-text-tertiary",
-                    )}
-                  >
-                    {card.stage}
-                  </span>
-                </div>
-                <div className="text-sm font-semibold text-text-primary">
-                  {card.title}
-                </div>
-                <div
-                  className={cn(
-                    "font-mono text-[10px] uppercase tracking-wide",
-                    isLight ? "text-text-secondary" : "text-text-tertiary",
-                  )}
-                >
-                  {card.meta}
-                </div>
-              </div>
-            ))}
-          </Stagger>
-        </div>
-      </Reveal>
-
-      <FlowLabel delay={0.55} theme={theme}>
-        Enrich from context
-      </FlowLabel>
-
-      {/* Graph Resolution — spider DrawPath + Beam into checkout-api */}
-      <Reveal delay={0.6} y={12}>
-        <div
-          className={cn(
-            "rounded-xl border p-4",
-            isLight ? "border-border/80 bg-surface" : "border-border bg-surface",
-          )}
-        >
-          <div className="mb-4 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-text-secondary">
-            Graph resolution
-          </div>
-          <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-[1fr_auto_minmax(200px,280px)]">
-            <Stagger step={STAGGER.chip} className="flex flex-col gap-2">
-              {SOURCES.map((src) => (
-                <div
-                  key={src}
-                  className={cn(
-                    "flex items-center gap-2 rounded-md border px-3 py-2",
-                    isLight ? "border-border/80 bg-surface-raised" : "border-border bg-surface-raised",
-                  )}
-                >
-                  <span
-                    className={cn(
-                      "size-1.5 shrink-0 rounded-full bg-accent",
-                      isLight ? "opacity-80" : "opacity-100",
-                    )}
-                    aria-hidden
-                  />
-                  <code className="truncate font-mono text-[11px] text-text-secondary">
-                    {src}
-                  </code>
-                </div>
-              ))}
-            </Stagger>
-
-            <svg
-              className="mx-auto hidden h-40 w-16 overflow-visible text-border md:block"
-              viewBox="0 0 64 160"
-              aria-hidden
-            >
-              {SPIDER_YS.map((y, i) => {
-                const d = `M0 ${y} C28 ${y}, 36 80, 64 80`;
-                return (
-                  <g key={y}>
-                    <DrawPath
-                      d={d}
-                      className="stroke-current"
-                      strokeWidth={1}
-                      delay={0.65 + i * 0.05}
-                      duration={isLight ? 0.48 : 0.55}
-                    />
-                    {!reduced && (
-                      <Beam
-                        d={d}
-                        className={isLight ? "fill-accent/75" : "fill-accent"}
-                        duration={(isLight ? 2.1 : 2.4) + i * (isLight ? 0.1 : 0.15)}
-                        delay={1.1 + i * 0.08}
-                        r={isLight ? 1.6 : 1.75}
-                      />
-                    )}
-                  </g>
-                );
-              })}
-            </svg>
-
-            <motion.div
-              className="rounded-xl border p-4 shadow-sm"
-              style={{
-                borderColor: isLight ? "var(--ds-border)" : "var(--ds-layer-intent-stroke)",
-                backgroundColor: isLight ? "var(--ds-surface)" : "var(--ds-layer-intent-bg)",
-              }}
-              animate={
-                reduced
-                  ? undefined
-                  : {
-                      boxShadow: [
-                        "0 0 0 0 color-mix(in srgb, var(--ds-accent) 0%, transparent)",
-                      `0 0 ${isLight ? 18 : 24}px 0 color-mix(in srgb, var(--ds-accent) ${isLight ? 16 : 22}%, transparent)`,
-                        "0 0 0 0 color-mix(in srgb, var(--ds-accent) 0%, transparent)",
-                      ],
-                    }
-              }
-              transition={{
-                duration: wave.intent,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: isLight ? 1.0 : 1.2,
-              }}
-            >
-              <div className="text-base font-semibold text-text-primary">
-                checkout-api
-              </div>
-              <div className="mt-1 text-xs text-text-secondary">
-                one entity · six sources
-              </div>
-              <div className="mt-3 font-mono text-[10px] uppercase tracking-wide text-text-tertiary">
-                owner · env · deps · recent change
-              </div>
-            </motion.div>
-          </div>
-          <p className="mt-4 text-center text-xs text-text-tertiary">
-            Resolution covers what you connect. Nothing beyond that.
           </p>
-        </div>
-      </Reveal>
-
-      <FlowLabel delay={0.75} theme={theme}>
-        Governed by
-      </FlowLabel>
-
-      {/* Aiden OS — chips settle */}
-      <Reveal delay={0.8} y={10}>
-        <div
-          className={cn("rounded-xl border p-4", isLight ? "border-border/80 bg-surface-raised" : "border-border")}
-          style={{
-            backgroundColor: isLight ? "var(--ds-surface-raised)" : "var(--ds-layer-os-bg)",
-            borderColor: isLight ? "var(--ds-border)" : "var(--ds-layer-os-stroke)",
-          }}
-        >
-          <div className="mb-3 text-center text-sm font-semibold text-accent-text">
-            Aiden Agentic Operating System
-          </div>
-          <Stagger
-            step={STAGGER.chip}
-            className="flex flex-wrap justify-center gap-2"
-          >
-            {OS_CHIPS.map((chip) => (
+          <div className="hidden shrink-0 gap-1 sm:flex">
+            {PROMPT_CHIPS.map((chip) => (
               <span
                 key={chip}
                 className={cn(
-                  "rounded-full border px-3 py-1.5 text-xs font-medium text-text-primary",
-                  isLight ? "border-border/80 bg-surface" : "border-border bg-surface",
+                  "rounded-full border px-1.5 py-0.5 font-mono text-[9px]",
+                  isLight
+                    ? "border-border/70 text-text-secondary"
+                    : "border-border text-text-tertiary",
                 )}
               >
                 {chip}
               </span>
             ))}
+          </div>
+          <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-[11px] font-medium text-on-accent">
+            Submit
+            <PhosphorIcon name="arrow-right" className="size-3" />
+          </span>
+        </div>
+      </Reveal>
+
+      {/* L1 Telemetry — quiet mono strip */}
+      <Reveal delay={0.06} y={4}>
+        <div
+          data-layer="telemetry"
+          className={cn(
+            "flex flex-wrap items-center gap-2 rounded-md border px-2.5 py-1.5",
+            isLight
+              ? "border-border/70 bg-surface-raised/60"
+              : "border-border bg-surface-raised/35",
+          )}
+        >
+          <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-text-tertiary">
+            Telemetry · signals
+          </span>
+          <Stagger step={STAGGER.chip} className="flex flex-wrap gap-1.5">
+            {TELEMETRY.map((channel) => (
+              <span
+                key={channel.label}
+                className={cn(
+                  "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-mono text-[10px]",
+                  isLight
+                    ? "border-border/60 bg-surface text-text-secondary"
+                    : "border-border bg-surface/80 text-text-tertiary",
+                )}
+              >
+                <PhosphorIcon
+                  name={channel.icon}
+                  className="size-3 text-text-tertiary"
+                />
+                {channel.label}
+              </span>
+            ))}
           </Stagger>
+        </div>
+      </Reveal>
+
+      <Spine delay={0.14} theme={theme} />
+
+      {/* L2 Context Graph — peak (graph only; ask bar lives above) */}
+      <Reveal delay={0.2} y={6}>
+        <div
+          data-layer="context"
+          className={cn(
+            "rounded-lg border p-2.5",
+            isLight ? "border-border/80 bg-surface" : "border-border bg-surface",
+          )}
+        >
+          <div className="mb-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-text-secondary">
+            Context Graph · semantic relationships
+          </div>
+
+          <ContextGraphSvg theme={theme} />
+        </div>
+      </Reveal>
+
+      <Spine delay={0.68} theme={theme} />
+
+      {/* L3 Aiden — compact action band */}
+      <Reveal delay={0.74} y={6}>
+        <div data-layer="aiden" className="flex flex-col gap-1.5">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-text-secondary">
+              Aiden · act within policy
+            </span>
+            <div
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1",
+                isLight
+                  ? "border-accent/40 bg-surface"
+                  : "border-accent/50 bg-surface",
+              )}
+            >
+              <PhosphorIcon
+                name="git-branch"
+                className="size-3.5 text-accent-text"
+              />
+              <span className="text-[11px] font-semibold text-text-primary">
+                Intent Router
+              </span>
+            </div>
+          </div>
+
+          <div
+            className={cn(
+              "rounded-lg border p-2",
+              isLight ? "border-border/80 bg-surface" : "border-border",
+            )}
+            style={{
+              borderColor: isLight
+                ? "var(--ds-border)"
+                : "var(--ds-layer-agent-stroke)",
+              backgroundColor: isLight
+                ? "var(--ds-surface)"
+                : "var(--ds-layer-agent-bg)",
+            }}
+          >
+            <div className="mb-1.5 flex items-center justify-between gap-2">
+              <span
+                className={cn(
+                  "font-mono text-[9px] font-semibold uppercase tracking-[0.14em]",
+                  isLight ? "text-text-secondary" : "text-pass",
+                )}
+              >
+                Factory assemblies
+              </span>
+            </div>
+            <Stagger
+              step={STAGGER.orbit}
+              className="grid grid-cols-2 gap-1 sm:grid-cols-4"
+            >
+              {ASSEMBLIES.map((card) => (
+                <div
+                  key={card.stage}
+                  title={card.title}
+                  className={cn(
+                    "flex items-center gap-1.5 rounded-md border px-2 py-1.5",
+                    isLight
+                      ? "border-border/70 bg-surface/90"
+                      : "border-border bg-surface/90",
+                  )}
+                >
+                  <PhosphorIcon
+                    name={card.icon}
+                    className="size-3 shrink-0 text-text-secondary"
+                  />
+                  <div className="min-w-0">
+                    <div className="font-mono text-[8px] uppercase tracking-[0.1em] text-text-tertiary">
+                      {card.stage}
+                    </div>
+                    <div className="truncate text-[11px] font-semibold text-text-primary">
+                      <span className="sr-only">{card.title}</span>
+                      <span aria-hidden>{card.short}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Stagger>
+          </div>
+
+          <div
+            className={cn(
+              "rounded-lg border px-2 py-1.5",
+              isLight ? "border-border/80 bg-surface-raised" : "border-border",
+            )}
+            style={{
+              backgroundColor: isLight
+                ? "var(--ds-surface-raised)"
+                : "var(--ds-layer-os-bg)",
+              borderColor: isLight
+                ? "var(--ds-border)"
+                : "var(--ds-layer-os-stroke)",
+            }}
+          >
+            <div className="mb-1 text-center text-[11px] font-semibold text-accent-text">
+              Aiden Agentic Operating System
+            </div>
+            <Stagger
+              step={STAGGER.chip}
+              className="flex flex-wrap justify-center gap-1"
+            >
+              {OS_CHIPS.map((chip) => (
+                <span
+                  key={chip}
+                  className={cn(
+                    "rounded-full border px-2 py-0.5 text-[10px] font-medium text-text-primary",
+                    isLight
+                      ? "border-border/70 bg-surface"
+                      : "border-border bg-surface",
+                  )}
+                >
+                  {chip}
+                </span>
+              ))}
+            </Stagger>
+          </div>
         </div>
       </Reveal>
     </div>

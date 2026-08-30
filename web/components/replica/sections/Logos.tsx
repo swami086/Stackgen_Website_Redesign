@@ -75,7 +75,7 @@ export function ReplicaLogos({ theme, className }: ReplicaLogosProps) {
     <section
       data-pencil-id={REPLICA_FRAMES[theme].logos}
       className={cn(
-        "flex w-full flex-col items-center gap-8 overflow-hidden px-4 py-16 md:px-24 md:py-24",
+        "flex w-full flex-col items-center gap-5 overflow-hidden px-4 py-10 md:gap-6 md:px-16 md:py-12",
         className,
       )}
     >

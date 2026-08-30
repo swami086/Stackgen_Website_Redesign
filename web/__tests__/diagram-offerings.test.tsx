@@ -29,14 +29,10 @@ test("renders the three group labels", () => {
   }
 });
 
-test("bezel is a self-drawing svg rect", () => {
+test("renders the Aiden OS band", () => {
   const { container } = render(<Offerings theme="dark" />);
-  expect(container.querySelector('[data-animate="bezel"] path, [data-animate="bezel"] rect')).toBeTruthy();
-});
-
-test("renders the os substrate band", () => {
-  const { container } = render(<Offerings theme="dark" />);
-  expect(container.querySelector('[data-part="os-substrate"]')).toBeTruthy();
+  expect(container.querySelector('[data-part="os-band"]')).toBeTruthy();
+  expect(screen.getByText("Aiden OS")).toBeInTheDocument();
 });
 
 test("contains zero vendor marks by design", () => {

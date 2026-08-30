@@ -5,7 +5,7 @@ export default defineConfig({
   testDir: "./e2e",
   outputDir: "../exports/web-shelf/motion-parity/.artifacts",
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000",
     viewport: { width: 1440, height: 900 },
     deviceScaleFactor: 1,
   },

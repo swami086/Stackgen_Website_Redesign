@@ -27,7 +27,9 @@ export function Stagger({ children, step = STAGGER.chip, className }: StaggerPro
       className={className}
       initial="hidden"
       whileInView="shown"
-      viewport={{ once: true, amount: 0.25 }}
+      // Generous margin so Factory diagrams don't stay at opacity 0
+      // when only a sliver is on-screen (common on dense home scroll).
+      viewport={{ once: true, amount: 0.05, margin: "80px 0px" }}
       variants={{ shown: { transition: { staggerChildren: effective } } }}
     >
       {items.map((child, i) => (

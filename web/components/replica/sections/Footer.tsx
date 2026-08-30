@@ -1,36 +1,75 @@
 import Link from "next/link";
+import {
+  ArrowUpRight,
+  GithubLogo,
+  LinkedinLogo,
+  XLogo,
+} from "@phosphor-icons/react";
 import { ReplicaLogo } from "@/components/replica/shared/ReplicaLogo";
 import { replicaContent } from "@/content/replica";
 import { cn } from "@/lib/cn";
+import { PRODUCTS } from "@/lib/products";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
-import { ArrowUpRight } from "@phosphor-icons/react";
 
 type ReplicaFooterProps = {
   theme: "light" | "dark";
   className?: string;
 };
 
-type FooterColumnProps = {
-  title: string;
-  items: readonly string[];
+type FooterLink = {
+  label: string;
+  href: string;
 };
 
-function FooterColumn({ title, items }: FooterColumnProps) {
+const PRODUCT_LINKS: readonly FooterLink[] = Object.values(PRODUCTS).map(
+  (product) => ({
+    label: product.title,
+    href: product.href,
+  }),
+);
+
+const PLATFORM_LINKS: readonly FooterLink[] = [
+  { label: "Aiden OS", href: "#" },
+  { label: "Context Graph", href: "#" },
+  { label: "AppStacks", href: "#" },
+  { label: "Policies", href: "#" },
+];
+
+const COMPANY_HREFS: Record<string, string> = {
+  Docs: "/docs",
+  About: "#",
+  Pricing: "#",
+  Contact: "#",
+  Security: "#",
+};
+
+function FooterColumn({
+  title,
+  links,
+}: {
+  title: string;
+  links: readonly FooterLink[];
+}) {
   return (
-    <div className="flex min-w-0 flex-1 flex-col gap-2.5">
-      <p className="text-[13px] font-medium text-text-primary">{title}</p>
-      {items.map((item) => (
-        <Link
-          key={item}
-          href="#"
-          className="text-[13px] text-text-secondary no-underline transition-colors hover:text-text-primary"
-        >
-          {item}
-        </Link>
-      ))}
+    <div className="flex min-w-0 flex-col gap-2.5">
+      <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-text-tertiary">
+        {title}
+      </p>
+      <ul className="flex flex-col gap-2">
+        {links.map((link) => (
+          <li key={link.label}>
+            <Link
+              href={link.href}
+              className="text-[13px] text-text-secondary no-underline transition-colors hover:text-text-primary"
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
-};
+}
 
 function FooterSocialLink({
   href,
@@ -45,120 +84,91 @@ function FooterSocialLink({
     <Link
       href={href}
       aria-label={label}
-      className="inline-flex text-text-tertiary transition-colors hover:text-text-secondary"
+      className="inline-flex size-8 items-center justify-center rounded-lg border border-border bg-surface text-text-secondary transition-colors hover:border-border-hover hover:text-text-primary"
     >
       {children}
     </Link>
   );
 }
 
-function LinkedInIcon() {
-  return (
-    <svg
-      width={16}
-      height={16}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-      <rect width={4} height={12} x={2} y={9} />
-      <circle cx={4} cy={4} r={2} />
-    </svg>
-  );
-}
-
-function TwitterIcon() {
-  return (
-    <svg
-      width={16}
-      height={16}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-    </svg>
-  );
-}
-
-function GitHubIcon() {
-  return (
-    <svg
-      width={16}
-      height={16}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-      <path d="M9 18c-4.51 2-5-2-7-2" />
-    </svg>
-  );
-}
-
+/**
+ * Footer — Soft Structuralism refinement.
+ * Mobbin: Attio (CTA → columns → meta), Linear/Chronicle (brand left + tight
+ * column cluster — no flex-1 stretch), Vercel (status under brand),
+ * Runway (bordered social marks).
+ */
 export function ReplicaFooter({ theme, className }: ReplicaFooterProps) {
-  const {
-    ctaHeading,
-    ctaSub,
-    cta,
-    brand,
-    product,
-    platform,
-    company,
-    legal,
-    legalLinks,
-  } = replicaContent.footer;
+  const { ctaHeading, ctaSub, cta, brand, company, legal, legalLinks } =
+    replicaContent.footer;
+
+  const companyLinks: FooterLink[] = company.map((label) => ({
+    label,
+    href: COMPANY_HREFS[label] ?? "#",
+  }));
 
   return (
     <footer
       data-pencil-id={REPLICA_FRAMES[theme].footer}
       className={cn(
-        "flex w-full flex-col gap-8 border-t border-border bg-bg px-24 pb-8 pt-12",
+        "flex w-full flex-col gap-8 border-t border-border bg-bg px-6 pb-8 pt-10 md:gap-10 md:px-16 md:pb-10 md:pt-12",
         className,
       )}
     >
-      <div className="flex w-full items-center justify-between gap-6 rounded-2xl border border-border bg-surface px-6 py-5">
-        <div className="flex min-w-0 flex-1 flex-col gap-1">
-          <p className="text-lg font-semibold text-text-primary">{ctaHeading}</p>
-          <p className="text-[13px] text-text-secondary">{ctaSub}</p>
-        </div>
-        <Link
-          href="#"
-          className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-accent pl-5 pr-2 py-2 text-[13px] font-semibold text-on-accent no-underline transition-transform active:scale-[0.98]"
-        >
-          {cta}
-          <div data-cta-icon className="flex size-8 items-center justify-center rounded-full bg-black/10 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-px group-hover:scale-105">
-            <ArrowUpRight size={16} weight="bold" className="text-on-accent" />
+      {/* CTA band — Attio / Relume: one job, left copy + right pill */}
+      <div className="rounded-2xl border border-border bg-surface-raised/40 p-1">
+        <div className="flex w-full flex-col items-start justify-between gap-4 rounded-[calc(1rem-2px)] border border-border bg-surface px-5 py-5 sm:flex-row sm:items-center md:px-7 md:py-6">
+          <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+            <p className="text-lg font-semibold tracking-tight text-text-primary md:text-xl">
+              {ctaHeading}
+            </p>
+            <p className="max-w-xl text-[13px] leading-snug text-text-secondary">
+              {ctaSub}
+            </p>
           </div>
-        </Link>
-      </div>
-
-      <div className="flex w-full gap-16">
-        <div className="flex w-[280px] shrink-0 flex-col gap-3">
-          <ReplicaLogo />
-          <p className="text-[13px] text-text-tertiary">{brand}</p>
+          <Link
+            href="#"
+            className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-accent pl-5 pr-2 py-2 text-[13px] font-semibold text-on-accent no-underline transition-transform active:scale-[0.98]"
+          >
+            {cta}
+            <div
+              data-cta-icon
+              className="flex size-8 items-center justify-center rounded-full bg-black/10 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-px group-hover:scale-105"
+            >
+              <ArrowUpRight
+                size={16}
+                weight="bold"
+                className="text-on-accent"
+              />
+            </div>
+          </Link>
         </div>
-        <FooterColumn title="Product" items={product} />
-        <FooterColumn title="Platform" items={platform} />
-        <FooterColumn title="Company" items={company} />
       </div>
 
-      <div className="flex w-full items-center justify-between gap-6 border-t border-border pt-5">
+      {/* Brand + columns — Chronicle/Linear: cluster, do not stretch flex-1 */}
+      <div className="flex w-full flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-16">
+        <div className="flex max-w-xs shrink-0 flex-col gap-3">
+          <ReplicaLogo />
+          <p className="text-[13px] leading-snug text-text-tertiary">{brand}</p>
+          <p className="inline-flex items-center gap-2 text-[12px] text-text-tertiary">
+            <span
+              className="size-1.5 shrink-0 rounded-full bg-pass"
+              aria-hidden
+            />
+            Status: All systems normal
+          </p>
+        </div>
+
+        <div className="grid w-full grid-cols-2 gap-x-10 gap-y-8 sm:max-w-2xl sm:grid-cols-3 lg:w-auto lg:max-w-none lg:shrink-0 lg:gap-x-14">
+          <FooterColumn title="Product" links={PRODUCT_LINKS} />
+          <FooterColumn title="Platform" links={PLATFORM_LINKS} />
+          <FooterColumn title="Company" links={companyLinks} />
+        </div>
+      </div>
+
+      {/* Meta bar — Attio: copyright | legal | social islands */}
+      <div className="flex w-full flex-col gap-4 border-t border-border pt-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
         <p className="text-xs text-text-tertiary">{legal}</p>
-        <div className="flex items-center gap-5">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
           {legalLinks.map((item) => (
             <Link
               key={item}
@@ -169,15 +179,15 @@ export function ReplicaFooter({ theme, className }: ReplicaFooterProps) {
             </Link>
           ))}
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <FooterSocialLink href="#" label="LinkedIn">
-            <LinkedInIcon />
+            <LinkedinLogo size={16} weight="regular" />
           </FooterSocialLink>
-          <FooterSocialLink href="#" label="Twitter">
-            <TwitterIcon />
+          <FooterSocialLink href="#" label="X">
+            <XLogo size={16} weight="regular" />
           </FooterSocialLink>
           <FooterSocialLink href="#" label="GitHub">
-            <GitHubIcon />
+            <GithubLogo size={16} weight="regular" />
           </FooterSocialLink>
         </div>
       </div>

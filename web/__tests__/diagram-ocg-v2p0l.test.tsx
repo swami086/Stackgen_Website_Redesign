@@ -12,6 +12,40 @@ beforeEach(() => {
   reducedMotion = false;
 });
 
+test("renders three-layer Option E structure", () => {
+  const { container } = render(<OperationalContextGraph theme="dark" />);
+  expect(container.querySelector('[data-structure="three-layer"]')).toBeTruthy();
+  expect(container.querySelector('[data-layer="telemetry"]')).toBeTruthy();
+  expect(container.querySelector('[data-layer="context"]')).toBeTruthy();
+  expect(container.querySelector('[data-layer="aiden"]')).toBeTruthy();
+  expect(container.querySelector('[data-motion-metaphor="signal-drop"]')).toBeTruthy();
+});
+
+test("ask bar sits at diagram top outside Context Graph", () => {
+  const { container } = render(<OperationalContextGraph theme="dark" />);
+  const root = container.querySelector('[data-structure="three-layer"]');
+  const ask = container.querySelector('[data-part="ask-bar"]');
+  const context = container.querySelector('[data-layer="context"]');
+  const telemetry = container.querySelector('[data-layer="telemetry"]');
+  expect(ask).toBeTruthy();
+  expect(context?.contains(ask)).toBe(false);
+  expect(root?.firstElementChild?.contains(ask) || root?.querySelector('[data-part="ask-bar"]')).toBeTruthy();
+  // DOM order: ask before telemetry before context
+  const order = [ask, telemetry, context].map((el) =>
+    el ? [...root!.querySelectorAll("*")].indexOf(el) : -1,
+  );
+  expect(order[0]).toBeLessThan(order[1]!);
+  expect(order[1]).toBeLessThan(order[2]!);
+  expect(screen.getByText(/Ask Aiden to investigate/)).toBeInTheDocument();
+});
+
+test("renders telemetry channels", () => {
+  render(<OperationalContextGraph theme="dark" />);
+  expect(screen.getByText("Logs")).toBeInTheDocument();
+  expect(screen.getByText("Metrics")).toBeInTheDocument();
+  expect(screen.getByText("Traces")).toBeInTheDocument();
+});
+
 test("renders intent router and four factory assemblies", () => {
   render(<OperationalContextGraph theme="dark" />);
   expect(screen.getByText("Intent Router")).toBeInTheDocument();
@@ -31,11 +65,12 @@ test("uses light-theme surface contrast", () => {
   expect(screen.getByText("Factory assemblies")).toHaveClass("text-text-secondary");
 });
 
-test("renders graph resolution entity and six sources", () => {
+test("renders context graph hub entity", () => {
   const { container } = render(<OperationalContextGraph theme="dark" />);
-  expect(screen.getAllByText("checkout-api").length).toBeGreaterThanOrEqual(1);
+  expect(screen.getByText("checkout-api")).toBeInTheDocument();
   expect(screen.getByText("one entity · six sources")).toBeInTheDocument();
-  expect(container.querySelectorAll("code")).toHaveLength(6);
+  expect(container.querySelector('[data-part="context-graph"]')).toBeTruthy();
+  expect(container.querySelectorAll('[data-part="context-graph"] text').length).toBeGreaterThanOrEqual(6);
 });
 
 test("renders Aiden OS governance chips", () => {
@@ -57,16 +92,20 @@ test("never prints banned DevOps product name", () => {
   expect(container.textContent).not.toMatch(/Aiden for DevOps/);
 });
 
-test("renders spider path geometry for graph convergence", () => {
+test("renders typed graph edges and drop rails", () => {
   const { container } = render(<OperationalContextGraph theme="dark" />);
-  const paths = container.querySelectorAll('path[d*="C28"]');
-  expect(paths.length).toBe(6);
+  expect(container.querySelectorAll('[data-part="drop-rail"]').length).toBe(2);
+  expect(screen.getByText("monitors")).toBeInTheDocument();
+  expect(screen.getAllByText("deploys").length).toBe(2);
+  expect(screen.getByText("owns")).toBeInTheDocument();
+  expect(screen.getByText("governs")).toBeInTheDocument();
 });
 
-test("reduced motion settles without wave loops", () => {
+test("reduced motion settles without beam loops", () => {
   reducedMotion = true;
   const { container } = render(<OperationalContextGraph theme="light" />);
   expect(container.querySelectorAll("circle")).toHaveLength(0);
-  expect(container.querySelectorAll('path[d="M12 0 V40"]')).toHaveLength(7);
-  expect(container.querySelectorAll('path[d*="C28"]')).toHaveLength(6);
+  expect(container.querySelectorAll('[data-part="drop-rail"] path').length).toBeGreaterThanOrEqual(2);
+  expect(container.querySelector('[data-part="context-graph"]')).toBeTruthy();
+  expect(container.querySelectorAll('path[d="M12 2 V30"]').length).toBe(2);
 });

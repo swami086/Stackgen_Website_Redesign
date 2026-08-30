@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "diagram-animation": {
+      "source": "iart-ai/explainer-video-skills",
+      "sourceType": "github",
+      "skillPath": "skills/diagram-animation/SKILL.md",
+      "computedHash": "875808a72e79967c35c1743af1f98d9904d83b5f278e13f248b65d63b7baff2a"
+    },
+    "mega-menu-builder": {
+      "source": "finsilabs/awesome-ecommerce-skills",
+      "sourceType": "github",
+      "skillPath": "skills/storefront-ui/mega-menu-builder/SKILL.md",
+      "computedHash": "b8cb149cdced20804a2a291a7571530670e6bc43057f42025f831674e7b1dbe8"
+    },
+    "navigation-menus": {
+      "source": "dylantarre/animation-principles",
+      "sourceType": "github",
+      "skillPath": "skills/07-by-ui-element/navigation-menus/SKILL.md",
+      "computedHash": "ea979bdd07ffe92fce609d72a606f57f5f2250ccc644c720a85c07e4e2efa29e"
+    }
+  }
+}

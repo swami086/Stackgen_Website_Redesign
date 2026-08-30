@@ -18,13 +18,13 @@ export function ReplicaAssemblies({ theme, className }: ReplicaAssembliesProps) 
     <section
       data-pencil-id={REPLICA_FRAMES[theme].assemblies}
       className={cn(
-        "relative overflow-hidden flex w-full flex-col items-center gap-8 p-24",
+        "relative overflow-hidden flex w-full flex-col items-center gap-4 px-4 py-8 md:gap-5 md:px-16 md:py-10",
         className,
       )}
     >
       <AtmosphereField slot="ground-assemblies" theme={theme} />
-      <div className="relative z-10 flex w-full flex-col items-center gap-8">
-        <h2 className="whitespace-nowrap text-[36px] font-bold tracking-[-0.5px] text-text-primary">
+      <div className="relative z-10 flex w-full flex-col items-center gap-4 md:gap-5">
+        <h2 className="whitespace-nowrap text-[28px] font-bold tracking-[-0.5px] text-text-primary md:text-[32px]">
           {heading}
         </h2>
         <InnerOuterLoop theme={theme} />

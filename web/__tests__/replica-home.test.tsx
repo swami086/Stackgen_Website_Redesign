@@ -59,9 +59,11 @@ test("the four canvas eyebrows are present and no fifth was added", () => {
 test("Shell hosts the V2P0L Operational Context Graph flow", () => {
   renderHome("dark");
   expect(screen.getByText("Intent Router")).toBeInTheDocument();
-  expect(screen.getByText("Graph resolution")).toBeInTheDocument();
+  expect(screen.getByText("Telemetry · signals")).toBeInTheDocument();
+  expect(screen.getByText("Context Graph · semantic relationships")).toBeInTheDocument();
   expect(screen.getByText("Aiden Agentic Operating System")).toBeInTheDocument();
   expect(document.querySelector('[data-pencil-id="V2P0L"]')).toBeInTheDocument();
+  expect(document.querySelector('[data-structure="three-layer"]')).toBeTruthy();
 });
 
 test("atmosphere fields are aria-hidden decorative layers", () => {

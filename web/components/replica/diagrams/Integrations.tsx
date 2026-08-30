@@ -5,7 +5,9 @@
  *
  * Motion thesis (Persuade): infinite left→right rolling bar — the stack
  * keeps streaming past like a live backplane. Mobbin: 1Password / Neon /
- * Rox / Headspace marquees with edge fades. Reduced motion = one static row.
+ * Rox / Headspace marquees with edge fades; Slack Apps + Phantom for
+ * icon+name chip scale (mark ≈ label cap-height after viewBox padding).
+ * Reduced motion = one static row.
  */
 import { VendorMark, VENDOR_NAMES, type VendorSlug } from "@/components/replica/logos";
 import { useReducedMotionSafe } from "@/components/replica/motion/useReducedMotionSafe";
@@ -35,11 +37,11 @@ function Pill({
     <div
       data-vendor-slug={pill.slug}
       data-vendor-label={pill.label}
-      className="flex shrink-0 items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-2"
+      className="flex h-10 shrink-0 items-center gap-2 rounded-full border border-border bg-bg px-3"
       title={VENDOR_NAMES[pill.slug]}
     >
-      <VendorMark slug={pill.slug} theme={theme} className="h-4 w-4" />
-      <span className="text-[13px] font-medium leading-none text-text-primary md:text-[14px]">
+      <VendorMark slug={pill.slug} theme={theme} className="size-6" />
+      <span className="text-[13px] font-medium leading-none text-text-primary">
         {pill.label}
       </span>
     </div>
@@ -56,7 +58,7 @@ function PillSet({
   return (
     <div
       data-marquee-set={setId}
-      className="flex shrink-0 items-center gap-3 pr-3"
+      className="flex shrink-0 items-center gap-4 pr-4"
       aria-hidden={setId === "b" ? true : undefined}
     >
       {PILLS.map((pill) => (
@@ -81,9 +83,9 @@ export function Integrations({
     <div
       role="img"
       aria-label="Integrations across GitHub, GitLab, Terraform, Datadog, PagerDuty, Jira, Open Policy Agent, and Slack"
-      className="relative flex w-full flex-col items-center overflow-hidden rounded-[20px] border border-border bg-surface p-5 md:p-6"
+      className="relative flex w-full max-w-5xl flex-col items-center overflow-hidden rounded-[16px] border border-border bg-surface px-2.5 py-2"
     >
-      <h3 className="mb-5 text-center text-[15px] font-medium leading-tight text-text-secondary md:mb-6">
+      <h3 className="mb-1.5 text-center text-[12px] font-medium leading-tight text-text-secondary">
         Plugs into the stack you already run
       </h3>
 
@@ -91,7 +93,7 @@ export function Integrations({
         <div
           data-integrations-row
           data-integrations-static-row
-          className="relative z-10 flex w-full flex-nowrap items-center justify-start gap-3 overflow-x-auto pb-1"
+          className="relative z-10 flex w-full flex-nowrap items-center justify-start gap-4 overflow-x-auto pb-1"
         >
           {PILLS.map((pill) => (
             <Pill key={pill.slug} pill={pill} theme={theme} />

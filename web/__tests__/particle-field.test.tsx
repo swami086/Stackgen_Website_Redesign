@@ -38,6 +38,7 @@ test("renders a decorative canvas", () => {
   const canvas = container.querySelector("canvas");
   expect(canvas).toBeInTheDocument();
   expect(canvas).toHaveAttribute("aria-hidden", "true");
+  expect(canvas).toHaveAttribute("data-motion-metaphor", "puzzle-stitch");
 });
 
 test("frozen mode is accepted for deterministic capture", () => {

@@ -1,0 +1,1402 @@
+---
+title: "Standalone Resources"
+product: "stackgen"
+sourcePath: "/docs/setup/supported-tech/supported-technologies"
+sourceUrl: "https://docs.stackgen.com/docs/setup/supported-tech/supported-technologies"
+status: "ok"
+---
+
+We've listed the resources that StackGen supports. We continuously expand our resource offerings, so be sure to check out this page at least once a month for the latest updates. Use the sections below to explore our extensive resource catalog.
+
+> **Resource Types:** Learn more about [Built-In Resources](/docs/stackgen/concepts/resources/built-in-resource) (Standalone and Grouped) and [Data Source](/docs/stackgen/concepts/resources/data-source) to understand how they function within your infrastructure.
+
+## Standalone Resources
+
+AWS (240 resources)
+
+- API Gateway Deployment
+- API Gateway REST API
+- API Gateway Resource
+- API Gateway Stage
+- AWS ALB Target Group Attachment
+- AWS ECS Service
+- AWS ECS Task Definition
+- AWS EKS Addon
+- AWS EKS Node Group
+- AWS External Resource
+- AWS IAM OpenID Connect Provider
+- AWS IAM SAML Provider
+- AWS Lambda Function
+- AWS Network ACL
+- AWS RDS Cluster
+- AWS Route Table
+- AWS Route53 Resolver Rule Association
+- AWS SES Configuration Set
+- AWS Tfvars Resource
+- Acm Certificate
+- Acm Certificate Validation
+- Alb Target Group Attachment
+- Ami Launch Permission
+- Api Gateway Authorizer
+- Api Gateway Method
+- Api Gateway Request Validator
+- Api Gateway Vpc Link
+- ApiGatewayV2 Deployment
+- ApiGatewayV2 Stage
+- Apigateway V2 Api
+- Apigateway V2 Authorizer
+- Apigatewayv2 Integration
+- Apigatewayv2 Route
+- Appautoscaling Target
+- Application Load Balancer
+- Athena Database
+- Athena Named Query
+- Athena Workgroup
+- Auto Scaling Group
+- Auto Scaling Policy
+- Autoscaling Group Tag
+- Autoscaling Notification
+- Autoscaling Schedule
+- Batch Job Definition
+- Chatbot Slack Channel Configuration
+- CloudFront Distribution
+- CloudFront Origin Access Identity
+- CloudWatch Event Rule
+- CloudWatch Event Target
+- CloudWatch Log Group
+- CloudWatch Metric Alarm
+- Cloudfront Origin Access Control
+- Cloudtrail
+- Cloudwatch Dashboard
+- Cloudwatch Log Resource Policy
+- Codeartifact Domain
+- Codecommit Repository
+- Codepipeline
+- Codestarconnections Connection
+- Cognito Resource Server
+- Cognito User Pool
+- Comprehend Entity Recognizer
+- Customer Gateway
+- DB Instance
+- DB Option Group
+- DB Parameter Group
+- DB Subnet Group
+- DLM Lifecycle Policy
+- DMS Replication Instance
+- Dax Cluster
+- Dax Subnet Group
+- Default Network Acl
+- Default Route Table
+- Directory Service Directory
+- Dx Gateway
+- DynamoDB Table
+- EBS
+- EBS Snapshot
+- EC2 Transit Gateway
+- EC2 Transit Gateway VPC Attachment Accepter
+- ECR Lifecycle Policy
+- ECR Repository
+- ECR Repository Policy
+- ECS Cluster
+- ECS Cluster Capacity Providers
+- EFS
+- EIP
+- EKS Cluster
+- EMR Cluster
+- Ec2 Tag
+- Ec2 Transit Gateway Route Table
+- Ec2 Transit Gateway Vpc Attachment
+- Efs Access Point
+- Efs File System Policy
+- Efs Mount Target
+- Eks Access Policy Association
+- ElastiCache Cluster
+- ElastiCache Subnet Group
+- Elastic Beanstalk Application
+- Elastic Load Balancer
+- Elasticache Parameter Group
+- Elasticache Replication Group
+- Elasticache Serverless Cache
+- Elasticsearch Domain
+- Elasticsearch Domain Policy
+- Glue Catalog Database
+- Glue Catalog Table
+- Glue Crawler
+- IAM Access Key
+- IAM Account Alias
+- IAM Account Password Policy
+- IAM Group
+- IAM Group Membership
+- IAM Group Policy Attachment
+- IAM Instance Profile
+- IAM Policy
+- IAM Role
+- IAM Role Policy
+- IAM Role Policy Attachment
+- IAM Server Certificate
+- IAM User
+- IAM User Policy
+- IAM User Policy Attachment
+- Iam Group Policy
+- Iam Policy Attachment
+- Identitystore Group
+- Identitystore User
+- Instance
+- Internet Gateway
+- Internet Gateway Attachment
+- KMS Alias
+- KMS Key
+- Key Pair
+- Keyspace
+- Keyspaces Table
+- Kinesis Firehose Delivery Stream
+- Kinesis Stream
+- Kinesis Stream Consumer
+- Kms Grant
+- Kms Key Policy
+- Lambda Code Signing Config
+- Lambda Function Permission
+- Launch Configuration
+- Launch Template
+- Lb Cookie Stickiness Policy
+- Lightsail Instance
+- Load Balancer
+- Load Balancer Listener
+- Load Balancer Listener
+- Load Balancer Listener Rule
+- Load Balancer Target Group
+- Load Balancer Target Group
+- MQ Broker
+- MQ Configuration
+- MSK Cluster
+- MSK VPC Connection
+- Msk Configuration
+- Msk Scram Secret Association
+- Msk Serverless Cluster
+- NAT Gateway
+- Neptune Cluster
+- Neptune Cluster Endpoint
+- Neptune Cluster Instance
+- Neptune Cluster Parameter Group
+- Neptune Cluster Snapshot
+- Neptune Global Cluster
+- Neptune Parameter Group
+- Neptune Subnet Group
+- Network Interface
+- Networkfirewall Firewall
+- Networkfirewall Firewall Policy
+- OpenSearch Domain
+- OpenSearch Domain Policy
+- Organizations Policy
+- Ram Resource Share
+- Rds Cluster Parameter Group
+- Rds Global Cluster
+- Redshift Authentication Profile
+- Redshift Cluster
+- Redshift Cluster Snapshot
+- Redshift Snapshot Schedule
+- Redshift Snapshot Schedule Association
+- Redshift Usage Limit
+- Route
+- Route 53 Zone
+- Route Table Association
+- Route53 Delegation Set
+- Route53 Health Check
+- Route53 Record
+- Route53 Resolver Endpoint
+- S3 Bucket
+- S3 Bucket CORS Configuration
+- S3 Bucket Lifecycle Configuration
+- S3 Bucket Notification
+- S3 Bucket Policy
+- S3 Bucket Public Access Block
+- S3 Bucket Server Side Encryption Configuration
+- S3 Bucket Versioning
+- S3 Object
+- SES Active Receipt Rule Set
+- SES Domain DKIM
+- SES Domain Identity
+- SES Domain Mail From
+- SES Receipt Rule
+- SNS Platform Application
+- SNS Topic
+- SNS Topic Subscription
+- SQS Queue
+- SQS Queue Redrive Allow Policy
+- SQS Queue Redrive Policy
+- SSM Parameter
+- Sagemaker Code Repository
+- Sagemaker Endpoint
+- Sagemaker Endpoint Configuration
+- Sagemaker Model
+- Sagemaker Notebook Instance
+- Secrets Manager - Secret
+- Secrets Manager - Secret Version
+- Secretsmanager Secret Policy
+- Security Group
+- Security Group Rule
+- Ses Receipt Rule Set
+- Ses Template
+- Shield Protection
+- Signer Signing Profile
+- Ssoadmin Customer Managed Policy Attachment
+- Ssoadmin Managed Policy Attachment
+- Ssoadmin Permission Set
+- Storage Gateway
+- Storagegateway Tape Pool
+- Subnet
+- VPC Endpoint
+- VPC Endpoint Security Group Association
+- VPC Peering Connection
+- VPC Security Group Egress Rule
+- VPC Security Group Ingress Rule
+- VPN Gateway
+- Vpn Connection
+- XRay Group
+- Xray Sampling Rule
+
+AZURE (100 resources)
+
+- App Configuration
+- App Configuration Key
+- App Service Plan
+- Application Gateway
+- Application Insights
+- Azure LB
+- Azure Role Assignment
+- Azure Service Plan
+- Azure Storage Queue
+- Azure Tfvars Resource
+- AzureAD Application
+- AzureAD Application Password
+- AzureAD Group
+- AzureAD Group Member
+- AzureAD Service Principal
+- AzureAD Service Principal Password
+- AzureAD User
+- CDN Endpoint
+- CDN Profile
+- Capacity Reservation Group
+- Container Registry
+- Cosmos DB Table
+- CosmosDB Account
+- CosmosDB Mongo Collection
+- Databricks Workspace
+- Disk Encryption Set
+- EventHub Authorization Rule
+- Eventhub
+- Eventhub Namespace
+- Firewall
+- Firewall Policy
+- Firewall Policy Rule Collection Group
+- Key Vault
+- Kubernetes Cluster
+- Kubernetes Cluster Node Pool
+- Linux Function App
+- Linux Virtual Machine
+- Linux Virtual Machine Scale Set
+- Linux Web App
+- Load Balancer Backend Address Pool
+- Load Balancer Backend Address Pool Address
+- Log Analytics Solution
+- Log Analytics Workspace
+- Machine Learning Workspace
+- Managed Disk
+- Monitor Action Group
+- Monitor Activity Log Alert
+- Monitor Diagnostic Setting
+- Monitor Metric Alert
+- Mssql Database
+- Mssql Elasticpool
+- MySQL DB Flexible Server
+- MySQL Flexible Database
+- Network Interface
+- Network Interface Security Group Association
+- Network Security Group
+- Network Security Rule
+- Network Watcher
+- Network Watcher Flow Log
+- Notification Hub
+- Notification Hub Authorization Rule
+- Notification Hub Namespace
+- Policy Definition
+- PostgreSQL DB Server
+- PostgreSQL Database
+- PostgreSQL Flexible Server
+- PostgreSQL Flexible Server Configuration
+- Postgresql Flexible Server Database
+- Private DNS A Record
+- Private DNS Zone
+- Private DNS Zone VNet Link
+- Private Endpoint
+- Proximity Placement Group
+- Public IP
+- Redis Cache
+- Redis Cache Firewall Rule
+- Resource Group
+- Route
+- Route Table
+- Route Table Association
+- Search Service
+- Security Center Subscription Pricing
+- Snapshot
+- Storage Account
+- Storage Account Network Rules
+- Storage Account Queue Properties
+- Storage Container
+- Storage Table
+- Subnet Network Security Group Association
+- Subscription Policy Assignment
+- User Assigned Identity
+- Virtual Machine
+- Virtual Machine Scale Set
+- Virtual Network
+- Virtual Network Gateway
+- Virtual Network Peering
+- Virtual Network Subnet
+- Windows Function App
+- Windows Virtual Machine
+- Windows Web App
+
+GOOGLE (205 resources)
+
+- Access Context Manager Access Level
+- Access Context Manager Access Policy
+- Access Context Manager Service Perimeter
+- Access Context Manager Service Perimeter Resource
+- Alloydb Cluster
+- Alloydb Instance
+- Apigee Addons Config
+- Apigee Endpoint Attachment
+- Apigee Envgroup
+- Apigee Envgroup Attachment
+- Apigee Environment
+- Apigee Environment Iam Binding
+- Apigee Environment Iam Member
+- Apigee Instance
+- Apigee Instance Attachment
+- Apigee Organization
+- Apikeys Key
+- App Engine Application
+- Artifact Registry Repository
+- Artifact Registry Repository Iam Member
+- Big Query Dataset
+- BigQuery Table
+- BigTable Instance
+- BigTable Table
+- Bigquery Routine
+- Bigtable Instance Iam Binding
+- Bigtable Instance Iam Member
+- Billing Account Iam Member
+- Billing Budget
+- Billing Project Info
+- Billing Subaccount
+- Certificate Manager Certificate
+- Cloud Router
+- Cloud Run Service
+- Cloud Run Service
+- Cloud Run Service Iam Member
+- Cloud Scheduler Job
+- Cloud Tasks
+- Cloudbuild Trigger
+- Cloudfunctions Function
+- Cloudfunctions Function Iam Binding
+- Cloudfunctions Function Iam Member
+- Cloudfunctions Function Iam Policy
+- Cloudfunctions2 Function
+- Cloudfunctions2 Function Iam Binding
+- Cloudfunctions2 Function Iam Member
+- Cloudfunctions2 Function Iam Policy
+- Composer Environment
+- Compute Address
+- Compute Autoscaler
+- Compute Backend Bucket
+- Compute Backend Service
+- Compute Disk
+- Compute Disk Resource Policy Attachment
+- Compute External Vpn Gateway
+- Compute Firewall
+- Compute Forwarding Rule
+- Compute Global Address
+- Compute Global Forwarding Rule
+- Compute Ha Vpn Gateway
+- Compute Health Check
+- Compute Http Health Check
+- Compute Image
+- Compute Instance
+- Compute Instance From Template
+- Compute Instance Group
+- Compute Instance Group Manager
+- Compute Instance Group Membership
+- Compute Instance Group Named Port
+- Compute Instance Iam Policy
+- Compute Instance Settings
+- Compute Instance Template
+- Compute Interconnect Attachment
+- Compute Managed Ssl Certificate
+- Compute Network
+- Compute Network Endpoint Group
+- Compute Network Peering
+- Compute Project Default Network Tier
+- Compute Project Metadata
+- Compute Project Metadata Item
+- Compute Region Autoscaler
+- Compute Region Backend Service
+- Compute Region Health Check
+- Compute Region Instance Template
+- Compute Region Network Endpoint Group
+- Compute Region Ssl Certificate
+- Compute Region Target Http Proxy
+- Compute Region Target Https Proxy
+- Compute Region Target Tcp Proxy
+- Compute Region Url Map
+- Compute Resource Policy
+- Compute Route
+- Compute Router Interface
+- Compute Router Peer
+- Compute Security Policy
+- Compute Shared Vpc Host Project
+- Compute Shared Vpc Service Project
+- Compute Snapshot
+- Compute Ssl Certificate
+- Compute Ssl Policy
+- Compute Sub Network
+- Compute Subnetwork Iam Binding
+- Compute Subnetwork Iam Member
+- Compute Target Http Proxy
+- Compute Target Https Proxy
+- Compute Target Pool
+- Compute Url Map
+- Compute Vpn Gateway
+- Compute Vpn Tunnel
+- Crypto Key
+- Crypto Key IAM Binding
+- Dataproc Cluster
+- Dns Managed Zone
+- Dns Policy
+- Dns Record Set
+- Dns Response Policy
+- Dns Response Policy Rule
+- Filestore Instance
+- Firestore Database
+- Firestore Index
+- Folder
+- Folder Iam Binding
+- Folder Iam Member
+- Folder Organization Policy
+- GCP tfvars Resource
+- GKE Cluster
+- GKE Feature
+- GKE Membership
+- IAM Policy
+- IAM Resource
+- Iam Workload Identity Pool
+- Iam Workload Identity Pool Provider
+- Identity Platform Config
+- Key Ring
+- Kms Crypto Key Iam Member
+- Logging Billing Account Sink
+- Logging Folder Sink
+- Logging Metric
+- Logging Organization Sink
+- Logging Project Bucket Config
+- Logging Project Sink
+- Memcache Instance
+- Monitoring Alert Policy
+- Monitoring Dashboard
+- Monitoring Notification Channel
+- Monitoring Uptime Check Config
+- NAT Router
+- Network Connectivity Service Connection Policy
+- Network Security Server Tls Policy
+- Organization Iam Binding
+- Organization Iam Member
+- Organization Policy
+- Privileged Access Manager Entitlement
+- Project
+- Project Custom Role
+- Project Default Service Accounts
+- Project IAM Member
+- Project IAM Policy
+- Project Iam Binding
+- Project Organization Policy
+- Project Service
+- Project Service Identities
+- Project Usage Export Bucket
+- PubSub Subscription
+- PubSub Topic
+- Pubsub Schema
+- Pubsub Subscription Iam Binding
+- Pubsub Subscription Iam Member
+- Pubsub Topic Iam Binding
+- Pubsub Topic Iam Member
+- Redis Cluster
+- Redis Instance
+- Resource Manager Lien
+- SQL Database
+- SQL Database Instance
+- SQL User
+- Scope IAM Binding
+- Scope RBAC Role Binding
+- Secret Manager
+- Secret Manager Secret Iam Binding
+- Secret Manager Secret Iam Member
+- Secret Manager Secret Version
+- Service Account
+- Service Account IAM Binding
+- Service Account IAM Member
+- Service Account Key
+- Service Networking Connection
+- Source Code Repository
+- Spanner Database
+- Spanner Database Iam Binding
+- Spanner Database Iam Member
+- Spanner Instance
+- Spanner Instance Iam Binding
+- Spanner Instance Iam Member
+- Sql Ssl Cert
+- Standard App Version
+- Storage Bucket
+- Storage Bucket IAM Binding
+- Storage Bucket Iam Member
+- Storage Bucket Iam Policy
+- Storage Bucket Object
+- Tags Tag Binding
+- Vpc Access Connector
+- Workbench Instance
+- Workflows Workflow
+
+CIVO (8 resources)
+
+- Database
+- Firewall
+- Instance
+- Kubernetes Cluster
+- Network
+- Node Pool
+- Object Store
+- Volume
+
+## Grouped Resources
+
+AWS (48 resources)
+
+- API Gateway - HTTP
+- API Gateway Lambda Integration
+- AWS DB Instance
+- AWS Region
+- Athena
+- Auto Scaling
+- Bedrock
+- Cloud Map Service Discovery
+- CloudFront Distribution
+- CloudWatch Event - Rule (Schedule)
+- Data Migration Service
+- DynamoDB
+- EC2
+- ECR Repository
+- ECS Service
+- ECS Service (EC2 Workload)
+- EKS Cluster
+- ElastiCache
+- Elastic IP
+- Elasticache Serverless
+- Internet Gateway with Route Table
+- KMS
+- Kinesis
+- Lambda Code Signing Config
+- Lambda DynamoDB Event Source Mapping
+- Lambda Event Source Mapping
+- Lambda Function
+- Lambda SQS Event Source Mapping
+- Load Balancer
+- MQ
+- MSK
+- NAT Gateway
+- Network ACL (NACL)
+- OpenSearch
+- RDS
+- Redshift
+- Route Table
+- S3
+- S3 Bucket Lambda Notification(Trigger)
+- SES
+- SES Email Template
+- SNS
+- SNS Lambda Trigger
+- SQS
+- SSM
+- Secrets Manager - Secret
+- Security Group
+- VPC
+
+AZURE (52 resources)
+
+- Automation DSC Configuration
+- Autoscale Setting
+- Availability Set
+- Azure Role Definition
+- CDN - Classic
+- Cognitive
+- CosmosDB for Cassandra
+- CosmosDB for MongoDB
+- CosmosDB for NoSQL
+- CosmosDB for PostgreSQL
+- DNS - A Record
+- DNS - CNAME Record
+- DNS - MX Record
+- DNS - NS Record
+- DNS - SRV Record
+- DNS - TXT Record
+- DNS Zone
+- Data Factory
+- Data Lake File System
+- Elastic Cloud Elasticsearch
+- Event Grid System Topic
+- Event Grid Topic
+- Event Hub
+- Key Vault
+- Key Vault Access Policy
+- Key Vault Key
+- Key Vault Secret
+- Kubernetes Cluster
+- Kubernetes Cluster Node Pool
+- Linux Virtual Machine
+- Linux Virtual Machine Scale Set
+- Load Balancer
+- MSSQL Server
+- MYSQL Flexible DB Server
+- Monitor Workspace
+- Notification Hub
+- PostgreSQL DB Server
+- Redis Cache
+- Service Bus Namespace
+- Service Bus Queue
+- Service Bus Subscription
+- Service Bus Topic
+- Storage Account
+- Storage Container
+- Storage Queue
+- Stream Analytics Cluster
+- Synapse Workspace
+- User Assigned Identity
+- Virtual Network
+- Virtual Network Subnet
+- Webapp Linux
+- Webapp Windows
+
+GOOGLE (17 resources)
+
+- Analysis Note
+- Artifact Registry
+- Big Query Table
+- BigTable
+- Binary Authorization Attestor
+- Cloud Function 2nd Gen
+- Crypto Key
+- GKE Cluster
+- GKE Feature/Membership
+- Key Ring
+- Node Pool
+- PubSub
+- SQL Database
+- Scope
+- Secret Manager
+- Service Account
+- Storage Bucket
+
+CIVO (1 resources)
+
+- Kubernetes
+
+## Data Sources
+
+AWS (574 resources)
+
+- Acm Certificate
+- Acmpca Certificate
+- Acmpca Certificate Authority
+- Alb
+- Alb Listener
+- Alb Target Group
+- Ami
+- Ami Ids
+- Api Gateway Api Key
+- Api Gateway Authorizer
+- Api Gateway Authorizers
+- Api Gateway Domain Name
+- Api Gateway Export
+- Api Gateway Resource
+- Api Gateway Rest Api
+- Api Gateway Sdk
+- Api Gateway Vpc Link
+- Apigatewayv2 Api
+- Apigatewayv2 Apis
+- Apigatewayv2 Export
+- Apigatewayv2 Vpc Link
+- Appconfig Configuration Profile
+- Appconfig Configuration Profiles
+- Appconfig Environment
+- Appconfig Environments
+- Appintegrations Event Integration
+- Appmesh Gateway Route
+- Appmesh Mesh
+- Appmesh Route
+- Appmesh Virtual Gateway
+- Appmesh Virtual Node
+- Appmesh Virtual Router
+- Appmesh Virtual Service
+- Apprunner Hosted Zone Id
+- Appstream Image
+- Arn
+- Athena Named Query
+- Auditmanager Control
+- Auditmanager Framework
+- Autoscaling Group
+- Autoscaling Groups
+- Availability Zone
+- Availability Zones
+- Backup Framework
+- Backup Plan
+- Backup Report Plan
+- Backup Selection
+- Backup Vault
+- Batch Compute Environment
+- Batch Job Definition
+- Batch Job Queue
+- Batch Scheduling Policy
+- Bedrock Custom Model
+- Bedrock Custom Models
+- Bedrock Foundation Model
+- Bedrock Foundation Models
+- Bedrock Inference Profile
+- Bedrock Inference Profiles
+- Bedrockagent Agent Versions
+- Billing Service Account
+- Budgets Budget
+- Caller Identity
+- Canonical User Id
+- Ce Cost Category
+- Chatbot Slack Workspace
+- Cloudcontrolapi Resource
+- Cloudformation Export
+- Cloudformation Stack
+- Cloudformation Type
+- Cloudfront Cache Policy
+- Cloudfront Distribution
+- Cloudfront Function
+- Cloudfront Log Delivery Canonical User Id
+- Cloudfront Origin Access Control
+- Cloudfront Origin Access Identities
+- Cloudfront Origin Access Identity
+- Cloudfront Origin Request Policy
+- Cloudfront Realtime Log Config
+- Cloudfront Response Headers Policy
+- Cloudhsm V2 Cluster
+- Cloudtrail Service Account
+- Cloudwatch Event Bus
+- Cloudwatch Event Connection
+- Cloudwatch Event Source
+- Cloudwatch Log Group
+- Cloudwatch Log Groups
+- Codeartifact Authorization Token
+- Codeartifact Repository Endpoint
+- Codebuild Fleet
+- Codecatalyst Dev Environment
+- Codecommit Approval Rule Template
+- Codecommit Repository
+- Codeguruprofiler Profiling Group
+- Codestarconnections Connection
+- Cognito Identity Pool
+- Cognito User Group
+- Cognito User Groups
+- Cognito User Pool
+- Cognito User Pool Client
+- Cognito User Pool Clients
+- Cognito User Pool Signing Certificate
+- Cognito User Pools
+- Connect Contact Flow
+- Connect Contact Flow Module
+- Connect Hours Of Operation
+- Connect Instance
+- Connect Instance Storage Config
+- Connect Lambda Function Association
+- Connect Prompt
+- Connect Queue
+- Connect Quick Connect
+- Connect Routing Profile
+- Connect Security Profile
+- Connect User
+- Connect User Hierarchy Group
+- Connect User Hierarchy Structure
+- Connect Vocabulary
+- Controltower Controls
+- Cur Report Definition
+- Customer Gateway
+- Datapipeline Pipeline
+- Datapipeline Pipeline Definition
+- Datazone Environment Blueprint
+- Db Cluster Snapshot
+- Db Event Categories
+- Db Instance
+- Db Instances
+- Db Parameter Group
+- Db Proxy
+- Db Snapshot
+- Db Subnet Group
+- Default Tags
+- Devopsguru Resource Collection
+- Directory Service Directory
+- Dms Certificate
+- Dms Endpoint
+- Dms Replication Instance
+- Dms Replication Subnet Group
+- Dms Replication Task
+- Docdb Engine Version
+- Docdb Orderable Db Instance
+- Dx Connection
+- Dx Gateway
+- Dx Location
+- Dx Locations
+- Dx Router Configuration
+- Dynamodb Table
+- Dynamodb Table Item
+- ECR Image
+- ELB Hosted Zone Id
+- Ebs Default Kms Key
+- Ebs Encryption By Default
+- Ebs Snapshot
+- Ebs Snapshot Ids
+- Ebs Volume
+- Ebs Volumes
+- Ec2 Capacity Block Offering
+- Ec2 Client Vpn Endpoint
+- Ec2 Coip Pool
+- Ec2 Coip Pools
+- Ec2 Host
+- Ec2 Instance Type
+- Ec2 Instance Type Offering
+- Ec2 Instance Type Offerings
+- Ec2 Instance Types
+- Ec2 Local Gateway
+- Ec2 Local Gateway Route Table
+- Ec2 Local Gateway Route Tables
+- Ec2 Local Gateway Virtual Interface
+- Ec2 Local Gateway Virtual Interface Group
+- Ec2 Local Gateway Virtual Interface Groups
+- Ec2 Local Gateways
+- Ec2 Managed Prefix List
+- Ec2 Managed Prefix Lists
+- Ec2 Network Insights Analysis
+- Ec2 Network Insights Path
+- Ec2 Public Ipv4 Pool
+- Ec2 Public Ipv4 Pools
+- Ec2 Serial Console Access
+- Ec2 Spot Price
+- Ec2 Transit Gateway
+- Ec2 Transit Gateway Attachment
+- Ec2 Transit Gateway Attachments
+- Ec2 Transit Gateway Connect
+- Ec2 Transit Gateway Connect Peer
+- Ec2 Transit Gateway Dx Gateway Attachment
+- Ec2 Transit Gateway Multicast Domain
+- Ec2 Transit Gateway Peering Attachment
+- Ec2 Transit Gateway Peering Attachments
+- Ec2 Transit Gateway Route Table
+- Ec2 Transit Gateway Route Table Associations
+- Ec2 Transit Gateway Route Table Propagations
+- Ec2 Transit Gateway Route Tables
+- Ec2 Transit Gateway Vpc Attachment
+- Ec2 Transit Gateway Vpc Attachments
+- Ec2 Transit Gateway Vpn Attachment
+- Ecr Authorization Token
+- Ecr Pull Through Cache Rule
+- Ecr Repositories
+- Ecr Repository
+- Ecr Repository Creation Template
+- Ecrpublic Authorization Token
+- Ecs Cluster
+- Ecs Container Definition
+- Ecs Service
+- Ecs Task Definition
+- Ecs Task Execution
+- Efs Access Point
+- Efs Access Points
+- Efs File System
+- Efs Mount Target
+- Eip
+- Eips
+- Eks Access Entry
+- Eks Addon
+- Eks Addon Version
+- Eks Cluster
+- Eks Cluster Auth
+- Eks Clusters
+- Eks Node Group
+- Eks Node Groups
+- Elastic Beanstalk Application
+- Elastic Beanstalk Hosted Zone
+- Elastic Beanstalk Solution Stack
+- Elasticache Cluster
+- Elasticache Replication Group
+- Elasticache Reserved Cache Node Offering
+- Elasticache Serverless Cache
+- Elasticache Subnet Group
+- Elasticache User
+- Elasticsearch Domain
+- Elb
+- Elb Service Account
+- Emr Release Labels
+- Emr Supported Instance Types
+- Emrcontainers Virtual Cluster
+- Fsx Ontap File System
+- Fsx Ontap Storage Virtual Machine
+- Fsx Ontap Storage Virtual Machines
+- Fsx Openzfs Snapshot
+- Fsx Windows File System
+- Globalaccelerator Accelerator
+- Globalaccelerator Custom Routing Accelerator
+- Glue Catalog Table
+- Glue Connection
+- Glue Data Catalog Encryption Settings
+- Glue Registry
+- Grafana Workspace
+- Guardduty Detector
+- Guardduty Finding Ids
+- IAM Policy Document
+- IAM Role
+- Iam Access Keys
+- Iam Account Alias
+- Iam Group
+- Iam Instance Profile
+- Iam Instance Profiles
+- Iam Openid Connect Provider
+- Iam Policy
+- Iam Principal Policy Simulation
+- Iam Roles
+- Iam Saml Provider
+- Iam Server Certificate
+- Iam Session Context
+- Iam User
+- Iam User Ssh Key
+- Iam Users
+- Identitystore Groups
+- Imagebuilder Component
+- Imagebuilder Components
+- Imagebuilder Container Recipe
+- Imagebuilder Container Recipes
+- Imagebuilder Distribution Configuration
+- Imagebuilder Distribution Configurations
+- Imagebuilder Image
+- Imagebuilder Image Pipeline
+- Imagebuilder Image Pipelines
+- Imagebuilder Image Recipe
+- Imagebuilder Image Recipes
+- Imagebuilder Infrastructure Configuration
+- Imagebuilder Infrastructure Configurations
+- Inspector Rules Packages
+- Instance
+- Instances
+- Internet Gateway
+- Iot Endpoint
+- Iot Registration Code
+- Ip Ranges
+- Ivs Stream Key
+- Kendra Experience
+- Kendra Faq
+- Kendra Index
+- Kendra Query Suggestions Block List
+- Kendra Thesaurus
+- Key Pair
+- Kinesis Firehose Delivery Stream
+- Kinesis Stream
+- Kinesis Stream Consumer
+- Kms Alias
+- Kms Ciphertext
+- Kms Custom Key Store
+- Kms Key
+- Kms Public Key
+- LB
+- LB Hosted Zone Id
+- Lakeformation Data Lake Settings
+- Lakeformation Permissions
+- Lakeformation Resource
+- Lambda Alias
+- Lambda Code Signing Config
+- Lambda Function
+- Lambda Function Url
+- Lambda Functions
+- Lambda Invocation
+- Lambda Layer Version
+- Launch Configuration
+- Launch Template
+- Lb Listener
+- Lb Listener Rule
+- Lb Target Group
+- Lb Trust Store
+- Lbs
+- Lex Bot
+- Lex Bot Alias
+- Lex Intent
+- Lex Slot Type
+- Licensemanager Received License
+- Location Geofence Collection
+- Location Map
+- Location Place Index
+- Location Route Calculator
+- Location Tracker
+- Location Tracker Association
+- Location Tracker Associations
+- Media Convert Queue
+- Medialive Input
+- Memorydb Acl
+- Memorydb Cluster
+- Memorydb Parameter Group
+- Memorydb Snapshot
+- Memorydb Subnet Group
+- Memorydb User
+- Mq Broker
+- Mq Broker Engine Types
+- Mq Broker Instance Type Offerings
+- Msk Bootstrap Brokers
+- Msk Broker Nodes
+- Msk Cluster
+- Msk Configuration
+- Msk Kafka Version
+- Msk Vpc Connection
+- Mskconnect Connector
+- Mskconnect Custom Plugin
+- Mskconnect Worker Configuration
+- Nat Gateway
+- Nat Gateways
+- Neptune Engine Version
+- Neptune Orderable Db Instance
+- Network Acls
+- Network Interface
+- Network Interfaces
+- Networkfirewall Firewall
+- Networkfirewall Firewall Policy
+- Networkfirewall Resource Policy
+- Networkmanager Connection
+- Networkmanager Connections
+- Networkmanager Device
+- Networkmanager Devices
+- Networkmanager Global Network
+- Networkmanager Global Networks
+- Networkmanager Link
+- Networkmanager Links
+- Networkmanager Site
+- Networkmanager Sites
+- Oam Link
+- Oam Links
+- Oam Sink
+- Oam Sinks
+- Opensearch Domain
+- Opensearchserverless Access Policy
+- Opensearchserverless Lifecycle Policy
+- Opensearchserverless Security Config
+- Opensearchserverless Security Policy
+- Opensearchserverless Vpc Endpoint
+- Organizations Delegated Administrators
+- Organizations Delegated Services
+- Organizations Organization
+- Organizations Organizational Unit
+- Organizations Organizational Unit Child Accounts
+- Organizations Organizational Unit Descendant Accounts
+- Organizations Organizational Unit Descendant Organizational Units
+- Organizations Organizational Units
+- Organizations Policies
+- Organizations Policies For Target
+- Organizations Policy
+- Organizations Resource Tags
+- Outposts Asset
+- Outposts Assets
+- Outposts Outpost
+- Outposts Outpost Instance Type
+- Outposts Outpost Instance Types
+- Outposts Outposts
+- Outposts Site
+- Outposts Sites
+- Partition
+- Polly Voices
+- Prefix List
+- Prometheus Default Scraper Configuration
+- Prometheus Workspace
+- Prometheus Workspaces
+- Qldb Ledger
+- Quicksight Analysis
+- Quicksight Data Set
+- Quicksight Group
+- Quicksight Theme
+- Quicksight User
+- Ram Resource Share
+- Rds Certificate
+- Rds Cluster
+- Rds Cluster Parameter Group
+- Rds Clusters
+- Rds Engine Version
+- Rds Orderable Db Instance
+- Rds Reserved Instance Offering
+- Redshift Cluster
+- Redshift Cluster Credentials
+- Redshift Data Shares
+- Redshift Orderable Cluster
+- Redshift Producer Data Shares
+- Redshift Service Account
+- Redshift Subnet Group
+- Redshiftserverless Credentials
+- Redshiftserverless Namespace
+- Redshiftserverless Workgroup
+- Region
+- Regions
+- Resourceexplorer2 Search
+- Resourcegroupstaggingapi Resources
+- Route
+- Route Table
+- Route Tables
+- Route53 Delegation Set
+- Route53 Resolver Endpoint
+- Route53 Resolver Firewall Config
+- Route53 Resolver Firewall Domain List
+- Route53 Resolver Firewall Rule Group
+- Route53 Resolver Firewall Rule Group Association
+- Route53 Resolver Firewall Rules
+- Route53 Resolver Query Log Config
+- Route53 Resolver Rule
+- Route53 Resolver Rules
+- Route53 Traffic Policy Document
+- Route53 Zone
+- Route53 Zones
+- Route53profiles Profiles
+- S3 Account Public Access Block
+- S3 Bucket
+- S3 Bucket Object
+- S3 Bucket Objects
+- S3 Bucket Policy
+- S3 Directory Buckets
+- S3 Object
+- S3 Objects
+- S3control Multi Region Access Point
+- Sagemaker Prebuilt Ecr Image
+- Secretsmanager Random Password
+- Secretsmanager Secret
+- Secretsmanager Secret Rotation
+- Secretsmanager Secret Version
+- Secretsmanager Secret Versions
+- Secretsmanager Secrets
+- Security Group
+- Security Groups
+- Securityhub Standards Control Associations
+- Serverlessapplicationrepository Application
+- Service Discovery Dns Namespace
+- Service Discovery Http Namespace
+- Service Discovery Service
+- Service Principal
+- Servicecatalog Constraint
+- Servicecatalog Launch Paths
+- Servicecatalog Portfolio
+- Servicecatalog Portfolio Constraints
+- Servicecatalog Product
+- Servicecatalog Provisioning Artifacts
+- Servicecatalogappregistry Application
+- Servicequotas Service
+- Servicequotas Service Quota
+- Servicequotas Templates
+- Ses Active Receipt Rule Set
+- Ses Domain Identity
+- Ses Email Identity
+- Sesv2 Configuration Set
+- Sesv2 Dedicated Ip Pool
+- Sesv2 Email Identity
+- Sesv2 Email Identity Mail From Attributes
+- Sfn Activity
+- Sfn Alias
+- Sfn State Machine
+- Sfn State Machine Versions
+- Shield Protection
+- Signer Signing Job
+- Signer Signing Profile
+- Sns Topic
+- Spot Datafeed Subscription
+- Sqs Queue
+- Sqs Queues
+- Ssm Document
+- Ssm Instances
+- Ssm Maintenance Windows
+- Ssm Parameter
+- Ssm Parameters By Path
+- Ssm Patch Baseline
+- Ssm Patch Baselines
+- Ssmcontacts Contact
+- Ssmcontacts Contact Channel
+- Ssmcontacts Plan
+- Ssmcontacts Rotation
+- Ssmincidents Replication Set
+- Ssmincidents Response Plan
+- Ssoadmin Application
+- Ssoadmin Application Assignments
+- Ssoadmin Application Providers
+- Ssoadmin Instances
+- Ssoadmin Permission Set
+- Ssoadmin Permission Sets
+- Ssoadmin Principal Application Assignments
+- Storagegateway Local Disk
+- Subnet
+- Subnets
+- Synthetics Runtime Version
+- Synthetics Runtime Versions
+- Timestreamwrite Database
+- Timestreamwrite Table
+- Transfer Connector
+- Transfer Server
+- VPC
+- Verifiedpermissions Policy Store
+- Vpc Dhcp Options
+- Vpc Endpoint
+- Vpc Endpoint Service
+- Vpc Ipam Pool
+- Vpc Ipam Pool Cidrs
+- Vpc Ipam Pools
+- Vpc Ipam Preview Next Cidr
+- Vpc Peering Connection
+- Vpc Peering Connections
+- Vpc Security Group Rule
+- Vpc Security Group Rules
+- Vpclattice Auth Policy
+- Vpclattice Listener
+- Vpclattice Resource Policy
+- Vpclattice Service
+- Vpclattice Service Network
+- Vpcs
+- Vpn Gateway
+- Waf Ipset
+- Waf Rate Based Rule
+- Waf Rule
+- Waf Subscribed Rule Group
+- Waf Web Acl
+- Wafregional Ipset
+- Wafregional Rate Based Rule
+- Wafregional Rule
+- Wafregional Subscribed Rule Group
+- Wafregional Web Acl
+- Wafv2 Ip Set
+- Wafv2 Regex Pattern Set
+- Wafv2 Rule Group
+- Wafv2 Web Acl
+- Workspaces Bundle
+- Workspaces Directory
+- Workspaces Image
+- Workspaces Workspace
+
+AZURE (49 resources)
+
+- App Configuration
+- App Configuration Keys
+- App Service Plan
+- Application
+- Application Gateway
+- Azure Logic App Workflow
+- Azure Private DNS Zone
+- AzureAD Client Config
+- Client Config
+- Container Registry
+- CosmosDB Account
+- Databricks Workspace
+- EventHub Authorization Rule
+- Eventhub
+- Eventhub Namespace
+- Firewall Policy
+- Function App Host Keys
+- Group
+- Image
+- Key Vault
+- Key Vault Key
+- Key Vault Secret
+- Kubernetes Cluster
+- Kubernetes Cluster Node Pool
+- Load Balancer
+- Load Balancer Backend Address Pool
+- Log Analytics Workspace
+- MySQL DB Flexible Server
+- Network Interface
+- Network Security Group
+- Policy Definition
+- Policy Set Definition
+- PostgreSQL DB Server
+- Public IP
+- Redis Cache
+- Resource Group
+- Role Definition
+- Route Table
+- SSH Public Key
+- Service Plan
+- Service Principal
+- Snapshot
+- Storage Account
+- User
+- User Assigned Identity
+- Virtual Machine
+- Virtual Network
+- Virtual Network Subnet
+- Windows Function App
+
+GOOGLE (29 resources)
+
+- Active Folder
+- Artifact Registry
+- Billing Account
+- Client Config
+- Cloudfunctions2 Function
+- Compute Image
+- Compute Instance Iam Policy
+- Compute Network
+- Compute Region Ssl Certificate
+- Compute Subnetwork
+- Compute Subnetworks
+- Compute Zones
+- Container Cluster
+- Container Engine Versions
+- Iam Role
+- Iam Testable Permissions
+- KMS Crypto Key
+- KMS Key Ring
+- Monitoring App Engine Service
+- Monitoring Notification Channel
+- Netblock Ip Ranges
+- Organization
+- Projects
+- Secret Manager Secret Version
+- Service Account
+- Spanner Instance
+- Sql Database Instance
+- Storage Bucket Iam Policy
+- Storage Project Service Account
+
+CIVO (3 resources)
+
+- Disk Image
+- Object Store Credential
+- SSH Key
+
+## Helm Charts
+
+HELM (18 resources)
+
+- ClusterRole
+- ClusterRoleBinding
+- ConfigMap
+- HPA
+- Ingress
+- Kafka(In-Cluster)
+- MongoDB(In-Cluster)
+- MySQL(In-Cluster)
+- NGINX Ingress Controller
+- Namespace
+- PostgreSQL(In-Cluster)
+- Redis(In-Cluster)
+- Role
+- RoleBinding
+- Secret (v1)
+- Service
+- ServiceAccount
+- Workload

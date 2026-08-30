@@ -1,0 +1,26 @@
+[
+  {
+    "from": "/docs/aiden/integrations/gcp",
+    "to": "/docs/aiden/1.0/integrations/gcp"
+  },
+  {
+    "from": "/docs/aiden/integrations/jenkins",
+    "to": "/docs/aiden/1.0/integrations/jenkins"
+  },
+  {
+    "from": "/docs/aiden/integrations/jira",
+    "to": "/docs/aiden/1.0/integrations/jira"
+  },
+  {
+    "from": "/docs/aiden/integrations/mysql",
+    "to": "/docs/aiden/1.0/integrations/mysql"
+  },
+  {
+    "from": "/docs/aiden/integrations/rest-api",
+    "to": "/docs/aiden/1.0/integrations/rest-api"
+  },
+  {
+    "from": "/docs/aiden/integrations/supported-integrations",
+    "to": "/docs/aiden/1.0/integrations/supported-integrations"
+  }
+]

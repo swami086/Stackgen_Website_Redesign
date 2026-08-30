@@ -34,6 +34,11 @@ test("bezel is a self-drawing svg rect", () => {
   expect(container.querySelector('[data-animate="bezel"] path, [data-animate="bezel"] rect')).toBeTruthy();
 });
 
+test("renders the os substrate band", () => {
+  const { container } = render(<Offerings theme="dark" />);
+  expect(container.querySelector('[data-part="os-substrate"]')).toBeTruthy();
+});
+
 test("contains zero vendor marks by design", () => {
   const { container } = render(<Offerings theme="dark" />);
   expect(container.querySelectorAll("[data-vendor-mark]")).toHaveLength(0);

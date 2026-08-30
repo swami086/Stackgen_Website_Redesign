@@ -9,7 +9,7 @@ import { PhosphorIcon } from "@/components/primitives/PhosphorIcon";
 import { Stagger } from "@/components/replica/motion/Stagger";
 import { useReducedMotionSafe } from "@/components/replica/motion/useReducedMotionSafe";
 import type { PhosphorIconName } from "@/lib/phosphor-icons";
-import { AMBIENT, EASE, STAGGER } from "@/lib/motion-tokens";
+import { AMBIENT, DUR, EASE, STAGGER } from "@/lib/motion-tokens";
 
 const APPS: {
   title: string;
@@ -62,15 +62,15 @@ export function Offerings({ theme }: { theme: "light" | "dark" }) {
         {APPS.map((app, i) => (
           <motion.div
             key={app.title}
-            initial={reduced ? false : { y: -16, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
+            initial={reduced ? false : { y: -18, opacity: 0, scale: 0.98 }}
+            whileInView={reduced ? undefined : { y: 0, opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{
-              duration: 0.5,
-              delay: reduced ? 0 : i * 0.04,
+              duration: DUR.shell,
+              delay: reduced ? 0 : i * STAGGER.chip,
               ease: EASE.emphasize,
             }}
-            className="flex flex-col gap-2 rounded-xl border border-border bg-surface-raised/80 px-4 py-4 shadow-sm"
+            className="flex flex-col gap-2 rounded-xl border border-border bg-surface-raised px-4 py-4 shadow-sm"
           >
             <PhosphorIcon
               name={app.icon}
@@ -86,13 +86,12 @@ export function Offerings({ theme }: { theme: "light" | "dark" }) {
         ))}
       </div>
 
-      <div
-        className="relative mt-1 rounded-2xl border p-5 md:p-6"
-        style={{
-          backgroundColor: "var(--ds-layer-os-bg)",
-          borderColor: "var(--ds-layer-os-stroke)",
-        }}
-      >
+      <div className="relative mt-1 overflow-hidden rounded-2xl border border-border bg-surface p-5 md:p-6">
+        <div
+          aria-hidden
+          data-part="os-substrate"
+          className="pointer-events-none absolute inset-x-4 top-14 bottom-4 rounded-2xl border border-border bg-surface-raised/70"
+        />
         <svg
           className="pointer-events-none absolute inset-0 h-full w-full"
           data-animate="bezel"
@@ -105,14 +104,14 @@ export function Offerings({ theme }: { theme: "light" | "dark" }) {
             height="calc(100% - 3px)"
             rx="15"
             fill="none"
-            stroke="var(--ds-accent)"
+            stroke="var(--ds-border)"
             strokeWidth={1.5}
-            strokeOpacity={0.35}
-            initial={reduced ? { pathLength: 1 } : { pathLength: 0 }}
-            whileInView={{ pathLength: 1 }}
+            strokeOpacity={0.7}
+            initial={reduced ? false : { pathLength: 0 }}
+            whileInView={reduced ? undefined : { pathLength: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{
-              duration: reduced ? 0 : 0.7,
+              duration: reduced ? 0 : DUR.shell,
               delay: 0.15,
               ease: EASE.emphasize,
             }}
@@ -133,7 +132,7 @@ export function Offerings({ theme }: { theme: "light" | "dark" }) {
 
         <div className="relative z-10 mb-5 flex flex-wrap items-end justify-between gap-3">
           <div className="flex flex-wrap items-baseline gap-3">
-            <span className="text-lg font-semibold text-accent-text">
+            <span className="text-lg font-semibold text-text-primary">
               Aiden OS
             </span>
             <span className="text-xs text-text-tertiary">
@@ -164,7 +163,7 @@ export function Offerings({ theme }: { theme: "light" | "dark" }) {
                 {group.chips.map((chip) => (
                   <div
                     key={chip}
-                    className="flex items-center justify-center rounded-lg border border-border bg-surface/90 px-3 py-2.5 text-center text-sm font-medium text-text-primary shadow-sm"
+                    className="flex items-center justify-center rounded-lg border border-border bg-surface px-3 py-2.5 text-center text-sm font-medium text-text-primary shadow-sm"
                   >
                     {chip}
                   </div>

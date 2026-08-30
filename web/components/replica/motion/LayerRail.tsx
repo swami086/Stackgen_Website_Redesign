@@ -76,13 +76,13 @@ export function LayerRail({ layers, activeId, onSelect, className }: Props) {
               "rounded-md px-3 py-1.5 text-left text-[13px] transition-colors",
               selected
                 ? "text-text-primary"
-                : "text-text-tertiary hover:text-text-secondary",
+                : "text-text-secondary hover:text-text-primary",
             )}
           >
             <span
               className={cn(
                 "mr-2 font-mono text-[11px] tabular-nums",
-                selected ? "text-text-secondary" : "text-text-tertiary",
+                "text-text-secondary",
               )}
             >
               {String(layers.length - i).padStart(2, "0")}

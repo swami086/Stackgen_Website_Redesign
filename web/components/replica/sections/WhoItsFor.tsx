@@ -8,6 +8,7 @@
 import { useRef } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "motion/react";
 import { PhosphorIcon } from "@/components/primitives/PhosphorIcon";
+import { AtmosphereField } from "@/components/replica/shared/AtmosphereField";
 import { replicaContent } from "@/content/replica";
 import { cn } from "@/lib/cn";
 import type { PhosphorIconName } from "@/lib/phosphor-icons";
@@ -43,10 +44,12 @@ export function ReplicaWhoItsFor({ theme, className }: ReplicaWhoItsForProps) {
     <section
       data-pencil-id={REPLICA_FRAMES[theme].whoItsFor}
       className={cn(
-        "flex w-full flex-col gap-6 bg-bg px-4 py-16 md:px-24",
+        "relative overflow-hidden flex w-full flex-col gap-6 bg-bg px-4 py-16 md:px-24",
         className,
       )}
     >
+      <AtmosphereField slot="ground-who" theme={theme} />
+      <div className="relative z-10 flex w-full flex-col gap-6">
       <header className="flex w-full flex-col items-center gap-2.5">
         <div className="rounded-full border border-border bg-surface px-3 py-1.5">
           <span className="text-[10px] font-semibold tracking-[2px] text-text-tertiary">
@@ -104,6 +107,7 @@ export function ReplicaWhoItsFor({ theme, className }: ReplicaWhoItsForProps) {
             </span>
           ))}
         </div>
+      </div>
       </div>
     </section>
   );

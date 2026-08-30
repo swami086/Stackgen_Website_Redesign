@@ -8,6 +8,7 @@ import { REPLICA_FRAMES } from "@/lib/replica-frames";
 import { DUR, EASE } from "@/lib/motion-tokens";
 import { useReducedMotionSafe } from "@/components/replica/motion/useReducedMotionSafe";
 import { GridSubstrate } from "@/components/replica/motion/GridSubstrate";
+import { AtmosphereField } from "@/components/replica/shared/AtmosphereField";
 
 type ReplicaHeroProps = {
   theme: "light" | "dark";
@@ -28,6 +29,7 @@ export function ReplicaHero({ theme, className }: ReplicaHeroProps) {
       )}
     >
       <div className="absolute inset-0 -z-10 overflow-hidden">
+        <AtmosphereField slot="hero-field" theme={theme} />
         <GridSubstrate />
       </div>
 

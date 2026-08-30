@@ -1,4 +1,5 @@
 import { OperationalContextGraph } from "@/components/replica/diagrams/OperationalContextGraph";
+import { AtmosphereField } from "@/components/replica/shared/AtmosphereField";
 import { replicaContent } from "@/content/replica";
 import { cn } from "@/lib/cn";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
@@ -15,11 +16,12 @@ export function ReplicaShell({ theme, className }: ReplicaShellProps) {
     <section
       data-pencil-id={REPLICA_FRAMES[theme].shell}
       className={cn(
-        "flex w-full flex-col items-center rounded-[20px] border border-border bg-surface px-[var(--spacing-pad-x)] py-8",
+        "relative overflow-hidden flex w-full flex-col items-center rounded-[20px] border border-border bg-surface px-[var(--spacing-pad-x)] py-8",
         className,
       )}
     >
-      <div className="flex w-full flex-col items-center gap-6">
+      <AtmosphereField slot="ground-shell" theme={theme} />
+      <div className="relative z-10 flex w-full flex-col items-center gap-6">
         <div className="flex w-full flex-col items-center gap-2">
           <div className="flex items-center justify-center rounded-full border border-border bg-surface px-3 py-1.5">
             <span className="whitespace-nowrap font-mono text-[11px] font-medium tracking-[2px] text-text-tertiary">

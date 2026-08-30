@@ -1,3 +1,4 @@
+import { AtmosphereField } from "@/components/replica/shared/AtmosphereField";
 import { InnerOuterLoop } from "@/components/replica/diagrams/InnerOuterLoop";
 import { Integrations } from "@/components/replica/diagrams/Integrations";
 import { Offerings } from "@/components/replica/diagrams/Offerings";
@@ -17,16 +18,19 @@ export function ReplicaAssemblies({ theme, className }: ReplicaAssembliesProps) 
     <section
       data-pencil-id={REPLICA_FRAMES[theme].assemblies}
       className={cn(
-        "flex w-full flex-col items-center gap-8 p-24",
+        "relative overflow-hidden flex w-full flex-col items-center gap-8 p-24",
         className,
       )}
     >
-      <h2 className="whitespace-nowrap text-[36px] font-bold tracking-[-0.5px] text-text-primary">
-        {heading}
-      </h2>
-      <InnerOuterLoop theme={theme} />
-      <Offerings theme={theme} />
-      <Integrations theme={theme} />
+      <AtmosphereField slot="ground-assemblies" theme={theme} />
+      <div className="relative z-10 flex w-full flex-col items-center gap-8">
+        <h2 className="whitespace-nowrap text-[36px] font-bold tracking-[-0.5px] text-text-primary">
+          {heading}
+        </h2>
+        <InnerOuterLoop theme={theme} />
+        <Offerings theme={theme} />
+        <Integrations theme={theme} />
+      </div>
     </section>
   );
 }

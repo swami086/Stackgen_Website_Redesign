@@ -63,3 +63,14 @@ test("Shell hosts the V2P0L Operational Context Graph flow", () => {
   expect(screen.getByText("Aiden Agentic Operating System")).toBeInTheDocument();
   expect(document.querySelector('[data-pencil-id="V2P0L"]')).toBeInTheDocument();
 });
+
+test("atmosphere fields are aria-hidden decorative layers", () => {
+  renderHome("dark");
+  const atmosphereImgs = [...document.querySelectorAll("img")].filter((img) =>
+    (img.getAttribute("src") ?? "").includes("/media/atmosphere/"),
+  );
+  expect(atmosphereImgs.length).toBeGreaterThan(0);
+  for (const img of atmosphereImgs) {
+    expect(img.closest('[aria-hidden="true"]')).toBeTruthy();
+  }
+});

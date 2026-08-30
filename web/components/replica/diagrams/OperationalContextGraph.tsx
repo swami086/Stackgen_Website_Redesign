@@ -76,14 +76,24 @@ const OS_CHIPS = [
 const SPINE_D = "M12 0 V40";
 const SPIDER_YS = [16, 40, 64, 88, 112, 136] as const;
 
-function SpineSegment({ delay = 0 }: { delay?: number }) {
+function SpineSegment({
+  delay = 0,
+  toneClassName = "text-border",
+  beamClassName = "fill-accent",
+  beamDuration = AMBIENT.sweep / 2,
+}: {
+  delay?: number;
+  toneClassName?: string;
+  beamClassName?: string;
+  beamDuration?: number;
+}) {
   const reduced = useReducedMotionSafe();
   return (
     <svg
       width="24"
       height="40"
       viewBox="0 0 24 40"
-      className="overflow-visible text-border"
+      className={cn("overflow-visible", toneClassName)}
       aria-hidden
     >
       <DrawPath
@@ -96,8 +106,8 @@ function SpineSegment({ delay = 0 }: { delay?: number }) {
       {!reduced && (
         <Beam
           d={SPINE_D}
-          className="fill-accent"
-          duration={AMBIENT.sweep / 2}
+          className={beamClassName}
+          duration={beamDuration}
           delay={delay + DUR.shell}
           r={2.25}
         />
@@ -109,17 +119,35 @@ function SpineSegment({ delay = 0 }: { delay?: number }) {
 function FlowLabel({
   children,
   delay = 0,
+  theme,
 }: {
   children: string;
   delay?: number;
+  theme: "light" | "dark";
 }) {
+  const isLight = theme === "light";
   return (
     <div className="flex flex-col items-center gap-2 py-2">
-      <SpineSegment delay={delay} />
-      <span className="font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-text-tertiary">
+      <SpineSegment
+        delay={delay}
+        toneClassName={isLight ? "text-text-secondary" : "text-border"}
+        beamClassName={isLight ? "fill-accent/75" : "fill-accent"}
+        beamDuration={isLight ? AMBIENT.sweep * 0.8 : AMBIENT.sweep / 2}
+      />
+      <span
+        className={cn(
+          "font-mono text-[10px] font-medium uppercase tracking-[0.14em]",
+          isLight ? "text-text-secondary" : "text-text-tertiary",
+        )}
+      >
         {children}
       </span>
-      <SpineSegment delay={delay + 0.12} />
+      <SpineSegment
+        delay={delay + 0.12}
+        toneClassName={isLight ? "text-text-secondary" : "text-border"}
+        beamClassName={isLight ? "fill-accent/75" : "fill-accent"}
+        beamDuration={isLight ? AMBIENT.sweep * 0.8 : AMBIENT.sweep / 2}
+      />
     </div>
   );
 }
@@ -131,32 +159,60 @@ export function OperationalContextGraph({
   theme: "light" | "dark";
   className?: string;
 }) {
+  const isLight = theme === "light";
   const reduced = useReducedMotionSafe();
-  void theme;
+  const wave = isLight
+    ? {
+        beam: AMBIENT.sweep * 0.8,
+        cursor: 0.9,
+        intent: AMBIENT.hub * 0.85,
+        bezel: AMBIENT.bezel * 0.85,
+        ring: [0.3, 0.72, 0.3] as const,
+        shell: [0.34, 0.72, 0.34] as const,
+      }
+    : {
+        beam: AMBIENT.sweep / 2,
+        cursor: 1.1,
+        intent: AMBIENT.hub,
+        bezel: AMBIENT.bezel,
+        ring: [0.35, 1, 0.35] as const,
+        shell: [0.45, 0.95, 0.45] as const,
+      };
 
   return (
     <div
       role="img"
       aria-label="Operational Context Graph: ask Aiden, route intent to factory assemblies, enrich from context sources into one entity, govern through Aiden OS"
       className={cn(
-        "glass-specular flex w-full max-w-4xl flex-col rounded-[20px] border border-border p-5 md:p-8",
+        "glass-specular flex w-full max-w-4xl flex-col rounded-[20px] border p-5 md:p-8",
+        isLight ? "border-border/80 bg-surface/95" : "border-border bg-surface/90",
         className,
       )}
     >
       {/* Prompt — wave starts here */}
       <Reveal delay={0} y={10}>
-        <div className="rounded-xl border border-border bg-surface-raised p-3 md:p-4">
+        <div
+          className={cn(
+            "rounded-xl border p-3 md:p-4",
+            isLight ? "border-border/80 bg-surface" : "border-border bg-surface-raised",
+          )}
+        >
           <div className="flex flex-col gap-3 md:flex-row md:items-center">
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm text-text-secondary">
+              <p
+                className={cn(
+                  "truncate text-sm",
+                  isLight ? "text-text-secondary" : "text-text-secondary",
+                )}
+              >
                 Ask Aiden to investigate latency spike in checkout…
                 {!reduced && (
                   <motion.span
                     aria-hidden
                     className="ml-0.5 inline-block h-3.5 w-px align-middle bg-accent"
-                    animate={{ opacity: [1, 0.15, 1] }}
+                    animate={{ opacity: [1, isLight ? 0.3 : 0.15, 1] }}
                     transition={{
-                      duration: 1.1,
+                      duration: wave.cursor,
                       repeat: Infinity,
                       ease: "linear",
                     }}
@@ -167,7 +223,10 @@ export function OperationalContextGraph({
                 {PROMPT_CHIPS.map((chip) => (
                   <span
                     key={chip}
-                    className="rounded-full border border-border bg-surface px-2.5 py-1 font-mono text-[11px] text-text-tertiary"
+                    className={cn(
+                      "rounded-full border bg-surface px-2.5 py-1 font-mono text-[11px]",
+                      isLight ? "border-border/80 text-text-secondary" : "border-border text-text-tertiary",
+                    )}
                   >
                     {chip}
                   </span>
@@ -184,40 +243,56 @@ export function OperationalContextGraph({
 
       {/* Intent Router — n8n-style active node pulse */}
       <div className="flex flex-col items-center gap-2 py-3">
-        <SpineSegment delay={0.15} />
+        <SpineSegment
+          delay={0.15}
+          toneClassName={isLight ? "text-text-secondary" : "text-border"}
+          beamClassName={isLight ? "fill-accent/75" : "fill-accent"}
+          beamDuration={wave.beam}
+        />
         <Reveal delay={0.22} y={8}>
           <motion.div
-            className="relative flex items-center gap-3 rounded-full border border-border bg-surface px-4 py-2"
+            className={cn(
+              "relative flex items-center gap-3 rounded-full border px-4 py-2",
+              isLight ? "border-border/80 bg-surface" : "border-border bg-surface",
+            )}
             animate={
               reduced
                 ? undefined
                 : {
                     boxShadow: [
                       "0 0 0 0 color-mix(in srgb, var(--ds-accent) 0%, transparent)",
-                      "0 0 0 8px color-mix(in srgb, var(--ds-accent) 18%, transparent)",
+                      `0 0 0 ${isLight ? 6 : 8}px color-mix(in srgb, var(--ds-accent) ${isLight ? 12 : 18}%, transparent)`,
                       "0 0 0 0 color-mix(in srgb, var(--ds-accent) 0%, transparent)",
                     ],
                   }
             }
             transition={{
-              duration: AMBIENT.hub,
+              duration: wave.intent,
               repeat: Infinity,
               ease: "easeInOut",
             }}
           >
-            <span className="flex size-8 items-center justify-center rounded-full bg-accent/15 text-accent-text">
+            <span
+              className={cn(
+                "flex size-8 items-center justify-center rounded-full",
+                isLight ? "bg-accent/12 text-accent-text" : "bg-accent/15 text-accent-text",
+              )}
+            >
               <PhosphorIcon name="git-branch" className="size-4" />
             </span>
-            <span className="text-sm font-semibold text-text-primary">
+            <span className={cn("text-sm font-semibold", isLight ? "text-text-primary" : "text-text-primary")}>
               Intent Router
             </span>
             {!reduced && (
               <motion.span
                 aria-hidden
                 className="absolute -right-1 -top-1 size-2 rounded-full bg-pass"
-                animate={{ opacity: [0.35, 1, 0.35], scale: [0.9, 1.15, 0.9] }}
+                animate={{
+                  opacity: [wave.ring[0], wave.ring[1], wave.ring[2]],
+                  scale: [0.9, isLight ? 1.08 : 1.15, 0.9],
+                }}
                 transition={{
-                  duration: AMBIENT.hub,
+                  duration: wave.intent,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
@@ -232,10 +307,13 @@ export function OperationalContextGraph({
       {/* Factory Assemblies — sequential L→R light-up */}
       <Reveal delay={0.42} y={12}>
         <div
-          className="relative overflow-hidden rounded-xl border p-4"
+          className={cn(
+            "relative overflow-hidden rounded-xl border p-4",
+            isLight ? "border-border/80 bg-surface" : "border-border",
+          )}
           style={{
-            borderColor: "var(--ds-layer-agent-stroke)",
-            backgroundColor: "var(--ds-layer-agent-bg)",
+            borderColor: isLight ? "var(--ds-border)" : "var(--ds-layer-agent-stroke)",
+            backgroundColor: isLight ? "var(--ds-surface)" : "var(--ds-layer-agent-bg)",
           }}
         >
           {!reduced && (
@@ -243,22 +321,28 @@ export function OperationalContextGraph({
               aria-hidden
               className="pointer-events-none absolute inset-0 rounded-xl"
               style={{
-                boxShadow:
-                  "inset 0 0 0 1px color-mix(in srgb, var(--ds-layer-agent-stroke) 70%, transparent)",
+                boxShadow: isLight
+                  ? "inset 0 0 0 1px color-mix(in srgb, var(--ds-border) 78%, transparent)"
+                  : "inset 0 0 0 1px color-mix(in srgb, var(--ds-layer-agent-stroke) 70%, transparent)",
               }}
-              animate={{ opacity: [0.45, 0.95, 0.45] }}
+              animate={{ opacity: isLight ? [0.38, 0.75, 0.38] : [0.45, 0.95, 0.45] }}
               transition={{
-                duration: AMBIENT.bezel,
+                duration: wave.bezel,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
             />
           )}
           <div className="relative z-10 mb-3 flex flex-wrap items-center justify-between gap-2">
-            <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-pass">
+            <span
+              className={cn(
+                "font-mono text-[11px] font-semibold uppercase tracking-[0.14em]",
+                isLight ? "text-text-secondary" : "text-pass",
+              )}
+            >
               Factory assemblies
             </span>
-            <span className="text-xs text-text-tertiary">
+            <span className={cn("text-xs", isLight ? "text-text-secondary" : "text-text-tertiary")}>
               Build · Operate · Observe · Remediate
             </span>
           </div>
@@ -269,21 +353,34 @@ export function OperationalContextGraph({
             {ASSEMBLIES.map((card) => (
               <div
                 key={card.stage}
-                className="flex flex-col gap-2 rounded-lg border border-border bg-surface/90 p-3"
+                className={cn(
+                  "flex flex-col gap-2 rounded-lg border p-3",
+                  isLight ? "border-border/80 bg-surface/90" : "border-border bg-surface/90",
+                )}
               >
                 <div className="flex items-center gap-2">
                   <PhosphorIcon
                     name={card.icon}
                     className="size-4 text-text-secondary"
                   />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-text-tertiary">
+                  <span
+                    className={cn(
+                      "font-mono text-[10px] uppercase tracking-[0.12em]",
+                      isLight ? "text-text-secondary" : "text-text-tertiary",
+                    )}
+                  >
                     {card.stage}
                   </span>
                 </div>
                 <div className="text-sm font-semibold text-text-primary">
                   {card.title}
                 </div>
-                <div className="font-mono text-[10px] uppercase tracking-wide text-text-tertiary">
+                <div
+                  className={cn(
+                    "font-mono text-[10px] uppercase tracking-wide",
+                    isLight ? "text-text-secondary" : "text-text-tertiary",
+                  )}
+                >
                   {card.meta}
                 </div>
               </div>
@@ -296,8 +393,18 @@ export function OperationalContextGraph({
 
       {/* Graph Resolution — spider DrawPath + Beam into checkout-api */}
       <Reveal delay={0.6} y={12}>
-        <div className="rounded-xl border border-border bg-surface p-4">
-          <div className="mb-4 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-text-secondary">
+        <div
+          className={cn(
+            "rounded-xl border p-4",
+            isLight ? "border-border/80 bg-surface" : "border-border bg-surface",
+          )}
+        >
+          <div
+            className={cn(
+              "mb-4 font-mono text-[11px] font-semibold uppercase tracking-[0.14em]",
+              isLight ? "text-text-secondary" : "text-text-secondary",
+            )}
+          >
             Graph resolution
           </div>
           <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-[1fr_auto_minmax(200px,280px)]">
@@ -305,13 +412,24 @@ export function OperationalContextGraph({
               {SOURCES.map((src) => (
                 <div
                   key={src}
-                  className="flex items-center gap-2 rounded-md border border-border bg-surface-raised px-3 py-2"
+                  className={cn(
+                    "flex items-center gap-2 rounded-md border px-3 py-2",
+                    isLight ? "border-border/80 bg-surface-raised" : "border-border bg-surface-raised",
+                  )}
                 >
                   <span
-                    className="size-1.5 shrink-0 rounded-full bg-accent"
+                    className={cn(
+                      "size-1.5 shrink-0 rounded-full bg-accent",
+                      isLight ? "opacity-80" : "opacity-100",
+                    )}
                     aria-hidden
                   />
-                  <code className="truncate font-mono text-[11px] text-text-secondary">
+                  <code
+                    className={cn(
+                      "truncate font-mono text-[11px]",
+                      isLight ? "text-text-secondary" : "text-text-secondary",
+                    )}
+                  >
                     {src}
                   </code>
                 </div>
@@ -332,15 +450,15 @@ export function OperationalContextGraph({
                       className="stroke-current"
                       strokeWidth={1}
                       delay={0.65 + i * 0.05}
-                      duration={0.55}
+                      duration={isLight ? 0.48 : 0.55}
                     />
                     {!reduced && (
                       <Beam
                         d={d}
-                        className="fill-accent"
-                        duration={2.4 + i * 0.15}
+                        className={isLight ? "fill-accent/75" : "fill-accent"}
+                        duration={(isLight ? 2.1 : 2.4) + i * (isLight ? 0.1 : 0.15)}
                         delay={1.1 + i * 0.08}
-                        r={1.75}
+                        r={isLight ? 1.6 : 1.75}
                       />
                     )}
                   </g>
@@ -351,8 +469,8 @@ export function OperationalContextGraph({
             <motion.div
               className="rounded-xl border p-4 shadow-sm"
               style={{
-                borderColor: "var(--ds-layer-intent-stroke)",
-                backgroundColor: "var(--ds-layer-intent-bg)",
+                borderColor: isLight ? "var(--ds-border)" : "var(--ds-layer-intent-stroke)",
+                backgroundColor: isLight ? "var(--ds-surface)" : "var(--ds-layer-intent-bg)",
               }}
               animate={
                 reduced
@@ -360,16 +478,16 @@ export function OperationalContextGraph({
                   : {
                       boxShadow: [
                         "0 0 0 0 color-mix(in srgb, var(--ds-accent) 0%, transparent)",
-                        "0 0 24px 0 color-mix(in srgb, var(--ds-accent) 22%, transparent)",
+                      `0 0 ${isLight ? 18 : 24}px 0 color-mix(in srgb, var(--ds-accent) ${isLight ? 16 : 22}%, transparent)`,
                         "0 0 0 0 color-mix(in srgb, var(--ds-accent) 0%, transparent)",
                       ],
                     }
               }
               transition={{
-                duration: AMBIENT.hub,
+                duration: wave.intent,
                 repeat: Infinity,
                 ease: "easeInOut",
-                delay: 1.2,
+                delay: isLight ? 1.0 : 1.2,
               }}
             >
               <div className="text-base font-semibold text-text-primary">
@@ -394,10 +512,10 @@ export function OperationalContextGraph({
       {/* Aiden OS — chips settle */}
       <Reveal delay={0.8} y={10}>
         <div
-          className="rounded-xl border p-4"
+          className={cn("rounded-xl border p-4", isLight ? "border-border/80 bg-surface-raised" : "border-border")}
           style={{
-            backgroundColor: "var(--ds-layer-os-bg)",
-            borderColor: "var(--ds-layer-os-stroke)",
+            backgroundColor: isLight ? "var(--ds-surface-raised)" : "var(--ds-layer-os-bg)",
+            borderColor: isLight ? "var(--ds-border)" : "var(--ds-layer-os-stroke)",
           }}
         >
           <div className="mb-3 text-center text-sm font-semibold text-accent-text">
@@ -410,7 +528,10 @@ export function OperationalContextGraph({
             {OS_CHIPS.map((chip) => (
               <span
                 key={chip}
-                className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium text-text-primary"
+                className={cn(
+                  "rounded-full border px-3 py-1.5 text-xs font-medium text-text-primary",
+                  isLight ? "border-border/80 bg-surface" : "border-border bg-surface",
+                )}
               >
                 {chip}
               </span>

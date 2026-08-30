@@ -1,0 +1,17 @@
+{
+  "model": "gemini-3-pro-image",
+  "generatedAt": "2026-08-30T05:40:43.400Z",
+  "completenessContract": "COMPLETENESS (must all be true):\n- Every vendor chip has a visible hairline feeder into its parent assembly disc\n- Every assembly disc has a beam into the center Intent Router\n- Four assemblies are EQUAL visual weight (Infrastructure N, Automation E, Observability S, SRE W)\n- Observability route is ACTIVE (thicker accent beam + mid-path packet)\n- Telemetry: three tiny Logs/Metrics/Traces icons under ask bar\n- OS strip: Governance · Guardrails · Tokenomics · Identity · Audit · Integrations (icons + short labels, none cut off)\n- Story reads in one glance: Ask → Router → Assembly → estate vendors (world model)",
+  "results": [
+    {
+      "key": "C1",
+      "title": "Tethered clusters · four equal spokes",
+      "path": "/Users/swami/Documents/Stackgen_Website_Redesign/.impeccable/mocks/ocg-intent-router-complete/option-C1.png"
+    },
+    {
+      "key": "C2",
+      "title": "Converge rings · vendors feed Router via assemblies",
+      "path": "/Users/swami/Documents/Stackgen_Website_Redesign/.impeccable/mocks/ocg-intent-router-complete/option-C2.png"
+    }
+  ]
+}

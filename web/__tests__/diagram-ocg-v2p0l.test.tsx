@@ -12,14 +12,15 @@ beforeEach(() => {
   reducedMotion = false;
 });
 
-test("renders Intent Router hub structure", () => {
+test("renders complete tethered Intent Router hub", () => {
   const { container } = render(<OperationalContextGraph theme="dark" />);
   expect(container.querySelector('[data-structure="router-hub"]')).toBeTruthy();
+  expect(container.querySelector('[data-complete="tethered-c1"]')).toBeTruthy();
   expect(container.querySelector('[data-part="intent-router"]')).toBeTruthy();
   expect(container.querySelector('[data-part="router-stage"]')).toBeTruthy();
   expect(container.querySelector('[data-layer="telemetry"]')).toBeTruthy();
-  expect(container.querySelector('[data-layer="aiden"]')).toBeTruthy();
-  expect(container.querySelector('[data-motion-metaphor="route-pulse"]')).toBeTruthy();
+  expect(container.querySelector('[data-motion-metaphor="neural-mesh"]')).toBeTruthy();
+  expect(container.querySelector('[data-neural="mesh"]')).toBeTruthy();
 });
 
 test("ask bar sits at diagram top before telemetry and router", () => {
@@ -48,7 +49,9 @@ test("renders telemetry channels", () => {
 test("renders centered Intent Router and four factory assemblies", () => {
   const { container } = render(<OperationalContextGraph theme="dark" />);
   expect(screen.getByText("Intent Router")).toBeInTheDocument();
-  expect(container.querySelector('[data-part="intent-router"]')).toBeTruthy();
+  expect(container.querySelectorAll('[data-part="assembly-dock"]').length).toBe(
+    4,
+  );
   for (const title of [
     "Aiden for Infrastructure",
     "Aiden for Automation",
@@ -65,20 +68,40 @@ test("uses light-theme surface contrast", () => {
   expect(screen.getByText("Intent Router")).toBeInTheDocument();
 });
 
-test("renders quiet context constellation underlay", () => {
+test("renders checkout-api and tethered official vendor marks", () => {
   const { container } = render(<OperationalContextGraph theme="dark" />);
   expect(screen.getByText("checkout-api")).toBeInTheDocument();
   expect(container.querySelector('[data-part="context-graph"]')).toBeTruthy();
+  expect(container.querySelector('[data-part="entity-hub"]')).toBeTruthy();
+  for (const slug of [
+    "aws",
+    "terraform",
+    "eks",
+    "datadog",
+    "prometheus",
+    "pagerduty",
+    "github",
+    "gitlab",
+    "jira",
+    "opa",
+    "slack",
+    "backstage",
+  ]) {
+    expect(container.querySelector(`[data-vendor-slug="${slug}"]`)).toBeTruthy();
+  }
+  expect(screen.getByText("OPA")).toBeInTheDocument();
+  expect(screen.getByText("EKS")).toBeInTheDocument();
 });
 
-test("renders Aiden OS governance chips", () => {
+test("renders Aiden OS strip without truncated long labels", () => {
   render(<OperationalContextGraph theme="dark" />);
+  expect(screen.getByText("Aiden OS")).toBeInTheDocument();
   for (const chip of [
     "Governance",
     "Guardrails",
     "Tokenomics",
-    "Identity & Access",
-    "Audit & Evidence",
+    "Identity",
+    "Audit",
     "Integrations",
   ]) {
     expect(screen.getByText(chip)).toBeInTheDocument();
@@ -96,15 +119,21 @@ test("draws route beams with an active packet path", () => {
   expect(container.querySelector('[data-part="route-beam-active"]')).toBeTruthy();
 });
 
-test("reduced motion keeps hub and beams without traveling packet", () => {
+test("renders neural mesh synapses and feeders for cross-talk", () => {
+  const { container } = render(<OperationalContextGraph theme="dark" />);
+  expect(container.querySelectorAll('[data-part="neural-synapse"]').length).toBe(
+    6,
+  );
+  expect(container.querySelectorAll('[data-part="neural-feeder"]').length).toBe(
+    13,
+  );
+  expect(container.querySelector('[data-focus-slot="s"]')).toBeTruthy();
+});
+
+test("reduced motion keeps hub and beams", () => {
   reducedMotion = true;
-  const { container } = render(<OperationalContextGraph theme="light" />);
+  const { container } = render(<OperationalContextGraph theme="dark" />);
   expect(container.querySelector('[data-part="intent-router"]')).toBeTruthy();
-  expect(
-    container.querySelectorAll(
-      '[data-part="route-beam"], [data-part="route-beam-active"]',
-    ).length,
-  ).toBe(4);
-  // Beam component returns null under reduced motion
-  expect(container.querySelector('[data-part="route-beam-active"] circle')).toBeNull();
+  expect(container.querySelector('[data-part="route-beam-active"]')).toBeTruthy();
+  expect(container.querySelectorAll("circle").length).toBe(0);
 });

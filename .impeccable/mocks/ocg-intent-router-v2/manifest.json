@@ -1,0 +1,29 @@
+{
+  "model": "gemini-3-pro-image",
+  "project": "propane-galaxy-498403-n8",
+  "generatedAt": "2026-08-30T05:26:15.396Z",
+  "productTruth": "Ask→Intent Router→Assemblies; OCG world-model underlay; Aiden OS substrate",
+  "inspiration": [
+    "Mobbin Cloudflare Bindings hub",
+    "Mobbin Railway canvas",
+    "Mobbin Weavy/FLORA node beams",
+    "shadcnblocks Integration19 radial hub"
+  ],
+  "results": [
+    {
+      "key": "V1",
+      "title": "Icon-disc hub over dense OCG",
+      "path": "/Users/swami/Documents/Stackgen_Website_Redesign/.impeccable/mocks/ocg-intent-router-v2/option-V1.png"
+    },
+    {
+      "key": "V2",
+      "title": "Converge graph → Router → emerge discs",
+      "path": "/Users/swami/Documents/Stackgen_Website_Redesign/.impeccable/mocks/ocg-intent-router-v2/option-V2.png"
+    },
+    {
+      "key": "V3",
+      "title": "Radar compass · graph is the floor",
+      "path": "/Users/swami/Documents/Stackgen_Website_Redesign/.impeccable/mocks/ocg-intent-router-v2/option-V3.png"
+    }
+  ]
+}

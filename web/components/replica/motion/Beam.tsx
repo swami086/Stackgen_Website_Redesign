@@ -11,6 +11,8 @@ type BeamProps = {
   delay?: number;
   className?: string;
   r?: number;
+  /** Travel to→from instead of from→to (bidirectional mesh chatter). */
+  reverse?: boolean;
 };
 
 /**
@@ -23,6 +25,7 @@ export function Beam({
   delay = 0,
   className,
   r = 2.5,
+  reverse = false,
 }: BeamProps) {
   const reduced = useReducedMotionSafe();
   if (reduced) return null;
@@ -31,9 +34,12 @@ export function Beam({
     <motion.circle
       r={r}
       className={className}
-      initial={{ offsetDistance: "0%", opacity: 0 }}
+      initial={{
+        offsetDistance: reverse ? "100%" : "0%",
+        opacity: 0,
+      }}
       animate={{
-        offsetDistance: "100%",
+        offsetDistance: reverse ? "0%" : "100%",
         opacity: [0, 1, 1, 0],
       }}
       transition={{

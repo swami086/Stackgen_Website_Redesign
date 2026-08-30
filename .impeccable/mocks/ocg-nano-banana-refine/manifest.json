@@ -1,0 +1,6 @@
+{
+  "generatedAt": "2026-08-30T01:24:12.107Z",
+  "model": "gemini-3-pro-image",
+  "source": ".impeccable/mocks/ocg-nano-banana-refine/source.png",
+  "out": ".impeccable/mocks/ocg-nano-banana-refine/refined-pro.png"
+}

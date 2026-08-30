@@ -8,7 +8,11 @@
       }
     },
     "openmemory": {
-      "url": "http://100.71.169.23:8771/mcp/cursor/sse/StackgenWebsite",
+      "command": "/Users/swami/.cursor/bin/openmemory-mcp-docker-launcher.sh",
+      "args": [],
+      "env": {
+        "OPENMEMORY_SSE_URL": "http://136.67.59.238:8771/mcp/cursor/sse/StackgenWebsite"
+      },
       "alwaysAllow": [
         "add_memories",
         "search_memory",
@@ -18,11 +22,19 @@
     },
     "webflow": {
       "command": "npx",
-      "args": ["-y", "mcp-remote", "https://mcp.webflow.com/mcp"]
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.webflow.com/mcp"
+      ]
     },
     "sybill": {
       "command": "npx",
-      "args": ["-y", "mcp-remote", "https://mcp.sybill.ai/mcp"]
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.sybill.ai/mcp"
+      ]
     },
     "figma-desktop": {
       "url": "http://127.0.0.1:3845/mcp"

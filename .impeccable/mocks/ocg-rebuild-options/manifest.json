@@ -1,0 +1,32 @@
+{
+  "generatedAt": "2026-08-30T02:56:44.923Z",
+  "model": "gemini-3-pro-image",
+  "source": "exports/web-shelf/impeccable-diagram-fix/V2P0L.png",
+  "frames": {
+    "A": {
+      "key": "A",
+      "title": "Execution spine (evolved)",
+      "out": ".impeccable/mocks/ocg-rebuild-options/option-A.png"
+    },
+    "B": {
+      "key": "B",
+      "title": "Two-plane split (structure vs decision)",
+      "out": ".impeccable/mocks/ocg-rebuild-options/option-B.png"
+    },
+    "C": {
+      "key": "C",
+      "title": "Hub constellation (graph-first)",
+      "out": ".impeccable/mocks/ocg-rebuild-options/option-C.png"
+    },
+    "D": {
+      "key": "D",
+      "title": "Interactive ask → traverse",
+      "out": ".impeccable/mocks/ocg-rebuild-options/option-D.png"
+    },
+    "E": {
+      "key": "E",
+      "title": "Three-layer stack (architecture truth)",
+      "out": ".impeccable/mocks/ocg-rebuild-options/option-E.png"
+    }
+  }
+}

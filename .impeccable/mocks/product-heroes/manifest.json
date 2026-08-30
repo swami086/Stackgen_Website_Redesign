@@ -1,0 +1,72 @@
+{
+  "generatedAt": "2026-08-30T01:48:54.619Z",
+  "model": "gemini-3-pro-image",
+  "project": "propane-galaxy-498403-n8",
+  "location": "global",
+  "files": [
+    {
+      "name": "aiden-for-automation-dark.png",
+      "slug": "aiden-for-automation",
+      "theme": "dark",
+      "mock": ".impeccable/mocks/product-heroes/aiden-for-automation-dark.png",
+      "public": "web/public/media/product/aiden-for-automation-dark.png",
+      "generatedAt": "2026-08-30T01:44:31.212Z"
+    },
+    {
+      "name": "aiden-for-automation-light.png",
+      "slug": "aiden-for-automation",
+      "theme": "light",
+      "mock": ".impeccable/mocks/product-heroes/aiden-for-automation-light.png",
+      "public": "web/public/media/product/aiden-for-automation-light.png",
+      "generatedAt": "2026-08-30T01:48:35.480Z"
+    },
+    {
+      "name": "aiden-for-infrastructure-dark.png",
+      "slug": "aiden-for-infrastructure",
+      "theme": "dark",
+      "mock": ".impeccable/mocks/product-heroes/aiden-for-infrastructure-dark.png",
+      "public": "web/public/media/product/aiden-for-infrastructure-dark.png",
+      "generatedAt": "2026-08-30T01:42:25.141Z"
+    },
+    {
+      "name": "aiden-for-infrastructure-light.png",
+      "slug": "aiden-for-infrastructure",
+      "theme": "light",
+      "mock": ".impeccable/mocks/product-heroes/aiden-for-infrastructure-light.png",
+      "public": "web/public/media/product/aiden-for-infrastructure-light.png",
+      "generatedAt": "2026-08-30T01:41:37.964Z"
+    },
+    {
+      "name": "aiden-for-observability-dark.png",
+      "slug": "aiden-for-observability",
+      "theme": "dark",
+      "mock": ".impeccable/mocks/product-heroes/aiden-for-observability-dark.png",
+      "public": "web/public/media/product/aiden-for-observability-dark.png",
+      "generatedAt": "2026-08-30T01:45:10.654Z"
+    },
+    {
+      "name": "aiden-for-observability-light.png",
+      "slug": "aiden-for-observability",
+      "theme": "light",
+      "mock": ".impeccable/mocks/product-heroes/aiden-for-observability-light.png",
+      "public": "web/public/media/product/aiden-for-observability-light.png",
+      "generatedAt": "2026-08-30T01:44:49.907Z"
+    },
+    {
+      "name": "aiden-for-sre-dark.png",
+      "slug": "aiden-for-sre",
+      "theme": "dark",
+      "mock": ".impeccable/mocks/product-heroes/aiden-for-sre-dark.png",
+      "public": "web/public/media/product/aiden-for-sre-dark.png",
+      "generatedAt": "2026-08-30T01:46:06.948Z"
+    },
+    {
+      "name": "aiden-for-sre-light.png",
+      "slug": "aiden-for-sre",
+      "theme": "light",
+      "mock": ".impeccable/mocks/product-heroes/aiden-for-sre-light.png",
+      "public": "web/public/media/product/aiden-for-sre-light.png",
+      "generatedAt": "2026-08-30T01:48:54.610Z"
+    }
+  ]
+}

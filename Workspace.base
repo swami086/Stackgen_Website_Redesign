@@ -1,0 +1,101 @@
+filters:
+  and:
+    - file.ext == "md"
+    - not:
+        - file.inFolder(".obsidian")
+        - file.inFolder("web")
+        - file.inFolder(".firecrawl")
+        - file.inFolder(".superpowers")
+        - file.inFolder(".stitch-preview")
+formulas:
+  outbound: file.links.length
+  inbound: file.backlinks.length
+  days_since_edit: (now() - file.mtime).days.round(0)
+  cluster: if(file.inFolder("Graph"), "Hub", if(file.inFolder("docs/superpowers/specs"), "Spec", if(file.inFolder("docs/superpowers/plans"), "Plan", if(file.inFolder("docs/meetings"), "Meeting", if(file.inFolder("docs/proof"), "Proof", "Root")))))
+properties:
+  kind:
+    displayName: Kind
+  area:
+    displayName: Area
+  status:
+    displayName: Status
+  formula.cluster:
+    displayName: Cluster
+  formula.outbound:
+    displayName: Out
+  formula.inbound:
+    displayName: In
+  formula.days_since_edit:
+    displayName: Days idle
+  file.mtime:
+    displayName: Modified
+views:
+  - type: table
+    name: By cluster
+    groupBy:
+      property: formula.cluster
+      direction: ASC
+    order:
+      - file.name
+      - formula.cluster
+      - kind
+      - area
+      - formula.outbound
+      - formula.inbound
+      - formula.days_since_edit
+      - file.mtime
+    summaries:
+      formula.outbound: Sum
+      formula.inbound: Sum
+  - type: table
+    name: Hubs
+    filters:
+      and:
+        - file.inFolder("Graph")
+    groupBy:
+      property: area
+      direction: ASC
+    order:
+      - file.name
+      - area
+      - kind
+      - formula.outbound
+      - formula.inbound
+      - file.mtime
+  - type: cards
+    name: Hub cards
+    filters:
+      and:
+        - file.inFolder("Graph")
+    order:
+      - file.name
+      - area
+      - kind
+      - status
+  - type: table
+    name: Specs
+    filters:
+      and:
+        - file.inFolder("docs/superpowers/specs")
+    order:
+      - file.name
+      - formula.outbound
+      - formula.inbound
+      - file.mtime
+  - type: table
+    name: Plans
+    filters:
+      and:
+        - file.inFolder("docs/superpowers/plans")
+    order:
+      - file.name
+      - formula.outbound
+      - formula.inbound
+      - file.mtime
+  - type: list
+    name: Recent
+    order:
+      - file.name
+      - formula.cluster
+      - file.mtime
+    limit: 20

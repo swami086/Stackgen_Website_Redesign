@@ -1,0 +1,11 @@
+{
+  "generatedAt": "2026-08-30T02:18:42.601Z",
+  "model": "gemini-3-pro-image",
+  "source": "exports/web-shelf/inner-outer-loop-v2/RBepL.png",
+  "frames": {
+    "A": ".impeccable/mocks/inner-outer-puzzle-stitch/frame-A.png",
+    "B": ".impeccable/mocks/inner-outer-puzzle-stitch/frame-B.png",
+    "C": ".impeccable/mocks/inner-outer-puzzle-stitch/frame-C.png",
+    "D": ".impeccable/mocks/inner-outer-puzzle-stitch/frame-D.png"
+  }
+}

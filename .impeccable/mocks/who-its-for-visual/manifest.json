@@ -1,0 +1,28 @@
+{
+  "generatedAt": "2026-08-30T04:16:42.496Z",
+  "model": "gemini-3-pro-image",
+  "source": ".impeccable/mocks/who-its-for-visual/source.png",
+  "frames": {
+    "A": {
+      "key": "A",
+      "title": "Icon-led distill",
+      "out": ".impeccable/mocks/who-its-for-visual/option-A.png"
+    },
+    "B": {
+      "key": "B",
+      "title": "Product portraits + role dock",
+      "out": ".impeccable/mocks/who-its-for-visual/option-B.png"
+    },
+    "C": {
+      "key": "C",
+      "title": "OS-first substrate",
+      "out": ".impeccable/mocks/who-its-for-visual/option-C.png"
+    },
+    "D": {
+      "key": "D",
+      "title": "Bento visual map",
+      "out": ".impeccable/mocks/who-its-for-visual/option-D.png"
+    }
+  },
+  "note": "Comps only — wait for user pick before editing WhoItsFor.tsx"
+}

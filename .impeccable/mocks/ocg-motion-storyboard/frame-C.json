@@ -1,0 +1,9 @@
+{
+  "phase": "t=70%",
+  "motion-cues": [
+    "assemblies-sequentially-lit",
+    "green-border-alive"
+  ],
+  "duration-hint-ms": 1500,
+  "reduced-motion-fallback": "fade-in"
+}

@@ -1,1 +1,7 @@
 Replicate the existing written content on stackgen.com and all the pages ( create additional pages on the pencil canvas as necessay ) content on the webpage ( pencil canvas ) be guided by /using-superpowers and prompt for inputs as needed.. Identify the right skills for the tasks as necessary before beginning the work.. 
+
+
+Look at how Harness opens its product up after the product dropdown .. use /firecrawl-cli to understand the sitemap of harness.io and apply the same structure.. scrape the relevant content from official stackgen documentation https://docs.stackgen.com/  and fill the relevant pages.. Gather context from openmemory mcp on how we are designing the pages to be minimal text and visually heavy and follow the same principles.. Gather all the necessary skills for this task first from Cursor's global skills catalog and then proceed.. what ever pages you create also create a copy of it on the pencil canvas /Users/swami/Documents/Stackgen_Website_Redesign/Stack_Linear.pen .. be guided by /using-superpowers and prompt me for inputs where needed .. 
+
+
+Gather all the necessary additional skills for this task first from Cursor's global skills catalog and then proceed.. be guided by /using-superpowers 

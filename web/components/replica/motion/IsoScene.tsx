@@ -1,5 +1,9 @@
 "use client";
 
+/**
+ * Communicates: product surfaces as a precision isometric object, not a flat
+ * illustration — layers share one authored camera angle (ISO_ROTATION).
+ */
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
 import { DUR, EASE } from "@/lib/motion-tokens";

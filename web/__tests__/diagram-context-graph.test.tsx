@@ -44,8 +44,12 @@ test("renders all five data-source marks", () => {
 
 test("is an accessible figure", () => {
   const { container } = render(<ContextGraph theme="dark" />);
-  expect(container.querySelector('[role="img"]')).toHaveAttribute(
+  const figure = container.querySelector('[role="img"]');
+  expect(figure).toHaveAttribute(
     "aria-label",
     expect.stringContaining("context graph"),
   );
+  // Operable rail must sit outside role=img (nested-interactive).
+  expect(figure?.querySelector('[role="tablist"]')).toBeNull();
+  expect(screen.getByRole("tablist", { name: /aiden os layers/i })).toBeInTheDocument();
 });

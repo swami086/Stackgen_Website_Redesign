@@ -1,12 +1,14 @@
 "use client";
 
-import { useMemo } from "react";
-import { motion } from "motion/react";
+/**
+ * Communicates: Aiden plugs into the estate you already run.
+ *
+ * Motion thesis (Persuade): infinite left→right rolling bar — the stack
+ * keeps streaming past like a live backplane. Mobbin: 1Password / Neon /
+ * Rox / Headspace marquees with edge fades. Reduced motion = one static row.
+ */
 import { VendorMark, VENDOR_NAMES, type VendorSlug } from "@/components/replica/logos";
 import { useReducedMotionSafe } from "@/components/replica/motion/useReducedMotionSafe";
-import { cn } from "@/lib/cn";
-import { AMBIENT } from "@/lib/motion-tokens";
-import { mulberry32, SEEDS } from "@/lib/seeded-random";
 
 const PILLS: readonly { slug: VendorSlug; label: string }[] = [
   { slug: "github", label: "GitHub" },
@@ -19,83 +21,109 @@ const PILLS: readonly { slug: VendorSlug; label: string }[] = [
   { slug: "slack", label: "Slack" },
 ] as const;
 
+/** Full loop period — slow enough to read each mark (1Password-class). */
+const MARQUEE_S = 36;
+
+function Pill({
+  pill,
+  theme,
+}: {
+  pill: (typeof PILLS)[number];
+  theme: "light" | "dark";
+}) {
+  return (
+    <div
+      data-vendor-slug={pill.slug}
+      data-vendor-label={pill.label}
+      className="flex shrink-0 items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-2"
+      title={VENDOR_NAMES[pill.slug]}
+    >
+      <VendorMark slug={pill.slug} theme={theme} className="h-4 w-4" />
+      <span className="text-[13px] font-medium leading-none text-text-primary md:text-[14px]">
+        {pill.label}
+      </span>
+    </div>
+  );
+}
+
+function PillSet({
+  theme,
+  setId,
+}: {
+  theme: "light" | "dark";
+  setId: "a" | "b";
+}) {
+  return (
+    <div
+      data-marquee-set={setId}
+      className="flex shrink-0 items-center gap-3 pr-3"
+      aria-hidden={setId === "b" ? true : undefined}
+    >
+      {PILLS.map((pill) => (
+        <Pill key={`${setId}-${pill.slug}`} pill={pill} theme={theme} />
+      ))}
+    </div>
+  );
+}
+
 export function Integrations({ theme }: { theme: "light" | "dark" }) {
   const reduced = useReducedMotionSafe();
-
-  const offsets = useMemo(() => {
-    const prng = mulberry32(SEEDS.integrations);
-    return PILLS.map(() => ({
-      x: (prng() - 0.5) * 30,
-      y: (prng() - 0.5) * 30,
-    }));
-  }, []);
 
   return (
     <div
       role="img"
       aria-label="Integrations across GitHub, GitLab, Terraform, Datadog, PagerDuty, Jira, Open Policy Agent, and Slack"
-      className="glass-specular relative flex w-full flex-col items-center justify-center overflow-hidden rounded-[20px] p-6"
+      className="glass-specular relative flex w-full flex-col items-center overflow-hidden rounded-[20px] border border-border p-5 md:p-6"
     >
-      <h3 className="mb-8 text-center text-[15px] font-medium leading-tight text-[var(--ds-text-secondary)]">
+      <h3 className="mb-5 text-center text-[15px] font-medium leading-tight text-text-secondary md:mb-6">
         Plugs into the stack you already run
       </h3>
 
-      <div className="relative z-10 flex w-full max-w-xl flex-wrap justify-center gap-4">
-        {PILLS.map((pill, i) => {
-          const offset = offsets[i]!;
-          return (
-            <motion.div
-              key={pill.slug}
-              data-vendor-slug={pill.slug}
-              data-vendor-label={pill.label}
-              initial={reduced ? false : { x: offset.x, y: offset.y, opacity: 0 }}
-              animate={{ x: 0, y: 0, opacity: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 260,
-                damping: 22,
-                delay: reduced ? 0 : i * 0.05,
-              }}
-              className="flex items-center gap-2 rounded-full border border-[var(--ds-border)] bg-[var(--ds-surface)] px-4 py-2"
-              title={VENDOR_NAMES[pill.slug]}
-            >
-              <VendorMark slug={pill.slug} theme={theme} className="h-4 w-4" />
-              <span className="text-[14px] font-medium leading-none text-[var(--ds-text-primary)]">
-                {pill.label}
-              </span>
-            </motion.div>
-          );
-        })}
-      </div>
-
-      {!reduced && (
+      {reduced ? (
         <div
-          data-animate="sweep"
-          aria-hidden="true"
-          className={cn(
-            "pointer-events-none absolute inset-0 z-0 opacity-40",
-            theme === "dark" ? "mix-blend-overlay" : "mix-blend-soft-light",
-          )}
+          data-integrations-row
+          className="relative z-10 flex w-full flex-wrap justify-center gap-3 md:flex-nowrap md:justify-between"
+        >
+          {PILLS.map((pill) => (
+            <Pill key={pill.slug} pill={pill} theme={theme} />
+          ))}
+        </div>
+      ) : (
+        <div
+          data-integrations-row
+          data-marquee
+          className="group/marquee relative z-10 w-full overflow-hidden"
           style={{
-            background:
-              "linear-gradient(135deg, transparent 0%, rgb(255 255 255 / 0.4) 50%, transparent 100%)",
-            maskImage: "linear-gradient(to bottom, black, transparent)",
-            WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
-            animation: `replica-integrations-sweep ${AMBIENT.sweep}s linear infinite`,
+            maskImage:
+              "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
           }}
-        />
-      )}
+        >
+          <div
+            data-animate="marquee"
+            className="flex w-max"
+            style={{
+              animation: `replica-integrations-marquee ${MARQUEE_S}s linear infinite`,
+            }}
+          >
+            <PillSet theme={theme} setId="a" />
+            <PillSet theme={theme} setId="b" />
+          </div>
 
-      {!reduced && (
-        <style>{`
-          @keyframes replica-integrations-sweep {
-            0% { transform: translateX(-20%); }
-            100% { transform: translateX(20%); }
-          }
-          @media (prefers-reduced-motion: reduce) {
-            [data-animate="sweep"] { animation: none !important; }
-          }
-        `}</style>
+          <style>{`
+            @keyframes replica-integrations-marquee {
+              from { transform: translate3d(-50%, 0, 0); }
+              to { transform: translate3d(0, 0, 0); }
+            }
+            .group\\/marquee:hover [data-animate="marquee"] {
+              animation-play-state: paused;
+            }
+            @media (prefers-reduced-motion: reduce) {
+              [data-animate="marquee"] { animation: none !important; }
+            }
+          `}</style>
+        </div>
       )}
     </div>
   );

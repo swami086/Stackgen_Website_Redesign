@@ -1,4 +1,4 @@
-/** Verbatim dual-theme copy from Pencil CYfSl / LexRf (2026-08-29 extract). */
+/** Dual-theme home copy. Naming and CTA vocabulary locked to PRODUCT.md. */
 
 export const replicaContent = {
   nav: {
@@ -9,11 +9,11 @@ export const replicaContent = {
       { label: "Company", href: "#" },
       { label: "Docs", href: "#" },
     ],
-    cta: { label: "Book Demo", href: "#" },
+    cta: { label: "Schedule demo", href: "#" },
   },
   hero: {
-    heading: "The Autonomous Operations  Factory",
-    sub: "Aiden: Agentic Operating System to Build, Operate, Observe and Remidiate",
+    heading: "The Autonomous DevOps Factory",
+    sub: "Aiden: Agentic Operating System to Build, Operate, Observe and Remediate",
     primaryCta: "Schedule demo",
     secondaryCta: "How ADF works",
   },
@@ -34,17 +34,17 @@ export const replicaContent = {
     ],
   },
   assemblies: {
-    heading: "The Devops Factory",
+    heading: "The DevOps Factory",
   },
   shell: {
     eyebrow: "OPERATIONAL CONTEXT GRAPH",
-    heading: "Trace changes Across Your Entire Software Supply Chain",
+    heading: "Trace changes across your entire software supply chain",
     body1: "Incidents pull deploy history, dependencies, and drift into one timeline.",
     body2: "Root cause starts with context, not a war room.",
   },
   whoItsFor: {
     eyebrow: "WHO IT'S FOR",
-    heading: "Aiden is the Agentic OS for Production Teams",
+    heading: "Aiden is the Agentic OS for production teams",
     sub: "SRE, platform, DevSecOps, and developers share one context layer. Every deploy, alert, and approval starts with the same context.",
     pillars: [
       {

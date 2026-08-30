@@ -16,3 +16,4 @@ design-reference/
 
 # Linked git worktrees
 .worktrees/
+.firecrawl/

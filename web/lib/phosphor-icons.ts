@@ -1,0 +1,21 @@
+/** Icon names referenced from Pencil shelf content. */
+export type PhosphorIconName =
+  | "stack"
+  | "rocket-launch"
+  | "chart-line-up"
+  | "heartbeat"
+  | "shield-check"
+  | "arrows-clockwise"
+  | "cloud-arrow-down"
+  | "git-branch"
+  | "lightning"
+  | "book-open"
+  | "check-circle"
+  | "chart-line"
+  | "magnifying-glass"
+  | "broadcast"
+  | "terminal-window"
+  | "compass"
+  | "funnel"
+  | "chat-circle-dots"
+  | "arrow-right";

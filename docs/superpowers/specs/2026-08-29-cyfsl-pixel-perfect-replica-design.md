@@ -1,7 +1,7 @@
 # Design: Pixel-perfect CYfSl landing (full regenerate)
 
 **Date:** 2026-08-29  
-**Status:** Approved for planning (Approach B)  
+**Status:** SUPERSEDED by `2026-08-29-cyfsl-lexrf-dual-theme-replica-design.md` (dual theme + wipe + parallel)  
 **Source of truth:** Pencil frame `CYfSl` — Web Shelf — Home [Dark] in `Stack_Linear.pen`  
 **Skill path:** using-superpowers → brainstorming → writing-plans → pencil-to-code (Path B) → verification-before-completion  
 

@@ -67,7 +67,7 @@ Note: jsdom logs "Not implemented: HTMLCanvasElement's getContext()" during Grid
 
 | Task | SHA | Subject |
 |------|-----|---------|
-| 1A | _(filled after commit)_ | feat: add Reveal, Stagger, DrawPath, Beam, GridSubstrate primitives |
+| 1A | `14316aa` | feat: add Reveal, Stagger, DrawPath, Beam, GridSubstrate primitives |
 
 ---
 

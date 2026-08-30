@@ -8,6 +8,14 @@ const CHIPS = [
   "Knowledge Hub", "Context Graph", "AppStacks",
 ];
 
+test("renders the three Aiden apps with locked naming", () => {
+  render(<Offerings theme="dark" />);
+  expect(screen.getByText("Aiden for SRE")).toBeInTheDocument();
+  expect(screen.getByText("Aiden for Automation")).toBeInTheDocument();
+  expect(screen.getByText("Aiden for Infrastructure")).toBeInTheDocument();
+  expect(screen.queryByText("Aiden for DevOps")).not.toBeInTheDocument();
+});
+
 test("renders all nine capability chips in canvas order", () => {
   render(<Offerings theme="dark" />);
   const rendered = CHIPS.map((c) => screen.getByText(c));

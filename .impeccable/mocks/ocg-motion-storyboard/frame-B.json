@@ -1,0 +1,10 @@
+{
+  "phase": "t=35%",
+  "motion-cues": [
+    "prompt-active",
+    "intent-router-pulse",
+    "beam-traveling-down-dashed-connector"
+  ],
+  "duration-hint-ms": 800,
+  "reduced-motion-fallback": "fade-in"
+}

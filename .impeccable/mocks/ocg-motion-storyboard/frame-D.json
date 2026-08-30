@@ -1,0 +1,10 @@
+{
+  "phase": "t=100%",
+  "motion-cues": [
+    "spider-paths-drawn",
+    "checkout-api-center-bright",
+    "os-chips-present"
+  ],
+  "duration-hint-ms": 2000,
+  "reduced-motion-fallback": "fade-in"
+}

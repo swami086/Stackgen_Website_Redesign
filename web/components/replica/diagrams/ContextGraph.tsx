@@ -1,5 +1,9 @@
 "use client";
 
+/**
+ * Communicates: Aiden OS is a machined stack the visitor can explode and
+ * inspect layer-by-layer (Class B object + Class C instrument).
+ */
 import React, { useEffect, useRef, useState } from "react";
 import { IsoScene, IsoLayer, Billboard } from "@/components/replica/motion/IsoScene";
 import { Constellation, type ConstellationNode, type ConstellationEdge } from "@/components/replica/motion/Constellation";
@@ -89,10 +93,8 @@ export function ContextGraph({ theme }: { theme: "light" | "dark" }) {
   const graphProgress = Math.min(1, Math.max(0, (progress - 0.65) / 0.2));
 
   return (
-    <div 
-      ref={rootRef} 
-      role="img" 
-      aria-label="context graph illustrating four layers: Intent, Assemblies, System of Context, and Data Sources."
+    <div
+      ref={rootRef}
       className="relative flex min-h-[100dvh] w-full flex-col lg:flex-row items-center lg:items-start justify-center gap-12 overflow-hidden px-4 lg:px-12 py-24"
     >
       <div className="flex-none lg:sticky lg:top-1/2 lg:-translate-y-1/2 z-10 w-full lg:w-48 order-last lg:order-first">
@@ -107,7 +109,12 @@ export function ContextGraph({ theme }: { theme: "light" | "dark" }) {
         />
       </div>
 
-      <div className="flex-1 w-full max-w-3xl flex items-center justify-center lg:min-h-screen">
+      {/* role=img only on the decorative stack — never wrap the operable rail */}
+      <div
+        role="img"
+        aria-label="context graph illustrating four layers: Intent, Assemblies, System of Context, and Data Sources."
+        className="flex-1 w-full max-w-3xl flex items-center justify-center lg:min-h-screen"
+      >
         <IsoScene className="w-full lg:w-[600px] h-[600px] flex items-center justify-center">
           {CONTEXT_LAYERS.slice().reverse().map((layer, reverseIndex) => {
             const index = reverseIndex; // sources=0, context=1, assemblies=2, intent=3

@@ -201,6 +201,15 @@
   pointer-events: none;
 }
 
+/* Cream ground: additive glow washes CTAs — keep Tier 3 as a whisper. */
+:root[data-theme="light"] .glow-source::after {
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--ds-accent) 10%, transparent),
+    transparent 70%
+  );
+}
+
 /* ============================================================
    BROWSER SURFACES
    The parts nobody draws still carry the design.

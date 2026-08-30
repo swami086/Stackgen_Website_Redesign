@@ -1,0 +1,11 @@
+{
+  "phase": "t=0%",
+  "motion-cues": [
+    "prompt-dim",
+    "connectors-undrawn",
+    "assemblies-idle",
+    "sources-muted"
+  ],
+  "duration-hint-ms": 0,
+  "reduced-motion-fallback": "static"
+}

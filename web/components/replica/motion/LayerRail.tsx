@@ -79,7 +79,12 @@ export function LayerRail({ layers, activeId, onSelect, className }: Props) {
                 : "text-text-tertiary hover:text-text-secondary",
             )}
           >
-            <span className="mr-2 font-mono text-[10px] opacity-60">
+            <span
+              className={cn(
+                "mr-2 font-mono text-[11px] tabular-nums",
+                selected ? "text-text-secondary" : "text-text-tertiary",
+              )}
+            >
               {String(layers.length - i).padStart(2, "0")}
             </span>
             {layer.label}

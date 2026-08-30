@@ -1,4 +1,4 @@
-import { ContextGraph } from "@/components/replica/diagrams/ContextGraph";
+import { OperationalContextGraph } from "@/components/replica/diagrams/OperationalContextGraph";
 import { replicaContent } from "@/content/replica";
 import { cn } from "@/lib/cn";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
@@ -36,7 +36,7 @@ export function ReplicaShell({ theme, className }: ReplicaShellProps) {
             {body2}
           </p>
         </div>
-        <ContextGraph theme={theme} />
+        <OperationalContextGraph theme={theme} />
       </div>
     </section>
   );

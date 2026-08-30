@@ -105,7 +105,7 @@ pnpm build      → PASS; `/` prerendered as static
 | 0.4 | `4190cf9` | feat: replace Inter with Geist across the replica |
 | 0.5 | `7782f1b` | feat: add three-tier material system and themed browser surfaces |
 | 0.6 | `f58e8c6` | feat: add MotionProvider with Lenis and ScrollTrigger registration |
-| 0.7 | (this commit) | docs: wave 0 foundation report |
+| 0.7 | `42acbcf` | docs: wave 0 foundation report |
 
 ---
 

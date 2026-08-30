@@ -7,6 +7,7 @@ import { replicaContent } from "@/content/replica";
 
 function renderHome(theme: "light" | "dark" = "dark") {
   document.documentElement.dataset.theme = theme;
+  window.localStorage.setItem("stackgen-theme", theme);
   return render(
     <ThemeProvider>
       <HomeReplica />
@@ -55,7 +56,10 @@ test("the four canvas eyebrows are present and no fifth was added", () => {
   }
 });
 
-test("the context graph rail is reachable from the page", () => {
+test("Shell hosts the V2P0L Operational Context Graph flow", () => {
   renderHome("dark");
-  expect(screen.getByRole("tablist", { name: /aiden os layers/i })).toBeInTheDocument();
+  expect(screen.getByText("Intent Router")).toBeInTheDocument();
+  expect(screen.getByText("Graph resolution")).toBeInTheDocument();
+  expect(screen.getByText("Aiden Agentic Operating System")).toBeInTheDocument();
+  expect(document.querySelector('[data-pencil-id="V2P0L"]')).toBeInTheDocument();
 });

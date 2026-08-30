@@ -199,12 +199,7 @@ export function OperationalContextGraph({
         >
           <div className="flex flex-col gap-3 md:flex-row md:items-center">
             <div className="min-w-0 flex-1">
-              <p
-                className={cn(
-                  "truncate text-sm",
-                  isLight ? "text-text-secondary" : "text-text-secondary",
-                )}
-              >
+              <p className="truncate text-sm text-text-secondary">
                 Ask Aiden to investigate latency spike in checkout…
                 {!reduced && (
                   <motion.span
@@ -280,7 +275,7 @@ export function OperationalContextGraph({
             >
               <PhosphorIcon name="git-branch" className="size-4" />
             </span>
-            <span className={cn("text-sm font-semibold", isLight ? "text-text-primary" : "text-text-primary")}>
+            <span className="text-sm font-semibold text-text-primary">
               Intent Router
             </span>
             {!reduced && (
@@ -302,7 +297,9 @@ export function OperationalContextGraph({
         </Reveal>
       </div>
 
-      <FlowLabel delay={0.35}>Route to assembly</FlowLabel>
+      <FlowLabel delay={0.35} theme={theme}>
+        Route to assembly
+      </FlowLabel>
 
       {/* Factory Assemblies — sequential L→R light-up */}
       <Reveal delay={0.42} y={12}>
@@ -389,7 +386,9 @@ export function OperationalContextGraph({
         </div>
       </Reveal>
 
-      <FlowLabel delay={0.55}>Enrich from context</FlowLabel>
+      <FlowLabel delay={0.55} theme={theme}>
+        Enrich from context
+      </FlowLabel>
 
       {/* Graph Resolution — spider DrawPath + Beam into checkout-api */}
       <Reveal delay={0.6} y={12}>
@@ -399,12 +398,7 @@ export function OperationalContextGraph({
             isLight ? "border-border/80 bg-surface" : "border-border bg-surface",
           )}
         >
-          <div
-            className={cn(
-              "mb-4 font-mono text-[11px] font-semibold uppercase tracking-[0.14em]",
-              isLight ? "text-text-secondary" : "text-text-secondary",
-            )}
-          >
+          <div className="mb-4 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-text-secondary">
             Graph resolution
           </div>
           <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-[1fr_auto_minmax(200px,280px)]">
@@ -424,12 +418,7 @@ export function OperationalContextGraph({
                     )}
                     aria-hidden
                   />
-                  <code
-                    className={cn(
-                      "truncate font-mono text-[11px]",
-                      isLight ? "text-text-secondary" : "text-text-secondary",
-                    )}
-                  >
+                  <code className="truncate font-mono text-[11px] text-text-secondary">
                     {src}
                   </code>
                 </div>
@@ -507,7 +496,9 @@ export function OperationalContextGraph({
         </div>
       </Reveal>
 
-      <FlowLabel delay={0.75}>Governed by</FlowLabel>
+      <FlowLabel delay={0.75} theme={theme}>
+        Governed by
+      </FlowLabel>
 
       {/* Aiden OS — chips settle */}
       <Reveal delay={0.8} y={10}>

@@ -66,14 +66,22 @@ function PillSet({
   );
 }
 
-export function Integrations({ theme }: { theme: "light" | "dark" }) {
-  const reduced = useReducedMotionSafe();
+export function Integrations({
+  theme,
+  reducedMotionOverride,
+}: {
+  theme: "light" | "dark";
+  reducedMotionOverride?: boolean;
+}) {
+  const reduced = reducedMotionOverride ?? useReducedMotionSafe();
+  const edgeFade =
+    "linear-gradient(to right, transparent, black 8%, black 92%, transparent)";
 
   return (
     <div
       role="img"
       aria-label="Integrations across GitHub, GitLab, Terraform, Datadog, PagerDuty, Jira, Open Policy Agent, and Slack"
-      className="glass-specular relative flex w-full flex-col items-center overflow-hidden rounded-[20px] border border-border p-5 md:p-6"
+      className="relative flex w-full flex-col items-center overflow-hidden rounded-[20px] border border-border bg-surface p-5 md:p-6"
     >
       <h3 className="mb-5 text-center text-[15px] font-medium leading-tight text-text-secondary md:mb-6">
         Plugs into the stack you already run
@@ -82,7 +90,8 @@ export function Integrations({ theme }: { theme: "light" | "dark" }) {
       {reduced ? (
         <div
           data-integrations-row
-          className="relative z-10 flex w-full flex-wrap justify-center gap-3 md:flex-nowrap md:justify-between"
+          data-integrations-static-row
+          className="relative z-10 flex w-full flex-nowrap items-center justify-start gap-3 overflow-x-auto pb-1"
         >
           {PILLS.map((pill) => (
             <Pill key={pill.slug} pill={pill} theme={theme} />
@@ -94,10 +103,8 @@ export function Integrations({ theme }: { theme: "light" | "dark" }) {
           data-marquee
           className="group/marquee relative z-10 w-full overflow-hidden"
           style={{
-            maskImage:
-              "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
-            WebkitMaskImage:
-              "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+            maskImage: edgeFade,
+            WebkitMaskImage: edgeFade,
           }}
         >
           <div

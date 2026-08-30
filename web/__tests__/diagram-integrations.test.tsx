@@ -38,6 +38,16 @@ test("rolling bar duplicates the track for a seamless marquee", () => {
   expect(container.querySelectorAll("[data-vendor-slug]")).toHaveLength(16);
 });
 
+test("reduced motion collapses to a single static row", () => {
+  const { container } = render(
+    <Integrations theme="dark" reducedMotionOverride />,
+  );
+  const staticRow = container.querySelector("[data-integrations-static-row]");
+  expect(staticRow).toBeInTheDocument();
+  expect(staticRow?.querySelectorAll("[data-vendor-slug]")).toHaveLength(8);
+  expect(container.querySelector("[data-marquee]")).toBeNull();
+});
+
 test("two renders stay deterministic", () => {
   const a = render(<Integrations theme="dark" />).container.innerHTML;
   const b = render(<Integrations theme="dark" />).container.innerHTML;

@@ -7,7 +7,8 @@ import type { WorkItemKind } from "@/components/replica/motion/ParticleField";
 import { Reveal } from "@/components/replica/motion/Reveal";
 import { Stagger } from "@/components/replica/motion/Stagger";
 import { VendorMark } from "@/components/replica/logos";
-import { AMBIENT, RING_OPACITY } from "@/lib/motion-tokens";
+import { cn } from "@/lib/cn";
+import { AMBIENT, DUR, RING_OPACITY, STAGGER } from "@/lib/motion-tokens";
 
 const SOURCES = [
   { id: "ide", x: 0.14, y: 0.22, emits: "edit" },
@@ -34,6 +35,12 @@ const SATELLITE_FOR_KIND: Record<WorkItemKind, string> = {
 export function InnerOuterLoop({ theme }: { theme: "light" | "dark" }) {
   const [isolateSourceId, setIsolateSourceId] = useState<string | null>(null);
   const [pulsed, setPulsed] = useState<string | null>(null);
+  const labelTone = theme === "light" ? "text-text-primary" : "text-text-secondary";
+  const eyebrowTone =
+    theme === "light" ? "text-text-secondary" : "text-text-tertiary";
+  const ringTone = theme === "light" ? "border-border-hover" : "border-border";
+  const trackTone =
+    theme === "light" ? "border-border-hover/70" : "border-border/50";
 
   const onAbsorb = useCallback((kind: WorkItemKind) => {
     setPulsed(SATELLITE_FOR_KIND[kind]);
@@ -63,12 +70,12 @@ export function InnerOuterLoop({ theme }: { theme: "light" | "dark" }) {
       {/* Inner Loop */}
       <Reveal delay={0} y={16} className="relative z-10 flex w-48 flex-col items-center gap-6">
         <div className="flex flex-col items-center gap-2">
-          <span className="font-mono text-[11px] font-medium tracking-[2px] text-text-tertiary">
+          <span className={cn("font-mono text-[11px] font-medium tracking-[2px]", eyebrowTone)}>
             INNER LOOP
           </span>
           <span className="text-sm font-medium text-text-primary">Build &amp; ship</span>
         </div>
-        <Stagger step={0.04} className="flex flex-col gap-3">
+        <Stagger step={STAGGER.chip} className="flex flex-col gap-3">
           {[
             { id: "ide", label: "IDE", slug: "cursor" as const },
             { id: "git", label: "Git", slug: "github" as const },
@@ -79,20 +86,28 @@ export function InnerOuterLoop({ theme }: { theme: "light" | "dark" }) {
               key={item.id}
               onPointerEnter={() => setIsolateSourceId(item.id)}
               onPointerLeave={() => setIsolateSourceId(null)}
-              className="flex h-[36px] w-[140px] cursor-default items-center gap-3 rounded-full border border-border bg-surface px-4 py-2 transition-colors hover:border-border-hover hover:bg-surface-hover"
+              className={cn(
+                "flex h-[36px] w-[140px] cursor-default items-center gap-3 rounded-full border bg-surface px-4 py-2 transition-colors hover:border-border-hover hover:bg-surface-hover",
+                theme === "light" ? "border-border-hover" : "border-border",
+              )}
+              style={{ transitionDuration: `${DUR.chip}s` }}
             >
               <VendorMark slug={item.slug} theme={theme} className="h-4 w-4 shrink-0" />
-              <span className="text-sm font-medium text-text-secondary">{item.label}</span>
+              <span className={cn("text-sm font-medium", labelTone)}>{item.label}</span>
             </div>
           ))}
         </Stagger>
       </Reveal>
 
       {/* Hub */}
-      <Reveal delay={0.16} y={16} className="relative z-10 flex h-[280px] w-[280px] shrink-0 items-center justify-center">
+      <Reveal
+        delay={STAGGER.shell}
+        y={16}
+        className="relative z-10 flex h-[280px] w-[280px] shrink-0 items-center justify-center"
+      >
         {/* Ambient orbit ring */}
         <div
-          className="absolute inset-0 rounded-full border border-border"
+          className={cn("absolute inset-0 rounded-full border", ringTone)}
           style={{
             animation: `orbit-ring ${AMBIENT.ring}s ease-in-out infinite alternate`,
           }}
@@ -112,7 +127,7 @@ export function InnerOuterLoop({ theme }: { theme: "light" | "dark" }) {
 
         {/* Orbit Track & Satellites */}
         <div
-          className="absolute inset-0 rounded-full border border-border/50 border-dashed"
+          className={cn("absolute inset-0 rounded-full border border-dashed", trackTone)}
           style={{
             animation: `orbit-track ${AMBIENT.orbit}s linear infinite`,
           }}
@@ -141,13 +156,17 @@ export function InnerOuterLoop({ theme }: { theme: "light" | "dark" }) {
               >
                 {/* Counter-rotate so text stays upright */}
                 <div
-                  className="flex items-center justify-center rounded-full bg-surface px-2 py-1 transition-colors duration-200"
+                  className={cn(
+                    "flex items-center justify-center rounded-full px-2 py-1 transition-colors",
+                    theme === "light" ? "bg-surface-raised" : "bg-surface",
+                  )}
                   style={{
                     animation: `orbit-track-reverse ${AMBIENT.orbit}s linear infinite`,
                     borderColor: isPulsed ? "var(--ds-accent)" : "var(--ds-border)",
                     borderWidth: 1,
                     borderStyle: "solid",
                     color: isPulsed ? "var(--ds-accent)" : "var(--ds-text-tertiary)",
+                    transitionDuration: `${DUR.chip}s`,
                   }}
                 >
                   <span className="font-mono text-[10px] tracking-wide">{sat.id}</span>
@@ -159,7 +178,10 @@ export function InnerOuterLoop({ theme }: { theme: "light" | "dark" }) {
 
         {/* Core */}
         <div
-          className="glow-source relative z-20 flex h-[80px] w-[80px] flex-col items-center justify-center gap-1 rounded-full border border-border bg-surface shadow-sm"
+          className={cn(
+            "glow-source relative z-20 flex h-[80px] w-[80px] flex-col items-center justify-center gap-1 rounded-full border bg-surface shadow-sm",
+            theme === "light" ? "border-border-hover" : "border-border",
+          )}
           style={{
             animation: `hub-pulse ${AMBIENT.hub}s ease-in-out infinite alternate`,
           }}
@@ -172,13 +194,17 @@ export function InnerOuterLoop({ theme }: { theme: "light" | "dark" }) {
       </Reveal>
 
       {/* Outer Loop */}
-      <Reveal delay={0.32} y={16} className="relative z-10 flex w-48 flex-col items-center gap-6">
+      <Reveal
+        delay={STAGGER.shell * 2}
+        y={16}
+        className="relative z-10 flex w-48 flex-col items-center gap-6"
+      >
         <div className="flex flex-col items-center gap-2">
-          <span className="font-mono text-[11px] font-medium tracking-[2px] text-text-tertiary">
+          <span className={cn("font-mono text-[11px] font-medium tracking-[2px]", eyebrowTone)}>
             OUTER LOOP
           </span>
         </div>
-        <Stagger step={0.04} className="flex flex-col gap-3">
+        <Stagger step={STAGGER.chip} className="flex flex-col gap-3">
           {[
             { id: "runtime", label: "Runtime", slug: "eks" as const },
             { id: "infra", label: "Infrastructure", slug: "aws" as const },
@@ -186,10 +212,14 @@ export function InnerOuterLoop({ theme }: { theme: "light" | "dark" }) {
           ].map((item) => (
             <div
               key={item.id}
-              className="flex h-[36px] w-[140px] items-center gap-3 rounded-full border border-border bg-surface px-4 py-2"
+              className={cn(
+                "flex h-[36px] w-[140px] items-center gap-3 rounded-full border bg-surface px-4 py-2 transition-colors hover:border-border-hover hover:bg-surface-hover",
+                theme === "light" ? "border-border-hover" : "border-border",
+              )}
+              style={{ transitionDuration: `${DUR.chip}s` }}
             >
               <VendorMark slug={item.slug} theme={theme} className="h-4 w-4 shrink-0" />
-              <span className="text-sm font-medium text-text-secondary">{item.label}</span>
+              <span className={cn("text-sm font-medium", labelTone)}>{item.label}</span>
             </div>
           ))}
         </Stagger>

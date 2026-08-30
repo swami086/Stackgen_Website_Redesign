@@ -14,8 +14,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const OUT = path.join(ROOT, "web/public/media/atmosphere");
 const PROJECT = process.env.GCP_PROJECT || "propane-galaxy-498403-n8";
-const LOCATION = process.env.GCP_LOCATION || "us-central1";
+const LOCATION = process.env.GCP_LOCATION || "global";
 const MODEL = "gemini-3.1-flash-image";
+/** Global publisher models use aiplatform.googleapis.com; regional use {loc}-aiplatform. */
+function apiHost(location) {
+  return location === "global"
+    ? "https://aiplatform.googleapis.com"
+    : `https://${location}-aiplatform.googleapis.com`;
+}
 
 const SLOTS = [
   "hero-field",
@@ -64,7 +70,7 @@ function parseArgs(argv) {
 
 async function generateOne(slot, theme) {
   const access = token();
-  const url = `https://${LOCATION}-aiplatform.googleapis.com/v1/projects/${PROJECT}/locations/${LOCATION}/publishers/google/models/${MODEL}:generateContent`;
+  const url = `${apiHost(LOCATION)}/v1/projects/${PROJECT}/locations/${LOCATION}/publishers/google/models/${MODEL}:generateContent`;
   const body = {
     contents: [
       {

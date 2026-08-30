@@ -12,26 +12,25 @@ beforeEach(() => {
   reducedMotion = false;
 });
 
-test("renders three-layer Option E structure", () => {
+test("renders Intent Router hub structure", () => {
   const { container } = render(<OperationalContextGraph theme="dark" />);
-  expect(container.querySelector('[data-structure="three-layer"]')).toBeTruthy();
+  expect(container.querySelector('[data-structure="router-hub"]')).toBeTruthy();
+  expect(container.querySelector('[data-part="intent-router"]')).toBeTruthy();
+  expect(container.querySelector('[data-part="router-stage"]')).toBeTruthy();
   expect(container.querySelector('[data-layer="telemetry"]')).toBeTruthy();
-  expect(container.querySelector('[data-layer="context"]')).toBeTruthy();
   expect(container.querySelector('[data-layer="aiden"]')).toBeTruthy();
-  expect(container.querySelector('[data-motion-metaphor="signal-drop"]')).toBeTruthy();
+  expect(container.querySelector('[data-motion-metaphor="route-pulse"]')).toBeTruthy();
 });
 
-test("ask bar sits at diagram top outside Context Graph", () => {
+test("ask bar sits at diagram top before telemetry and router", () => {
   const { container } = render(<OperationalContextGraph theme="dark" />);
-  const root = container.querySelector('[data-structure="three-layer"]');
+  const root = container.querySelector('[data-structure="router-hub"]');
   const ask = container.querySelector('[data-part="ask-bar"]');
-  const context = container.querySelector('[data-layer="context"]');
   const telemetry = container.querySelector('[data-layer="telemetry"]');
+  const stage = container.querySelector('[data-part="router-stage"]');
   expect(ask).toBeTruthy();
-  expect(context?.contains(ask)).toBe(false);
-  expect(root?.firstElementChild?.contains(ask) || root?.querySelector('[data-part="ask-bar"]')).toBeTruthy();
-  // DOM order: ask before telemetry before context
-  const order = [ask, telemetry, context].map((el) =>
+  expect(stage?.contains(ask)).toBe(false);
+  const order = [ask, telemetry, stage].map((el) =>
     el ? [...root!.querySelectorAll("*")].indexOf(el) : -1,
   );
   expect(order[0]).toBeLessThan(order[1]!);
@@ -46,9 +45,10 @@ test("renders telemetry channels", () => {
   expect(screen.getByText("Traces")).toBeInTheDocument();
 });
 
-test("renders intent router and four factory assemblies", () => {
-  render(<OperationalContextGraph theme="dark" />);
+test("renders centered Intent Router and four factory assemblies", () => {
+  const { container } = render(<OperationalContextGraph theme="dark" />);
   expect(screen.getByText("Intent Router")).toBeInTheDocument();
+  expect(container.querySelector('[data-part="intent-router"]')).toBeTruthy();
   for (const title of [
     "Aiden for Infrastructure",
     "Aiden for Automation",
@@ -62,15 +62,13 @@ test("renders intent router and four factory assemblies", () => {
 test("uses light-theme surface contrast", () => {
   const { container } = render(<OperationalContextGraph theme="light" />);
   expect(container.firstElementChild).toHaveClass("bg-surface/95");
-  expect(screen.getByText("Factory assemblies")).toHaveClass("text-text-secondary");
+  expect(screen.getByText("Intent Router")).toBeInTheDocument();
 });
 
-test("renders context graph hub entity", () => {
+test("renders quiet context constellation underlay", () => {
   const { container } = render(<OperationalContextGraph theme="dark" />);
   expect(screen.getByText("checkout-api")).toBeInTheDocument();
-  expect(screen.getByText("one entity · six sources")).toBeInTheDocument();
   expect(container.querySelector('[data-part="context-graph"]')).toBeTruthy();
-  expect(container.querySelectorAll('[data-part="context-graph"] text').length).toBeGreaterThanOrEqual(6);
 });
 
 test("renders Aiden OS governance chips", () => {
@@ -92,20 +90,21 @@ test("never prints banned DevOps product name", () => {
   expect(container.textContent).not.toMatch(/Aiden for DevOps/);
 });
 
-test("renders typed graph edges and drop rails", () => {
+test("draws route beams with an active packet path", () => {
   const { container } = render(<OperationalContextGraph theme="dark" />);
-  expect(container.querySelectorAll('[data-part="drop-rail"]').length).toBe(2);
-  expect(screen.getByText("monitors")).toBeInTheDocument();
-  expect(screen.getAllByText("deploys").length).toBe(2);
-  expect(screen.getByText("owns")).toBeInTheDocument();
-  expect(screen.getByText("governs")).toBeInTheDocument();
+  expect(container.querySelectorAll('[data-part="route-beam"]').length).toBe(3);
+  expect(container.querySelector('[data-part="route-beam-active"]')).toBeTruthy();
 });
 
-test("reduced motion settles without beam loops", () => {
+test("reduced motion keeps hub and beams without traveling packet", () => {
   reducedMotion = true;
   const { container } = render(<OperationalContextGraph theme="light" />);
-  expect(container.querySelectorAll("circle")).toHaveLength(0);
-  expect(container.querySelectorAll('[data-part="drop-rail"] path').length).toBeGreaterThanOrEqual(2);
-  expect(container.querySelector('[data-part="context-graph"]')).toBeTruthy();
-  expect(container.querySelectorAll('path[d="M12 2 V30"]').length).toBe(2);
+  expect(container.querySelector('[data-part="intent-router"]')).toBeTruthy();
+  expect(
+    container.querySelectorAll(
+      '[data-part="route-beam"], [data-part="route-beam-active"]',
+    ).length,
+  ).toBe(4);
+  // Beam component returns null under reduced motion
+  expect(container.querySelector('[data-part="route-beam-active"] circle')).toBeNull();
 });

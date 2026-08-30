@@ -1,0 +1,23 @@
+{
+  "model": "gemini-3-pro-image",
+  "project": "propane-galaxy-498403-n8",
+  "source": ".impeccable/mocks/ocg-intent-router/source.png",
+  "createdAt": "2026-08-30T05:06:20.040Z",
+  "frames": {
+    "R1": {
+      "key": "R1",
+      "title": "Router hub · four assembly spokes",
+      "out": ".impeccable/mocks/ocg-intent-router/option-R1.png"
+    },
+    "R2": {
+      "key": "R2",
+      "title": "Converge → route → emerge",
+      "out": ".impeccable/mocks/ocg-intent-router/option-R2.png"
+    },
+    "R3": {
+      "key": "R3",
+      "title": "Router compass over quiet graph",
+      "out": ".impeccable/mocks/ocg-intent-router/option-R3.png"
+    }
+  }
+}

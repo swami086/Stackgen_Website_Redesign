@@ -1,22 +1,21 @@
 "use client";
 
 /**
- * Communicates: signals enrich one Operational Context Graph; Aiden acts
- * within policy. Option E — three bands in a Shell-scale plate (peer to
- * Offerings / InnerOuterLoop height, not a full viewport).
+ * Operational Context Graph — Intent Router hub (comp R1).
  *
- * Spatial thesis (Mobbin Base / Railway / Midday): one framed card, short
- * spines (~32px), dense mid graph as the peak.
+ * Communicates: ask → Intent Router (center) routes to one of four Factory
+ * Assemblies under Aiden OS. Quiet telemetry inputs; faint context constellation
+ * behind the hub (world model), not a wordy labeled spider.
  *
- * Motion thesis (signal drop): telemetry → spine → nodes → edges → hop
- * beams → spine → router / assemblies / OS. Reduced = final state.
+ * Motion thesis (route pulse): hub settles → beams draw to four docks →
+ * one active route lights with a traveling packet. Reduced = final lit state.
  *
- * Pencil V2P0L. Structure from option-E.png — not raster-as-live.
+ * Inspiration: Mobbin Dovetail converge hub, Base centered router, Nano Banana
+ * R1 plate. Soft Structuralism: ds-* hairlines, accent on hub/active only.
  */
 import { motion } from "motion/react";
 import { PhosphorIcon } from "@/components/primitives/PhosphorIcon";
 import { Beam } from "@/components/replica/motion/Beam";
-import { DrawPath } from "@/components/replica/motion/DrawPath";
 import { Reveal } from "@/components/replica/motion/Reveal";
 import { Stagger } from "@/components/replica/motion/Stagger";
 import { useReducedMotionSafe } from "@/components/replica/motion/useReducedMotionSafe";
@@ -37,30 +36,37 @@ const ASSEMBLIES: {
   title: string;
   short: string;
   icon: PhosphorIconName;
+  slot: "n" | "e" | "s" | "w";
+  active?: boolean;
 }[] = [
   {
     stage: "Build",
     title: "Aiden for Infrastructure",
     short: "Infrastructure",
     icon: "cloud-arrow-down",
+    slot: "n",
   },
   {
     stage: "Operate",
     title: "Aiden for Automation",
     short: "Automation",
     icon: "git-branch",
+    slot: "e",
   },
   {
     stage: "Observe",
     title: "Aiden for Observability",
     short: "Observability",
     icon: "chart-line",
+    slot: "s",
+    active: true,
   },
   {
     stage: "Remediate",
     title: "Aiden for SRE",
     short: "SRE",
     icon: "heartbeat",
+    slot: "w",
   },
 ];
 
@@ -73,211 +79,214 @@ const OS_CHIPS = [
   "Integrations",
 ] as const;
 
-const GRAPH_NODES = [
-  { id: "latency", label: "Checkout latency", x: 280, y: 18 },
-  { id: "ecs", label: "ecs-svc/checkout", x: 72, y: 58 },
-  { id: "hub", label: "checkout-api", x: 280, y: 62, hub: true as const },
-  { id: "module", label: "module.checkout_api", x: 488, y: 58 },
-  { id: "job", label: 'job="checkout"', x: 120, y: 108 },
-  { id: "label", label: "label: checkout", x: 440, y: 108 },
+/** Faint world-model constellation behind the hub (no edge captions). */
+const CONSTELLATION = [
+  { x: 50, y: 18 },
+  { x: 78, y: 32 },
+  { x: 88, y: 55 },
+  { x: 72, y: 78 },
+  { x: 50, y: 88 },
+  { x: 28, y: 78 },
+  { x: 12, y: 55 },
+  { x: 22, y: 32 },
 ] as const;
 
-const GRAPH_EDGES: {
-  from: (typeof GRAPH_NODES)[number]["id"];
-  to: (typeof GRAPH_NODES)[number]["id"];
-  rel: string;
-  active?: boolean;
-}[] = [
-  { from: "latency", to: "hub", rel: "monitors", active: true },
-  { from: "ecs", to: "hub", rel: "deploys" },
-  { from: "module", to: "hub", rel: "deploys" },
-  { from: "job", to: "hub", rel: "owns", active: true },
-  { from: "label", to: "hub", rel: "governs", active: true },
-];
+const SLOT_CLASS: Record<(typeof ASSEMBLIES)[number]["slot"], string> = {
+  n: "col-start-2 row-start-1 self-end justify-self-center",
+  e: "col-start-3 row-start-2 self-center justify-self-start",
+  s: "col-start-2 row-start-3 self-start justify-self-center",
+  w: "col-start-1 row-start-2 self-center justify-self-end",
+};
 
-const SPINE_D = "M12 2 V30";
+/** Beam endpoints in the 3×3 stage viewBox (percent). */
+const BEAM_PATH: Record<(typeof ASSEMBLIES)[number]["slot"], string> = {
+  n: "M50 50 L50 22",
+  e: "M50 50 L78 50",
+  s: "M50 50 L50 78",
+  w: "M50 50 L22 50",
+};
 
-function nodeById(id: string) {
-  return GRAPH_NODES.find((n) => n.id === id)!;
-}
-
-function edgePath(
-  from: (typeof GRAPH_NODES)[number]["id"],
-  to: (typeof GRAPH_NODES)[number]["id"],
-) {
-  const a = nodeById(from);
-  const b = nodeById(to);
-  const mx = (a.x + b.x) / 2;
-  const my = (a.y + b.y) / 2;
-  return `M${a.x} ${a.y} Q${mx} ${my} ${b.x} ${b.y}`;
-}
-
-function Spine({ delay, theme }: { delay: number; theme: "light" | "dark" }) {
-  const reduced = useReducedMotionSafe();
+function AssemblyDock({
+  card,
+  theme,
+  reduced,
+}: {
+  card: (typeof ASSEMBLIES)[number];
+  theme: "light" | "dark";
+  reduced: boolean;
+}) {
   const isLight = theme === "light";
   return (
-    <div className="flex justify-center py-0.5" aria-hidden>
-      <svg
-        width="24"
-        height="32"
-        viewBox="0 0 24 32"
+    <motion.div
+      title={card.title}
+      className={cn(
+        SLOT_CLASS[card.slot],
+        "z-10 flex min-w-0 max-w-[9.5rem] items-center gap-1.5 rounded-md border px-2 py-1.5",
+        card.active
+          ? isLight
+            ? "border-accent/50 bg-surface shadow-sm"
+            : "border-accent/55 bg-surface"
+          : isLight
+            ? "border-border/70 bg-surface/90"
+            : "border-border bg-surface/90",
+      )}
+      initial={reduced ? false : { opacity: 0, scale: 0.92 }}
+      whileInView={reduced ? undefined : { opacity: 1, scale: 1 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{
+        duration: DUR.shell,
+        ease: EASE.emphasize,
+        delay: card.active ? 0.55 : 0.35,
+      }}
+    >
+      <PhosphorIcon
+        name={card.icon}
         className={cn(
-          "overflow-visible",
-          isLight ? "text-text-secondary" : "text-border",
+          "size-3.5 shrink-0",
+          card.active ? "text-accent-text" : "text-text-secondary",
         )}
-        data-part="drop-rail"
-      >
-        <DrawPath
-          d={SPINE_D}
-          className="stroke-current"
-          strokeWidth={1.25}
-          delay={delay}
-          duration={DUR.flow}
-        />
-        {!reduced && (
-          <Beam
-            d={SPINE_D}
-            className={isLight ? "fill-accent/75" : "fill-accent"}
-            duration={AMBIENT.sweep / 2}
-            delay={delay + DUR.flow}
-            r={2}
-          />
-        )}
-      </svg>
-    </div>
+      />
+      <div className="min-w-0">
+        <div className="font-mono text-[8px] uppercase tracking-[0.1em] text-text-tertiary">
+          {card.stage}
+        </div>
+        <div className="truncate text-[11px] font-semibold text-text-primary">
+          <span className="sr-only">{card.title}</span>
+          <span aria-hidden>{card.short}</span>
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
-function ContextGraphSvg({ theme }: { theme: "light" | "dark" }) {
+function RouterStage({ theme }: { theme: "light" | "dark" }) {
   const reduced = useReducedMotionSafe();
   const isLight = theme === "light";
+  const stroke = isLight ? "var(--ds-border)" : "var(--ds-border)";
+  const accent = "var(--ds-accent)";
 
   return (
-    <svg
-      viewBox="0 0 560 128"
-      className="mx-auto h-auto w-full max-w-xl overflow-visible"
-      role="presentation"
-      data-part="context-graph"
+    <div
+      data-part="router-stage"
+      className={cn(
+        "relative grid aspect-[5/4] w-full grid-cols-3 grid-rows-3 gap-1 rounded-lg border p-2 sm:aspect-[4/3]",
+        isLight ? "border-border/80 bg-surface" : "border-border bg-surface",
+      )}
     >
-      {GRAPH_EDGES.map((edge, i) => {
-        const d = edgePath(edge.from, edge.to);
-        return (
-          <g key={`${edge.from}-${edge.to}`}>
-            <DrawPath
-              d={d}
-              className={
-                edge.active
-                  ? isLight
-                    ? "stroke-accent/50"
-                    : "stroke-accent/65"
-                  : "stroke-border"
-              }
-              strokeWidth={edge.active ? 1.35 : 1}
-              delay={0.4 + i * 0.045}
-              duration={0.36}
+      {/* Quiet constellation — world model substrate */}
+      <svg
+        data-part="context-graph"
+        viewBox="0 0 100 100"
+        className="pointer-events-none absolute inset-3 z-0 h-[calc(100%-1.5rem)] w-[calc(100%-1.5rem)] opacity-40"
+        aria-hidden
+      >
+        {CONSTELLATION.map((a, i) => {
+          const b = CONSTELLATION[(i + 1) % CONSTELLATION.length]!;
+          return (
+            <line
+              key={`e-${i}`}
+              x1={a.x}
+              y1={a.y}
+              x2={b.x}
+              y2={b.y}
+              stroke={stroke}
+              strokeWidth={0.4}
             />
-            {edge.active && !reduced && (
+          );
+        })}
+        {CONSTELLATION.map((p, i) => (
+          <circle
+            key={`n-${i}`}
+            cx={p.x}
+            cy={p.y}
+            r={1.1}
+            fill={isLight ? "var(--ds-text-tertiary)" : "var(--ds-text-tertiary)"}
+          />
+        ))}
+        <text
+          x={50}
+          y={8}
+          textAnchor="middle"
+          className="fill-[var(--ds-text-tertiary)]"
+          style={{ fontSize: 2.4, fontFamily: "ui-monospace, monospace" }}
+        >
+          checkout-api
+        </text>
+      </svg>
+
+      {/* Route beams + traveling packet on the active spoke */}
+      <svg
+        viewBox="0 0 100 100"
+        className="pointer-events-none absolute inset-0 z-[1] h-full w-full"
+        aria-hidden
+      >
+        {ASSEMBLIES.map((card) => (
+          <g key={card.slot} data-part={card.active ? "route-beam-active" : "route-beam"}>
+            <path
+              d={BEAM_PATH[card.slot]}
+              fill="none"
+              stroke={card.active ? accent : stroke}
+              strokeWidth={card.active ? 1.25 : 0.7}
+              strokeLinecap="round"
+              opacity={card.active ? 1 : 0.4}
+            />
+            {card.active && (
               <Beam
-                d={d}
-                className={isLight ? "fill-accent/80" : "fill-accent"}
-                duration={2 + i * 0.1}
-                delay={0.8 + i * 0.05}
-                r={1.4}
+                d={BEAM_PATH[card.slot]}
+                delay={0.45}
+                duration={AMBIENT.sweep / 4}
+                r={1.8}
+                className="fill-[var(--ds-accent)]"
               />
             )}
-            <motion.text
-              x={(nodeById(edge.from).x + nodeById(edge.to).x) / 2}
-              y={(nodeById(edge.from).y + nodeById(edge.to).y) / 2 - 4}
-              textAnchor="middle"
-              className="fill-current font-mono text-[8px] text-text-tertiary"
-              initial={reduced ? false : { opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{
-                delay: 0.55 + i * 0.045,
-                duration: DUR.chip,
-                ease: EASE.emphasize,
-              }}
-            >
-              {edge.rel}
-            </motion.text>
           </g>
-        );
-      })}
+        ))}
+      </svg>
 
-      {GRAPH_NODES.map((node, i) => {
-        const isHub = "hub" in node && node.hub;
-        const w = isHub ? 108 : 102;
-        const h = isHub ? 32 : 22;
-        return (
-          <motion.g
-            key={node.id}
-            initial={reduced ? false : { opacity: 0, scale: 0.94 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
+      {ASSEMBLIES.map((card) => (
+        <AssemblyDock
+          key={card.slot}
+          card={card}
+          theme={theme}
+          reduced={reduced}
+        />
+      ))}
+
+      {/* Center Intent Router hub */}
+      <motion.div
+        data-part="intent-router"
+        className={cn(
+          "relative z-20 col-start-2 row-start-2 flex size-[4.75rem] flex-col items-center justify-center justify-self-center self-center rounded-full border sm:size-[5.5rem]",
+          isLight
+            ? "border-accent/45 bg-surface shadow-sm"
+            : "border-accent/50 bg-surface-raised",
+        )}
+        initial={reduced ? false : { opacity: 0, scale: 0.85 }}
+        whileInView={reduced ? undefined : { opacity: 1, scale: 1 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: DUR.shell, ease: EASE.emphasize, delay: 0.12 }}
+      >
+        <PhosphorIcon
+          name="git-branch"
+          className="mb-0.5 size-4 text-accent-text"
+        />
+        <span className="px-1 text-center text-[10px] font-semibold leading-tight text-text-primary sm:text-[11px]">
+          Intent Router
+        </span>
+        {!reduced && (
+          <motion.span
+            aria-hidden
+            className="pointer-events-none absolute inset-0 rounded-full border border-accent/25"
+            animate={{ opacity: [0.35, 0.65, 0.35], scale: [1, 1.05, 1] }}
             transition={{
-              delay: 0.26 + i * STAGGER.chip,
-              duration: DUR.chip,
-              ease: EASE.emphasize,
+              duration: AMBIENT.hub,
+              repeat: Infinity,
+              ease: "easeInOut",
             }}
-            style={{ transformOrigin: `${node.x}px ${node.y}px` }}
-          >
-            <rect
-              x={node.x - w / 2}
-              y={node.y - h / 2}
-              width={w}
-              height={h}
-              rx={6}
-              fill={
-                isHub
-                  ? isLight
-                    ? "var(--ds-surface)"
-                    : "var(--ds-layer-intent-bg)"
-                  : "var(--ds-surface-raised)"
-              }
-              stroke={
-                isHub
-                  ? isLight
-                    ? "color-mix(in srgb, var(--ds-accent) 45%, transparent)"
-                    : "var(--ds-layer-intent-stroke)"
-                  : "var(--ds-border)"
-              }
-              strokeWidth={1}
-            />
-            <text
-              x={node.x}
-              y={node.y + (isHub ? -4 : 1)}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fill="var(--ds-text-primary)"
-              style={{
-                fontSize: isHub ? 11 : 9,
-                fontFamily: isHub
-                  ? "var(--font-sans, ui-sans-serif)"
-                  : "var(--font-mono, ui-monospace)",
-                fontWeight: isHub ? 600 : 500,
-              }}
-            >
-              {node.label}
-            </text>
-            {isHub && (
-              <text
-                x={node.x}
-                y={node.y + 9}
-                textAnchor="middle"
-                fill="var(--ds-text-tertiary)"
-                style={{
-                  fontSize: 8,
-                  fontFamily: "var(--font-mono, ui-monospace)",
-                }}
-              >
-                one entity · six sources
-              </text>
-            )}
-          </motion.g>
-        );
-      })}
-    </svg>
+          />
+        )}
+      </motion.div>
+    </div>
   );
 }
 
@@ -294,21 +303,20 @@ export function OperationalContextGraph({
   return (
     <div
       role="img"
-      aria-label="Operational Context Graph: ask Aiden first; telemetry signals enrich a shared context graph; Aiden routes intent to factory assemblies under Aiden OS"
-      data-motion-metaphor="signal-drop"
-      data-structure="three-layer"
+      aria-label="Operational Context Graph: ask Aiden; Intent Router routes intent to factory assemblies under Aiden OS"
+      data-motion-metaphor="route-pulse"
+      data-structure="router-hub"
       className={cn(
-        "glass-specular flex w-full max-w-3xl flex-col gap-0 rounded-[20px] border p-3",
+        "glass-specular flex w-full max-w-3xl flex-col gap-2 rounded-[20px] border p-3",
         isLight ? "border-border/80 bg-surface/95" : "border-border bg-surface/90",
         className,
       )}
     >
-      {/* Intent chrome — diagram top, not nested inside Context Graph */}
       <Reveal delay={0} y={4}>
         <div
           data-part="ask-bar"
           className={cn(
-            "mb-2 flex items-center gap-2 rounded-md border px-2 py-1.5",
+            "flex items-center gap-2 rounded-md border px-2 py-1.5",
             isLight
               ? "border-border/70 bg-surface-raised"
               : "border-border bg-surface-raised",
@@ -351,29 +359,17 @@ export function OperationalContextGraph({
         </div>
       </Reveal>
 
-      {/* L1 Telemetry — quiet mono strip */}
       <Reveal delay={0.06} y={4}>
         <div
           data-layer="telemetry"
-          className={cn(
-            "flex flex-wrap items-center gap-2 rounded-md border px-2.5 py-1.5",
-            isLight
-              ? "border-border/70 bg-surface-raised/60"
-              : "border-border bg-surface-raised/35",
-          )}
+          className="flex flex-wrap items-center justify-center gap-3 px-1"
         >
-          <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-text-tertiary">
-            Telemetry · signals
-          </span>
-          <Stagger step={STAGGER.chip} className="flex flex-wrap gap-1.5">
+          <Stagger step={STAGGER.chip} className="flex flex-wrap gap-2">
             {TELEMETRY.map((channel) => (
               <span
                 key={channel.label}
                 className={cn(
-                  "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-mono text-[10px]",
-                  isLight
-                    ? "border-border/60 bg-surface text-text-secondary"
-                    : "border-border bg-surface/80 text-text-tertiary",
+                  "inline-flex items-center gap-1 font-mono text-[10px] text-text-tertiary",
                 )}
               >
                 <PhosphorIcon
@@ -387,145 +383,55 @@ export function OperationalContextGraph({
         </div>
       </Reveal>
 
-      <Spine delay={0.14} theme={theme} />
-
-      {/* L2 Context Graph — peak (graph only; ask bar lives above) */}
-      <Reveal delay={0.2} y={6}>
-        <div
-          data-layer="context"
-          className={cn(
-            "rounded-lg border p-2.5",
-            isLight ? "border-border/80 bg-surface" : "border-border bg-surface",
-          )}
-        >
-          <div className="mb-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-text-secondary">
-            Context Graph · semantic relationships
-          </div>
-
-          <ContextGraphSvg theme={theme} />
+      <Reveal delay={0.12} y={6}>
+        <div data-layer="aiden" data-layer-context="context">
+          <RouterStage theme={theme} />
         </div>
       </Reveal>
 
-      <Spine delay={0.68} theme={theme} />
+      {/* Keep a dedicated context hook for tests / a11y without a wordy band */}
+      <span data-layer="context" className="sr-only">
+        Context graph underlays the Intent Router as a quiet constellation
+        including checkout-api.
+      </span>
 
-      {/* L3 Aiden — compact action band */}
-      <Reveal delay={0.74} y={6}>
-        <div data-layer="aiden" className="flex flex-col gap-1.5">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-text-secondary">
-              Aiden · act within policy
-            </span>
-            <div
-              className={cn(
-                "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1",
-                isLight
-                  ? "border-accent/40 bg-surface"
-                  : "border-accent/50 bg-surface",
-              )}
-            >
-              <PhosphorIcon
-                name="git-branch"
-                className="size-3.5 text-accent-text"
-              />
-              <span className="text-[11px] font-semibold text-text-primary">
-                Intent Router
-              </span>
-            </div>
+      <Reveal delay={0.55} y={4}>
+        <div
+          data-layer="os"
+          className={cn(
+            "rounded-lg border px-2 py-1.5",
+            isLight ? "border-border/80 bg-surface-raised" : "border-border",
+          )}
+          style={{
+            backgroundColor: isLight
+              ? "var(--ds-surface-raised)"
+              : "var(--ds-layer-os-bg)",
+            borderColor: isLight
+              ? "var(--ds-border)"
+              : "var(--ds-layer-os-stroke)",
+          }}
+        >
+          <div className="mb-1 text-center text-[11px] font-semibold text-accent-text">
+            Aiden Agentic Operating System
           </div>
-
-          <div
-            className={cn(
-              "rounded-lg border p-2",
-              isLight ? "border-border/80 bg-surface" : "border-border",
-            )}
-            style={{
-              borderColor: isLight
-                ? "var(--ds-border)"
-                : "var(--ds-layer-agent-stroke)",
-              backgroundColor: isLight
-                ? "var(--ds-surface)"
-                : "var(--ds-layer-agent-bg)",
-            }}
+          <Stagger
+            step={STAGGER.chip}
+            className="flex flex-wrap justify-center gap-1"
           >
-            <div className="mb-1.5 flex items-center justify-between gap-2">
+            {OS_CHIPS.map((chip) => (
               <span
+                key={chip}
                 className={cn(
-                  "font-mono text-[9px] font-semibold uppercase tracking-[0.14em]",
-                  isLight ? "text-text-secondary" : "text-pass",
+                  "rounded-full border px-2 py-0.5 text-[10px] font-medium text-text-primary",
+                  isLight
+                    ? "border-border/70 bg-surface"
+                    : "border-border bg-surface",
                 )}
               >
-                Factory assemblies
+                {chip}
               </span>
-            </div>
-            <Stagger
-              step={STAGGER.orbit}
-              className="grid grid-cols-2 gap-1 sm:grid-cols-4"
-            >
-              {ASSEMBLIES.map((card) => (
-                <div
-                  key={card.stage}
-                  title={card.title}
-                  className={cn(
-                    "flex items-center gap-1.5 rounded-md border px-2 py-1.5",
-                    isLight
-                      ? "border-border/70 bg-surface/90"
-                      : "border-border bg-surface/90",
-                  )}
-                >
-                  <PhosphorIcon
-                    name={card.icon}
-                    className="size-3 shrink-0 text-text-secondary"
-                  />
-                  <div className="min-w-0">
-                    <div className="font-mono text-[8px] uppercase tracking-[0.1em] text-text-tertiary">
-                      {card.stage}
-                    </div>
-                    <div className="truncate text-[11px] font-semibold text-text-primary">
-                      <span className="sr-only">{card.title}</span>
-                      <span aria-hidden>{card.short}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </Stagger>
-          </div>
-
-          <div
-            className={cn(
-              "rounded-lg border px-2 py-1.5",
-              isLight ? "border-border/80 bg-surface-raised" : "border-border",
-            )}
-            style={{
-              backgroundColor: isLight
-                ? "var(--ds-surface-raised)"
-                : "var(--ds-layer-os-bg)",
-              borderColor: isLight
-                ? "var(--ds-border)"
-                : "var(--ds-layer-os-stroke)",
-            }}
-          >
-            <div className="mb-1 text-center text-[11px] font-semibold text-accent-text">
-              Aiden Agentic Operating System
-            </div>
-            <Stagger
-              step={STAGGER.chip}
-              className="flex flex-wrap justify-center gap-1"
-            >
-              {OS_CHIPS.map((chip) => (
-                <span
-                  key={chip}
-                  className={cn(
-                    "rounded-full border px-2 py-0.5 text-[10px] font-medium text-text-primary",
-                    isLight
-                      ? "border-border/70 bg-surface"
-                      : "border-border bg-surface",
-                  )}
-                >
-                  {chip}
-                </span>
-              ))}
-            </Stagger>
-          </div>
+            ))}
+          </Stagger>
         </div>
       </Reveal>
     </div>

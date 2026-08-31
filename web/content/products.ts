@@ -217,6 +217,155 @@ function buildProductContent(slug: ProductSlug): ProductPageContent {
   };
 }
 
+const infraOpsContent: ProductPageContent = {
+  slug: "aiden-for-infraops",
+  title: PRODUCTS["aiden-for-infraops"].title,
+  phase: PRODUCTS["aiden-for-infraops"].phase,
+  flags: {
+    subNav: true,
+    pillars: true,
+    offers: false,
+    resources: false,
+  },
+  subNav: {
+    overviewLabel: "Overview",
+  },
+  hero: {
+    heading: "Aiden for InfraOps",
+    subhead:
+      "Self-serve standardized infrastructure from the IDE — intent to governed IaC without a platform-team handoff.",
+    primaryCta: CTA_DEFAULTS.primaryCta,
+    primaryHref: CTA_DEFAULTS.primaryHref,
+    secondaryCta: CTA_DEFAULTS.secondaryCta,
+    secondaryHref: CTA_DEFAULTS.secondaryHref,
+  },
+  pillars: {
+    items: [
+      {
+        title: "Intent in the IDE",
+        body: "Developers describe what they need in the environment they already work in — no ticket queue.",
+      },
+      {
+        title: "Governed IaC generation",
+        body: "Secure Terraform or OpenTofu generated in-environment, aligned to your approved modules.",
+      },
+      {
+        title: "Compliance before production",
+        body: "Policy checks run against shared state before any change reaches your estate.",
+      },
+    ],
+  },
+  logos: {
+    eyebrow: "Trusted by platform teams",
+  },
+  problem: {
+    heading: "Manual handoffs slow every infrastructure request.",
+    body: "Developers wait on tickets while platform teams re-encode the same patterns. Compliance arrives late, after the shape is already wrong.",
+  },
+  spotlight: {
+    heading: "Intent → Detect & generate → Govern → Deploy → Close the loop",
+    body: "The Build spine of the Autonomous Operations Factory — from developer intent to governed infrastructure in your Git.",
+    cards: [
+      {
+        title: "Intent in IDE",
+        body: "Developers express infrastructure needs directly in agentic IDEs — no platform-team translation layer.",
+      },
+      {
+        title: "Secure Terraform/OpenTofu generated in-environment",
+        body: "IaC is composed inside your environment using approved modules and patterns.",
+      },
+      {
+        title: "Compliance checked against shared state before production",
+        body: "Policy gates validate against the Operational Context Graph before deploy.",
+      },
+    ],
+  },
+  capabilities: {
+    heading: "Built for platform teams",
+    items: [
+      {
+        title: "Manual handoff eliminated",
+        body: "Developers self-serve standardized infrastructure without waiting on platform tickets.",
+      },
+      {
+        title: "Compliance by default",
+        body: "Every generated change is checked against policy before it lands in production.",
+      },
+      {
+        title: "Audit trail auto-filed",
+        body: "Intent, generation, and approval history travel with the PR — not in a separate system.",
+      },
+      {
+        title: "Multi-cloud IaC (AWS / Azure / GCP)",
+        body: "Same governance model across cloud providers with your approved module library.",
+      },
+    ],
+  },
+  platformLink: {
+    heading: "Shared memory across the Factory",
+    body: "Aiden OS and the Operational Context Graph hold live estate state and policy — so generated IaC is checked against truth, not stale docs.",
+  },
+  integrations: {
+    heading: "Your stack, connected",
+    body: "IDE and agentic IDEs (e.g. Kiro-class), Git, and cloud accounts — intent flows straight into governed IaC.",
+  },
+  enterprise: {
+    heading: "Deploy your way",
+    items: [
+      {
+        title: "Public cloud",
+        body: "Run Aiden for InfraOps on your preferred cloud provider with standard SaaS deployment.",
+      },
+      {
+        title: "Private SaaS",
+        body: "Dedicated tenant isolation with your security and compliance requirements.",
+      },
+      {
+        title: "Self-hosted",
+        body: "Deploy in your own environment when data residency or air-gapped operation is required.",
+      },
+    ],
+  },
+  proof: {
+    heading: "Trusted in production",
+    body: "Trusted by platform teams standardizing infrastructure across production estates.",
+  },
+  offers: {
+    heading: "",
+    items: [],
+  },
+  finalCta: {
+    heading: "See InfraOps on your estate",
+    subhead: "Schedule a demo — intent to governed IaC without the handoff queue.",
+    cta: CTA_DEFAULTS.finalCtaLabel,
+    href: CTA_DEFAULTS.finalCtaHref,
+  },
+  faq: {
+    heading: "How it works",
+    items: [
+      {
+        question: "Does this replace our platform team?",
+        answer:
+          "No. Platform teams define modules, policies, and guardrails. Developers self-serve within those boundaries — reducing toil, not ownership.",
+      },
+      {
+        question: "Where does the IaC land?",
+        answer:
+          "Generated Terraform or OpenTofu flows into your Git repos with full audit trail — same review process your team already uses.",
+      },
+      {
+        question: "How is compliance enforced?",
+        answer:
+          "Policy checks run against the Operational Context Graph before production. Non-compliant changes are blocked, not reviewed after the fact.",
+      },
+    ],
+  },
+  resources: {
+    heading: "",
+    items: [],
+  },
+};
+
 const sreContent: ProductPageContent = {
   slug: "aiden-for-sre",
   title: PRODUCTS["aiden-for-sre"].title,
@@ -371,7 +520,7 @@ const sreContent: ProductPageContent = {
 };
 
 export const productContentBySlug: Record<ProductSlug, ProductPageContent> = {
-  "aiden-for-infraops": buildProductContent("aiden-for-infraops"),
+  "aiden-for-infraops": infraOpsContent,
   "aiden-for-devops": buildProductContent("aiden-for-devops"),
   "aiden-for-observability": buildProductContent("aiden-for-observability"),
   "aiden-for-sre": sreContent,

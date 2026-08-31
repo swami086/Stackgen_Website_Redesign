@@ -17,9 +17,9 @@ export const productMegaMenuContent = {
       description: "Governed IaC from intent. Lands in your Git.",
       slug: "aiden-for-infraops",
       capabilities: [
-        "PLACEHOLDER — capability",
-        "PLACEHOLDER — capability",
-        "PLACEHOLDER — capability",
+        "Intent to governed IaC in the IDE",
+        "Policy checked before production",
+        "Audit trail with the PR",
       ],
     },
     {

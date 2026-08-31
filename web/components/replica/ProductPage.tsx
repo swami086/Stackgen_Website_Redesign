@@ -20,6 +20,7 @@ import { ProductProof } from "@/components/replica/product/ProductProof";
 import { ProductResources } from "@/components/replica/product/ProductResources";
 import { ProductSpotlight } from "@/components/replica/product/ProductSpotlight";
 import { ProductSubNav } from "@/components/replica/product/ProductSubNav";
+import { ProductVideo } from "@/components/replica/product/ProductVideo";
 
 type ProductPageProps = {
   slug: ProductSlug;
@@ -51,6 +52,7 @@ export function ProductPage({ slug }: ProductPageProps) {
       ) : null}
       <ProductLogos theme={theme} content={content} />
       <ProductProblem theme={theme} content={content} />
+      <ProductVideo theme={theme} caption={content.video.caption} />
       <ProductSpotlight theme={theme} content={content} />
       <ProductCapabilities theme={theme} content={content} />
       <ProductPlatformLink theme={theme} content={content} />

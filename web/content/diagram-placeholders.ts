@@ -9,29 +9,10 @@ export type DiagramPlaceholderContent = {
   deck: string;
 };
 
-/** Homepage Soft Structuralism slots awaiting Pencil → React (Ops Lag already live). */
-export const homeDiagramPlaceholders = {
-  solutionPillars: {
-    id: "solution-pillars",
-    title: "Factory pillars",
-    subtitle: "Build · Operate · Observe · Remediate · Learn",
-    deck: "Deck p4–5 · Pencil pending",
-  },
-  howItWorks: {
-    id: "how-it-works-path",
-    title: "Intent → Spec → Runtime → Learning",
-    subtitle: "Shared World Model band across the Factory path",
-    deck: "Deck p6 · Pencil pending",
-  },
-  offeringsStrip: {
-    id: "offerings-aiden-os",
-    title: "Offerings diagram",
-    subtitle: "InfraOps · DevOps · Observability · SRE on Aiden OS",
-    deck: "Deck p14 · Pencil pending",
-  },
-} as const satisfies Record<string, DiagramPlaceholderContent>;
-
-/** Product deep-dive visual slots (deck diagrams) — Soft Structuralism plates until Pencil. */
+/**
+ * New product deep-dive visual slots only (homepage keeps live diagrams + prior video plate).
+ * Soft Structuralism stand-ins until Pencil → React.
+ */
 export const productDiagramPlaceholders = {
   "aiden-for-sre": {
     id: "product-sre-flow",

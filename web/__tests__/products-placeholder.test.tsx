@@ -81,6 +81,17 @@ test("each product page mounts a Soft Structuralism diagram placeholder", () => 
   }
 });
 
+test("each product page restores prior video placeholder plate", () => {
+  for (const slug of PRODUCT_SLUGS) {
+    const { unmount } = renderProduct(slug);
+    const video = document.querySelector('[data-video-placeholder="product"]');
+    expect(video).toBeTruthy();
+    expect(getProductContent(slug).video.caption.length).toBeGreaterThan(0);
+    expect(video?.textContent).toContain("video placeholder");
+    unmount();
+  }
+});
+
 test("product pages never use superseded Infrastructure or Automation naming", () => {
   for (const slug of PRODUCT_SLUGS) {
     const { container, unmount } = renderProduct(slug);

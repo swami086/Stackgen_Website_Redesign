@@ -52,6 +52,9 @@ export type ProductPageContent = {
     heading: string;
     body: string;
   };
+  video: {
+    caption: string;
+  };
   spotlight: {
     heading: string;
     body: string;
@@ -141,6 +144,9 @@ const observabilityContent: ProductPageContent = {
   problem: {
     heading: "Dashboards without a shared investigation path.",
     body: "Every tool holds a slice. Developers lose time re-assembling context that the Factory should already share.",
+  },
+  video: {
+    caption: "See Observability investigation — video placeholder.",
   },
   spotlight: {
     heading: "Observe pillar in the Autonomous Operations Factory",
@@ -291,6 +297,9 @@ const devOpsContent: ProductPageContent = {
     heading: "Weeks to stand up what the blueprint already knows.",
     body: "Developers pick scaffolds in the IDP; platform still re-applies modules and reviews by hand. Same standards, slow path.",
   },
+  video: {
+    caption: "See DevOps blueprint compose — video placeholder.",
+  },
   spotlight: {
     heading: "IDP / ticket → compose → provision",
     body: "The Operate spine of the Autonomous Operations Factory — from developer request to governed deployment.",
@@ -440,6 +449,9 @@ const infraOpsContent: ProductPageContent = {
     heading: "Manual handoffs slow every infrastructure request.",
     body: "Developers wait on tickets while platform teams re-encode the same patterns. Compliance arrives late, after the shape is already wrong.",
   },
+  video: {
+    caption: "See InfraOps IDE intent → IaC — video placeholder.",
+  },
   spotlight: {
     heading: "Intent → Detect & generate → Govern → Deploy → Close the loop",
     body: "The Build spine of the Autonomous Operations Factory — from developer intent to governed infrastructure in your Git.",
@@ -588,6 +600,9 @@ const sreContent: ProductPageContent = {
   problem: {
     heading: "Hundreds of alerts. Hours to a hypothesis.",
     body: "Signals arrive fragmented across tools. Tribal knowledge stays in chats. Forming a root-cause hypothesis burns minutes you do not have on call.",
+  },
+  video: {
+    caption: "See Detect → Triage → Remediate — video placeholder.",
   },
   spotlight: {
     heading: "Detect → Triage → Diagnose → Remediate",

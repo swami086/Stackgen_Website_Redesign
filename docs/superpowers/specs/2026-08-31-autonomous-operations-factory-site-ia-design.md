@@ -1,6 +1,6 @@
 # Autonomous Operations Factory — Full-site IA from Website Sequencing deck
 
-**Status:** Design approved. Wave 1–2 content shipped. Ops Lag live (`OpsLag.tsx` / `ifJjx`). Remaining homepage + product diagram slots use Soft Structuralism **`DiagramPlaceholder`** plates until Pencil approval → React. OCG / Integrations stay live.  
+**Status:** Design approved. Wave 1–2 content shipped. Ops Lag live. Assemblies keeps live InnerOuterLoop + Offerings + Integrations; Solution keeps prior **video** plate. Soft Structuralism **`DiagramPlaceholder`** only on **new** product deep-dive visual slots. OCG stays live.  
 **Source of truth (content + diagram intent):** `Website_Sequencing.pptx.pdf` (38 slides)  
 **Visual world:** Soft Structuralism on Soft Structuralism `$ds-*` / existing replica chrome  
 **Canvas:** `Stack_Linear.pen` — **Pencil-first**; user approves frames before code  

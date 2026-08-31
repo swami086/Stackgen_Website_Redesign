@@ -53,24 +53,27 @@ test("the four canvas eyebrows are present and no fifth was added", () => {
   renderHome("dark");
   expect(screen.getByText("SHARED WORLD MODEL")).toBeInTheDocument();
   expect(screen.getByText("Offerings")).toBeInTheDocument();
-  // Inner/Outer Loop only on Problem Ops Lag (Assemblies uses diagram placeholders)
-  expect(screen.getAllByText("Inner Loop").length).toBeGreaterThanOrEqual(1);
-  expect(screen.getAllByText("Outer Loop").length).toBeGreaterThanOrEqual(1);
+  // Inner/Outer Loop on Problem (Ops Lag) and Assemblies (InnerOuterLoop)
+  expect(screen.getAllByText("Inner Loop").length).toBeGreaterThanOrEqual(2);
+  expect(screen.getAllByText("Outer Loop").length).toBeGreaterThanOrEqual(2);
 });
 
-test("Solution and How it works ship Soft Structuralism diagram placeholders", () => {
+test("Solution keeps prior video placeholder plate", () => {
   renderHome("dark");
+  expect(document.querySelector('[data-video-placeholder="solution"]')).toBeTruthy();
+  expect(screen.getByText(/From intent to repeatable action under policy/i)).toBeInTheDocument();
   expect(
     document.querySelector('[data-diagram-placeholder="solution-pillars"]'),
-  ).toBeTruthy();
+  ).toBeNull();
+});
+
+test("Assemblies remounts live InnerOuterLoop and Offerings diagrams", () => {
+  renderHome("dark");
+  expect(document.querySelector('[data-diagram="inner-outer-loop-shells"]')).toBeTruthy();
+  expect(screen.getAllByText("Aiden OS").length).toBeGreaterThanOrEqual(1);
   expect(
     document.querySelector('[data-diagram-placeholder="how-it-works-path"]'),
-  ).toBeTruthy();
-  expect(
-    document.querySelector('[data-diagram-placeholder="offerings-aiden-os"]'),
-  ).toBeTruthy();
-  expect(screen.getByText("Factory pillars")).toBeInTheDocument();
-  expect(screen.getByText("Offerings diagram")).toBeInTheDocument();
+  ).toBeNull();
 });
 
 test("homepage section order is Hero Logos Problem Solution Assemblies", () => {

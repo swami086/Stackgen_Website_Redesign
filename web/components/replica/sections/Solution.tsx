@@ -1,13 +1,27 @@
 "use client";
 
-import { DiagramPlaceholder } from "@/components/replica/shared/DiagramPlaceholder";
-import { homeDiagramPlaceholders } from "@/content/diagram-placeholders";
+import { AtmosphereField } from "@/components/replica/shared/AtmosphereField";
 import { replicaContent } from "@/content/replica";
 import { cn } from "@/lib/cn";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
 
 type Props = { theme: "light" | "dark"; className?: string };
 
+function PlayIcon() {
+  return (
+    <svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden
+    >
+      <path d="M8 5v14l11-7z" />
+    </svg>
+  );
+}
+
+/** Prior Soft Structuralism video plate — stand-in until Factory pillars Pencil ships. */
 export function ReplicaSolution({ theme, className }: Props) {
   const s = replicaContent.solution;
 
@@ -40,13 +54,25 @@ export function ReplicaSolution({ theme, className }: Props) {
 
       <div
         data-pencil-id={REPLICA_FRAMES[theme].video}
-        className="w-full max-w-5xl"
+        className="w-full max-w-3xl rounded-[20px] border border-border bg-surface p-1.5"
       >
-        <DiagramPlaceholder
-          theme={theme}
-          content={homeDiagramPlaceholders.solutionPillars}
-        />
-        <p className="sr-only">{s.demoCaption}</p>
+        <div
+          className="relative flex h-[480px] w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-[14px] border border-border bg-surface-raised"
+          role="img"
+          aria-label={`Video placeholder: ${s.demoCaption}`}
+          data-video-placeholder="solution"
+        >
+          <AtmosphereField slot="video-still" theme={theme} className="z-0" />
+          <div className="relative z-10 flex flex-col items-center gap-4">
+            <div
+              className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-on-accent"
+              aria-hidden
+            >
+              <PlayIcon />
+            </div>
+            <p className="text-sm text-text-secondary">{s.demoCaption}</p>
+          </div>
+        </div>
       </div>
     </section>
   );

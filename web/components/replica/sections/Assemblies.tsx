@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { AtmosphereField } from "@/components/replica/shared/AtmosphereField";
-import { DiagramPlaceholder } from "@/components/replica/shared/DiagramPlaceholder";
+import { InnerOuterLoop } from "@/components/replica/diagrams/InnerOuterLoop";
 import { Integrations } from "@/components/replica/diagrams/Integrations";
-import { homeDiagramPlaceholders } from "@/content/diagram-placeholders";
+import { Offerings } from "@/components/replica/diagrams/Offerings";
 import { replicaContent } from "@/content/replica";
 import { cn } from "@/lib/cn";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
@@ -28,7 +28,7 @@ export function ReplicaAssemblies({ theme, className }: ReplicaAssembliesProps) 
       <div className="relative z-10 flex w-full flex-col items-center gap-4 md:gap-5">
         <div className="flex w-full max-w-3xl flex-col items-center gap-2 text-center">
           <div className="rounded-full border border-border bg-surface px-3 py-1">
-            <span className="font-mono text-[11px] font-medium uppercase tracking-[2px] text-text-tertiary">
+            <span className="font-mono text-[11px] font-medium tracking-[2px] text-text-tertiary">
               {eyebrow}
             </span>
           </div>
@@ -42,12 +42,8 @@ export function ReplicaAssemblies({ theme, className }: ReplicaAssembliesProps) 
             {learnMore.label} →
           </Link>
         </div>
-        <DiagramPlaceholder theme={theme} content={homeDiagramPlaceholders.howItWorks} />
-        <DiagramPlaceholder
-          theme={theme}
-          content={homeDiagramPlaceholders.offeringsStrip}
-          compact
-        />
+        <InnerOuterLoop theme={theme} />
+        <Offerings theme={theme} />
         <Integrations theme={theme} />
       </div>
     </section>

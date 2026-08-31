@@ -39,6 +39,25 @@ test("all four product slugs resolve via getProduct", () => {
   }
 });
 
+test("no product ships PLACEHOLDER hero, problem, or final CTA copy", () => {
+  for (const slug of PRODUCT_SLUGS) {
+    const c = getProductContent(slug);
+    expect(c.hero.subhead).not.toMatch(/^PLACEHOLDER/);
+    expect(c.problem.heading).not.toMatch(/^PLACEHOLDER/);
+    expect(c.finalCta.heading).not.toMatch(/^PLACEHOLDER/);
+    expect(c.finalCta.cta).toBe("Schedule a demo");
+    expect(c.finalCta.href).toBe("/schedule-demo");
+  }
+});
+
+test("mega-menu capabilities are real strings", () => {
+  for (const column of productMegaMenuContent.columns) {
+    for (const cap of column.capabilities) {
+      expect(cap).not.toMatch(/^PLACEHOLDER/);
+    }
+  }
+});
+
 test("SRE product page ships Factory hero and DETECT spine without PLACEHOLDER", () => {
   const content = getProductContent("aiden-for-sre");
   expect(content.hero.subhead).not.toMatch(/^PLACEHOLDER/);

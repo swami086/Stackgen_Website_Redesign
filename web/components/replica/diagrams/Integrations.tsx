@@ -83,9 +83,9 @@ export function Integrations({
     <div
       role="img"
       aria-label="Integrations across GitHub, GitLab, Terraform, Datadog, PagerDuty, Jira, Open Policy Agent, and Slack"
-      className="relative flex w-full max-w-5xl flex-col items-center overflow-hidden rounded-[16px] border border-border bg-surface px-2.5 py-2"
+      className="relative flex w-full flex-col items-center overflow-hidden rounded-[16px] border border-border glass-specular px-2.5 py-2"
     >
-      <h3 className="mb-1.5 text-center text-[12px] font-medium leading-tight text-text-secondary">
+      <h3 className="relative z-10 mb-1.5 text-center text-[12px] font-medium leading-tight text-text-secondary">
         Plugs into the stack you already run
       </h3>
 

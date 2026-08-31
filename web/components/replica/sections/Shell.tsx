@@ -14,27 +14,29 @@ export function ReplicaShell({ theme, className }: ReplicaShellProps) {
 
   return (
     <section
+      id="ocg"
       data-pencil-id={REPLICA_FRAMES[theme].shell}
       className={cn(
-        "relative overflow-hidden flex w-full flex-col items-center rounded-[20px] border border-border bg-surface px-[var(--spacing-pad-x)] py-6",
+        // Match Assemblies / WhoItsFor content width — no nested glass plate.
+        "relative overflow-hidden flex w-full flex-col items-center px-4 py-8 md:gap-5 md:px-16 md:py-10",
         className,
       )}
     >
       <AtmosphereField slot="ground-shell" theme={theme} />
-      <div className="relative z-10 flex w-full flex-col items-center gap-4">
+      <div className="relative z-10 flex w-full flex-col items-center gap-3 md:gap-4">
         <div className="flex w-full flex-col items-center gap-1.5">
-          <div className="flex items-center justify-center rounded-full border border-border bg-surface px-3 py-1">
+          <div className="rounded-full border border-border bg-surface px-3 py-1">
             <span className="whitespace-nowrap font-mono text-[11px] font-medium tracking-[2px] text-text-tertiary">
               {eyebrow}
             </span>
           </div>
-          <h2 className="max-w-[900px] text-center text-[28px] font-bold leading-[1.1] tracking-[-1px] text-text-primary md:text-[32px]">
+          <h2 className="max-w-3xl text-center text-[28px] font-bold leading-[1.1] tracking-[-1px] text-text-primary md:text-[32px]">
             {heading}
           </h2>
-          <p className="max-w-[720px] text-center text-sm leading-normal text-text-secondary md:text-base">
+          <p className="max-w-xl text-center text-sm leading-snug text-text-secondary md:text-[15px]">
             {body1}
           </p>
-          <p className="max-w-[720px] text-center text-sm leading-normal text-text-tertiary">
+          <p className="max-w-xl text-center text-sm leading-snug text-text-tertiary">
             {body2}
           </p>
         </div>

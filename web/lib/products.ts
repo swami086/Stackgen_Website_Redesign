@@ -1,7 +1,7 @@
 /** Product route slugs — naming locked to PRODUCT.md. */
 export const PRODUCT_SLUGS = [
-  "aiden-for-infrastructure",
-  "aiden-for-automation",
+  "aiden-for-infraops",
+  "aiden-for-devops",
   "aiden-for-observability",
   "aiden-for-sre",
 ] as const;
@@ -21,18 +21,18 @@ export type ProductMeta = {
 };
 
 export const PRODUCTS: Record<ProductSlug, ProductMeta> = {
-  "aiden-for-infrastructure": {
-    slug: "aiden-for-infrastructure",
+  "aiden-for-infraops": {
+    slug: "aiden-for-infraops",
     phase: "Build",
-    title: "Aiden for Infrastructure",
-    href: "/product/aiden-for-infrastructure",
+    title: "Aiden for InfraOps",
+    href: "/product/aiden-for-infraops",
     pencilFrameId: "qwI1S",
   },
-  "aiden-for-automation": {
-    slug: "aiden-for-automation",
+  "aiden-for-devops": {
+    slug: "aiden-for-devops",
     phase: "Operate",
-    title: "Aiden for Automation",
-    href: "/product/aiden-for-automation",
+    title: "Aiden for DevOps",
+    href: "/product/aiden-for-devops",
     pencilFrameId: "llzpJ",
   },
   "aiden-for-observability": {

@@ -12,15 +12,11 @@ beforeEach(() => {
   reducedMotion = false;
 });
 
-test("renders complete tethered Intent Router hub", () => {
+test("router stage uses capped landscape height not exploding aspect ratio", () => {
   const { container } = render(<OperationalContextGraph theme="dark" />);
-  expect(container.querySelector('[data-structure="router-hub"]')).toBeTruthy();
-  expect(container.querySelector('[data-complete="tethered-c1"]')).toBeTruthy();
-  expect(container.querySelector('[data-part="intent-router"]')).toBeTruthy();
-  expect(container.querySelector('[data-part="router-stage"]')).toBeTruthy();
-  expect(container.querySelector('[data-layer="telemetry"]')).toBeTruthy();
-  expect(container.querySelector('[data-motion-metaphor="neural-mesh"]')).toBeTruthy();
-  expect(container.querySelector('[data-neural="mesh"]')).toBeTruthy();
+  const stage = container.querySelector('[data-part="router-stage"]');
+  expect(stage?.className).toMatch(/h-\[280px\]/);
+  expect(stage?.className).not.toMatch(/aspect-/);
 });
 
 test("ask bar sits at diagram top before telemetry and router", () => {
@@ -53,8 +49,8 @@ test("renders centered Intent Router and four factory assemblies", () => {
     4,
   );
   for (const title of [
-    "Aiden for Infrastructure",
-    "Aiden for Automation",
+    "Aiden for InfraOps",
+    "Aiden for DevOps",
     "Aiden for Observability",
     "Aiden for SRE",
   ]) {
@@ -108,9 +104,10 @@ test("renders Aiden OS strip without truncated long labels", () => {
   }
 });
 
-test("never prints banned DevOps product name", () => {
+test("never prints superseded Infrastructure or Automation product titles", () => {
   const { container } = render(<OperationalContextGraph theme="dark" />);
-  expect(container.textContent).not.toMatch(/Aiden for DevOps/);
+  expect(container.textContent).not.toMatch(/Aiden for Infrastructure/);
+  expect(container.textContent).not.toMatch(/Aiden for Automation/);
 });
 
 test("draws route beams with an active packet path", () => {
@@ -128,6 +125,26 @@ test("renders neural mesh synapses and feeders for cross-talk", () => {
     13,
   );
   expect(container.querySelector('[data-focus-slot="s"]')).toBeTruthy();
+});
+
+test("mesh viewBox is landscape-isotropic, not a stretched 100 square", () => {
+  const { container } = render(<OperationalContextGraph theme="dark" />);
+  const mesh = container.querySelector("[data-part='context-graph']");
+  expect(mesh?.getAttribute("viewBox")).not.toBe("0 0 100 100");
+  expect(mesh?.getAttribute("data-mesh-aspect")).toBeTruthy();
+});
+
+test("intent router is a machined double-bezel, not a pulse halo", () => {
+  const { container } = render(<OperationalContextGraph theme="light" />);
+  const hub = container.querySelector('[data-part="intent-router"]');
+  expect(hub).toHaveAttribute("data-finish", "double-bezel");
+  expect(hub?.querySelector("[data-part='intent-router-disc']")).toHaveClass(
+    "glass-hub-shine",
+    "glass-tile",
+  );
+  expect(hub?.querySelector(".glow-source")).toBeTruthy();
+  expect(hub?.querySelector("[data-part='intent-router-bezel']")).toBeTruthy();
+  expect(hub?.querySelector("[data-part='intent-router-pulse']")).toBeNull();
 });
 
 test("reduced motion keeps hub and beams", () => {

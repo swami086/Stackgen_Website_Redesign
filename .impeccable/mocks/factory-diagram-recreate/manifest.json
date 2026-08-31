@@ -1,0 +1,45 @@
+{
+  "model": "gemini-3-pro-image",
+  "project": "propane-galaxy-498403-n8",
+  "source": "exports/web-shelf/factory-gloss-align-dark-1440.png",
+  "research": {
+    "mobbin": [
+      "Cycle hub-spoke",
+      "Railway architecture",
+      "Cloudflare Workers flow",
+      "Linear isometric air",
+      "Ditto fan beams",
+      "n8n workflow canvas",
+      "beehiiv fork",
+      "Clay workflow"
+    ],
+    "firecrawl": [
+      "svgator SaaS SVG animations",
+      "bool.dev animated architecture",
+      "vercel Flow component / stroke connectors"
+    ]
+  },
+  "createdAt": "2026-08-31T15:13:18.547Z",
+  "frames": {
+    "A": {
+      "key": "A",
+      "title": "Cycle hub-spoke · roomy pills",
+      "out": ".impeccable/mocks/factory-diagram-recreate/option-A.png"
+    },
+    "B": {
+      "key": "B",
+      "title": "Railway canvas · orthogonal bus",
+      "out": ".impeccable/mocks/factory-diagram-recreate/option-B.png"
+    },
+    "C": {
+      "key": "C",
+      "title": "Linear air · puzzle keystone refined",
+      "out": ".impeccable/mocks/factory-diagram-recreate/option-C.png"
+    },
+    "D": {
+      "key": "D",
+      "title": "beehiiv / Clay fork · staged flow",
+      "out": ".impeccable/mocks/factory-diagram-recreate/option-D.png"
+    }
+  }
+}

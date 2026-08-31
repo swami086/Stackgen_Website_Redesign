@@ -13,9 +13,9 @@ export const productMegaMenuContent = {
   columns: [
     {
       phase: "Build",
-      title: "Aiden for Infrastructure",
+      title: "Aiden for InfraOps",
       description: "Governed IaC from intent. Lands in your Git.",
-      slug: "aiden-for-infrastructure",
+      slug: "aiden-for-infraops",
       capabilities: [
         "PLACEHOLDER — capability",
         "PLACEHOLDER — capability",
@@ -24,9 +24,9 @@ export const productMegaMenuContent = {
     },
     {
       phase: "Operate",
-      title: "Aiden for Automation",
+      title: "Aiden for DevOps",
       description: "Prompts become reviewed action across your toolchain.",
-      slug: "aiden-for-automation",
+      slug: "aiden-for-devops",
       capabilities: [
         "PLACEHOLDER — capability",
         "PLACEHOLDER — capability",

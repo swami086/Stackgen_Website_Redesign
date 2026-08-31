@@ -1,0 +1,37 @@
+{
+  "model": "gemini-3-pro-image",
+  "project": "propane-galaxy-498403-n8",
+  "source": "exports/web-shelf/factory-gloss-align-dark-1440.png",
+  "research": {
+    "mobbin": [
+      "https://mobbin.com/sites/sections/b5b16367-0324-4627-87db-791011ccde93",
+      "https://mobbin.com/sites/sections/10a77b79-0e26-4f3e-a34a-d5a1a4ae3588",
+      "https://mobbin.com/sites/sections/9caf7169-91a3-419e-a787-6f61843eeda0",
+      "https://mobbin.com/sites/sections/c7058e8a-dd2e-4be9-a940-cf8bafb296a5",
+      "https://mobbin.com/sites/sections/2ea63f3f-4158-4845-a3da-52b91c6e092e"
+    ]
+  },
+  "createdAt": "2026-08-31T18:33:21.595Z",
+  "frames": {
+    "A": {
+      "key": "A",
+      "title": "Ramp chaos collage · systems never spoke",
+      "out": ".impeccable/mocks/problem-animated-explainer/option-A.png"
+    },
+    "B": {
+      "key": "B",
+      "title": "Cinema plate · Framer/Tines video hero",
+      "out": ".impeccable/mocks/problem-animated-explainer/option-B.png"
+    },
+    "C": {
+      "key": "C",
+      "title": "Intercom tangle · three silos spaghetti",
+      "out": ".impeccable/mocks/problem-animated-explainer/option-C.png"
+    },
+    "D": {
+      "key": "D",
+      "title": "Antimetal filmstrip · P1 timeline scrub",
+      "out": ".impeccable/mocks/problem-animated-explainer/option-D.png"
+    }
+  }
+}

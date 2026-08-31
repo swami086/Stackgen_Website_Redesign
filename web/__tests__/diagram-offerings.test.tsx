@@ -11,9 +11,10 @@ const CHIPS = [
 test("renders the three Aiden apps with locked naming", () => {
   render(<Offerings theme="dark" />);
   expect(screen.getByText("Aiden for SRE")).toBeInTheDocument();
-  expect(screen.getByText("Aiden for Automation")).toBeInTheDocument();
-  expect(screen.getByText("Aiden for Infrastructure")).toBeInTheDocument();
-  expect(screen.queryByText("Aiden for DevOps")).not.toBeInTheDocument();
+  expect(screen.getByText("Aiden for DevOps")).toBeInTheDocument();
+  expect(screen.getByText("Aiden for InfraOps")).toBeInTheDocument();
+  expect(screen.queryByText("Aiden for Infrastructure")).not.toBeInTheDocument();
+  expect(screen.queryByText("Aiden for Automation")).not.toBeInTheDocument();
 });
 
 test("renders all nine capability chips in canvas order", () => {

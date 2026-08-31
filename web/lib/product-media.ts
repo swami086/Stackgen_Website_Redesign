@@ -1,8 +1,6 @@
-export type ProductHeroSlug =
-  | "aiden-for-infrastructure"
-  | "aiden-for-automation"
-  | "aiden-for-observability"
-  | "aiden-for-sre";
+import type { ProductSlug } from "@/lib/products";
+
+export type ProductHeroSlug = ProductSlug;
 
 export type ProductHeroTheme = "light" | "dark";
 

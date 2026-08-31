@@ -144,7 +144,7 @@ export function ContextGraph({ theme }: { theme: "light" | "dark" }) {
                   )}
                   {layer.id === "assemblies" && (
                     <div className="grid grid-cols-2 gap-4">
-                      {["Aiden for Infrastructure", "Aiden for Automation", "Aiden for Observability", "Aiden for SRE"].map((card) => (
+                      {["Aiden for InfraOps", "Aiden for DevOps", "Aiden for Observability", "Aiden for SRE"].map((card) => (
                         <div key={card} className="bg-bg-secondary p-3 rounded-lg text-xs font-medium text-text-secondary text-center">
                           {card}
                         </div>

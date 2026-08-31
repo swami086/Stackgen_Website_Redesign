@@ -1,7 +1,7 @@
 # Product Marketing Context
 
-**Document version:** v1.1  
-**Last updated:** 2026-08-19, deck harvest vocabulary added without changing L0–L2 locks.
+**Document version:** v1.2  
+**Last updated:** 2026-08-31, AOF + InfraOps/DevOps public naming lock (Wave 1).
 
 Source of truth for site copy, IA, and Pencil work. Align with `PRODUCT.md` (naming, mechanisms, evidence gates). Messaging layers L0–L2 below supersede older one-liners when they conflict.
 
@@ -10,7 +10,7 @@ Source of truth for site copy, IA, and Pencil work. Align with `PRODUCT.md` (nam
 ## Messaging architecture (site-wide)
 
 ```text
-ADF (architectural vision)
+AOF (architectural vision)
  └── Agentic / Agent-native OS
       └── Aiden (product suite)
 ```
@@ -18,18 +18,22 @@ ADF (architectural vision)
 | Layer | Role | Locked copy |
 |---|---|---|
 | **L0** | Company + product | StackGen is the company behind Aiden, the DevOps operating system for AI-native environments. Aiden serves Platform Engineers, Developers, and SRE teams. |
-| **L1** | ADF vision | Aiden sets the foundations for an Autonomous DevOps Factory: build, govern, observe, and remediate the agent-driven SDLC so velocity and governance move in the same path. Platform engineering and SRE leaders scale developer autonomy at the pace their confidence supports — not merely faster because agentic IDEs can push untrusted recommendations faster. |
+| **L1** | AOF vision | Aiden sets the foundations for an Autonomous Operations Factory: build, govern, observe, and remediate the agent-driven SDLC so velocity and governance move in the same path. Platform engineering and SRE leaders scale developer autonomy at the pace their confidence supports — not merely faster because agentic IDEs can push untrusted recommendations faster. |
 | **L1b** | Problem (mid-page) | Agentic IDEs can make untrusted recommendations faster. Speed without a governed loop is how agent-driven change creates incidents. Cite DORA / CodeRabbit / New Relic (see Proof Points). |
-| **L2** | System / product | Aiden is the Agentic OS for DevOps — for Platform Engineers, Developers, and SRE teams to build, operate, monitor, and heal production multi-cloud environments for applications and AI agents, with guardrails baked in and without organizational silos or vendor lock-in. (**No** “single OS”; **no ADF** in L2.) |
+| **L2** | System / product | Aiden is the Agentic OS for DevOps — for Platform Engineers, Developers, and SRE teams to build, operate, monitor, and heal production multi-cloud environments for applications and AI agents, with guardrails baked in and without organizational silos or vendor lock-in. (**No** “single OS”; **no AOF** in L2.) |
 | **L3–L5** | Depth / trust | Named Aiden products + mechanisms; spans the full production journey; brings together what teams already trust across infrastructure, operations, and reliability. |
 
 **Canonical boilerplate** (About / long-form; L0 intent + L2–L5 depth):
 
 > StackGen is the company building the Agentic Operating System, offered through Aiden, a suite of products built for platform engineers, developers, and SRE teams. Aiden is the agent for AI-native DevOps environments that gives enterprises a single platform to build, operate, monitor, and heal production multi-cloud environments for both applications and AI agents, with guardrails baked in and without organizational silos or vendor lock-in. Where other vendors stop at writing code or managing infrastructure, StackGen spans the entire production journey. The Agentic Operating System brings together what teams already trust, enabling them across infrastructure, operations, and reliability with the control and flexibility enterprises need.
 
-**Hero pattern:** H1 = Autonomous DevOps Factory · Sub/body from L0–L2 · Bold Factory-like energy on hero · Declarative elsewhere.
+**Hero pattern:** H1 = Autonomous Operations Factory · Sub/body from L0–L2 · Bold Factory-like energy on hero · Declarative elsewhere.
 
-**Naming (binding):** Aiden for Infrastructure · Aiden for Automation · Aiden for Observability · Aiden for SRE. Never “Olly” on site. ADF is vision, not a SKU.
+**Replica homepage override (`/`):** Hero H1 is **"Take control of production change"** (v2); AOF demoted to Assemblies below the fold (Approach C). L0–L2 locks above unchanged.
+
+**Naming (binding):** Aiden for InfraOps · Aiden for DevOps · Aiden for Observability · Aiden for SRE. Never “Olly” on site. AOF is vision, not a SKU.
+
+**Superseded 2026-08-31 (historical only):** Aiden for Infrastructure · Aiden for Automation · Autonomous DevOps Factory (ADF) — do not use on public web.
 
 ## Factory process & OCG (deck harvest)
 
@@ -44,7 +48,7 @@ Intent → Factory Spec → Factory Runtime → Factory Learning.
 - **Factory Runtime:** Agents execute configured tasks; novel edge cases escalate to humans with full context.
 - **Factory Learning:** Patterns and remediation outcomes write back to the OCG.
 
-This is the ADF **operating process**. It is distinct from the **product loop** Build → Govern → Observe → Remediate (four Aiden products).
+This is the AOF **operating process**. It is distinct from the **product loop** Build → Govern → Observe → Remediate (four Aiden products).
 
 ### Operational Context Graph (OCG)
 
@@ -64,9 +68,9 @@ Slide 14 modeled annual value ($4M–$6M for a 500-engineer company) and similar
 
 **One-liner:** StackGen is the company behind Aiden, the DevOps operating system for AI-native environments. Aiden serves Platform Engineers, Developers, and SRE teams.
 
-**What it does:** Aiden is the Agentic OS for DevOps — for Platform Engineers, Developers, and SRE teams to build, operate, monitor, and heal production multi-cloud environments for applications and AI agents, with guardrails baked in and without organizational silos or vendor lock-in. Aiden sets the foundations for an Autonomous DevOps Factory so enterprises can build, govern, observe, and remediate the agent-driven SDLC with velocity and governance in the same path.
+**What it does:** Aiden is the Agentic OS for DevOps — for Platform Engineers, Developers, and SRE teams to build, operate, monitor, and heal production multi-cloud environments for applications and AI agents, with guardrails baked in and without organizational silos or vendor lock-in. Aiden sets the foundations for an Autonomous Operations Factory so enterprises can build, govern, observe, and remediate the agent-driven SDLC with velocity and governance in the same path.
 
-**Product category:** Agentic OS for DevOps (under ADF architectural vision)
+**Product category:** Agentic OS for DevOps (under AOF architectural vision)
 
 **Product type:** Hybrid — SaaS default; on-prem / air-gapped for regulated enterprises
 
@@ -82,7 +86,7 @@ Slide 14 modeled annual value ($4M–$6M for a 500-engineer company) and similar
 - Primary path: Platform Engineering / SRE leaders (VP / Director / Head) as champion; CIO / VP Infrastructure as signer
 - Multi-product deals: dual-track — platform/SRE for fit; executive for budget and operating-model sign-off
 
-**Primary use case:** **B — Full Autonomous DevOps loop** (build → govern → observe → remediate) as **new launch north star**. Continue existing GTM: **A** governed infra change · **C** SRE / MTTR / heal with bounded autonomy.
+**Primary use case:** **B — Full Autonomous Operations loop** (build → govern → observe → remediate) as **new launch north star**. Continue existing GTM: **A** governed infra change · **C** SRE / MTTR / heal with bounded autonomy.
 
 **Jobs to be done** (preference order):
 1. Scale developer / agent autonomy without losing governance
@@ -91,7 +95,7 @@ Slide 14 modeled annual value ($4M–$6M for a 500-engineer company) and similar
 4. Collapse siloed tools into one Agentic OS across domains
 
 **Use cases:**
-- Launch (ADF): agent velocity + governance in one loop across domains
+- Launch (AOF): agent velocity + governance in one loop across domains
 - Infra GTM: intent → policy-checked change without ungoverned agent freelancing
 - SRE GTM: detect → diagnose → remediate within policy; reclaim SRE time
 
@@ -102,9 +106,9 @@ Slide 14 modeled annual value ($4M–$6M for a 500-engineer company) and similar
 | Persona | Role | Cares about | Challenge | Value we promise |
 |---------|------|-------------|-----------|------------------|
 | **User** | Platform eng + SRE | Diffs, policy results, SLOs, MTTR, production truth | Agent/IDE speed without a governed loop | Operate Aiden across build → govern → observe → remediate |
-| **Champion** | Head/Dir/VP Platform **or** SRE (by motion) | Autonomy at confidence pace; team leverage | Selling ADF vs point tools / IDEs | Credible path to ADF without ripping out what they trust |
-| **Decision Maker** | CIO / VP Infra / VP Platform **or** CTO / VP Eng (by deal) | Operating model, risk, multi-product scope | Ungoverned agent change + siloed tools | Agentic OS under ADF; velocity + governance together |
-| **Financial Buyer** | Same as Decision Maker | ROI; platform fee + usage predictability | Build-vs-buy governance layer | Buy the foundations instead of building ADF in-house |
+| **Champion** | Head/Dir/VP Platform **or** SRE (by motion) | Autonomy at confidence pace; team leverage | Selling AOF vs point tools / IDEs | Credible path to AOF without ripping out what they trust |
+| **Decision Maker** | CIO / VP Infra / VP Platform **or** CTO / VP Eng (by deal) | Operating model, risk, multi-product scope | Ungoverned agent change + siloed tools | Agentic OS under AOF; velocity + governance together |
+| **Financial Buyer** | Same as Decision Maker | ROI; platform fee + usage predictability | Build-vs-buy governance layer | Buy the foundations instead of building AOF in-house |
 | **Technical Influencer** | Staff/Principal Platform or SRE (primary); Security/Risk adjacent | Will it work; can it refuse at policy bounds | Trusting agents in production | Bounded autonomy; policy at every action |
 
 Developers interact mainly via IDE / PRs / tickets that Aiden governs — not the primary buyer persona.
@@ -134,8 +138,8 @@ Developers interact mainly via IDE / PRs / tickets that Aiden governs — not th
 ## Competitive Landscape
 
 **Direct (site set):**
-- **AWS DevOps Agent** — hyperscaler agentic DevOps (ADF launch contrast)
-- **Harness** — AI across SDLC / DevOps platform (ADF launch contrast)
+- **AWS DevOps Agent** — hyperscaler agentic DevOps (AOF launch contrast)
+- **Harness** — AI across SDLC / DevOps platform (AOF launch contrast)
 
 **Secondary (motion-scoped):**
 - **HashiCorp** — IaC / infra (GTM A) only
@@ -144,14 +148,14 @@ Developers interact mainly via IDE / PRs / tickets that Aiden governs — not th
 
 **Indirect / foil (not named competitors on homepage):** Agentic IDEs / coding agents; DIY platform glue. Last9 not in current site set.
 
-**Contrast by motion:** B (ADF) → Harness + AWS · A (infra) → HashiCorp · C (SRE) → Resolve + Traversal
+**Contrast by motion:** B (AOF) → Harness + AWS · A (infra) → HashiCorp · C (SRE) → Resolve + Traversal
 
 ---
 
 ## Differentiation
 
 **Key differentiators:**
-- **Lead (launch):** Full ADF loop under one Agentic OS — build → govern → observe → remediate across domains
+- **Lead (launch):** Full AOF loop under one Agentic OS — build → govern → observe → remediate across domains
 - **Proof mechanism A:** Safely *changes* infrastructure (intent → policy-checked Terraform/OpenTofu) — not observe/advise-only
 - **Proof mechanism C:** Bounded autonomy — scale at confidence; refuse at policy bounds
 
@@ -159,7 +163,7 @@ Developers interact mainly via IDE / PRs / tickets that Aiden governs — not th
 
 **Why that’s better:** Velocity and governance move in the same path; autonomy scales only as far as confidence supports.
 
-**Why customers choose us:** Foundations for ADF / governance for agent-driven change — not another point agent or IDE.
+**Why customers choose us:** Foundations for AOF / governance for agent-driven change — not another point agent or IDE.
 
 ---
 
@@ -167,7 +171,7 @@ Developers interact mainly via IDE / PRs / tickets that Aiden governs — not th
 
 | Objection | Who | Response angle |
 |-----------|-----|----------------|
-| “We’ll build the governance / agent layer in-house” | Advanced DIY platform engineering | Buy foundations of ADF; build-vs-buy on time-to-governed autonomy, not feature parity |
+| “We’ll build the governance / agent layer in-house” | Advanced DIY platform engineering | Buy foundations of AOF; build-vs-buy on time-to-governed autonomy, not feature parity |
 | “We don’t trust agents to change production” | Smaller / regulated; less agentic-IDE adoption | Bounded autonomy + refusal at policy; recommend → approve → act-within-policy ladder |
 
 **Anti-persona:**
@@ -200,20 +204,20 @@ Developers interact mainly via IDE / PRs / tickets that Aiden governs — not th
 
 **How they describe the solution (A + C only):**
 - Governance layer for agent-driven change
-- Foundations for an Autonomous DevOps Factory  
+- Foundations for an Autonomous Operations Factory  
   (“Glue / OS” is supporting mechanism language, not the customer-facing lead)
 
-**Words to use:** governance, guardrails, bounded autonomy, Agentic OS, Autonomous DevOps Factory, policy-checked, build → govern → observe → remediate, Platform / SRE
+**Words to use:** governance, guardrails, bounded autonomy, Agentic OS, Autonomous Operations Factory, policy-checked, build → govern → observe → remediate, Platform / SRE
 
-**Words to avoid:** Olly · DevOps Factory as product-only name · “we replace HashiCorp/Harness” · unverified customer quotes · “single pane of glass” · em dashes · **Git / estate** (and “their Git / estate”)
+**Words to avoid:** Olly · DevOps Factory as product-only name · public product names Infrastructure / Automation · “we replace HashiCorp/Harness” · unverified customer quotes · “single pane of glass” · em dashes · **Git / estate** (and “their Git / estate”)
 
 **Glossary:**
 
 | Term | Meaning |
 |------|---------|
-| ADF | Autonomous DevOps Factory — architectural vision / destination, not a SKU |
+| AOF | Autonomous Operations Factory — architectural vision / destination, not a SKU |
 | Agentic OS | Aiden as the operating system for AI-native DevOps |
-| Aiden | Product suite: Infrastructure, Automation, Observability, SRE |
+| Aiden | Product suite: InfraOps, DevOps, Observability, SRE |
 | Bounded autonomy | Act within policy; refuse and escalate when limits are crossed |
 | Tirith | Policy framework evaluated at action boundaries |
 | Operational Context Graph | Shared memory across Aiden surfaces enabling cross-domain plays |
@@ -234,7 +238,7 @@ Developers interact mainly via IDE / PRs / tickets that Aiden governs — not th
 
 **Proof stack (homepage / launch):**
 1. Logos + published cases
-2. Customer quotes on ADF (**approval required** — placeholders OK for design only)
+2. Customer quotes on AOF (**approval required** — placeholders OK for design only)
 3. Industry “state of agentic-coding incidents” with attributed cites
 
 **Customers / logos (live stackgen.com, 2026-08-19):** Nielsen, greytHR, Corcentric, Piramal, NIQ, SAP-NS2, Lowe's, RocTop, Chamberlain, Autodesk, InMobi, Innovaccer  
@@ -249,8 +253,8 @@ Pack: `docs/proof/customer-logos-and-quotes.md` · assets: `.firecrawl/logos-quo
 
 **Product metrics** (cite with mechanisms; from `PRODUCT.md`):
 - SRE: 50% MTTR · 66% faster RCA · 90% less alert noise · 10–15 hrs/week per SRE
-- Infrastructure: 10× velocity · 100% policy-checked deploys · 95% less IaC toil
-- Automation: ~30% fewer pipeline tickets
+- InfraOps: 10× velocity · 100% policy-checked deploys · 95% less IaC toil
+- DevOps: ~30% fewer pipeline tickets
 - Observability: 60%+ lower cost · 300+ integrations
 
 **Citeable incident / quality data (attribute on site):**
@@ -266,7 +270,7 @@ Pack: `docs/proof/customer-logos-and-quotes.md` · assets: `.firecrawl/logos-quo
 | Theme | Proof |
 |-------|-------|
 | Autonomy + governance together | L1 + bounded autonomy + greytHR / Innovaccer cases |
-| Full ADF loop | Product family diagram + cross-domain mechanisms |
+| Full AOF loop | Product family diagram + cross-domain mechanisms |
 | Agent risk is real | DORA / CodeRabbit / New Relic strip |
 | Enterprise trust | Logos + Gartner / cloud partner strip |
 
@@ -274,7 +278,7 @@ Pack: `docs/proof/customer-logos-and-quotes.md` · assets: `.firecrawl/logos-quo
 
 ## Goals
 
-**Business goal:** Drive qualified enterprise / mid-market pipeline for the ADF launch narrative (Agentic OS via Aiden), while supporting existing infra and SRE GTM motions.
+**Business goal:** Drive qualified enterprise / mid-market pipeline for the AOF launch narrative (Agentic OS via Aiden), while supporting existing infra and SRE GTM motions.
 
 **Conversion action:** **Schedule demo** only — sole primary CTA in nav, hero, and mid/final page CTAs. No dual primary. Secondary links (cases, login) may exist as navigation, not competing CTAs.
 
@@ -296,4 +300,5 @@ Pack: `docs/proof/customer-logos-and-quotes.md` · assets: `.firecrawl/logos-quo
 *Newest first. One line per revision: what changed and why.*
 
 - v1 (2026-08-19) — Initial context from guided intake §§1–12; CTA locked to Schedule demo only; logos pack referenced.
- - v1.1 (2026-08-19) — Deck harvest vocabulary added without changing L0–L2 locks.
+- v1.2 (2026-08-31) — Public naming lock: Autonomous Operations Factory (AOF) + Aiden for InfraOps / DevOps / Observability / SRE; superseded Infrastructure / Automation / ADF.
+- v1.1 (2026-08-19) — Deck harvest vocabulary added without changing L0–L2 locks.

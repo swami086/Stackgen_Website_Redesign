@@ -41,6 +41,29 @@ test("renders a decorative canvas", () => {
   expect(canvas).toHaveAttribute("data-motion-metaphor", "puzzle-stitch");
 });
 
+test("quiet mode opts into soft-corridor metaphor", () => {
+  const { container } = render(
+    <ParticleField sources={SOURCES} hub={HUB} sinks={SINKS} quiet />,
+  );
+  const canvas = container.querySelector("canvas");
+  expect(canvas).toHaveAttribute("data-motion-quiet", "true");
+  expect(canvas).toHaveAttribute("data-motion-metaphor", "soft-corridor");
+});
+
+test("corridor + hub labels uses corridor-stitch metaphor", () => {
+  const { container } = render(
+    <ParticleField
+      sources={SOURCES}
+      hub={HUB}
+      sinks={SINKS}
+      corridor={{ minX: 0.3, maxX: 0.7 }}
+      labels="hub"
+    />,
+  );
+  const canvas = container.querySelector("canvas");
+  expect(canvas).toHaveAttribute("data-motion-metaphor", "corridor-stitch");
+  expect(canvas).toHaveAttribute("data-motion-labels", "hub");
+});
 test("frozen mode is accepted for deterministic capture", () => {
   const { container } = render(
     <ParticleField sources={SOURCES} hub={HUB} sinks={SINKS} frozen seed={99} />,

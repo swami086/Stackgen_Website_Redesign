@@ -34,6 +34,11 @@ export const DUR = {
   shell: 0.52,
   /** Nav Tier 1 to Tier 2 material crossfade, 240ms (spec) */
   glassFade: 0.24,
+  /**
+   * Fluid Island width/height morph. Layout needs longer than glassFade
+   * (impeccable animate: 300–500ms layout; Apple minimize is direction-led).
+   */
+  navMorph: 0.42,
 } as const;
 
 /** Per-sibling stagger step in seconds. */

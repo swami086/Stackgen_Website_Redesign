@@ -98,7 +98,7 @@ function FooterSocialLink({
  * Runway (bordered social marks).
  */
 export function ReplicaFooter({ theme, className }: ReplicaFooterProps) {
-  const { ctaHeading, ctaSub, cta, brand, company, legal, legalLinks } =
+  const { ctaHeading, ctaSub, cta, ctaHref, brand, company, legal, legalLinks } =
     replicaContent.footer;
 
   const companyLinks: FooterLink[] = company.map((label) => ({
@@ -126,7 +126,7 @@ export function ReplicaFooter({ theme, className }: ReplicaFooterProps) {
             </p>
           </div>
           <Link
-            href="#"
+            href={ctaHref}
             className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-accent pl-5 pr-2 py-2 text-[13px] font-semibold text-on-accent no-underline transition-transform active:scale-[0.98]"
           >
             {cta}

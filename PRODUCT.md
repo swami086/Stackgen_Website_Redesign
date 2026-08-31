@@ -43,15 +43,19 @@ Buyers evaluate from inside a live estate: existing repos and IaC, telemetry, po
 
 ## Capabilities and Constraints
 
-Named products, **verbatim and binding** (naming decided 18 Aug 2026, confirmed by the user as the one untouchable element of this redesign):
+Named products, **verbatim and binding** (naming locked 2026-08-31 per Website Sequencing deck + AOF site IA design):
 
-- Parent category: **Autonomous DevOps Factory (ADF)**
-- **Aiden for Infrastructure** (reverted from "Aiden for InfraOps"; "Infra" acceptable only in UI-constrained contexts)
-- **Aiden for Automation** (replaces "Aiden for DevOps")
+- Parent category: **Autonomous Operations Factory (AOF)**
+- **Aiden for InfraOps**
+- **Aiden for DevOps**
+- **Aiden for Observability**
 - **Aiden for SRE**
-- **Aiden for Observability** ("Olly" is internal shorthand and must never appear on the site)
 
-Four pillars, mapped one-to-one: Build → Aiden for Infrastructure · Operate → Aiden for Automation · Observe → Aiden for Observability · Remediate → Aiden for SRE. Standing rule: the pillars appear on one diagram only.
+Superseded 2026-08-31: Infrastructure / Automation / ADF per Website Sequencing deck + AOF site IA design.
+
+Four pillars, mapped one-to-one: Build → Aiden for InfraOps · Operate → Aiden for DevOps · Observe → Aiden for Observability · Remediate → Aiden for SRE. Standing rule: the pillars appear on one diagram only.
+
+"Olly" is internal shorthand and must never appear on the site.
 
 Other named assets: AppStacks, StackBuilder, StackGuard, StackAnchor, Tirith, Aiden OS, Operational Context Graph.
 
@@ -71,7 +75,7 @@ Undecided / not to be assumed: whether the hero holds for the 27 Aug Gartner inq
 
 Real and usable:
 
-- Product metrics — Aiden for SRE: 50% MTTR reduction, 66% faster RCA, 90% less alert noise, 10–15 hrs/week reclaimed per SRE, 2–5 FTEs reclaimed. Infrastructure: 10× velocity, 100% policy-checked deploys, 95% less IaC toil, 60% lower IaC cost. Automation: ~30% fewer pipeline tickets. Observability: 60%+ lower cost, 300+ integrations, native PromQL.
+- Product metrics — Aiden for SRE: 50% MTTR reduction, 66% faster RCA, 90% less alert noise, 10–15 hrs/week reclaimed per SRE, 2–5 FTEs reclaimed. InfraOps: 10× velocity, 100% policy-checked deploys, 95% less IaC toil, 60% lower IaC cost. DevOps: ~30% fewer pipeline tickets. Observability: 60%+ lower cost, 300+ integrations, native PromQL.
 - Problem-side figures: 24% of change effort is rework (one leading Latin American bank, 53,000 deployments/week, 60-day lead time — anonymisation to hold for public web); $400B/year lost to downtime (Splunk / Oxford Economics, *Hidden Costs of Downtime*, 2024, across the Global 2000); Level 3 autonomy cap (StackGen L0–L5 model).
 - Customer logo set from live homepage (2026-08-19): Nielsen, greytHR, Corcentric, Piramal, NIQ, SAP-NS2, Lowe's, RocTop, Chamberlain, Autodesk, InMobi, Innovaccer. Assets + design quotes: `docs/proof/customer-logos-and-quotes.md`. Published case studies: greytHR (named quote) and Innovaccer (metrics only). Oro / ContextQA were in prior drafts but are not on the current strip.
 - Analyst credentials: Gartner Cool Vendor in AI for IT Operations; named in 4 Gartner Hype Cycles; AWS Advanced Technology Partner; Google Cloud Partner.
@@ -80,8 +84,8 @@ Real and usable:
 Absent — must not be fabricated:
 
 - **All ten customer quotes are placeholders** (tracker rows P-01 to P-10 in `StackGen_Quote_Approval_Tracker_v1.0.xlsx`). No quote may appear as real. Any quote on the site is labelled as a placeholder.
-- The 90-second ADF film and the 3D factory animation do not exist. The demo footage above is the proof layer instead; no cinematic asset may be implied.
-- Renamed Aiden logo marks (Infrastructure, Automation) are not produced; the current set still reads InfraOps and DevOps. The positioning deck also titles two diagrams with the banned names and both are corrected on port.
+- The 90-second AOF film and the 3D factory animation do not exist. The demo footage above is the proof layer instead; no cinematic asset may be implied.
+- Aiden product logo marks for InfraOps and DevOps are not yet produced as separate assets; the current set uses legacy InfraOps / DevOps labels. Superseded deck diagram titles (Infrastructure / Automation) are corrected on port.
 - Legal / analyst-relations sign-off on the Splunk attribution is not yet obtained.
 - Modeled dollar ROI (deck slide 14, $4M to $6M) is not cleared for public web and must not ship.
 

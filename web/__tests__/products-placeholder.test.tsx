@@ -4,7 +4,7 @@ import { ProductPage } from "@/components/replica/ProductPage";
 import { ThemeProvider } from "@/components/replica/theme/ThemeProvider";
 import { productMegaMenuContent } from "@/content/product-mega-menu";
 import { getProductContent } from "@/content/products";
-import { PRODUCT_SLUGS, getProduct, productHref } from "@/lib/products";
+import { PRODUCTS, PRODUCT_SLUGS, getProduct, productHref } from "@/lib/products";
 
 function renderProduct(slug: (typeof PRODUCT_SLUGS)[number]) {
   document.documentElement.dataset.theme = "dark";
@@ -15,6 +15,20 @@ function renderProduct(slug: (typeof PRODUCT_SLUGS)[number]) {
     </ThemeProvider>,
   );
 }
+
+test("PRODUCT_SLUGS uses locked InfraOps and DevOps routes", () => {
+  expect(PRODUCT_SLUGS).toEqual([
+    "aiden-for-infraops",
+    "aiden-for-devops",
+    "aiden-for-observability",
+    "aiden-for-sre",
+  ]);
+
+  expect(PRODUCTS["aiden-for-infraops"].title).toBe("Aiden for InfraOps");
+  expect(PRODUCTS["aiden-for-devops"].title).toBe("Aiden for DevOps");
+  expect(PRODUCTS["aiden-for-infraops"].href).toBe("/product/aiden-for-infraops");
+  expect(PRODUCTS["aiden-for-devops"].href).toBe("/product/aiden-for-devops");
+});
 
 test("all four product slugs resolve via getProduct", () => {
   for (const slug of PRODUCT_SLUGS) {
@@ -31,10 +45,11 @@ test("product page hero includes PLACEHOLDER copy", () => {
   expect(screen.getAllByText("PLACEHOLDER — fill me").length).toBeGreaterThan(0);
 });
 
-test("product pages never use banned Aiden for DevOps naming", () => {
+test("product pages never use superseded Infrastructure or Automation naming", () => {
   for (const slug of PRODUCT_SLUGS) {
     const { container, unmount } = renderProduct(slug);
-    expect(container.textContent).not.toMatch(/Aiden for DevOps/);
+    expect(container.textContent).not.toMatch(/Aiden for Infrastructure/);
+    expect(container.textContent).not.toMatch(/Aiden for Automation/);
     unmount();
   }
 });
@@ -44,8 +59,8 @@ test("mega-menu explore hrefs point to the four product routes", () => {
     productHref(column.slug),
   );
   expect(hrefs).toEqual([
-    "/product/aiden-for-infrastructure",
-    "/product/aiden-for-automation",
+    "/product/aiden-for-infraops",
+    "/product/aiden-for-devops",
     "/product/aiden-for-observability",
     "/product/aiden-for-sre",
   ]);
@@ -53,8 +68,8 @@ test("mega-menu explore hrefs point to the four product routes", () => {
 
 test("mega-menu columns use locked product titles from PRODUCT.md", () => {
   for (const column of productMegaMenuContent.columns) {
-    expect(column.title).toMatch(/^Aiden for (Infrastructure|Automation|Observability|SRE)$/);
-    expect(column.title).not.toMatch(/DevOps|Olly|InfraOps/);
+    expect(column.title).toMatch(/^Aiden for (InfraOps|DevOps|Observability|SRE)$/);
+    expect(column.title).not.toMatch(/Infrastructure|Automation|Olly/);
   }
 });
 
@@ -68,14 +83,14 @@ test("product content objects expose section placeholders for every slug", () =>
 });
 
 test("product page renders locked title as hero heading", () => {
-  renderProduct("aiden-for-infrastructure");
+  renderProduct("aiden-for-infraops");
   expect(
-    screen.getByRole("heading", { level: 1, name: "Aiden for Infrastructure" }),
+    screen.getByRole("heading", { level: 1, name: "Aiden for InfraOps" }),
   ).toBeInTheDocument();
 });
 
 test("product page skips optional offers section when flag is false", () => {
-  renderProduct("aiden-for-automation");
+  renderProduct("aiden-for-devops");
   expect(document.querySelector('[data-product-section="product-offers"]')).toBeNull();
 });
 

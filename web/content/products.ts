@@ -202,8 +202,8 @@ function buildProductContent(slug: ProductSlug): ProductPageContent {
 }
 
 export const productContentBySlug: Record<ProductSlug, ProductPageContent> = {
-  "aiden-for-infrastructure": buildProductContent("aiden-for-infrastructure"),
-  "aiden-for-automation": buildProductContent("aiden-for-automation"),
+  "aiden-for-infraops": buildProductContent("aiden-for-infraops"),
+  "aiden-for-devops": buildProductContent("aiden-for-devops"),
   "aiden-for-observability": buildProductContent("aiden-for-observability"),
   "aiden-for-sre": buildProductContent("aiden-for-sre"),
 };

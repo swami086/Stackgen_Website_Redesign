@@ -14,6 +14,18 @@ test("logo row renders eight customer marks in a rolling marquee", () => {
   expect(container.querySelectorAll("[data-marquee-set]")).toHaveLength(2);
 });
 
+test("who-its-for docks use Tier-2 glass plates with nested tiles", () => {
+  const { container } = render(<ReplicaWhoItsFor theme="light" />);
+  const roles = container.querySelector("[data-who-roles]");
+  const os = container.querySelector("[data-who-os]");
+  expect(roles?.className).toContain("glass-specular");
+  expect(os?.className).toContain("glass-specular");
+  expect(container.querySelectorAll("[data-who-role].glass-tile").length).toBe(
+    4,
+  );
+  expect(os?.querySelectorAll(".glass-tile").length).toBeGreaterThan(0);
+});
+
 test("who-its-for renders product portraits, role dock, and OS rail", () => {
   const { container } = render(<ReplicaWhoItsFor theme="dark" />);
   expect(container.querySelector('[data-who-layout="portraits-dock"]')).toBeTruthy();
@@ -44,8 +56,8 @@ test("footer CTA nests its icon in its own circle", () => {
 test("footer product links resolve to product routes and meta bar is present", () => {
   render(<ReplicaFooter theme="dark" />);
   expect(
-    screen.getByRole("link", { name: "Aiden for Infrastructure" }),
-  ).toHaveAttribute("href", "/product/aiden-for-infrastructure");
+    screen.getByRole("link", { name: "Aiden for InfraOps" }),
+  ).toHaveAttribute("href", "/product/aiden-for-infraops");
   expect(screen.getByText(replicaContent.footer.legal)).toBeInTheDocument();
   expect(screen.getByLabelText("LinkedIn")).toBeInTheDocument();
   expect(screen.getByLabelText("GitHub")).toBeInTheDocument();

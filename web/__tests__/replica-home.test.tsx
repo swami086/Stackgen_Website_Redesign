@@ -51,19 +51,88 @@ test("every diagram exposes an accessible figure", () => {
 
 test("the four canvas eyebrows are present and no fifth was added", () => {
   renderHome("dark");
-  for (const e of ["OPERATIONAL CONTEXT GRAPH", "WHO IT'S FOR", "INNER LOOP", "OUTER LOOP"]) {
+  for (const e of ["SHARED WORLD MODEL", "Offerings", "Inner Loop", "Outer Loop"]) {
     expect(screen.getByText(e)).toBeInTheDocument();
   }
+});
+
+test("homepage section order is Hero Logos Problem Solution Assemblies", () => {
+  renderHome("dark");
+  const main = document.querySelector("main");
+  expect(main).toBeTruthy();
+  const ids = [...main!.querySelectorAll("[data-pencil-id]")].map((el) =>
+    el.getAttribute("data-pencil-id"),
+  );
+  const hero = REPLICA_FRAMES.dark.hero;
+  const logos = REPLICA_FRAMES.dark.logos;
+  const problem = REPLICA_FRAMES.dark.problem;
+  const video = REPLICA_FRAMES.dark.video; // Solution media plate
+  const assemblies = REPLICA_FRAMES.dark.assemblies;
+  const i = (id: string) => ids.indexOf(id);
+  expect(i(hero)).toBeGreaterThanOrEqual(0);
+  expect(i(logos)).toBeGreaterThan(i(hero));
+  expect(i(problem)).toBeGreaterThan(i(logos));
+  expect(i(video)).toBeGreaterThan(i(problem));
+  expect(i(assemblies)).toBeGreaterThan(i(video));
+});
+
+test("Factory homepage hero and CTAs", () => {
+  renderHome("dark");
+  const h1 = screen.getByRole("heading", { level: 1 });
+  expect(h1.textContent?.replace(/\s/g, "")).toBe("Outcomes,notagents.");
+  const scheduleLinks = screen.getAllByRole("link", { name: "Schedule a demo" });
+  expect(scheduleLinks.some((link) => link.getAttribute("href") === "/schedule-demo")).toBe(
+    true,
+  );
+  expect(screen.getByRole("link", { name: "How it works" })).toHaveAttribute(
+    "href",
+    "#how-it-works",
+  );
+});
+
+test("how-it-works anchor exists on assemblies", () => {
+  renderHome("dark");
+  expect(document.getElementById("how-it-works")).toBeTruthy();
+});
+
+test("Factory brand appears in how-it-works / assemblies", () => {
+  renderHome("dark");
+  expect(
+    screen.getByText(
+      /Learn back into the Shared World Model — the Autonomous Operations Factory path/i,
+    ),
+  ).toBeInTheDocument();
+});
+
+test("hero and problem use Factory spine copy", () => {
+  renderHome("dark");
+  expect(screen.getByRole("heading", { level: 1 }).textContent?.replace(/\s/g, "")).toBe(
+    "Outcomes,notagents.",
+  );
+  expect(screen.getByText("The problem")).toBeInTheDocument();
+  expect(
+    screen.getByText(/Outer Ops loop is failing to keep up with inner Dev loop/i),
+  ).toBeInTheDocument();
+  expect(screen.getByText("The solution")).toBeInTheDocument();
+  expect(screen.getByText("Autonomous Operations Factory")).toBeInTheDocument();
+});
+
+test("problem section ships A+B chaos film plate", () => {
+  renderHome("dark");
+  expect(document.querySelector('[data-problem-film="chaos-ab"]')).toBeTruthy();
+  expect(screen.getByText("Inner loop minutes · Outer loop hours to days")).toBeInTheDocument();
+  expect(screen.getByText("Alert · no deploy")).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: /Play problem explainer|Pause problem explainer/i })).toBeInTheDocument();
 });
 
 test("Shell hosts the V2P0L Operational Context Graph flow", () => {
   renderHome("dark");
   expect(screen.getByText("Intent Router")).toBeInTheDocument();
-  expect(screen.getByText("Telemetry · signals")).toBeInTheDocument();
-  expect(screen.getByText("Context Graph · semantic relationships")).toBeInTheDocument();
-  expect(screen.getByText("Aiden Agentic Operating System")).toBeInTheDocument();
   expect(document.querySelector('[data-pencil-id="V2P0L"]')).toBeInTheDocument();
-  expect(document.querySelector('[data-structure="three-layer"]')).toBeTruthy();
+  const ocg = document.querySelector('[data-structure="router-hub"]');
+  expect(ocg).toBeTruthy();
+  expect(ocg?.getAttribute("data-complete")).toBe("tethered-c1");
+  expect(ocg?.textContent).toContain("Aiden OS");
 });
 
 test("atmosphere fields are aria-hidden decorative layers", () => {

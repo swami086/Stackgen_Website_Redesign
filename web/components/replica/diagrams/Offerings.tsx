@@ -23,12 +23,12 @@ const APPS: {
     icon: "shield-check",
   },
   {
-    title: "Aiden for Automation",
+    title: "Aiden for DevOps",
     sub: "ticket → reviewed action",
     icon: "git-branch",
   },
   {
-    title: "Aiden for Infrastructure",
+    title: "Aiden for InfraOps",
     sub: "intent → governed AppStacks",
     icon: "cloud-arrow-down",
   },
@@ -55,7 +55,7 @@ export function Offerings({ theme }: { theme: "light" | "dark" }) {
 
   return (
     <div
-      className="glass-specular relative flex w-full max-w-5xl flex-col gap-2 overflow-hidden rounded-[16px] border border-border p-2.5 md:p-3"
+      className="glass-specular relative flex w-full flex-col gap-2 overflow-hidden rounded-[16px] border border-border p-2.5 md:p-3"
       role="img"
       aria-label="Aiden factory offerings: SRE, Automation, and Infrastructure apps over the Aiden OS agent platform, governance, and shared context capabilities"
     >
@@ -71,7 +71,7 @@ export function Offerings({ theme }: { theme: "light" | "dark" }) {
               delay: reduced ? 0 : i * STAGGER.chip,
               ease: EASE.emphasize,
             }}
-            className="flex flex-col gap-0.5 rounded-md border border-border bg-surface-raised px-2 py-2 shadow-sm"
+            className="relative z-10 flex flex-col gap-0.5 rounded-md border border-border glass-tile px-2 py-2"
           >
             <PhosphorIcon
               name={app.icon}

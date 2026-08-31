@@ -8,7 +8,8 @@
  * floating triangles. checkout-api sits in the Observe vendor arc as a chip.
  *
  * OWN-WORLD: Soft Structuralism ds-* hairlines; accent on hub + focused
- * route + checkout-api chip chrome (not glow soup).
+ * route + checkout-api chip chrome (not glow soup). Hub is a machined
+ * double-bezel (glass-hub-shine + Cycle ring + Coda offset lift).
  *
  * STORY: Intent routes; shared context is the vendors + entity underlay.
  * FIRST VIEWPORT: ask → tethered hub diagram → Aiden OS strip.
@@ -16,10 +17,12 @@
  *
  * Motion (neural-mesh): feeders draw → ring synapses → traveling packets
  * on spokes/feeders/synapses with rotating assembly focus (parts talking).
+ * Landscape mesh remaps x by measured aspect so strokes and packets stay
+ * isotropic (n8n/Railway 1px edges, not fat/thin from preserveAspectRatio).
  * Comp: .impeccable/mocks/ocg-intent-router-complete/option-C1.png
  * Logos: VendorMark = Integrations + Pencil tool-grid SoT.
  */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { PhosphorIcon } from "@/components/primitives/PhosphorIcon";
 import {
@@ -61,20 +64,20 @@ const ASSEMBLIES: {
     slot: "n",
     stage: "Build",
     stageMark: "B",
-    title: "Aiden for Infrastructure",
-    short: "Infrastructure",
+    title: "Aiden for InfraOps",
+    short: "InfraOps",
     icon: "cloud-arrow-down",
     x: 50,
-    y: 22,
+    y: 26,
   },
   {
     slot: "e",
     stage: "Operate",
     stageMark: "O",
-    title: "Aiden for Automation",
-    short: "Automation",
+    title: "Aiden for DevOps",
+    short: "DevOps",
     icon: "git-branch",
-    x: 78,
+    x: 64,
     y: 50,
   },
   {
@@ -85,7 +88,7 @@ const ASSEMBLIES: {
     short: "Observability",
     icon: "chart-line",
     x: 50,
-    y: 72,
+    y: 74,
   },
   {
     slot: "w",
@@ -94,7 +97,7 @@ const ASSEMBLIES: {
     title: "Aiden for SRE",
     short: "SRE",
     icon: "heartbeat",
-    x: 22,
+    x: 36,
     y: 50,
   },
 ];
@@ -117,29 +120,32 @@ const VENDOR_BY_SLOT: Record<
   { slug: VendorSlug; x: number; y: number; short?: string }[]
 > = {
   n: [
-    { slug: "aws", x: 37, y: 11 },
-    { slug: "terraform", x: 50, y: 8 },
-    { slug: "eks", x: 63, y: 11, short: "EKS" },
+    { slug: "aws", x: 41, y: 10 },
+    { slug: "terraform", x: 50, y: 7 },
+    { slug: "eks", x: 59, y: 10, short: "EKS" },
   ],
   e: [
-    { slug: "github", x: 88, y: 37 },
-    { slug: "gitlab", x: 91, y: 50 },
-    { slug: "jira", x: 88, y: 63 },
+    { slug: "github", x: 78, y: 38 },
+    { slug: "gitlab", x: 84, y: 50 },
+    { slug: "jira", x: 78, y: 62 },
   ],
   s: [
-    { slug: "datadog", x: 18, y: 92 },
-    { slug: "prometheus", x: 56, y: 96 },
-    { slug: "pagerduty", x: 80, y: 92 },
+    { slug: "datadog", x: 41, y: 90 },
+    { slug: "prometheus", x: 50, y: 94 },
+    { slug: "pagerduty", x: 60, y: 90 },
   ],
   w: [
-    { slug: "opa", x: 12, y: 37, short: "OPA" },
-    { slug: "slack", x: 9, y: 50 },
-    { slug: "backstage", x: 12, y: 63 },
+    { slug: "opa", x: 20, y: 38, short: "OPA" },
+    { slug: "slack", x: 16, y: 50 },
+    { slug: "backstage", x: 20, y: 62 },
   ],
 };
 
 /** World-model entity — Observe-arc chip peer (not an orb on the dock label). */
-const ENTITY = { x: 36, y: 92, label: "checkout-api" } as const;
+const ENTITY = { x: 31, y: 90, label: "checkout-api" } as const;
+
+/** Landscape fallback until the stage is measured (1312 / 360). */
+const STAGE_ASPECT = 3.6;
 
 const OS_CHIPS: { label: string; icon: PhosphorIconName }[] = [
   { label: "Governance", icon: "shield-check" },
@@ -154,6 +160,10 @@ function dockOf(slot: Slot) {
   return ASSEMBLIES.find((a) => a.slot === slot)!;
 }
 
+function mapPt(p: { x: number; y: number }, aspect: number) {
+  return { x: p.x * aspect, y: p.y };
+}
+
 function curvedBeam(from: { x: number; y: number }, to: { x: number; y: number }) {
   const mx = (from.x + to.x) / 2;
   const my = (from.y + to.y) / 2;
@@ -164,17 +174,46 @@ function curvedBeam(from: { x: number; y: number }, to: { x: number; y: number }
 function ringSynapse(
   from: { x: number; y: number },
   to: { x: number; y: number },
-  push = 10,
+  aspect: number,
+  push = 8,
 ) {
-  const mx = (from.x + to.x) / 2;
-  const my = (from.y + to.y) / 2;
-  const dx = mx - 50;
-  const dy = my - 50;
+  const a = mapPt(from, aspect);
+  const b = mapPt(to, aspect);
+  const cx = 50 * aspect;
+  const cy = 50;
+  const mx = (a.x + b.x) / 2;
+  const my = (a.y + b.y) / 2;
+  const dx = mx - cx;
+  const dy = my - cy;
   const len = Math.hypot(dx, dy) || 1;
-  return `M${from.x} ${from.y} Q${mx + (dx / len) * push} ${my + (dy / len) * push} ${to.x} ${to.y}`;
+  return `M${a.x} ${a.y} Q${mx + (dx / len) * push} ${my + (dy / len) * push} ${b.x} ${b.y}`;
 }
 
-const ENTITY_FEEDER = `M${ENTITY.x} ${ENTITY.y} Q28 82 ${dockOf("s").x} ${dockOf("s").y}`;
+function entityFeeder(aspect: number) {
+  const from = mapPt(ENTITY, aspect);
+  const to = mapPt(dockOf("s"), aspect);
+  const q = mapPt({ x: 36, y: 84 }, aspect);
+  return `M${from.x} ${from.y} Q${q.x} ${q.y} ${to.x} ${to.y}`;
+}
+
+function useStageAspect() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [aspect, setAspect] = useState(STAGE_ASPECT);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const apply = () => {
+      const { width, height } = el.getBoundingClientRect();
+      if (width > 0 && height > 0) setAspect(width / height);
+    };
+    apply();
+    if (typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(apply);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  return [ref, aspect] as const;
+}
 
 function VendorChip({
   slug,
@@ -251,7 +290,7 @@ function AssemblyDisc({
     >
       <div
         className={cn(
-          "relative flex size-11 items-center justify-center rounded-full border sm:size-12",
+          "relative flex size-9 items-center justify-center rounded-full border sm:size-10",
           focused
             ? isLight
               ? "border-accent/50 bg-surface shadow-sm"
@@ -306,10 +345,12 @@ function AssemblyDisc({
 function RouterStage({ theme }: { theme: "light" | "dark" }) {
   const reduced = useReducedMotionSafe();
   const isLight = theme === "light";
-  const router = { x: 50, y: 50 };
+  const [stageRef, aspect] = useStageAspect();
+  const router = mapPt({ x: 50, y: 50 }, aspect);
   const [focus, setFocus] = useState<Slot>("s");
   let feederI = 0;
   let packetI = 0;
+  const entityPath = entityFeeder(aspect);
 
   useEffect(() => {
     if (reduced) return;
@@ -324,10 +365,13 @@ function RouterStage({ theme }: { theme: "light" | "dark" }) {
 
   return (
     <div
+      ref={stageRef}
       data-part="router-stage"
       data-focus-slot={focus}
       className={cn(
-        "relative aspect-[5/4] w-full overflow-hidden rounded-lg border sm:aspect-[4/3]",
+        // Landscape stage (Railway/Antimetal density): fixed height so
+        // full-bleed width cannot inflate a 4:3 canvas to ~1k px tall.
+        "relative h-[280px] w-full overflow-hidden rounded-lg border sm:h-[320px] md:h-[360px]",
         isLight ? "border-border/80 bg-surface" : "border-border bg-surface",
       )}
       style={{
@@ -340,19 +384,21 @@ function RouterStage({ theme }: { theme: "light" | "dark" }) {
       <svg
         data-part="context-graph"
         data-neural="mesh"
-        viewBox="0 0 100 100"
+        data-mesh-aspect={aspect.toFixed(2)}
+        viewBox={`0 0 ${100 * aspect} 100`}
+        preserveAspectRatio="none"
         className="pointer-events-none absolute inset-0 z-0 h-full w-full"
         aria-hidden
       >
         {/* Ring + cross synapses — assemblies talk laterally */}
         {RING_PAIRS.map(([a, b], i) => {
-          const d = ringSynapse(dockOf(a), dockOf(b), 11);
+          const d = ringSynapse(dockOf(a), dockOf(b), aspect, 8);
           return (
             <g key={`ring-${a}-${b}`} data-part="neural-synapse" data-kind="ring">
               <DrawPath
                 d={d}
                 className="stroke-[var(--ds-border)]"
-                strokeWidth={0.4}
+                strokeWidth={1}
                 delay={0.5 + i * 0.05}
                 duration={0.5}
               />
@@ -360,7 +406,7 @@ function RouterStage({ theme }: { theme: "light" | "dark" }) {
                 d={d}
                 delay={0.9 + i * 0.35}
                 duration={AMBIENT.sweep / 2.4}
-                r={1.05}
+                r={0.7}
                 className="fill-[var(--ds-text-tertiary)]"
               />
               <Beam
@@ -368,20 +414,20 @@ function RouterStage({ theme }: { theme: "light" | "dark" }) {
                 reverse
                 delay={1.4 + i * 0.35}
                 duration={AMBIENT.sweep / 2.2}
-                r={0.9}
+                r={0.7}
                 className="fill-[var(--ds-accent)]"
               />
             </g>
           );
         })}
         {CROSS_PAIRS.map(([a, b], i) => {
-          const d = ringSynapse(dockOf(a), dockOf(b), 4);
+          const d = ringSynapse(dockOf(a), dockOf(b), aspect, 4);
           return (
             <g key={`cross-${a}-${b}`} data-part="neural-synapse" data-kind="cross">
               <DrawPath
                 d={d}
                 className="stroke-[var(--ds-border)] opacity-50"
-                strokeWidth={0.35}
+                strokeWidth={1}
                 delay={0.7 + i * 0.06}
                 duration={0.55}
               />
@@ -389,7 +435,7 @@ function RouterStage({ theme }: { theme: "light" | "dark" }) {
                 d={d}
                 delay={1.8 + i * 0.55}
                 duration={AMBIENT.sweep / 1.8}
-                r={0.85}
+                r={0.65}
                 className="fill-[var(--ds-text-tertiary)]"
               />
             </g>
@@ -400,7 +446,7 @@ function RouterStage({ theme }: { theme: "light" | "dark" }) {
         {ASSEMBLIES.flatMap((card) =>
           VENDOR_BY_SLOT[card.slot].map((v) => {
             const i = feederI++;
-            const d = curvedBeam({ x: v.x, y: v.y }, { x: card.x, y: card.y });
+            const d = curvedBeam(mapPt(v, aspect), mapPt(card, aspect));
             const hot = card.slot === focus;
             const pi = packetI++;
             return (
@@ -408,7 +454,7 @@ function RouterStage({ theme }: { theme: "light" | "dark" }) {
                 <DrawPath
                   d={d}
                   className="stroke-[var(--ds-border)]"
-                  strokeWidth={0.55}
+                  strokeWidth={1}
                   delay={0.06 + i * 0.025}
                   duration={0.4}
                 />
@@ -416,7 +462,7 @@ function RouterStage({ theme }: { theme: "light" | "dark" }) {
                   d={d}
                   delay={0.55 + pi * 0.22}
                   duration={hot ? AMBIENT.sweep / 3.2 : AMBIENT.sweep / 2.1}
-                  r={hot ? 1.25 : 0.95}
+                  r={0.75}
                   className={
                     hot
                       ? "fill-[var(--ds-accent)]"
@@ -429,7 +475,7 @@ function RouterStage({ theme }: { theme: "light" | "dark" }) {
                     reverse
                     delay={1.1 + pi * 0.18}
                     duration={AMBIENT.sweep / 3.6}
-                    r={0.85}
+                    r={0.7}
                     className="fill-[var(--ds-accent)]"
                   />
                 )}
@@ -441,17 +487,17 @@ function RouterStage({ theme }: { theme: "light" | "dark" }) {
         {/* Entity → Observability dock */}
         <g data-part="neural-feeder" data-kind="entity">
           <DrawPath
-            d={ENTITY_FEEDER}
+            d={entityPath}
             className="stroke-[var(--ds-border)]"
-            strokeWidth={0.55}
+            strokeWidth={1}
             delay={0.28}
             duration={0.4}
           />
           <Beam
-            d={ENTITY_FEEDER}
+            d={entityPath}
             delay={0.85}
             duration={AMBIENT.sweep / 3}
-            r={focus === "s" ? 1.35 : 1}
+            r={0.75}
             className={
               focus === "s"
                 ? "fill-[var(--ds-accent)]"
@@ -462,7 +508,7 @@ function RouterStage({ theme }: { theme: "light" | "dark" }) {
 
         {/* Assembly → Router spokes */}
         {ASSEMBLIES.map((card, i) => {
-          const d = curvedBeam({ x: card.x, y: card.y }, router);
+          const d = curvedBeam(mapPt(card, aspect), router);
           const hot = card.slot === focus;
           return (
             <g
@@ -476,7 +522,7 @@ function RouterStage({ theme }: { theme: "light" | "dark" }) {
                     ? "stroke-[var(--ds-accent)]"
                     : "stroke-[var(--ds-border)]"
                 }
-                strokeWidth={hot ? 1.4 : 0.85}
+                strokeWidth={hot ? 1.5 : 1}
                 delay={hot ? 0.48 : 0.32}
                 duration={0.55}
               />
@@ -484,7 +530,7 @@ function RouterStage({ theme }: { theme: "light" | "dark" }) {
                 d={d}
                 delay={0.7 + i * 0.28}
                 duration={hot ? AMBIENT.sweep / 3.5 : AMBIENT.sweep / 2.4}
-                r={hot ? 1.7 : 1.15}
+                r={hot ? 0.95 : 0.75}
                 className={
                   hot
                     ? "fill-[var(--ds-accent)]"
@@ -496,7 +542,7 @@ function RouterStage({ theme }: { theme: "light" | "dark" }) {
                 reverse
                 delay={1.35 + i * 0.3}
                 duration={hot ? AMBIENT.sweep / 3.2 : AMBIENT.sweep / 2.2}
-                r={hot ? 1.2 : 0.9}
+                r={0.7}
                 className={
                   hot
                     ? "fill-[var(--ds-accent)]"
@@ -559,37 +605,56 @@ function RouterStage({ theme }: { theme: "light" | "dark" }) {
 
       <motion.div
         data-part="intent-router"
-        className={cn(
-          "absolute z-20 flex size-[4.5rem] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border sm:size-[5.25rem]",
-          isLight
-            ? "border-accent/45 bg-surface shadow-sm"
-            : "border-accent/50 bg-surface-raised",
-        )}
+        data-finish="double-bezel"
+        className="absolute z-20 -translate-x-1/2 -translate-y-1/2"
         style={{ left: "50%", top: "50%" }}
         initial={reduced ? false : { opacity: 0, scale: 0.85 }}
         whileInView={reduced ? undefined : { opacity: 1, scale: 1 }}
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: DUR.shell, ease: EASE.emphasize, delay: 0.16 }}
       >
-        <PhosphorIcon
-          name="git-branch"
-          className="mb-0.5 size-4 text-accent-text"
-        />
-        <span className="px-1 text-center text-[10px] font-semibold leading-tight text-text-primary sm:text-[11px]">
+        {/*
+          Machined keystone (Coda offset lift + Cycle ring weight +
+          factory glass-hub-shine). glow-source lives on the wrapper so
+          it does not steal glass-hub-shine::after. Label is absolute so
+          the disc stays on the 50/50 spoke junction.
+        */}
+        <div className="glow-source relative">
+          <span
+            aria-hidden
+            data-part="intent-router-bezel"
+            className={cn(
+              "pointer-events-none absolute -inset-1.5 rounded-full border",
+              isLight ? "border-border" : "border-white/12",
+            )}
+          />
+          <div
+            data-part="intent-router-disc"
+            className={cn(
+              "glass-hub-shine glass-tile relative flex size-14 items-center justify-center rounded-full border sm:size-16",
+              isLight
+                ? "border-accent/40 shadow-md"
+                : "border-accent/45",
+            )}
+          >
+            <span
+              className={cn(
+                "relative z-[1] flex size-8 items-center justify-center rounded-full border sm:size-9",
+                isLight
+                  ? "border-border/70 bg-surface"
+                  : "border-white/10 bg-surface-raised",
+              )}
+            >
+              <PhosphorIcon
+                name="git-branch"
+                className="size-4 text-accent-text"
+              />
+            </span>
+          </div>
+        </div>
+        <span className="absolute left-1/2 top-full mt-1 w-max -translate-x-1/2 text-center text-[10px] font-semibold leading-none text-text-primary sm:text-[11px]">
           Intent Router
         </span>
-        {!reduced && (
-          <motion.span
-            aria-hidden
-            className="pointer-events-none absolute inset-0 rounded-full border border-accent/20"
-            animate={{ opacity: [0.28, 0.55, 0.28], scale: [1, 1.05, 1] }}
-            transition={{
-              duration: AMBIENT.hub,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        )}
       </motion.div>
     </div>
   );
@@ -613,8 +678,8 @@ export function OperationalContextGraph({
       data-structure="router-hub"
       data-complete="tethered-c1"
       className={cn(
-        "glass-specular flex w-full max-w-3xl flex-col gap-2 rounded-[20px] border p-3",
-        isLight ? "border-border/80 bg-surface/95" : "border-border bg-surface/90",
+        "glass-specular relative z-10 flex w-full flex-col gap-1.5 rounded-[16px] border p-2 md:p-2.5",
+        isLight ? "border-border/80 bg-surface/95" : "border-border",
         className,
       )}
     >
@@ -622,13 +687,13 @@ export function OperationalContextGraph({
         <div
           data-part="ask-bar"
           className={cn(
-            "flex items-center gap-2 rounded-md border px-2 py-1.5",
+            "glass-tile flex items-center gap-2 rounded-md border px-2 py-1",
             isLight
-              ? "border-border/70 bg-surface-raised"
-              : "border-border bg-surface-raised",
+              ? "border-border/70"
+              : "border-border",
           )}
         >
-          <p className="min-w-0 flex-1 truncate text-xs text-text-secondary">
+          <p className="min-w-0 flex-1 truncate text-[11px] text-text-secondary md:text-xs">
             Ask Aiden to investigate latency spike in checkout…
             {!reduced && (
               <motion.span
@@ -643,7 +708,7 @@ export function OperationalContextGraph({
               />
             )}
           </p>
-          <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-[11px] font-medium text-on-accent">
+          <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-accent px-2 py-0.5 text-[10px] font-medium text-on-accent md:px-2.5 md:py-1 md:text-[11px]">
             Submit
             <PhosphorIcon name="arrow-right" className="size-3" />
           </span>
@@ -653,13 +718,13 @@ export function OperationalContextGraph({
       <Reveal delay={0.05} y={4}>
         <div
           data-layer="telemetry"
-          className="flex flex-wrap items-center justify-center gap-3 px-1"
+          className="flex flex-wrap items-center justify-center gap-2 px-1"
         >
-          <Stagger step={STAGGER.chip} className="flex flex-wrap gap-3">
+          <Stagger step={STAGGER.chip} className="flex flex-wrap gap-2">
             {TELEMETRY.map((channel) => (
               <span
                 key={channel.label}
-                className="inline-flex items-center gap-1 font-mono text-[10px] text-text-tertiary"
+                className="inline-flex items-center gap-1 font-mono text-[9px] text-text-tertiary md:text-[10px]"
               >
                 <PhosphorIcon
                   name={channel.icon}
@@ -689,7 +754,7 @@ export function OperationalContextGraph({
         <div
           data-layer="os"
           className={cn(
-            "rounded-lg border px-2 py-1.5",
+            "rounded-lg border px-2 py-1",
             isLight ? "border-border/80 bg-surface-raised" : "border-border",
           )}
           style={{
@@ -701,12 +766,12 @@ export function OperationalContextGraph({
               : "var(--ds-layer-os-stroke)",
           }}
         >
-          <div className="mb-1 text-center font-mono text-[10px] font-medium text-accent-text">
+          <div className="mb-0.5 text-center font-mono text-[9px] font-medium text-accent-text md:text-[10px]">
             Aiden OS
           </div>
           <Stagger
             step={STAGGER.chip}
-            className="flex flex-wrap justify-center gap-1.5"
+            className="flex flex-wrap justify-center gap-1"
           >
             {OS_CHIPS.map((chip) => (
               <span

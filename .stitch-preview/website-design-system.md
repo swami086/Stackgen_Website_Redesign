@@ -1,4 +1,14 @@
-# Design System: StackGen ADF Website — Linear Dark Console
+# SUPERSEDED (2026-08-31)
+
+This Linear-console token sheet (`#08090A`, `#9437FF`, Inter, zero gloss) is **not** the live replica.
+
+Use:
+- `.stitch-preview/DESIGN.md` — Stitch semantic design system (Soft Structuralism, Geist, live `$ds-*`)
+- `.stitch-preview/diagram-prompt-template.md` — fill-in prompt for diagram plates
+
+---
+
+# Design System: StackGen ADF Website — Linear Dark Console (archive)
 
 ## 1. Visual Theme & Atmosphere
 A restrained, engineering-grade dark console — the visual world is pinned to Linear (linear.app): near-black canvas, flat hairline structure, zero shadows, zero gradients, one disciplined violet accent used only where it means something (the primary CTA, an active state, or the single most important number). Precise and technical, never a marketing gradient-scape. Left-aligned, asymmetric — never centered hero or headline blocks. Motion is minimal and purposeful, not decorative.

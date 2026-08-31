@@ -25,13 +25,13 @@ const PORTRAIT_SRC: Record<
   ProductHeroSlug,
   { src: string; alt: string }
 > = {
-  "aiden-for-infrastructure": {
+  "aiden-for-infraops": {
     src: "/media/aiden-infra-security-audit/product-ui-skills-canvas.jpg",
-    alt: "Aiden for Infrastructure skills canvas",
+    alt: "Aiden for InfraOps skills canvas",
   },
-  "aiden-for-automation": {
+  "aiden-for-devops": {
     src: "/media/aiden-home-change-surface/hero-app-only-1920.png",
-    alt: "Aiden for Automation investigation surface",
+    alt: "Aiden for DevOps investigation surface",
   },
   "aiden-for-observability": {
     src: "/media/aiden-observability-sre-investigator/ui-45s.jpg",
@@ -44,17 +44,17 @@ const PORTRAIT_SRC: Record<
 };
 
 const PILLAR_SLUGS: ProductHeroSlug[] = [
-  "aiden-for-infrastructure",
-  "aiden-for-automation",
+  "aiden-for-infraops",
+  "aiden-for-devops",
   "aiden-for-observability",
   "aiden-for-sre",
 ];
 
 const ROLE_ICONS: Record<string, PhosphorIconName> = {
+  SRE: "heartbeat",
   "Platform Engineering": "rocket-launch",
   Developers: "terminal-window",
   DevSecOps: "shield-check",
-  SRE: "heartbeat",
 };
 
 export function ReplicaWhoItsFor({ theme, className }: ReplicaWhoItsForProps) {
@@ -63,6 +63,7 @@ export function ReplicaWhoItsFor({ theme, className }: ReplicaWhoItsForProps) {
 
   return (
     <section
+      id="who"
       data-pencil-id={REPLICA_FRAMES[theme].whoItsFor}
       data-who-layout="portraits-dock"
       className={cn(
@@ -97,26 +98,33 @@ export function ReplicaWhoItsFor({ theme, className }: ReplicaWhoItsForProps) {
             return (
               <Link
                 key={pillar.title}
-                href={`/product/${slug}`}
+                href={pillar.href}
                 data-bento-cell=""
                 data-who-portrait=""
-                className="group flex min-w-0 flex-col overflow-hidden rounded-[14px] border border-border bg-surface transition-colors hover:border-border-hover"
+                className="group flex min-w-0 flex-col overflow-hidden rounded-[14px] border border-border bg-surface shadow-sm transition-colors hover:border-border-hover"
               >
                 <div className="relative aspect-video overflow-hidden bg-surface-raised">
                   {/*
                     Same rule as Aiden OS left-frame (openmemory Task 10):
                     landscape product UI must not be stretched into a taller well.
                     Frame = video aspect; object-contain preserves intrinsic ratio.
+                    Gloss stays off the photo — glass-specular ::after was washing
+                    Observability/SRE stills (Impeccable quieter).
                   */}
                   <img
                     src={media.src}
                     alt={media.alt}
-                    className="absolute inset-0 h-full w-full object-contain object-top transition-transform duration-500 group-hover:scale-[1.02]"
+                    className="absolute inset-0 z-0 h-full w-full object-contain object-top transition-transform duration-500 group-hover:scale-[1.02]"
                     loading="lazy"
                     decoding="async"
                   />
+                  {/* Whisper rim only — not a fog sheet over product UI */}
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-6 bg-gradient-to-b from-white/[0.12] to-transparent"
+                  />
                 </div>
-                <div className="flex flex-col gap-1 px-3 py-2.5">
+                <div className="relative z-10 flex flex-col gap-1 border-t border-border/60 px-3 py-2.5">
                   <span className="font-mono text-[9px] font-medium uppercase tracking-[1.5px] text-text-tertiary">
                     {pillar.label}
                   </span>
@@ -132,12 +140,13 @@ export function ReplicaWhoItsFor({ theme, className }: ReplicaWhoItsForProps) {
           })}
         </div>
 
-        {/* Role dock — Deel/Option B: name+icon chips, no paragraphs */}
+        {/* Role dock — Apple Mail/Notes floating tray: Tier-2 plate + nested tiles.
+            Light: no matte bg-bg chips (they flatten liquid gloss). No content blur. */}
         <div
           data-who-roles
-          className="flex w-full flex-wrap items-center justify-center gap-2 rounded-xl border border-border bg-surface px-3 py-2.5"
+          className="glass-specular relative z-10 flex w-full flex-wrap items-center justify-center gap-2 rounded-xl px-3 py-2.5"
         >
-          <span className="mr-1 font-mono text-[9px] font-semibold uppercase tracking-[1.5px] text-text-tertiary">
+          <span className="relative z-[2] mr-1 font-mono text-[9px] font-semibold uppercase tracking-[1.5px] text-text-tertiary">
             Roles
           </span>
           {roles.map((role) => (
@@ -145,7 +154,7 @@ export function ReplicaWhoItsFor({ theme, className }: ReplicaWhoItsForProps) {
               key={role.title}
               data-bento-cell=""
               data-who-role=""
-              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-bg px-2.5 py-1.5"
+              className="glass-tile relative z-[2] inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5"
               title={role.body}
             >
               <PhosphorIcon
@@ -159,19 +168,19 @@ export function ReplicaWhoItsFor({ theme, className }: ReplicaWhoItsForProps) {
           ))}
         </div>
 
-        {/* Aiden OS rail — chips fill the bar */}
+        {/* Aiden OS rail — same liquid plate as Roles (was flat ds-layer-os matte). */}
         <div
           data-who-os
-          className="flex w-full flex-wrap items-center gap-2 rounded-xl border border-[var(--ds-layer-os-stroke)] bg-[var(--ds-layer-os-bg)] px-3 py-2.5"
+          className="glass-specular relative z-10 flex w-full flex-wrap items-center gap-2 rounded-xl px-3 py-2.5"
         >
-          <span className="shrink-0 text-sm font-bold text-accent-text">
+          <span className="relative z-[2] shrink-0 text-sm font-bold text-accent-text">
             {osTitle}
           </span>
-          <div className="flex min-w-0 flex-1 flex-wrap gap-1.5">
+          <div className="relative z-[2] flex min-w-0 flex-1 flex-wrap gap-1.5">
             {osChips.map((chip) => (
               <span
                 key={chip}
-                className="inline-flex items-center rounded-full border border-border bg-bg px-2.5 py-1 text-[11px] text-text-secondary"
+                className="glass-tile inline-flex items-center rounded-full px-2.5 py-1 text-[11px] text-text-secondary"
               >
                 {chip}
               </span>

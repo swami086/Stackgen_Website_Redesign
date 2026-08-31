@@ -4,6 +4,7 @@ export const REPLICA_FRAMES = {
     nav: "cYtoM",
     hero: "PzSjX",
     video: "coT3f",
+    problem: "homeProbD", // dark provisional until Pencil
     logos: "TKCFb",
     assemblies: "C2kYT",
     shell: "V2P0L",
@@ -15,6 +16,7 @@ export const REPLICA_FRAMES = {
     nav: "e3z1q",
     hero: "W1CQS",
     video: "NohsW",
+    problem: "homeProbL",
     logos: "QKd6D",
     assemblies: "oWWUj",
     shell: "HSHAw",

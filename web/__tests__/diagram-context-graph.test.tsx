@@ -26,7 +26,7 @@ test("rail selection changes the active layer", async () => {
 test("renders the four assembly cards and the focus entity", () => {
   render(<ContextGraph theme="dark" />);
   for (const card of [
-    "Aiden for Infrastructure", "Aiden for Automation",
+    "Aiden for InfraOps", "Aiden for DevOps",
     "Aiden for Observability", "Aiden for SRE",
   ]) {
     expect(screen.getByText(card)).toBeInTheDocument();

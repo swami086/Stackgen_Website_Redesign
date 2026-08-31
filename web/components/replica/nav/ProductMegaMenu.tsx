@@ -34,12 +34,15 @@ type ProductMegaMenuProps = {
   children: ReactElement<MegaMenuTriggerProps>;
   /** Test-only: keep the catalog panel mounted and visible. */
   forceOpen?: boolean;
+  /** Notify parent (e.g. floating nav) when the catalog opens/closes. */
+  onOpenChange?: (open: boolean) => void;
   className?: string;
 };
 
 export function ProductMegaMenu({
   children,
   forceOpen = false,
+  onOpenChange,
   className,
 }: ProductMegaMenuProps) {
   const panelId = useId();
@@ -47,6 +50,10 @@ export function ProductMegaMenu({
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [open, setOpen] = useState(forceOpen);
   const isOpen = forceOpen || open;
+
+  useEffect(() => {
+    onOpenChange?.(isOpen);
+  }, [isOpen, onOpenChange]);
 
   const cancelClose = useCallback(() => {
     if (closeTimerRef.current) {
@@ -140,7 +147,10 @@ export function ProductMegaMenu({
             aria-hidden="true"
             data-mega-bridge=""
             className="fixed inset-x-0 z-40"
-            style={{ top: "calc(1.5rem + 60px - 4px)", height: "20px" }}
+            style={{
+              top: "calc(var(--nav-top, 1.5rem) + var(--nav-island-h, 60px) - 4px)",
+              height: "20px",
+            }}
             onMouseEnter={openMenu}
           />
           {/* Fixed + viewport-centered so the panel shares the nav shell axis. */}
@@ -151,13 +161,16 @@ export function ProductMegaMenu({
             data-pencil-id="BCszz"
             data-mega-align="nav-shell"
             className="fixed left-1/2 z-50 w-[min(1200px,calc(100vw-3rem))] -translate-x-1/2 px-0 pt-3"
-            style={{ top: "calc(1.5rem + 60px)" }}
+            style={{
+              top: "calc(var(--nav-top, 1.5rem) + var(--nav-island-h, 60px))",
+            }}
             onMouseEnter={openMenu}
             onMouseLeave={scheduleClose}
           >
             <div
               data-pencil-id="rvmr8"
-              className="glass-specular overflow-hidden rounded-[20px] border border-border bg-surface p-5 shadow-lg md:p-6"
+              /* Opaque panel — Apple Liquid Glass: no glass-on-glass under the nav island. */
+              className="overflow-hidden rounded-[20px] border border-border bg-surface p-5 shadow-lg md:p-6"
             >
               <div data-pencil-id="r8gi4e" className="flex flex-col gap-5">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">

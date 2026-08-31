@@ -56,6 +56,21 @@ export type ParticleFieldProps = {
   onAbsorb?: (kind: WorkItemKind) => void;
   /** Called when a transformed item leaves the hub toward a sink. */
   onEmit?: (kind: EmittedKind, sinkId: string) => void;
+  /**
+   * Soft Structuralism quiet mode: no kind labels, lower trail alpha,
+   * smaller shards. Prefer corridor clip instead of quiet when the hub
+   * stitch must still read.
+   */
+  quiet?: boolean;
+  /**
+   * Kind labels: off, always (wide canvases), or only near the hub so
+   * absorb→emit still teaches without labeling the shell edges.
+   */
+  labels?: boolean | "hub";
+  /** Normalized x band where particles may draw (default full width). */
+  corridor?: { minX: number; maxX: number };
+  /** Override density cap (default MAX_PARTICLES). */
+  maxParticles?: number;
   className?: string;
 };
 
@@ -107,6 +122,10 @@ export function ParticleField({
   isolateSourceId = null,
   onAbsorb,
   onEmit,
+  quiet = false,
+  labels,
+  corridor,
+  maxParticles = MAX_PARTICLES,
   className,
 }: ParticleFieldProps) {
   const ref = useRef<HTMLCanvasElement | null>(null);
@@ -117,6 +136,8 @@ export function ParticleField({
   onAbsorbRef.current = onAbsorb;
   const onEmitRef = useRef(onEmit);
   onEmitRef.current = onEmit;
+  const labelMode: boolean | "hub" =
+    labels === undefined ? (quiet ? false : true) : labels;
 
   useEffect(() => {
     const canvas = ref.current;
@@ -132,8 +153,11 @@ export function ParticleField({
 
     // Per-source emission cadence, jittered so the field never falls into
     // visible lockstep. Seeded, so the jitter is reproducible.
-    const cadence = sources.map(() => range(rng, 0.9, 1.9));
-    const nextEmit = sources.map(() => range(rng, 0, 1.2));
+    const cadence = sources.map(() =>
+      quiet ? range(rng, 1.4, 2.4) : range(rng, 0.9, 1.9),
+    );
+    const nextEmit = sources.map(() => range(rng, 0, quiet ? 1.6 : 1.2));
+    const cap = Math.min(maxParticles, MAX_PARTICLES);
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const resize = () => {
@@ -146,7 +170,7 @@ export function ParticleField({
       getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
 
     const spawn = (i: number) => {
-      if (particles.length >= MAX_PARTICLES) particles.shift();
+      if (particles.length >= cap) particles.shift();
       const s = sources[i]!;
       particles.push({
         kind: s.emits,
@@ -156,16 +180,16 @@ export function ParticleField({
         toX: hub.x,
         toY: hub.y,
         t: 0,
-        speed: range(rng, 0.22, 0.38),
-        wobble: range(rng, 0.006, 0.022),
+        speed: quiet ? range(rng, 0.18, 0.28) : range(rng, 0.22, 0.38),
+        wobble: quiet ? range(rng, 0.002, 0.008) : range(rng, 0.006, 0.022),
         wobblePhase: range(rng, 0, Math.PI * 2),
-        size: range(rng, 2.4, 3.6),
+        size: quiet ? range(rng, 1.6, 2.4) : range(rng, 2.4, 3.6),
         sourceId: s.id,
       });
     };
 
     const emitFromHub = (p: Particle) => {
-      if (particles.length >= MAX_PARTICLES) particles.shift();
+      if (particles.length >= cap) particles.shift();
       const sink = sinks[sinkCursor % sinks.length]!;
       sinkCursor++;
       const emitted = TRANSFORM_MAP[p.kind as WorkItemKind];
@@ -178,10 +202,10 @@ export function ParticleField({
         toX: sink.x,
         toY: sink.y,
         t: 0,
-        speed: range(rng, 0.24, 0.4),
-        wobble: range(rng, 0.004, 0.016),
+        speed: quiet ? range(rng, 0.2, 0.3) : range(rng, 0.24, 0.4),
+        wobble: quiet ? range(rng, 0.001, 0.006) : range(rng, 0.004, 0.016),
         wobblePhase: range(rng, 0, Math.PI * 2),
-        size: range(rng, 2.2, 3.2),
+        size: quiet ? range(rng, 1.5, 2.2) : range(rng, 2.2, 3.2),
         sourceId: p.sourceId,
         sinkId: sink.id,
       });
@@ -195,11 +219,14 @@ export function ParticleField({
 
       const w = canvas.clientWidth;
       const h = canvas.clientHeight;
-      const showLabels = w >= LABEL_MIN_WIDTH;
+      const wideEnough = w >= LABEL_MIN_WIDTH;
       const accent = readVar("--ds-accent", "#8c85ff");
       const text = readVar("--ds-text-secondary", "#9aa0ac");
-      // Deck cyan — not a CSS token yet; stitch trails only.
       const cyan = "#A8E0F8";
+      const trailAlpha = quiet ? 0.12 : 0.24;
+      const curveAmp = quiet ? 3 : 6;
+      const minX = (corridor?.minX ?? 0) * w;
+      const maxX = (corridor?.maxX ?? 1) * w;
 
       for (let i = 0; i < sources.length; i++) {
         nextEmit[i]! -= dt;
@@ -213,6 +240,14 @@ export function ParticleField({
       ctx.font = "500 9px var(--font-mono, monospace)";
       ctx.textBaseline = "middle";
       ctx.lineCap = "round";
+
+      // Keep threads inside the hub corridor so Soft Structuralism shells stay clean.
+      if (corridor) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(minX, 0, maxX - minX, h);
+        ctx.clip();
+      }
 
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i]!;
@@ -236,28 +271,31 @@ export function ParticleField({
 
         const px = nx * w;
         const py = ny * h;
-        const fromPx = p.fromX * w;
+        // Trail starts at the corridor edge so we never paint past the shells.
+        const fromNx = corridor
+          ? Math.min(Math.max(p.fromX, corridor.minX), corridor.maxX)
+          : p.fromX;
+        const fromPx = fromNx * w;
         const fromPy = p.fromY * h;
 
         const dimmed =
           isolateRef.current !== null && p.sourceId !== isolateRef.current;
         const alpha = (dimmed ? 0.3 : 1) * Math.sin(p.t * Math.PI);
 
-        // Stitch thread: a fading trail that "sews" shard → hub → sink.
-        ctx.globalAlpha = alpha * 0.28;
+        ctx.globalAlpha = alpha * trailAlpha;
         ctx.strokeStyle = p.phase === "outbound" ? accent : cyan;
-        ctx.lineWidth = p.phase === "outbound" ? 1.25 : 1;
+        ctx.lineWidth = quiet ? 0.85 : p.phase === "outbound" ? 1.25 : 1;
         ctx.beginPath();
         ctx.moveTo(fromPx, fromPy);
         ctx.quadraticCurveTo(
           (fromPx + px) / 2,
-          (fromPy + py) / 2 + Math.sin(p.wobblePhase) * 8,
+          (fromPy + py) / 2 + Math.sin(p.wobblePhase) * curveAmp,
           px,
           py,
         );
         ctx.stroke();
 
-        ctx.globalAlpha = alpha;
+        ctx.globalAlpha = alpha * (quiet ? 0.75 : 1);
         ctx.fillStyle = p.phase === "outbound" ? accent : text;
         if (p.phase === "inbound") {
           drawShard(ctx, px, py, p.size, p.wobblePhase + p.t * Math.PI);
@@ -265,12 +303,19 @@ export function ParticleField({
           drawLock(ctx, px, py, p.size * 0.95);
         }
 
-        if (showLabels && p.size > 2.6) {
-          ctx.globalAlpha = alpha * 0.75;
-          ctx.fillStyle = p.phase === "outbound" ? accent : text;
-          ctx.fillText(p.kind, px + p.size + 4, py);
+        if (p.size > 2.2 && wideEnough && labelMode !== false) {
+          const nearHub = Math.abs(nx - hub.x) < 0.09;
+          const drawLabel =
+            labelMode === true ? true : labelMode === "hub" ? nearHub : false;
+          if (drawLabel) {
+            ctx.globalAlpha = alpha * 0.8;
+            ctx.fillStyle = p.phase === "outbound" ? accent : text;
+            ctx.fillText(p.kind, px + p.size + 4, py);
+          }
         }
       }
+
+      if (corridor) ctx.restore();
       ctx.globalAlpha = 1;
 
       raf = requestAnimationFrame(step);
@@ -280,9 +325,6 @@ export function ParticleField({
     window.addEventListener("resize", resize);
 
     if (reduced || frozen) {
-      // Render one readable, fully labelled snapshot. Under reduced motion
-      // the diagram must still show that work flows through the hub and
-      // gets transformed, so the frozen frame has to be legible.
       last = 0;
       for (let k = 0; k < FROZEN_TICKS; k++) step(k * 16);
       running = false;
@@ -309,14 +351,16 @@ export function ParticleField({
       window.removeEventListener("resize", resize);
       document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, [sources, hub, sinks, seed, frozen, reduced]);
+  }, [sources, hub, sinks, seed, frozen, reduced, quiet, corridor, maxParticles, labelMode]);
 
   return (
     <canvas
       ref={ref}
       aria-hidden="true"
       data-motion-field="work-items"
-      data-motion-metaphor="puzzle-stitch"
+      data-motion-metaphor={corridor ? "corridor-stitch" : quiet ? "soft-corridor" : "puzzle-stitch"}
+      data-motion-quiet={quiet ? "true" : "false"}
+      data-motion-labels={String(labelMode)}
       className={className ?? "pointer-events-none absolute inset-0 h-full w-full"}
     />
   );

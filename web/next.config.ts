@@ -50,6 +50,16 @@ const nextConfig: NextConfig = {
         destination: "/docs/observenow/:path*",
         permanent: true,
       },
+      {
+        source: "/product/aiden-for-infrastructure",
+        destination: "/product/aiden-for-infraops",
+        permanent: true,
+      },
+      {
+        source: "/product/aiden-for-automation",
+        destination: "/product/aiden-for-devops",
+        permanent: true,
+      },
       ...redirectsJson.map(({ from, to }) => ({
         source: from,
         destination: to,

@@ -4,9 +4,10 @@ import { ReplicaAssemblies } from "@/components/replica/sections/Assemblies";
 import { ReplicaFooter } from "@/components/replica/sections/Footer";
 import { ReplicaHero } from "@/components/replica/sections/Hero";
 import { ReplicaLogos } from "@/components/replica/sections/Logos";
+import { ReplicaProblem } from "@/components/replica/sections/Problem";
 import { ReplicaNav } from "@/components/replica/sections/Nav";
 import { ReplicaShell } from "@/components/replica/sections/Shell";
-import { ReplicaVideo } from "@/components/replica/sections/Video";
+import { ReplicaSolution } from "@/components/replica/sections/Solution";
 import { ReplicaWhoItsFor } from "@/components/replica/sections/WhoItsFor";
 import { useTheme } from "@/components/replica/theme/ThemeProvider";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
@@ -23,8 +24,9 @@ export function HomeReplica() {
     >
       <ReplicaNav theme={theme} />
       <ReplicaHero theme={theme} />
-      <ReplicaVideo theme={theme} />
       <ReplicaLogos theme={theme} />
+      <ReplicaProblem theme={theme} />
+      <ReplicaSolution theme={theme} />
       <ReplicaAssemblies theme={theme} />
       <ReplicaShell theme={theme} />
       <ReplicaWhoItsFor theme={theme} />

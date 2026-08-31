@@ -7,7 +7,7 @@ import { MotionProvider } from "@/components/replica/motion/MotionProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "The Autonomous DevOps Factory | StackGen",
+  title: "The Autonomous Operations Factory | StackGen",
 };
 
 export default function RootLayout({

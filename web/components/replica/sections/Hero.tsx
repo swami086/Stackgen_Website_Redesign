@@ -16,7 +16,8 @@ type ReplicaHeroProps = {
 };
 
 export function ReplicaHero({ theme, className }: ReplicaHeroProps) {
-  const { heading, sub, primaryCta, secondaryCta } = replicaContent.hero;
+  const { heading, sub, primaryCta, primaryHref, secondaryCta, secondaryHref } =
+    replicaContent.hero;
   const reduced = useReducedMotionSafe();
   const tokens = heading.split(/(\s+)/);
 
@@ -63,13 +64,13 @@ export function ReplicaHero({ theme, className }: ReplicaHeroProps) {
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <Link
-              href="#"
+              href={primaryHref}
               className="glow-source inline-flex items-center justify-center whitespace-nowrap rounded-full bg-accent px-6 py-3 text-sm font-medium text-on-accent no-underline"
             >
               {primaryCta}
             </Link>
             <Link
-              href="#"
+              href={secondaryHref}
               className="group inline-flex items-center gap-3 whitespace-nowrap rounded-full px-6 py-3 text-sm font-medium text-text-primary no-underline outline outline-1 -outline-offset-1 outline-border"
             >
               {secondaryCta}

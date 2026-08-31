@@ -4,21 +4,62 @@ import { ReplicaNav } from "@/components/replica/sections/Nav";
 import { ReplicaHero } from "@/components/replica/sections/Hero";
 import { replicaContent } from "@/content/replica";
 
-test("nav starts in the glass material state", () => {
+test("nav starts as clear Liquid Glass over the hero", () => {
   const { container } = render(
     <ThemeProvider>
       <ReplicaNav theme="dark" />
     </ThemeProvider>,
   );
-  const island = container.querySelector("[data-nav-material]");
+  const island = container.querySelector("[data-nav-island]");
   expect(island).toHaveAttribute("data-nav-material", "glass");
+  expect(island).toHaveAttribute("data-liquid-variant", "clear");
+  expect(island).toHaveClass("glass-real", "w-auto", "max-w-6xl");
+  expect(island).not.toHaveClass("glow-source");
+  expect(container.querySelector("[data-liquid-glass]")).toHaveAttribute(
+    "data-nav-minimize",
+    "on-scroll-down",
+  );
+  expect(container.querySelector(".nav-scroll-edge")).toHaveAttribute(
+    "data-active",
+    "false",
+  );
+  expect(container.querySelector("[data-nav-density]")).toHaveAttribute(
+    "data-nav-density",
+    "expanded",
+  );
+});
+
+test("nav keeps primary links in the expanded island", () => {
+  render(
+    <ThemeProvider>
+      <ReplicaNav theme="dark" />
+    </ThemeProvider>,
+  );
+  expect(screen.getByRole("navigation", { name: "Primary" })).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Products" })).toBeInTheDocument();
+  expect(screen.getByText("Platform")).toBeInTheDocument();
+  expect(screen.getByText("Case Studies")).toBeInTheDocument();
+  expect(screen.getByText("Schedule a demo")).toBeInTheDocument();
+});
+
+test("nav CTA is a nested single-line glassProminent pill", () => {
+  const { container } = render(
+    <ThemeProvider>
+      <ReplicaNav theme="dark" />
+    </ThemeProvider>,
+  );
+  const cta = container.querySelector('[data-pill-variant="nav"]');
+  expect(cta).toBeTruthy();
+  expect(cta).toHaveClass("h-8", "rounded-full", "whitespace-nowrap", "bg-accent");
+  expect(cta).not.toHaveClass("rounded-lg", "py-2", "py-3");
 });
 
 test("hero splits its heading into per-word spans for the mask reveal", () => {
   render(<ReplicaHero theme="dark" />);
   const h1 = screen.getByRole("heading", { level: 1 });
   const words = h1.querySelectorAll("[data-word]");
-  expect(words.length).toBeGreaterThanOrEqual(4);
+  const expectedWords = replicaContent.hero.heading.split(/\s+/).filter(Boolean).length;
+  expect(words.length).toBe(expectedWords);
   expect(h1.textContent?.replace(/\s+/g, " ").trim()).toBe(
     replicaContent.hero.heading.replace(/\s+/g, " ").trim(),
   );

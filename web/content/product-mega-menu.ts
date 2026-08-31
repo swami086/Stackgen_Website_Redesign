@@ -50,9 +50,9 @@ export const productMegaMenuContent = {
       description: "Discovery through triage to approved remediation.",
       slug: "aiden-for-sre",
       capabilities: [
-        "PLACEHOLDER — capability",
-        "PLACEHOLDER — capability",
-        "PLACEHOLDER — capability",
+        "Detect → Triage → Diagnose → Remediate",
+        "RCA with shared context",
+        "Human-approved remediation",
       ],
     },
   ] satisfies readonly ProductMegaMenuColumn[],

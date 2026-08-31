@@ -2,6 +2,15 @@ import { PRODUCTS, type ProductSlug } from "@/lib/products";
 
 const P = (label: string) => `PLACEHOLDER — ${label}`;
 
+const CTA_DEFAULTS = {
+  primaryCta: "Schedule a demo",
+  primaryHref: "/schedule-demo",
+  secondaryCta: "How it works",
+  secondaryHref: "/#how-it-works",
+  finalCtaLabel: "Schedule a demo",
+  finalCtaHref: "/schedule-demo",
+} as const;
+
 export type ProductSectionFlags = {
   subNav: boolean;
   pillars: boolean;
@@ -109,10 +118,11 @@ function buildProductContent(slug: ProductSlug): ProductPageContent {
     hero: {
       heading: meta.title,
       subhead: P("hero subhead"),
-      primaryCta: "Schedule a demo",
-      primaryHref: "/schedule-demo",
-      secondaryCta: "How it works",
-      secondaryHref: "/#how-it-works",
+      ...CTA_DEFAULTS,
+      primaryCta: CTA_DEFAULTS.primaryCta,
+      primaryHref: CTA_DEFAULTS.primaryHref,
+      secondaryCta: CTA_DEFAULTS.secondaryCta,
+      secondaryHref: CTA_DEFAULTS.secondaryHref,
     },
     pillars: {
       items: [
@@ -176,8 +186,8 @@ function buildProductContent(slug: ProductSlug): ProductPageContent {
     finalCta: {
       heading: P("final CTA heading"),
       subhead: P("final CTA subhead"),
-      cta: "Schedule a demo",
-      href: "/schedule-demo",
+      cta: CTA_DEFAULTS.finalCtaLabel,
+      href: CTA_DEFAULTS.finalCtaHref,
     },
     faq: {
       heading: P("FAQ heading"),
@@ -207,11 +217,164 @@ function buildProductContent(slug: ProductSlug): ProductPageContent {
   };
 }
 
+const sreContent: ProductPageContent = {
+  slug: "aiden-for-sre",
+  title: PRODUCTS["aiden-for-sre"].title,
+  phase: PRODUCTS["aiden-for-sre"].phase,
+  flags: {
+    subNav: true,
+    pillars: true,
+    offers: false,
+    resources: false,
+  },
+  subNav: {
+    overviewLabel: "Overview",
+  },
+  hero: {
+    heading: "Aiden for SRE",
+    subhead:
+      "Less toil. Improve reliability. Detect → Triage → Diagnose → Remediate — with humans keeping authority.",
+    primaryCta: CTA_DEFAULTS.primaryCta,
+    primaryHref: CTA_DEFAULTS.primaryHref,
+    secondaryCta: CTA_DEFAULTS.secondaryCta,
+    secondaryHref: CTA_DEFAULTS.secondaryHref,
+  },
+  pillars: {
+    items: [
+      {
+        title: "Alert intelligence",
+        body: "Correlates signals across your observability stack so noise drops before it reaches on-call.",
+      },
+      {
+        title: "Incident triage",
+        body: "Routes incidents with shared context from the Operational Context Graph — not another chat thread.",
+      },
+      {
+        title: "RCA acceleration",
+        body: "Surfaces hypotheses from live estate state and recent changes, ready for human review.",
+      },
+    ],
+  },
+  logos: {
+    eyebrow: "Trusted by platform teams",
+  },
+  problem: {
+    heading: "Hundreds of alerts. Hours to a hypothesis.",
+    body: "Signals arrive fragmented across tools. Tribal knowledge stays in chats. Forming a root-cause hypothesis burns minutes you do not have on call.",
+  },
+  spotlight: {
+    heading: "Detect → Triage → Diagnose → Remediate",
+    body: "The SRE spine of the Autonomous Operations Factory — each step grounded in shared context and human authority.",
+    cards: [
+      {
+        title: "Detect",
+        body: "Ingest alerts and signals from Grafana, Datadog, New Relic, and your existing observability stack.",
+      },
+      {
+        title: "Triage",
+        body: "Correlate and prioritize with shared context — humans stay in the loop on every escalation.",
+      },
+      {
+        title: "Diagnose",
+        body: "Form root-cause hypotheses from live infrastructure state and change history.",
+      },
+      {
+        title: "Remediate",
+        body: "Propose policy-checked fixes and learn from outcomes — nothing executes without explicit approval.",
+      },
+    ],
+  },
+  capabilities: {
+    heading: "Built for production SRE",
+    items: [
+      {
+        title: "Integrations with your stack",
+        body: "Connects to the observability, Git, cloud, and ITSM tools your team already runs.",
+      },
+      {
+        title: "Never acts without sign-off",
+        body: "Every remediation proposal requires explicit human approval before any change executes.",
+      },
+      {
+        title: "Full audit trail",
+        body: "Every investigation step, hypothesis, and proposed change is logged with full context.",
+      },
+      {
+        title: "Works with OSS and managed observability",
+        body: "Grafana, OTEL, Datadog, Dynatrace, New Relic — same governance layer across vendors.",
+      },
+    ],
+  },
+  platformLink: {
+    heading: "Shared memory across the Factory",
+    body: "Aiden OS and the Operational Context Graph keep infrastructure state, policies, and change history in one place — so SRE workflows start from truth, not tribal knowledge.",
+  },
+  integrations: {
+    heading: "Your stack, connected",
+    body: "Grafana, Grafana Cloud, New Relic, Dynatrace, Datadog, OTEL, Kubernetes, Terraform, Git, ServiceNow, cloud accounts — out of the box.",
+  },
+  enterprise: {
+    heading: "Deploy your way",
+    items: [
+      {
+        title: "Public cloud",
+        body: "Run Aiden for SRE on your preferred cloud provider with standard SaaS deployment.",
+      },
+      {
+        title: "Private SaaS",
+        body: "Dedicated tenant isolation with your security and compliance requirements.",
+      },
+      {
+        title: "Self-hosted",
+        body: "Deploy in your own environment when data residency or air-gapped operation is required.",
+      },
+    ],
+  },
+  proof: {
+    heading: "Trusted in production",
+    body: "Trusted by platform and SRE teams running production estates.",
+  },
+  offers: {
+    heading: "",
+    items: [],
+  },
+  finalCta: {
+    heading: "See Aiden for SRE on your stack",
+    subhead: "Schedule a demo — policy, context, and humans keeping authority.",
+    cta: CTA_DEFAULTS.finalCtaLabel,
+    href: CTA_DEFAULTS.finalCtaHref,
+  },
+  faq: {
+    heading: "How it works",
+    items: [
+      {
+        question: "Does Aiden act autonomously?",
+        answer:
+          "No. Every remediation proposal requires explicit human approval. Policy gates and sign-off stay in your control.",
+      },
+      {
+        question: "Is there an audit trail?",
+        answer:
+          "Yes. Every investigation step, hypothesis, and proposed change is logged with full context for compliance and post-incident review.",
+      },
+      {
+        question: "Does it work with our existing tools?",
+        answer:
+          "Aiden integrates with Grafana, Datadog, New Relic, Dynatrace, Kubernetes, Terraform, Git, ServiceNow, and cloud accounts out of the box.",
+      },
+    ],
+  },
+  resources: {
+    heading: "",
+    items: [],
+  },
+};
+
 export const productContentBySlug: Record<ProductSlug, ProductPageContent> = {
   "aiden-for-infraops": buildProductContent("aiden-for-infraops"),
   "aiden-for-devops": buildProductContent("aiden-for-devops"),
   "aiden-for-observability": buildProductContent("aiden-for-observability"),
-  "aiden-for-sre": buildProductContent("aiden-for-sre"),
+  "aiden-for-sre": sreContent,
 };
 
 export function getProductContent(slug: ProductSlug): ProductPageContent {

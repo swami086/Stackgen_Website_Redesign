@@ -39,10 +39,13 @@ test("all four product slugs resolve via getProduct", () => {
   }
 });
 
-test("product page hero includes PLACEHOLDER copy", () => {
+test("SRE product page ships Factory hero and DETECT spine without PLACEHOLDER", () => {
+  const content = getProductContent("aiden-for-sre");
+  expect(content.hero.subhead).not.toMatch(/^PLACEHOLDER/);
+  expect(content.hero.subhead).toMatch(/Detect/);
+  expect(content.problem.heading).not.toMatch(/^PLACEHOLDER/);
   renderProduct("aiden-for-sre");
-  expect(screen.getByText(/PLACEHOLDER — hero subhead/)).toBeInTheDocument();
-  expect(screen.getAllByText("PLACEHOLDER — fill me").length).toBeGreaterThan(0);
+  expect(screen.queryByText(/PLACEHOLDER — hero subhead/)).toBeNull();
 });
 
 test("product pages never use superseded Infrastructure or Automation naming", () => {
@@ -73,8 +76,9 @@ test("mega-menu columns use locked product titles from PRODUCT.md", () => {
   }
 });
 
-test("product content objects expose section placeholders for every slug", () => {
-  for (const slug of PRODUCT_SLUGS) {
+test("product content objects expose section placeholders for stub slugs", () => {
+  const stubSlugs = PRODUCT_SLUGS.filter((slug) => slug !== "aiden-for-sre");
+  for (const slug of stubSlugs) {
     const content = getProductContent(slug);
     expect(content.hero.subhead).toMatch(/^PLACEHOLDER — /);
     expect(content.problem.heading).toMatch(/^PLACEHOLDER — /);

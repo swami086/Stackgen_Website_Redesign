@@ -3,6 +3,7 @@ import { ProductMegaMenu } from "@/components/replica/nav/ProductMegaMenu";
 import { ProductPage } from "@/components/replica/ProductPage";
 import { ThemeProvider } from "@/components/replica/theme/ThemeProvider";
 import { productMegaMenuContent } from "@/content/product-mega-menu";
+import { productDiagramPlaceholders } from "@/content/diagram-placeholders";
 import { getProductContent } from "@/content/products";
 import { PRODUCTS, PRODUCT_SLUGS, getProduct, productHref } from "@/lib/products";
 
@@ -65,6 +66,19 @@ test("SRE product page ships Factory hero and DETECT spine without PLACEHOLDER",
   expect(content.problem.heading).not.toMatch(/^PLACEHOLDER/);
   renderProduct("aiden-for-sre");
   expect(screen.queryByText(/PLACEHOLDER — hero subhead/)).toBeNull();
+});
+
+test("each product page mounts a Soft Structuralism diagram placeholder", () => {
+  for (const slug of PRODUCT_SLUGS) {
+    const { unmount } = renderProduct(slug);
+    const plate = document.querySelector(
+      `[data-diagram-placeholder="${productDiagramPlaceholders[slug].id}"]`,
+    );
+    expect(plate).toBeTruthy();
+    expect(plate?.textContent).toContain("Diagram placeholder");
+    expect(plate?.textContent).toContain(productDiagramPlaceholders[slug].title);
+    unmount();
+  }
 });
 
 test("product pages never use superseded Infrastructure or Automation naming", () => {

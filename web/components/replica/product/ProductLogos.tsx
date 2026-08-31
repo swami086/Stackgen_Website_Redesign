@@ -1,7 +1,7 @@
 import { replicaContent } from "@/content/replica";
 import type { ProductPageContent } from "@/content/products";
 import { cn } from "@/lib/cn";
-import { ProductPlaceholderBadge, ProductSectionShell } from "./shared";
+import { ProductSectionShell } from "./shared";
 
 type ProductLogosProps = {
   theme: "light" | "dark";
@@ -18,7 +18,6 @@ export function ProductLogos({ theme, content, className }: ProductLogosProps) {
         <p className="text-center font-mono text-[11px] font-medium tracking-[2px] text-text-tertiary">
           {content.logos.eyebrow}
         </p>
-        <ProductPlaceholderBadge />
       </div>
       <div className="flex flex-wrap items-center justify-center gap-8">
         {items.map((logo) => (

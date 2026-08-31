@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ProductPageContent } from "@/content/products";
 import { cn } from "@/lib/cn";
-import { ProductPlaceholderBadge, ProductSectionShell } from "./shared";
+import { ProductSectionShell } from "./shared";
 
 type ProductFinalCtaProps = {
   theme: "light" | "dark";
@@ -16,7 +16,6 @@ export function ProductFinalCta({ theme, content, className }: ProductFinalCtaPr
       theme={theme}
       className={cn("bg-surface", className)}
     >
-      <ProductPlaceholderBadge />
       <h2 className="text-2xl font-semibold text-text-primary md:text-3xl">
         {content.finalCta.heading}
       </h2>

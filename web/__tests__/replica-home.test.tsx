@@ -53,9 +53,24 @@ test("the four canvas eyebrows are present and no fifth was added", () => {
   renderHome("dark");
   expect(screen.getByText("SHARED WORLD MODEL")).toBeInTheDocument();
   expect(screen.getByText("Offerings")).toBeInTheDocument();
-  // Inner/Outer Loop appear in Problem (Ops Lag) and Assemblies (InnerOuterLoop)
-  expect(screen.getAllByText("Inner Loop").length).toBeGreaterThanOrEqual(2);
-  expect(screen.getAllByText("Outer Loop").length).toBeGreaterThanOrEqual(2);
+  // Inner/Outer Loop only on Problem Ops Lag (Assemblies uses diagram placeholders)
+  expect(screen.getAllByText("Inner Loop").length).toBeGreaterThanOrEqual(1);
+  expect(screen.getAllByText("Outer Loop").length).toBeGreaterThanOrEqual(1);
+});
+
+test("Solution and How it works ship Soft Structuralism diagram placeholders", () => {
+  renderHome("dark");
+  expect(
+    document.querySelector('[data-diagram-placeholder="solution-pillars"]'),
+  ).toBeTruthy();
+  expect(
+    document.querySelector('[data-diagram-placeholder="how-it-works-path"]'),
+  ).toBeTruthy();
+  expect(
+    document.querySelector('[data-diagram-placeholder="offerings-aiden-os"]'),
+  ).toBeTruthy();
+  expect(screen.getByText("Factory pillars")).toBeInTheDocument();
+  expect(screen.getByText("Offerings diagram")).toBeInTheDocument();
 });
 
 test("homepage section order is Hero Logos Problem Solution Assemblies", () => {

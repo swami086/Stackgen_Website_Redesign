@@ -1,6 +1,6 @@
 import type { ProductPageContent } from "@/content/products";
 import { cn } from "@/lib/cn";
-import { ProductPlaceholderBadge, ProductSectionShell } from "./shared";
+import { ProductSectionShell } from "./shared";
 
 type ProductOffersProps = {
   theme: "light" | "dark";
@@ -11,7 +11,6 @@ type ProductOffersProps = {
 export function ProductOffers({ theme, content, className }: ProductOffersProps) {
   return (
     <ProductSectionShell id="product-offers" theme={theme} className={className}>
-      <ProductPlaceholderBadge />
       <h2 className="text-2xl font-semibold text-text-primary md:text-3xl">
         {content.offers.heading}
       </h2>

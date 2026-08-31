@@ -1,6 +1,6 @@
 import type { ProductPageContent } from "@/content/products";
 import { cn } from "@/lib/cn";
-import { ProductPlaceholderBadge, ProductSectionShell } from "./shared";
+import { ProductSectionShell } from "./shared";
 
 type ProductPlatformLinkProps = {
   theme: "light" | "dark";
@@ -15,7 +15,6 @@ export function ProductPlatformLink({
 }: ProductPlatformLinkProps) {
   return (
     <ProductSectionShell id="product-platform-link" theme={theme} className={className}>
-      <ProductPlaceholderBadge />
       <h2 className="text-2xl font-semibold text-text-primary md:text-3xl">
         {content.platformLink.heading}
       </h2>

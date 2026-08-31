@@ -1,6 +1,6 @@
 import type { ProductPageContent } from "@/content/products";
 import { cn } from "@/lib/cn";
-import { ProductPlaceholderBadge, ProductSectionShell } from "./shared";
+import { ProductSectionShell } from "./shared";
 
 type ProductProblemProps = {
   theme: "light" | "dark";
@@ -11,7 +11,6 @@ type ProductProblemProps = {
 export function ProductProblem({ theme, content, className }: ProductProblemProps) {
   return (
     <ProductSectionShell id="product-problem" theme={theme} className={className}>
-      <ProductPlaceholderBadge />
       <h2 className="text-2xl font-semibold text-text-primary md:text-3xl">
         {content.problem.heading}
       </h2>

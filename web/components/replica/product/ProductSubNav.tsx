@@ -1,6 +1,6 @@
 import type { ProductPageContent } from "@/content/products";
 import { cn } from "@/lib/cn";
-import { ProductPlaceholderBadge, ProductSectionShell } from "./shared";
+import { ProductSectionShell } from "./shared";
 
 type ProductSubNavProps = {
   theme: "light" | "dark";
@@ -19,7 +19,6 @@ export function ProductSubNav({ theme, content, className }: ProductSubNavProps)
         <span className="text-sm font-medium text-text-primary">
           {content.subNav.overviewLabel}
         </span>
-        <ProductPlaceholderBadge />
       </nav>
     </ProductSectionShell>
   );

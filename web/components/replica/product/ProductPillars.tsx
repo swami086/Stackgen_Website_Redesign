@@ -1,6 +1,6 @@
 import type { ProductPageContent } from "@/content/products";
 import { cn } from "@/lib/cn";
-import { ProductPlaceholderBadge, ProductSectionShell } from "./shared";
+import { ProductSectionShell } from "./shared";
 
 type ProductPillarsProps = {
   theme: "light" | "dark";
@@ -11,7 +11,6 @@ type ProductPillarsProps = {
 export function ProductPillars({ theme, content, className }: ProductPillarsProps) {
   return (
     <ProductSectionShell id="product-pillars" theme={theme} className={className}>
-      <ProductPlaceholderBadge />
       <div className="grid gap-3 md:gap-4 md:grid-cols-3">
         {content.pillars.items.map((item, index) => (
           <article

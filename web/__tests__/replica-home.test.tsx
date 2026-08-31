@@ -51,9 +51,11 @@ test("every diagram exposes an accessible figure", () => {
 
 test("the four canvas eyebrows are present and no fifth was added", () => {
   renderHome("dark");
-  for (const e of ["SHARED WORLD MODEL", "Offerings", "Inner Loop", "Outer Loop"]) {
-    expect(screen.getByText(e)).toBeInTheDocument();
-  }
+  expect(screen.getByText("SHARED WORLD MODEL")).toBeInTheDocument();
+  expect(screen.getByText("Offerings")).toBeInTheDocument();
+  // Inner/Outer Loop appear in Problem (Ops Lag) and Assemblies (InnerOuterLoop)
+  expect(screen.getAllByText("Inner Loop").length).toBeGreaterThanOrEqual(2);
+  expect(screen.getAllByText("Outer Loop").length).toBeGreaterThanOrEqual(2);
 });
 
 test("homepage section order is Hero Logos Problem Solution Assemblies", () => {
@@ -117,12 +119,17 @@ test("hero and problem use Factory spine copy", () => {
   expect(screen.getByText("Autonomous Operations Factory")).toBeInTheDocument();
 });
 
-test("problem section ships A+B chaos film plate", () => {
+test("problem section ships Ops Lag Soft Structuralism diagram", () => {
   renderHome("dark");
-  expect(document.querySelector('[data-problem-film="chaos-ab"]')).toBeTruthy();
-  expect(screen.getByText("Inner loop minutes · Outer loop hours to days")).toBeInTheDocument();
-  expect(screen.getByText("Alert · no deploy")).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: /Play problem explainer|Pause problem explainer/i })).toBeInTheDocument();
+  const diagram = document.querySelector('[data-problem-diagram="ops-lag"]');
+  expect(diagram).toBeTruthy();
+  expect(document.querySelector('[data-pencil-id="ifJjx"]')).toBeTruthy();
+  expect(diagram?.textContent).toContain("Slow Feedback / Noisy Signal");
+  expect(diagram?.textContent).toContain("AI-assisted Build");
+  expect(diagram?.textContent).toContain("Observe");
+  expect(
+    screen.queryByRole("button", { name: /Play problem explainer|Pause problem explainer/i }),
+  ).not.toBeInTheDocument();
 });
 
 test("Shell hosts the V2P0L Operational Context Graph flow", () => {

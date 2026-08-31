@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { AtmosphereField } from "@/components/replica/shared/AtmosphereField";
-import { ProblemChaosFilm } from "@/components/replica/diagrams/ProblemChaosFilm";
+import { OpsLag } from "@/components/replica/diagrams/OpsLag";
 import { replicaContent } from "@/content/replica";
 import { cn } from "@/lib/cn";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
@@ -10,8 +10,8 @@ import { REPLICA_FRAMES } from "@/lib/replica-frames";
 type Props = { theme: "light" | "dark"; className?: string };
 
 /**
- * Approach C Problem — A+B hybrid (Ramp chaos inside Framer/Tines cinema plate).
- * Copy stays short; symptoms live as film fragments, not a text list.
+ * AOF Problem — Soft Structuralism Ops Lag diagram (Pencil `ifJjx`).
+ * Copy stays short; anatomy lives in the diagram plate, not a symptom list.
  */
 export function ReplicaProblem({ theme, className }: Props) {
   const p = replicaContent.problem;
@@ -40,7 +40,7 @@ export function ReplicaProblem({ theme, className }: Props) {
       </div>
 
       <div className="relative z-10 w-full max-w-3xl">
-        <ProblemChaosFilm caption={p.filmCaption} />
+        <OpsLag theme={theme} caption={p.filmCaption} />
       </div>
 
       <Link

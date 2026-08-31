@@ -28,9 +28,9 @@ export const productMegaMenuContent = {
       description: "Prompts become reviewed action across your toolchain.",
       slug: "aiden-for-devops",
       capabilities: [
-        "PLACEHOLDER — capability",
-        "PLACEHOLDER — capability",
-        "PLACEHOLDER — capability",
+        "IDP to blueprint compose",
+        "Policies applied by design",
+        "ServiceNow & Jira ready",
       ],
     },
     {

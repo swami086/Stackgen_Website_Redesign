@@ -83,9 +83,19 @@ test("InfraOps product page ships Factory hero without PLACEHOLDER", () => {
   expect(content.problem.heading).not.toMatch(/^PLACEHOLDER/);
 });
 
+test("DevOps product page ships Factory hero without PLACEHOLDER", () => {
+  const content = getProductContent("aiden-for-devops");
+  expect(content.hero.subhead).not.toMatch(/^PLACEHOLDER/);
+  expect(content.hero.subhead).toMatch(/IDP/);
+  expect(content.problem.heading).not.toMatch(/^PLACEHOLDER/);
+});
+
 test("product content objects expose section placeholders for stub slugs", () => {
   const stubSlugs = PRODUCT_SLUGS.filter(
-    (slug) => slug !== "aiden-for-sre" && slug !== "aiden-for-infraops",
+    (slug) =>
+      slug !== "aiden-for-sre" &&
+      slug !== "aiden-for-infraops" &&
+      slug !== "aiden-for-devops",
   );
   for (const slug of stubSlugs) {
     const content = getProductContent(slug);

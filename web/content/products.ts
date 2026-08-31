@@ -217,6 +217,155 @@ function buildProductContent(slug: ProductSlug): ProductPageContent {
   };
 }
 
+const devOpsContent: ProductPageContent = {
+  slug: "aiden-for-devops",
+  title: PRODUCTS["aiden-for-devops"].title,
+  phase: PRODUCTS["aiden-for-devops"].phase,
+  flags: {
+    subNav: true,
+    pillars: true,
+    offers: false,
+    resources: false,
+  },
+  subNav: {
+    overviewLabel: "Overview",
+  },
+  hero: {
+    heading: "Aiden for DevOps",
+    subhead:
+      "From IDP and ticketing to automated pipeline provisioning — blueprints, policies, and guardrails applied by design.",
+    primaryCta: CTA_DEFAULTS.primaryCta,
+    primaryHref: CTA_DEFAULTS.primaryHref,
+    secondaryCta: CTA_DEFAULTS.secondaryCta,
+    secondaryHref: CTA_DEFAULTS.secondaryHref,
+  },
+  pillars: {
+    items: [
+      {
+        title: "IDP-native compose",
+        body: "Developers pick approved scaffolds in the IDP — StackGen composes the full stack from there.",
+      },
+      {
+        title: "Policy by design",
+        body: "Modules, security guidelines, and guardrails are enforced automatically — not reviewed manually each time.",
+      },
+      {
+        title: "Ticket-to-deploy",
+        body: "ServiceNow and Jira requests flow into governed provisioning without platform-team re-encoding.",
+      },
+    ],
+  },
+  logos: {
+    eyebrow: "Trusted by platform teams",
+  },
+  problem: {
+    heading: "Weeks to stand up what the blueprint already knows.",
+    body: "Developers pick scaffolds in the IDP; platform still re-applies modules and reviews by hand. Same standards, slow path.",
+  },
+  spotlight: {
+    heading: "IDP / ticket → compose → provision",
+    body: "The Operate spine of the Autonomous Operations Factory — from developer request to governed deployment.",
+    cards: [
+      {
+        title: "Developer parametrizes approved blueprint",
+        body: "Pick a scaffold in the IDP or open a ticket — parameters stay within approved bounds.",
+      },
+      {
+        title: "StackGen composes IaC with policies",
+        body: "Infrastructure, app configs, and workloads are composed with L1–L3 modules and security guidelines applied.",
+      },
+      {
+        title: "App configs, infrastructure, and workload deploy",
+        body: "The full stack provisions through the same governance layer — no manual module re-application.",
+      },
+    ],
+  },
+  capabilities: {
+    heading: "Built for platform teams",
+    items: [
+      {
+        title: "ServiceNow & Jira out of the box",
+        body: "Ticket-driven provisioning flows into the same compose and policy pipeline as IDP requests.",
+      },
+      {
+        title: "Centers of excellence keep L1–L3 modules",
+        body: "Platform teams maintain approved module libraries — developers consume, not re-invent.",
+      },
+      {
+        title: "Same governance, automatic enforcement",
+        body: "Security guidelines and guardrails apply on every compose — not on every review cycle.",
+      },
+      {
+        title: "Blueprint-driven provisioning",
+        body: "Approved patterns become repeatable, governed deployments across your estate.",
+      },
+    ],
+  },
+  platformLink: {
+    heading: "Shared memory across the Factory",
+    body: "Aiden OS and the Operational Context Graph connect IDP selections, tickets, and live estate — so compose starts from current state.",
+  },
+  integrations: {
+    heading: "Your stack, connected",
+    body: "Internal developer platforms, ServiceNow, Jira, Git, and cloud accounts — requests flow into governed provisioning.",
+  },
+  enterprise: {
+    heading: "Deploy your way",
+    items: [
+      {
+        title: "Public cloud",
+        body: "Run Aiden for DevOps on your preferred cloud provider with standard SaaS deployment.",
+      },
+      {
+        title: "Private SaaS",
+        body: "Dedicated tenant isolation with your security and compliance requirements.",
+      },
+      {
+        title: "Self-hosted",
+        body: "Deploy in your own environment when data residency or air-gapped operation is required.",
+      },
+    ],
+  },
+  proof: {
+    heading: "Trusted in production",
+    body: "Same blueprints and security guidelines — enforced automatically instead of reviewed manually.",
+  },
+  offers: {
+    heading: "",
+    items: [],
+  },
+  finalCta: {
+    heading: "See DevOps compose on your IDP",
+    subhead: "Schedule a demo — blueprints, policies, and guardrails applied by design.",
+    cta: CTA_DEFAULTS.finalCtaLabel,
+    href: CTA_DEFAULTS.finalCtaHref,
+  },
+  faq: {
+    heading: "How it works",
+    items: [
+      {
+        question: "Does this work with our existing IDP?",
+        answer:
+          "Yes. Aiden connects to your internal developer platform — developers keep their familiar scaffolds and workflows.",
+      },
+      {
+        question: "What about ServiceNow or Jira tickets?",
+        answer:
+          "Ticket-driven requests flow into the same compose pipeline. Platform teams define blueprints once; every request uses them.",
+      },
+      {
+        question: "Who maintains the module library?",
+        answer:
+          "Your platform team or center of excellence. Aiden enforces what you approve — L1–L3 modules and security guidelines stay under your control.",
+      },
+    ],
+  },
+  resources: {
+    heading: "",
+    items: [],
+  },
+};
+
 const infraOpsContent: ProductPageContent = {
   slug: "aiden-for-infraops",
   title: PRODUCTS["aiden-for-infraops"].title,
@@ -521,7 +670,7 @@ const sreContent: ProductPageContent = {
 
 export const productContentBySlug: Record<ProductSlug, ProductPageContent> = {
   "aiden-for-infraops": infraOpsContent,
-  "aiden-for-devops": buildProductContent("aiden-for-devops"),
+  "aiden-for-devops": devOpsContent,
   "aiden-for-observability": buildProductContent("aiden-for-observability"),
   "aiden-for-sre": sreContent,
 };

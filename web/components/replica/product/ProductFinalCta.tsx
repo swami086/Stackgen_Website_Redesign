@@ -24,7 +24,7 @@ export function ProductFinalCta({ theme, content, className }: ProductFinalCtaPr
         {content.finalCta.subhead}
       </p>
       <Link
-        href="#"
+        href={content.finalCta.href}
         className="inline-flex w-fit items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-medium text-on-accent no-underline"
       >
         {content.finalCta.cta}

@@ -18,7 +18,8 @@ export function ProductHero({
   pencilFrameId,
   className,
 }: ProductHeroProps) {
-  const { heading, subhead, primaryCta, secondaryCta } = content.hero;
+  const { heading, subhead, primaryCta, primaryHref, secondaryCta, secondaryHref } =
+    content.hero;
 
   return (
     <ProductSectionShell
@@ -46,13 +47,13 @@ export function ProductHero({
         {isPlaceholderCopy(subhead) ? <ProductPlaceholderBadge /> : null}
         <div className="mt-4 flex flex-wrap items-center gap-4">
           <Link
-            href="#"
+            href={primaryHref}
             className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-medium text-on-accent no-underline"
           >
             {primaryCta}
           </Link>
           <Link
-            href="#"
+            href={secondaryHref}
             className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-medium text-text-primary no-underline outline outline-1 -outline-offset-1 outline-border"
           >
             {secondaryCta}

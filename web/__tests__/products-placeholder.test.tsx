@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { ProductMegaMenu } from "@/components/replica/nav/ProductMegaMenu";
 import { ProductPage } from "@/components/replica/ProductPage";
 import { ThemeProvider } from "@/components/replica/theme/ThemeProvider";
@@ -78,7 +78,7 @@ test("product content objects expose section placeholders for every slug", () =>
     const content = getProductContent(slug);
     expect(content.hero.subhead).toMatch(/^PLACEHOLDER — /);
     expect(content.problem.heading).toMatch(/^PLACEHOLDER — /);
-    expect(content.finalCta.cta).toBe("Schedule demo");
+    expect(content.finalCta.cta).toBe("Schedule a demo");
   }
 });
 
@@ -94,10 +94,29 @@ test("product page skips optional offers section when flag is false", () => {
   expect(document.querySelector('[data-product-section="product-offers"]')).toBeNull();
 });
 
-test("product page includes final CTA with Schedule demo", () => {
+test("product page includes final CTA with Schedule a demo", () => {
   renderProduct("aiden-for-observability");
-  const ctas = screen.getAllByRole("link", { name: "Schedule demo" });
+  const ctas = screen.getAllByRole("link", { name: "Schedule a demo" });
   expect(ctas.length).toBeGreaterThanOrEqual(2);
+});
+
+test("product hero CTAs link to schedule-demo and homepage how-it-works", () => {
+  renderProduct("aiden-for-sre");
+  const hero = document.getElementById("product-hero")!;
+  expect(within(hero).getByRole("link", { name: "Schedule a demo" })).toHaveAttribute(
+    "href",
+    "/schedule-demo",
+  );
+  expect(within(hero).getByRole("link", { name: "How it works" })).toHaveAttribute(
+    "href",
+    "/#how-it-works",
+  );
+});
+
+test("final CTA uses Schedule a demo href", () => {
+  const content = getProductContent("aiden-for-infraops");
+  expect(content.finalCta.cta).toBe("Schedule a demo");
+  expect(content.finalCta.href).toBe("/schedule-demo");
 });
 
 test("product mega menu lists four Explore links to product routes", () => {

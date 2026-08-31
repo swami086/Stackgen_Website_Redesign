@@ -31,7 +31,9 @@ export type ProductPageContent = {
     heading: string;
     subhead: string;
     primaryCta: string;
+    primaryHref: string;
     secondaryCta: string;
+    secondaryHref: string;
   };
   pillars: {
     items: readonly ProductCard[];
@@ -76,6 +78,7 @@ export type ProductPageContent = {
     heading: string;
     subhead: string;
     cta: string;
+    href: string;
   };
   faq: {
     heading: string;
@@ -106,8 +109,10 @@ function buildProductContent(slug: ProductSlug): ProductPageContent {
     hero: {
       heading: meta.title,
       subhead: P("hero subhead"),
-      primaryCta: "Schedule demo",
-      secondaryCta: P("secondary CTA"),
+      primaryCta: "Schedule a demo",
+      primaryHref: "/schedule-demo",
+      secondaryCta: "How it works",
+      secondaryHref: "/#how-it-works",
     },
     pillars: {
       items: [
@@ -171,7 +176,8 @@ function buildProductContent(slug: ProductSlug): ProductPageContent {
     finalCta: {
       heading: P("final CTA heading"),
       subhead: P("final CTA subhead"),
-      cta: "Schedule demo",
+      cta: "Schedule a demo",
+      href: "/schedule-demo",
     },
     faq: {
       heading: P("FAQ heading"),

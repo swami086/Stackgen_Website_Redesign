@@ -217,6 +217,155 @@ function buildProductContent(slug: ProductSlug): ProductPageContent {
   };
 }
 
+const observabilityContent: ProductPageContent = {
+  slug: "aiden-for-observability",
+  title: PRODUCTS["aiden-for-observability"].title,
+  phase: PRODUCTS["aiden-for-observability"].phase,
+  flags: {
+    subNav: true,
+    pillars: true,
+    offers: false,
+    resources: false,
+  },
+  subNav: {
+    overviewLabel: "Overview",
+  },
+  hero: {
+    heading: "Aiden for Observability",
+    subhead:
+      "AI investigation on the observability stack you already run — Grafana, Datadog, New Relic, Dynatrace, and more.",
+    primaryCta: CTA_DEFAULTS.primaryCta,
+    primaryHref: CTA_DEFAULTS.primaryHref,
+    secondaryCta: CTA_DEFAULTS.secondaryCta,
+    secondaryHref: CTA_DEFAULTS.secondaryHref,
+  },
+  pillars: {
+    items: [
+      {
+        title: "Work with existing dashboards",
+        body: "Investigate on Grafana, Datadog, New Relic, or Dynatrace — no rip-and-replace.",
+      },
+      {
+        title: "Shared World Model context",
+        body: "The Operational Context Graph connects signals across tools into one investigation path.",
+      },
+      {
+        title: "Feeds SRE remediation",
+        body: "Observations flow into Detect → Remediate with the same governance and audit trail.",
+      },
+    ],
+  },
+  logos: {
+    eyebrow: "Trusted by platform teams",
+  },
+  problem: {
+    heading: "Dashboards without a shared investigation path.",
+    body: "Every tool holds a slice. Developers lose time re-assembling context that the Factory should already share.",
+  },
+  spotlight: {
+    heading: "Observe pillar in the Autonomous Operations Factory",
+    body: "AI investigation on your existing observability stack — context shared across the Factory.",
+    cards: [
+      {
+        title: "Investigate on your stack",
+        body: "Connect Grafana, Datadog, New Relic, Dynatrace, and OTEL without migrating dashboards.",
+      },
+      {
+        title: "Shared context across tools",
+        body: "The Operational Context Graph joins signals that live in separate vendor silos.",
+      },
+      {
+        title: "Feeds Detect → Remediate",
+        body: "Observations connect to SRE workflows with the same policy gates and human authority.",
+      },
+    ],
+  },
+  capabilities: {
+    heading: "Built for your observability stack",
+    items: [
+      {
+        title: "Works with Grafana / Datadog / New Relic / Dynatrace",
+        body: "Investigate on the tools your team already runs — no new dashboard migration.",
+      },
+      {
+        title: "Saves developer investigation time",
+        body: "Shared context reduces the re-assembly tax across vendor silos.",
+      },
+      {
+        title: "Same Aiden OS governance",
+        body: "Policy gates, audit trail, and human authority apply to every investigation path.",
+      },
+      {
+        title: "Factory-wide context",
+        body: "Observations feed Build, Operate, and Remediate workflows from one shared memory.",
+      },
+    ],
+  },
+  platformLink: {
+    heading: "Shared memory across the Factory",
+    body: "Aiden OS and the Operational Context Graph unify observability signals with infrastructure state — so investigation starts from truth.",
+  },
+  integrations: {
+    heading: "Your stack, connected",
+    body: "Grafana, Grafana Cloud, Datadog, New Relic, Dynatrace, OTEL, and cloud accounts — investigate without replacing your stack.",
+  },
+  enterprise: {
+    heading: "Deploy your way",
+    items: [
+      {
+        title: "Public cloud",
+        body: "Run Aiden for Observability on your preferred cloud provider with standard SaaS deployment.",
+      },
+      {
+        title: "Private SaaS",
+        body: "Dedicated tenant isolation with your security and compliance requirements.",
+      },
+      {
+        title: "Self-hosted",
+        body: "Deploy in your own environment when data residency or air-gapped operation is required.",
+      },
+    ],
+  },
+  proof: {
+    heading: "Trusted in production",
+    body: "Trusted by platform teams running multi-vendor observability estates.",
+  },
+  offers: {
+    heading: "",
+    items: [],
+  },
+  finalCta: {
+    heading: "See Observability in the Factory",
+    subhead: "Schedule a demo — AI investigation on the stack you already run.",
+    cta: CTA_DEFAULTS.finalCtaLabel,
+    href: CTA_DEFAULTS.finalCtaHref,
+  },
+  faq: {
+    heading: "How it works",
+    items: [
+      {
+        question: "Do we need to migrate our dashboards?",
+        answer:
+          "No. Aiden investigates on Grafana, Datadog, New Relic, Dynatrace, and OTEL — your existing stack stays in place.",
+      },
+      {
+        question: "How does this connect to SRE workflows?",
+        answer:
+          "Observations feed Detect → Remediate with shared context from the Operational Context Graph and the same governance layer.",
+      },
+      {
+        question: "Is investigation autonomous?",
+        answer:
+          "Aiden accelerates investigation with shared context. Remediation still requires explicit human approval through Aiden for SRE.",
+      },
+    ],
+  },
+  resources: {
+    heading: "",
+    items: [],
+  },
+};
+
 const devOpsContent: ProductPageContent = {
   slug: "aiden-for-devops",
   title: PRODUCTS["aiden-for-devops"].title,
@@ -671,7 +820,7 @@ const sreContent: ProductPageContent = {
 export const productContentBySlug: Record<ProductSlug, ProductPageContent> = {
   "aiden-for-infraops": infraOpsContent,
   "aiden-for-devops": devOpsContent,
-  "aiden-for-observability": buildProductContent("aiden-for-observability"),
+  "aiden-for-observability": observabilityContent,
   "aiden-for-sre": sreContent,
 };
 

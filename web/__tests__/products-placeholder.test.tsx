@@ -90,19 +90,12 @@ test("DevOps product page ships Factory hero without PLACEHOLDER", () => {
   expect(content.problem.heading).not.toMatch(/^PLACEHOLDER/);
 });
 
-test("product content objects expose section placeholders for stub slugs", () => {
-  const stubSlugs = PRODUCT_SLUGS.filter(
-    (slug) =>
-      slug !== "aiden-for-sre" &&
-      slug !== "aiden-for-infraops" &&
-      slug !== "aiden-for-devops",
-  );
-  for (const slug of stubSlugs) {
-    const content = getProductContent(slug);
-    expect(content.hero.subhead).toMatch(/^PLACEHOLDER — /);
-    expect(content.problem.heading).toMatch(/^PLACEHOLDER — /);
-    expect(content.finalCta.cta).toBe("Schedule a demo");
-  }
+test("Observability product page ships thin Factory hero without PLACEHOLDER", () => {
+  const content = getProductContent("aiden-for-observability");
+  expect(content.hero.subhead).not.toMatch(/^PLACEHOLDER/);
+  expect(content.hero.subhead).toMatch(/Grafana/);
+  expect(content.problem.heading).not.toMatch(/^PLACEHOLDER/);
+  expect(content.flags.resources).toBe(false);
 });
 
 test("product page renders locked title as hero heading", () => {

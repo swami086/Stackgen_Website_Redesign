@@ -39,9 +39,9 @@ export const productMegaMenuContent = {
       description: "Managed OSS observability with an AI investigation layer.",
       slug: "aiden-for-observability",
       capabilities: [
-        "PLACEHOLDER — capability",
-        "PLACEHOLDER — capability",
-        "PLACEHOLDER — capability",
+        "Investigate on your existing stack",
+        "Shared context across tools",
+        "Feeds Detect → Remediate",
       ],
     },
     {

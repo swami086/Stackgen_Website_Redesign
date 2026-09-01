@@ -21,7 +21,7 @@ test("who-its-for docks use Tier-2 glass plates with nested tiles", () => {
   expect(roles?.className).toContain("glass-specular");
   expect(os?.className).toContain("glass-specular");
   expect(container.querySelectorAll("[data-who-role].glass-tile").length).toBe(
-    4,
+    3,
   );
   expect(os?.querySelectorAll(".glass-tile").length).toBeGreaterThan(0);
 });
@@ -30,14 +30,17 @@ test("who-its-for renders product portraits, role dock, and OS rail", () => {
   const { container } = render(<ReplicaWhoItsFor theme="dark" />);
   expect(container.querySelector('[data-who-layout="portraits-dock"]')).toBeTruthy();
   expect(container.querySelectorAll("[data-who-portrait]")).toHaveLength(4);
-  expect(container.querySelectorAll("[data-who-role]")).toHaveLength(4);
+  expect(container.querySelectorAll("[data-who-role]")).toHaveLength(3);
   expect(container.querySelector("[data-who-os]")).toBeTruthy();
   expect(
     container.querySelectorAll("[data-who-pillars] [data-bento-cell]"),
   ).toHaveLength(4);
   expect(
     container.querySelectorAll("[data-who-roles] [data-bento-cell]"),
-  ).toHaveLength(4);
+  ).toHaveLength(3);
+    expect(screen.getAllByText(/Detect the real incident/i).length).toBeGreaterThanOrEqual(2);
+  expect(screen.getByText(/Ship change on-call can see/i)).toBeInTheDocument();
+  expect(screen.getByText(/Keep control of how software ships/i)).toBeInTheDocument();
   // Real product UI frames — not generative product heroes
   const imgs = [...container.querySelectorAll("[data-who-portrait] img")];
   expect(imgs).toHaveLength(4);

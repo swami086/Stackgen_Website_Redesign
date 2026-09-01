@@ -52,9 +52,8 @@ const PILLAR_SLUGS: ProductHeroSlug[] = [
 
 const ROLE_ICONS: Record<string, PhosphorIconName> = {
   SRE: "heartbeat",
-  "Platform Engineering": "rocket-launch",
-  Developers: "terminal-window",
-  DevSecOps: "shield-check",
+  Developer: "terminal-window",
+  DevOps: "arrows-clockwise",
 };
 
 export function ReplicaWhoItsFor({ theme, className }: ReplicaWhoItsForProps) {
@@ -140,32 +139,38 @@ export function ReplicaWhoItsFor({ theme, className }: ReplicaWhoItsForProps) {
           })}
         </div>
 
-        {/* Role dock — Apple Mail/Notes floating tray: Tier-2 plate + nested tiles.
-            Light: no matte bg-bg chips (they flatten liquid gloss). No content blur. */}
+        {/* Persona dock — titles plus job language, not tooltip-only chips. */}
         <div
           data-who-roles
-          className="glass-specular relative z-10 flex w-full flex-wrap items-center justify-center gap-2 rounded-xl px-3 py-2.5"
+          className="glass-specular relative z-10 flex w-full flex-col gap-2 rounded-xl px-3 py-2.5"
         >
-          <span className="relative z-[2] mr-1 font-mono text-[9px] font-semibold uppercase tracking-[1.5px] text-text-tertiary">
-            Roles
+          <span className="relative z-[2] font-mono text-[9px] font-semibold uppercase tracking-[1.5px] text-text-tertiary">
+            For
           </span>
-          {roles.map((role) => (
-            <div
-              key={role.title}
-              data-bento-cell=""
-              data-who-role=""
-              className="glass-tile relative z-[2] inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5"
-              title={role.body}
-            >
-              <PhosphorIcon
-                name={ROLE_ICONS[role.title] ?? "stack"}
-                className="size-3.5 text-accent"
-              />
-              <span className="text-[12px] font-medium text-text-primary">
-                {role.title}
-              </span>
-            </div>
-          ))}
+          <div className="relative z-[2] grid w-full grid-cols-1 gap-2 sm:grid-cols-3">
+            {roles.map((role) => (
+              <Link
+                key={role.title}
+                href={role.href}
+                data-bento-cell=""
+                data-who-role=""
+                className="glass-tile flex min-w-0 flex-col items-start gap-1 rounded-xl px-3 py-2.5 transition-colors hover:border-border-hover"
+              >
+                <span className="inline-flex items-center gap-1.5">
+                  <PhosphorIcon
+                    name={ROLE_ICONS[role.title] ?? "stack"}
+                    className="size-3.5 text-accent"
+                  />
+                  <span className="text-[12px] font-semibold text-text-primary">
+                    {role.title}
+                  </span>
+                </span>
+                <p className="text-[12px] leading-snug text-text-secondary">
+                  {role.body}
+                </p>
+              </Link>
+            ))}
+          </div>
         </div>
 
         {/* Aiden OS rail — same liquid plate as Roles (was flat ds-layer-os matte). */}

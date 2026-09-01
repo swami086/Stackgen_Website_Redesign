@@ -8,6 +8,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "The Autonomous Operations Factory | StackGen",
+  description:
+    "Take control of production. Give on-call complete context to see, decide, and change what is running. Aiden for InfraOps, DevOps, Observability, and SRE.",
 };
 
 export default function RootLayout({

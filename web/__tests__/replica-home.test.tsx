@@ -61,7 +61,7 @@ test("the four canvas eyebrows are present and no fifth was added", () => {
 test("Solution keeps prior video placeholder plate", () => {
   renderHome("dark");
   expect(document.querySelector('[data-video-placeholder="solution"]')).toBeTruthy();
-  expect(screen.getByText(/From intent to repeatable action under policy/i)).toBeInTheDocument();
+  expect(screen.getByText(/Incomplete context vs. complete context/i)).toBeInTheDocument();
   expect(
     document.querySelector('[data-diagram-placeholder="solution-pillars"]'),
   ).toBeNull();
@@ -99,7 +99,7 @@ test("homepage section order is Hero Logos Problem Solution Assemblies", () => {
 test("Factory homepage hero and CTAs", () => {
   renderHome("dark");
   const h1 = screen.getByRole("heading", { level: 1 });
-  expect(h1.textContent?.replace(/\s/g, "")).toBe("Outcomes,notagents.");
+  expect(h1.textContent?.replace(/\s/g, "")).toBe("Takecontrolofproduction.");
   const scheduleLinks = screen.getAllByRole("link", { name: "Schedule a demo" });
   expect(scheduleLinks.some((link) => link.getAttribute("href") === "/schedule-demo")).toBe(
     true,
@@ -119,7 +119,7 @@ test("Factory brand appears in how-it-works / assemblies", () => {
   renderHome("dark");
   expect(
     screen.getByText(
-      /Learn back into the Shared World Model — the Autonomous Operations Factory path/i,
+      /Build, Operate, Observe, and Remediate share one Autonomous Operations Factory path/i,
     ),
   ).toBeInTheDocument();
 });
@@ -127,14 +127,14 @@ test("Factory brand appears in how-it-works / assemblies", () => {
 test("hero and problem use Factory spine copy", () => {
   renderHome("dark");
   expect(screen.getByRole("heading", { level: 1 }).textContent?.replace(/\s/g, "")).toBe(
-    "Outcomes,notagents.",
+    "Takecontrolofproduction.",
   );
   expect(screen.getByText("The problem")).toBeInTheDocument();
   expect(
-    screen.getByText(/Outer Ops loop is failing to keep up with inner Dev loop/i),
+    screen.getByText(/AI code is hitting production/i),
   ).toBeInTheDocument();
   expect(screen.getByText("The solution")).toBeInTheDocument();
-  expect(screen.getByText("Autonomous Operations Factory")).toBeInTheDocument();
+  expect(screen.getByText("Take back control with complete context")).toBeInTheDocument();
 });
 
 test("problem section ships Ops Lag Soft Structuralism diagram", () => {

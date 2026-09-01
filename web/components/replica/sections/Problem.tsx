@@ -34,12 +34,14 @@ export function ReplicaProblem({ theme, className }: Props) {
         <h2 className="text-[28px] font-bold leading-[1.1] tracking-[-1px] text-text-primary md:text-[32px]">
           {p.heading}
         </h2>
-        <p className="text-sm font-semibold text-text-primary">{p.punchline}</p>
+        {p.punchline ? (
+          <p className="text-sm font-semibold text-text-primary">{p.punchline}</p>
+        ) : null}
         {/* body kept in content for SEO/a11y; not shown as a wall of text */}
         <p className="sr-only">{p.body}</p>
       </div>
 
-      <div className="relative z-10 w-full max-w-3xl">
+      <div className="relative z-10 w-full max-w-5xl">
         <OpsLag theme={theme} caption={p.filmCaption} />
       </div>
 

@@ -19,17 +19,17 @@ const APPS: {
 }[] = [
   {
     title: "Aiden for SRE",
-    sub: "investigate with shared context",
+    sub: "on-call with shared context",
     icon: "shield-check",
   },
   {
     title: "Aiden for DevOps",
-    sub: "ticket → reviewed action",
+    sub: "delivery on-call can trust",
     icon: "git-branch",
   },
   {
     title: "Aiden for InfraOps",
-    sub: "intent → governed AppStacks",
+    sub: "policy-checked from the IDE",
     icon: "cloud-arrow-down",
   },
 ];

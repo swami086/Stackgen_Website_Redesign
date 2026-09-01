@@ -116,7 +116,7 @@ const observabilityContent: ProductPageContent = {
   hero: {
     heading: "Aiden for Observability",
     subhead:
-      "AI investigation on the observability stack you already run — Grafana, Datadog, New Relic, Dynatrace, and more.",
+      "AI investigation on Grafana, Datadog, New Relic, Dynatrace, and more. Filter false positives.",
     primaryCta: CTA_DEFAULTS.primaryCta,
     primaryHref: CTA_DEFAULTS.primaryHref,
     secondaryCta: CTA_DEFAULTS.secondaryCta,
@@ -126,7 +126,7 @@ const observabilityContent: ProductPageContent = {
     items: [
       {
         title: "Work with existing dashboards",
-        body: "Investigate on Grafana, Datadog, New Relic, or Dynatrace — no rip-and-replace.",
+        body: "Investigate on Grafana, Datadog, New Relic, or Dynatrace. No rip-and-replace.",
       },
       {
         title: "Shared World Model context",
@@ -139,18 +139,18 @@ const observabilityContent: ProductPageContent = {
     ],
   },
   logos: {
-    eyebrow: "Trusted by platform teams",
+    eyebrow: "Trusted by SRE teams",
   },
   problem: {
-    heading: "Dashboards without a shared investigation path.",
-    body: "Every tool holds a slice. Developers lose time re-assembling context that the Factory should already share.",
+    heading: "Every dashboard is a fragment. Alerts struggle to keep up.",
+    body: "On-call still jumps dashboards while AI code lands in production. Alerts struggle to keep up.",
   },
   video: {
     caption: "See Observability investigation — video placeholder.",
   },
   spotlight: {
     heading: "Observe pillar in the Autonomous Operations Factory",
-    body: "AI investigation on your existing observability stack — context shared across the Factory.",
+    body: "AI investigation on your existing observability stack. Context shared across the Factory.",
     cards: [
       {
         title: "Investigate on your stack",
@@ -167,14 +167,14 @@ const observabilityContent: ProductPageContent = {
     ],
   },
   capabilities: {
-    heading: "Built for your observability stack",
+    heading: "Built for on-call investigation",
     items: [
       {
         title: "Works with Grafana / Datadog / New Relic / Dynatrace",
-        body: "Investigate on the tools your team already runs — no new dashboard migration.",
+        body: "Investigate on the tools your team already runs. No new dashboard migration.",
       },
       {
-        title: "Saves developer investigation time",
+        title: "Saves on-call investigation time",
         body: "Shared context reduces the re-assembly tax across vendor silos.",
       },
       {
@@ -189,11 +189,11 @@ const observabilityContent: ProductPageContent = {
   },
   platformLink: {
     heading: "Shared memory across the Factory",
-    body: "Aiden OS and the Operational Context Graph unify observability signals with infrastructure state — so investigation starts from truth.",
+    body: "Aiden OS and the Operational Context Graph unify observability signals with infrastructure state, so investigation starts from truth.",
   },
   integrations: {
     heading: "Your stack, connected",
-    body: "Grafana, Grafana Cloud, Datadog, New Relic, Dynatrace, OTEL, and cloud accounts — investigate without replacing your stack.",
+    body: "Grafana, Grafana Cloud, Datadog, New Relic, Dynatrace, OTEL, and cloud accounts. Investigate without replacing your stack.",
   },
   enterprise: {
     heading: "Deploy your way",
@@ -214,15 +214,15 @@ const observabilityContent: ProductPageContent = {
   },
   proof: {
     heading: "Trusted in production",
-    body: "Trusted by platform teams running multi-vendor observability estates.",
+    body: "Trusted by SRE teams investigating on the stack they already run.",
   },
   offers: {
     heading: "",
     items: [],
   },
   finalCta: {
-    heading: "See Observability in the Factory",
-    subhead: "Schedule a demo — AI investigation on the stack you already run.",
+    heading: "See Observability on your stack",
+    subhead: "Schedule a demo. Investigation that already knows what changed.",
     cta: CTA_DEFAULTS.finalCtaLabel,
     href: CTA_DEFAULTS.finalCtaHref,
   },
@@ -232,7 +232,7 @@ const observabilityContent: ProductPageContent = {
       {
         question: "Do we need to migrate our dashboards?",
         answer:
-          "No. Aiden investigates on Grafana, Datadog, New Relic, Dynatrace, and OTEL — your existing stack stays in place.",
+          "No. Aiden investigates on Grafana, Datadog, New Relic, Dynatrace, and OTEL. Your existing stack stays in place.",
       },
       {
         question: "How does this connect to SRE workflows?",
@@ -268,7 +268,7 @@ const devOpsContent: ProductPageContent = {
   hero: {
     heading: "Aiden for DevOps",
     subhead:
-      "From IDP and ticketing to automated pipeline provisioning — blueprints, policies, and guardrails applied by design.",
+      "Delivery from the IDP that on-call can trust.",
     primaryCta: CTA_DEFAULTS.primaryCta,
     primaryHref: CTA_DEFAULTS.primaryHref,
     secondaryCta: CTA_DEFAULTS.secondaryCta,
@@ -278,35 +278,35 @@ const devOpsContent: ProductPageContent = {
     items: [
       {
         title: "IDP-native compose",
-        body: "Developers pick approved scaffolds in the IDP — StackGen composes the full stack from there.",
+        body: "Developers pick approved scaffolds in the IDP. Compose stays inside the rails on-call can see.",
       },
       {
         title: "Policy by design",
-        body: "Modules, security guidelines, and guardrails are enforced automatically — not reviewed manually each time.",
+        body: "Modules, security guidelines, and guardrails apply automatically. Not a review cycle each time.",
       },
       {
         title: "Ticket-to-deploy",
-        body: "ServiceNow and Jira requests flow into governed provisioning without platform-team re-encoding.",
+        body: "ServiceNow and Jira requests flow into governed provisioning. You are not re-encoding each one.",
       },
     ],
   },
   logos: {
-    eyebrow: "Trusted by platform teams",
+    eyebrow: "Trusted by SRE teams",
   },
   problem: {
-    heading: "Weeks to stand up what the blueprint already knows.",
-    body: "Developers pick scaffolds in the IDP; platform still re-applies modules and reviews by hand. Same standards, slow path.",
+    heading: "A deploy you did not see still becomes an alert.",
+    body: "Scaffolds ship from the IDP. You still reverse-engineer what landed. Same standards. Slow path to truth.",
   },
   video: {
     caption: "See DevOps blueprint compose — video placeholder.",
   },
   spotlight: {
     heading: "IDP / ticket → compose → provision",
-    body: "The Operate spine of the Autonomous Operations Factory — from developer request to governed deployment.",
+    body: "The Operate spine of the Autonomous Operations Factory. From developer request to governed deployment.",
     cards: [
       {
         title: "Developer parametrizes approved blueprint",
-        body: "Pick a scaffold in the IDP or open a ticket — parameters stay within approved bounds.",
+        body: "Pick a scaffold in the IDP or open a ticket. Parameters stay within approved bounds.",
       },
       {
         title: "StackGen composes IaC with policies",
@@ -314,12 +314,12 @@ const devOpsContent: ProductPageContent = {
       },
       {
         title: "App configs, infrastructure, and workload deploy",
-        body: "The full stack provisions through the same governance layer — no manual module re-application.",
+        body: "The full stack provisions through the same governance layer. No manual module re-application.",
       },
     ],
   },
   capabilities: {
-    heading: "Built for platform teams",
+    heading: "Built for SRE",
     items: [
       {
         title: "ServiceNow & Jira out of the box",
@@ -327,25 +327,25 @@ const devOpsContent: ProductPageContent = {
       },
       {
         title: "Centers of excellence keep L1–L3 modules",
-        body: "Platform teams maintain approved module libraries — developers consume, not re-invent.",
+        body: "You maintain approved module libraries. Developers consume, not re-invent.",
       },
       {
         title: "Same governance, automatic enforcement",
-        body: "Security guidelines and guardrails apply on every compose — not on every review cycle.",
+        body: "Security guidelines and guardrails apply on every compose, not on every review cycle.",
       },
       {
         title: "Blueprint-driven provisioning",
-        body: "Approved patterns become repeatable, governed deployments across your estate.",
+        body: "Approved patterns become repeatable, governed deployments.",
       },
     ],
   },
   platformLink: {
     heading: "Shared memory across the Factory",
-    body: "Aiden OS and the Operational Context Graph connect IDP selections, tickets, and live estate — so compose starts from current state.",
+    body: "Aiden OS and the Operational Context Graph connect IDP selections, tickets, and live production, so compose starts from current state.",
   },
   integrations: {
     heading: "Your stack, connected",
-    body: "Internal developer platforms, ServiceNow, Jira, Git, and cloud accounts — requests flow into governed provisioning.",
+    body: "Internal developer platforms, ServiceNow, Jira, and cloud accounts. Requests flow into governed provisioning.",
   },
   enterprise: {
     heading: "Deploy your way",
@@ -366,15 +366,15 @@ const devOpsContent: ProductPageContent = {
   },
   proof: {
     heading: "Trusted in production",
-    body: "Same blueprints and security guidelines — enforced automatically instead of reviewed manually.",
+    body: "Same blueprints and security guidelines. Enforced automatically instead of reviewed on every request.",
   },
   offers: {
     heading: "",
     items: [],
   },
   finalCta: {
-    heading: "See DevOps compose on your IDP",
-    subhead: "Schedule a demo — blueprints, policies, and guardrails applied by design.",
+    heading: "See Aiden for DevOps on your IDP",
+    subhead: "Schedule a demo. Delivery on-call can trust.",
     cta: CTA_DEFAULTS.finalCtaLabel,
     href: CTA_DEFAULTS.finalCtaHref,
   },
@@ -384,17 +384,17 @@ const devOpsContent: ProductPageContent = {
       {
         question: "Does this work with our existing IDP?",
         answer:
-          "Yes. Aiden connects to your internal developer platform — developers keep their familiar scaffolds and workflows.",
+          "Yes. Aiden connects to your internal developer platform. Developers keep their familiar scaffolds and workflows.",
       },
       {
         question: "What about ServiceNow or Jira tickets?",
         answer:
-          "Ticket-driven requests flow into the same compose pipeline. Platform teams define blueprints once; every request uses them.",
+          "Ticket-driven requests flow into the same compose pipeline. You define blueprints once. Every request uses them.",
       },
       {
         question: "Who maintains the module library?",
         answer:
-          "Your platform team or center of excellence. Aiden enforces what you approve — L1–L3 modules and security guidelines stay under your control.",
+          "You do, or your center of excellence. Aiden enforces what you approve. L1–L3 modules and security guidelines stay under your control.",
       },
     ],
   },
@@ -420,7 +420,7 @@ const infraOpsContent: ProductPageContent = {
   hero: {
     heading: "Aiden for InfraOps",
     subhead:
-      "Self-serve standardized infrastructure from the IDE — intent to governed IaC without a platform-team handoff.",
+      "Policy-checked change from the IDE. Before it becomes an alert.",
     primaryCta: CTA_DEFAULTS.primaryCta,
     primaryHref: CTA_DEFAULTS.primaryHref,
     secondaryCta: CTA_DEFAULTS.secondaryCta,
@@ -430,7 +430,7 @@ const infraOpsContent: ProductPageContent = {
     items: [
       {
         title: "Intent in the IDE",
-        body: "Developers describe what they need in the environment they already work in — no ticket queue.",
+        body: "Describe what production needs in the IDE. Policy gates run before the change becomes an alert.",
       },
       {
         title: "Governed IaC generation",
@@ -438,27 +438,27 @@ const infraOpsContent: ProductPageContent = {
       },
       {
         title: "Compliance before production",
-        body: "Policy checks run against shared state before any change reaches your estate.",
+        body: "Policy checks run against shared state before any change reaches production.",
       },
     ],
   },
   logos: {
-    eyebrow: "Trusted by platform teams",
+    eyebrow: "Trusted by SRE teams",
   },
   problem: {
-    heading: "Manual handoffs slow every infrastructure request.",
-    body: "Developers wait on tickets while platform teams re-encode the same patterns. Compliance arrives late, after the shape is already wrong.",
+    heading: "Ungoverned infra change shows up as an alert.",
+    body: "Intent lands without policy. You find out on-call. Drift shows up after deploy. Compliance arrives late, after the shape is already wrong.",
   },
   video: {
     caption: "See InfraOps IDE intent → IaC — video placeholder.",
   },
   spotlight: {
     heading: "Intent → Detect & generate → Govern → Deploy → Close the loop",
-    body: "The Build spine of the Autonomous Operations Factory — from developer intent to governed infrastructure in your Git.",
+    body: "The Build spine of the Autonomous Operations Factory. From developer intent to governed infrastructure.",
     cards: [
       {
         title: "Intent in IDE",
-        body: "Developers express infrastructure needs directly in agentic IDEs — no platform-team translation layer.",
+        body: "Intent lands in agentic IDEs. Policy still has to catch it before on-call does.",
       },
       {
         title: "Secure Terraform/OpenTofu generated in-environment",
@@ -471,11 +471,11 @@ const infraOpsContent: ProductPageContent = {
     ],
   },
   capabilities: {
-    heading: "Built for platform teams",
+    heading: "Built for SRE",
     items: [
       {
-        title: "Manual handoff eliminated",
-        body: "Developers self-serve standardized infrastructure without waiting on platform tickets.",
+        title: "Policy-checked before it becomes an alert",
+        body: "Generated infrastructure is checked against policy before it reaches production.",
       },
       {
         title: "Compliance by default",
@@ -483,7 +483,7 @@ const infraOpsContent: ProductPageContent = {
       },
       {
         title: "Audit trail auto-filed",
-        body: "Intent, generation, and approval history travel with the PR — not in a separate system.",
+        body: "Intent, generation, and approval history travel with the change, not in a separate system.",
       },
       {
         title: "Multi-cloud IaC (AWS / Azure / GCP)",
@@ -493,11 +493,11 @@ const infraOpsContent: ProductPageContent = {
   },
   platformLink: {
     heading: "Shared memory across the Factory",
-    body: "Aiden OS and the Operational Context Graph hold live estate state and policy — so generated IaC is checked against truth, not stale docs.",
+    body: "Aiden OS and the Operational Context Graph hold live production state and policy, so generated IaC is checked against truth, not stale docs.",
   },
   integrations: {
     heading: "Your stack, connected",
-    body: "IDE and agentic IDEs (e.g. Kiro-class), Git, and cloud accounts — intent flows straight into governed IaC.",
+    body: "IDE and agentic IDEs (e.g. Kiro-class) and cloud accounts. Intent flows straight into governed IaC.",
   },
   enterprise: {
     heading: "Deploy your way",
@@ -518,15 +518,15 @@ const infraOpsContent: ProductPageContent = {
   },
   proof: {
     heading: "Trusted in production",
-    body: "Trusted by platform teams standardizing infrastructure across production estates.",
+    body: "Trusted by SRE teams shipping infrastructure without surprise deploys.",
   },
   offers: {
     heading: "",
     items: [],
   },
   finalCta: {
-    heading: "See InfraOps on your estate",
-    subhead: "Schedule a demo — intent to governed IaC without the handoff queue.",
+    heading: "See InfraOps in your IDE",
+    subhead: "Schedule a demo. Change on-call can see before it becomes an alert.",
     cta: CTA_DEFAULTS.finalCtaLabel,
     href: CTA_DEFAULTS.finalCtaHref,
   },
@@ -536,12 +536,12 @@ const infraOpsContent: ProductPageContent = {
       {
         question: "Does this replace our platform team?",
         answer:
-          "No. Platform teams define modules, policies, and guardrails. Developers self-serve within those boundaries — reducing toil, not ownership.",
+          "No. You still define modules, policies, and guardrails. Developers self-serve within those boundaries. Less toil on-call, not less ownership.",
       },
       {
         question: "Where does the IaC land?",
         answer:
-          "Generated Terraform or OpenTofu flows into your Git repos with full audit trail — same review process your team already uses.",
+          "Generated Terraform or OpenTofu flows into your repos with a full audit trail. Same review process your team already uses.",
       },
       {
         question: "How is compliance enforced?",
@@ -572,7 +572,7 @@ const sreContent: ProductPageContent = {
   hero: {
     heading: "Aiden for SRE",
     subhead:
-      "Less toil. Improve reliability. Detect → Triage → Diagnose → Remediate — with humans keeping authority.",
+      "Detect the real incident. Let agents act. You keep the call.",
     primaryCta: CTA_DEFAULTS.primaryCta,
     primaryHref: CTA_DEFAULTS.primaryHref,
     secondaryCta: CTA_DEFAULTS.secondaryCta,
@@ -586,27 +586,27 @@ const sreContent: ProductPageContent = {
       },
       {
         title: "Incident triage",
-        body: "Routes incidents with shared context from the Operational Context Graph — not another chat thread.",
+        body: "Routes incidents with shared context from the Operational Context Graph. Not another chat thread.",
       },
       {
         title: "RCA acceleration",
-        body: "Surfaces hypotheses from live estate state and recent changes, ready for human review.",
+        body: "Surfaces likely root cause from live production state and recent changes, ready for human review.",
       },
     ],
   },
   logos: {
-    eyebrow: "Trusted by platform teams",
+    eyebrow: "Trusted by SRE teams",
   },
   problem: {
     heading: "Hundreds of alerts. Hours to a hypothesis.",
-    body: "Signals arrive fragmented across tools. Tribal knowledge stays in chats. Forming a root-cause hypothesis burns minutes you do not have on call.",
+    body: "Signals arrive fragmented across tools. Tribal knowledge stays in chats. Forming a root cause burns the first hour of a P1.",
   },
   video: {
     caption: "See Detect → Triage → Remediate — video placeholder.",
   },
   spotlight: {
     heading: "Detect → Triage → Diagnose → Remediate",
-    body: "The SRE spine of the Autonomous Operations Factory — each step grounded in shared context and human authority.",
+    body: "The SRE spine of the Autonomous Operations Factory. Each step grounded in shared context and human authority.",
     cards: [
       {
         title: "Detect",
@@ -614,7 +614,7 @@ const sreContent: ProductPageContent = {
       },
       {
         title: "Triage",
-        body: "Correlate and prioritize with shared context — humans stay in the loop on every escalation.",
+        body: "Correlate and prioritize with shared context. Humans stay in the loop on every escalation.",
       },
       {
         title: "Diagnose",
@@ -622,7 +622,7 @@ const sreContent: ProductPageContent = {
       },
       {
         title: "Remediate",
-        body: "Propose policy-checked fixes and learn from outcomes — nothing executes without explicit approval.",
+        body: "Propose policy-checked fixes and learn from outcomes. Nothing executes without explicit approval.",
       },
     ],
   },
@@ -631,7 +631,7 @@ const sreContent: ProductPageContent = {
     items: [
       {
         title: "Integrations with your stack",
-        body: "Connects to the observability, Git, cloud, and ITSM tools your team already runs.",
+        body: "Connects to the observability, cloud, and ITSM tools your team already runs.",
       },
       {
         title: "Never acts without sign-off",
@@ -643,17 +643,17 @@ const sreContent: ProductPageContent = {
       },
       {
         title: "Works with OSS and managed observability",
-        body: "Grafana, OTEL, Datadog, Dynatrace, New Relic — same governance layer across vendors.",
+        body: "Grafana, OTEL, Datadog, Dynatrace, New Relic. Same governance layer across vendors.",
       },
     ],
   },
   platformLink: {
     heading: "Shared memory across the Factory",
-    body: "Aiden OS and the Operational Context Graph keep infrastructure state, policies, and change history in one place — so SRE workflows start from truth, not tribal knowledge.",
+    body: "Aiden OS and the Operational Context Graph keep infrastructure state, policies, and change history in one place, so SRE workflows start from truth, not tribal knowledge.",
   },
   integrations: {
     heading: "Your stack, connected",
-    body: "Grafana, Grafana Cloud, New Relic, Dynatrace, Datadog, OTEL, Kubernetes, Terraform, Git, ServiceNow, cloud accounts — out of the box.",
+    body: "Grafana, Grafana Cloud, New Relic, Dynatrace, Datadog, OTEL, Kubernetes, Terraform, ServiceNow, cloud accounts. Out of the box.",
   },
   enterprise: {
     heading: "Deploy your way",
@@ -674,15 +674,15 @@ const sreContent: ProductPageContent = {
   },
   proof: {
     heading: "Trusted in production",
-    body: "Trusted by platform and SRE teams running production estates.",
+    body: "Trusted by SRE teams running production.",
   },
   offers: {
     heading: "",
     items: [],
   },
   finalCta: {
-    heading: "See Aiden for SRE on your stack",
-    subhead: "Schedule a demo — policy, context, and humans keeping authority.",
+    heading: "See Aiden for SRE on-call",
+    subhead: "Schedule a demo. Root cause without assembling a war room.",
     cta: CTA_DEFAULTS.finalCtaLabel,
     href: CTA_DEFAULTS.finalCtaHref,
   },
@@ -702,7 +702,7 @@ const sreContent: ProductPageContent = {
       {
         question: "Does it work with our existing tools?",
         answer:
-          "Aiden integrates with Grafana, Datadog, New Relic, Dynatrace, Kubernetes, Terraform, Git, ServiceNow, and cloud accounts out of the box.",
+          "Aiden integrates with Grafana, Datadog, New Relic, Dynatrace, Kubernetes, Terraform, ServiceNow, and cloud accounts out of the box.",
       },
     ],
   },

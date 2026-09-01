@@ -12,12 +12,12 @@ export const docsHub = {
     {
       href: "/docs/aiden",
       title: "Aiden",
-      body: "AI help for everyday DevOps: answers, guided tasks, and the integrations your team already uses.",
+      body: "AI help for SRE: answers, guided tasks, and the integrations on-call already uses.",
     },
     {
       href: "/docs/observenow",
       title: "ObserveNow",
-      body: "Bring metrics, dashboards, and alerts together so your team can spot and fix issues quickly.",
+      body: "Bring metrics, dashboards, and alerts together so on-call can spot and fix issues quickly.",
     },
   ],
   toolsTitle: "Developer tools",
@@ -32,7 +32,7 @@ export const docsHub = {
     {
       href: "/docs/stackgen/integrations",
       title: "Integrations",
-      body: "Work seamlessly with tools like Backstage, Terraform Cloud, and Wiz, keeping one flow from portal to production.",
+      body: "Work with tools like Backstage, Terraform Cloud, and Wiz, keeping one flow from portal to production.",
     },
     {
       href: "/docs/stackgen/mcp",

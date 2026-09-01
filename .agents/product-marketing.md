@@ -1,7 +1,7 @@
 # Product Marketing Context
 
-**Document version:** v1.2  
-**Last updated:** 2026-08-31, AOF + InfraOps/DevOps public naming lock (Wave 1).
+**Document version:** v1.7  
+**Last updated:** 2026-08-31, H1 Take control of production; claim Focus on outcomes, not agents.
 
 Source of truth for site copy, IA, and Pencil work. Align with `PRODUCT.md` (naming, mechanisms, evidence gates). Messaging layers L0–L2 below supersede older one-liners when they conflict.
 
@@ -29,7 +29,7 @@ AOF (architectural vision)
 
 **Hero pattern:** H1 = Autonomous Operations Factory · Sub/body from L0–L2 · Bold Factory-like energy on hero · Declarative elsewhere.
 
-**Replica homepage override (`/`):** Hero H1 is **"Take control of production change"** (v2); AOF demoted to Assemblies below the fold (Approach C). L0–L2 locks above unchanged.
+**Replica homepage override (`/`):** Hero H1 is **"Take control of production."** Hero sub: **"Give on-call complete context to see, decide, and change what is running."** Problem H2: **"AI code is hitting production faster than you can see it. You cannot control what you cannot see."** Body: **"Agents and IDEs ship all day. Alerts struggle to keep up."** Solution H2: **"Take back control with complete context"**. Solution body: **"Filter false positives and let your agents act proactively."** Claim: **"Focus on outcomes, not agents."** CTA: Schedule a demo. L0–L2 locks above unchanged.
 
 **Naming (binding):** Aiden for InfraOps · Aiden for DevOps · Aiden for Observability · Aiden for SRE. Never “Olly” on site. AOF is vision, not a SKU.
 
@@ -111,7 +111,19 @@ Slide 14 modeled annual value ($4M–$6M for a 500-engineer company) and similar
 | **Financial Buyer** | Same as Decision Maker | ROI; platform fee + usage predictability | Build-vs-buy governance layer | Buy the foundations instead of building AOF in-house |
 | **Technical Influencer** | Staff/Principal Platform or SRE (primary); Security/Risk adjacent | Will it work; can it refuse at policy bounds | Trusting agents in production | Bounded autonomy; policy at every action |
 
-Developers interact mainly via IDE / PRs / tickets that Aiden governs — not the primary buyer persona.
+Developers interact mainly via IDE / PRs / tickets that Aiden governs. They are a supporting homepage persona. **SRE is the primary public-web reader.**
+
+**Homepage personas (public `/` Who it's for dock):** SRE (lead), Developer, DevOps. Job language, not buying-committee titles. Site voice is second-person on-call, Sourcegraph control altitude.
+
+| Persona | JTBD | Pain (their words) | Site line |
+|---------|------|--------------------|-----------|
+| **SRE (primary)** | Detect the real incident; let agents act | Alert fatigue, toil, alerts that mean nothing | Detect the real incident. Let agents act. You keep the call. |
+| **Developer (supporting)** | Ship change on-call can see | Surprise deploys, ticket-ops | Ship change on-call can see. No surprise deploys. |
+| **DevOps (supporting)** | Run delivery on-call can trust | Losing the change picture | Keep control of how software ships. On-call stays in the loop. |
+
+**Replica homepage (`/`):** H1 is **"Take control of production."** Hero sub: **"Give on-call complete context to see, decide, and change what is running."** Problem H2: **"AI code is hitting production faster than you can see it. You cannot control what you cannot see."** No punchline. Solution H2: **"Take back control with complete context"**. Solution body: **"Filter false positives and let your agents act proactively."** Claim: **"Focus on outcomes, not agents."** CTA: Schedule a demo.
+
+**Product page voice:** every SKU is written for SRE. Keep locked tokens (IDE / IDP / Grafana / Detect). Never “pipelines by hand” / stitching. Never “page” for a PagerDuty event (say **alert**). Weave Semrush terms (root cause analysis, war room, toil, alert fatigue, MTTR) in body, not homepage H1.
 
 ---
 
@@ -299,6 +311,11 @@ Pack: `docs/proof/customer-logos-and-quotes.md` · assets: `.firecrawl/logos-quo
 
 *Newest first. One line per revision: what changed and why.*
 
+- v1.7 (2026-08-31) — Homepage H1 Take control of production. Claim Focus on outcomes, not agents. Problem: AI code hitting production; alerts struggle to keep up. Solution body: filter false positives / agents act proactively. Alert not page.
+- v1.6 (2026-08-31) — Sitewide SRE-primary voice. Sourcegraph control spine (complete context, this is where you lose control). Developer/DevOps remain supporting dock personas.
+- v1.5 (2026-08-31) — Sitewide persona copy: InfraOps=Developer, DevOps=DevOps, Observability+SRE=SRE. Mega menu + product pages use dock job language.
+- v1.4 (2026-08-31) — Homepage personas: SRE, Developer, DevOps with visible job language (was tooltip-only chips).
+- v1.3 (2026-08-31) — Homepage Problem/Solution lifted to Sourcegraph control-job altitude; inner/outer jargon out of headlines.
 - v1 (2026-08-19) — Initial context from guided intake §§1–12; CTA locked to Schedule demo only; logos pack referenced.
 - v1.2 (2026-08-31) — Public naming lock: Autonomous Operations Factory (AOF) + Aiden for InfraOps / DevOps / Observability / SRE; superseded Infrastructure / Automation / ADF.
 - v1.1 (2026-08-19) — Deck harvest vocabulary added without changing L0–L2 locks.

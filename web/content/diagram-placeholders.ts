@@ -17,25 +17,25 @@ export const productDiagramPlaceholders = {
   "aiden-for-sre": {
     id: "product-sre-flow",
     title: "Detect → Triage → Diagnose → Remediate",
-    subtitle: "SRE agent flow on your observability stack",
+    subtitle: "Detect the real incident. Let agents act. You keep the call.",
     deck: "Deck p23–28 · Pencil pending",
   },
   "aiden-for-infraops": {
     id: "product-infraops-ide",
     title: "Intent → Governed IaC in the IDE",
-    subtitle: "1/5 → 5/5: detect, generate, govern, deploy, close the loop",
+    subtitle: "Policy-checked change from the IDE. Before it becomes an alert.",
     deck: "Deck p29–30 · Pencil pending",
   },
   "aiden-for-devops": {
     id: "product-devops-compose",
     title: "IDP / ticket → blueprint compose",
-    subtitle: "Blueprints, policies, and guardrails applied by design",
+    subtitle: "Delivery from the IDP that on-call can trust.",
     deck: "Deck p31–32 · Pencil pending",
   },
   "aiden-for-observability": {
     id: "product-observability-agent",
     title: "Observe pillar · investigation agent",
-    subtitle: "Work with Grafana, Datadog, New Relic, Dynatrace dashboards you already run",
+    subtitle: "Investigation on Grafana and the stack you already run. Filter false positives.",
     deck: "Deck p14 / p38 · Pencil pending",
   },
 } as const satisfies Record<ProductSlug, DiagramPlaceholderContent>;

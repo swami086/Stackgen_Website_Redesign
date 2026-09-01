@@ -8,27 +8,27 @@ export type ProductMegaMenuColumn = {
   capabilities: readonly [string, string, string];
 };
 
-/** Pencil BCszz → rvmr8 catalog columns (verbatim blurbs). */
+/** Pencil BCszz catalog. SRE-primary job language. Sourcegraph control altitude. */
 export const productMegaMenuContent = {
   columns: [
     {
       phase: "Build",
       title: "Aiden for InfraOps",
-      description: "Governed IaC from intent. Lands in your Git.",
+      description: "Policy-checked change from the IDE. Before it becomes an alert.",
       slug: "aiden-for-infraops",
       capabilities: [
         "Intent to governed IaC in the IDE",
         "Policy checked before production",
-        "Audit trail with the PR",
+        "Audit trail with the change",
       ],
     },
     {
       phase: "Operate",
       title: "Aiden for DevOps",
-      description: "Prompts become reviewed action across your toolchain.",
+      description: "Delivery from the IDP that on-call can trust.",
       slug: "aiden-for-devops",
       capabilities: [
-        "IDP to blueprint compose",
+        "Developers self-serve from the IDP",
         "Policies applied by design",
         "ServiceNow & Jira ready",
       ],
@@ -36,7 +36,7 @@ export const productMegaMenuContent = {
     {
       phase: "Observe",
       title: "Aiden for Observability",
-      description: "Managed OSS observability with an AI investigation layer.",
+      description: "Investigation on Grafana. Filter false positives.",
       slug: "aiden-for-observability",
       capabilities: [
         "Investigate on your existing stack",
@@ -47,7 +47,7 @@ export const productMegaMenuContent = {
     {
       phase: "Remediate",
       title: "Aiden for SRE",
-      description: "Discovery through triage to approved remediation.",
+      description: "Detect the real incident. Let agents act. You keep the call.",
       slug: "aiden-for-sre",
       capabilities: [
         "Detect → Triage → Diagnose → Remediate",

@@ -233,3 +233,39 @@ test("mega menu mounts a hover bridge under the nav when open", () => {
 
   expect(container.querySelector("[data-mega-bridge]")).toBeInTheDocument();
 });
+
+test("product pages speak SRE job language", () => {
+  const infra = getProductContent("aiden-for-infraops");
+  expect(infra.hero.subhead).toMatch(/IDE/);
+  expect(infra.hero.subhead).toMatch(/alert/i);
+  expect(infra.logos.eyebrow).toMatch(/SRE/);
+  expect(infra.problem.heading).toMatch(/alert/i);
+
+  const devops = getProductContent("aiden-for-devops");
+  expect(devops.hero.subhead).toMatch(/IDP/);
+  expect(devops.hero.subhead).toMatch(/on-call/i);
+  expect(devops.logos.eyebrow).toMatch(/SRE/);
+  expect(devops.problem.body).not.toMatch(/by hand/);
+
+  const observability = getProductContent("aiden-for-observability");
+  expect(observability.hero.subhead).toMatch(/Grafana/);
+  expect(observability.logos.eyebrow).toMatch(/SRE|on-call/i);
+  expect(observability.problem.body).toMatch(/on-call|alert/i);
+
+  const sre = getProductContent("aiden-for-sre");
+  expect(sre.hero.subhead).toMatch(/Detect/);
+  expect(sre.hero.subhead).toMatch(/agents act|keep the call/i);
+  expect(sre.logos.eyebrow).toMatch(/SRE/);
+  expect(sre.finalCta.subhead).toMatch(/war room/i);
+});
+
+test("mega-menu descriptions use persona job language, not Git", () => {
+  const bySlug = Object.fromEntries(
+    productMegaMenuContent.columns.map((column) => [column.slug, column]),
+  );
+  expect(bySlug["aiden-for-infraops"].description).toMatch(/IDE/);
+  expect(bySlug["aiden-for-infraops"].description).not.toMatch(/\bGit\b/);
+  expect(bySlug["aiden-for-devops"].description).toMatch(/IDP/);
+  expect(bySlug["aiden-for-observability"].description).toMatch(/Grafana/);
+  expect(bySlug["aiden-for-sre"].description).toMatch(/Detect/);
+});

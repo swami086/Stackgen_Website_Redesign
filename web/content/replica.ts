@@ -1,4 +1,4 @@
-/** Dual-theme home copy. Naming and CTA vocabulary locked to PRODUCT.md. */
+/** Dual-theme home copy. Naming and CTA vocabulary locked to PRODUCT.md. SRE is the primary reader. */
 
 export const replicaContent = {
   nav: {
@@ -12,15 +12,15 @@ export const replicaContent = {
     cta: { label: "Schedule a demo", href: "/schedule-demo" },
   },
   hero: {
-    heading: "Outcomes, not agents.",
-    sub: "The Autonomous Operations Factory turns how you build, ship, run, and improve software into reliable, repeatable action — with humans keeping authority.",
+    heading: "Take control of production.",
+    sub: "Give on-call complete context to see, decide, and change what is running.",
     primaryCta: "Schedule a demo",
     primaryHref: "/schedule-demo",
     secondaryCta: "How it works",
     secondaryHref: "#how-it-works",
   },
   logos: {
-    eyebrow: "Trusted by teams running production",
+    eyebrow: "Trusted by SRE teams running production",
     items: [
       { src: "/logos/customers/Nielsen.png", alt: "Nielsen" },
       { src: "/logos/customers/GreytHR.png", alt: "GreytHR" },
@@ -34,17 +34,17 @@ export const replicaContent = {
   },
   problem: {
     eyebrow: "The problem",
-    heading: "Outer Ops loop is failing to keep up with inner Dev loop",
-    body: "AI accelerated the inner Dev loop. The outer Ops loop — observe, operate, remediate under compliance — did not keep up. Feedback is slow. Signal is noisy.",
-    punchline: "Slow feedback / noisy signal",
+    heading: "AI code is hitting production faster than you can see it. You cannot control what you cannot see.",
+    body: "Agents and IDEs ship all day. Alerts struggle to keep up.",
+    punchline: "",
     /** Cinema-plate caption (A+B hybrid film). Symptoms render as animated fragments, not a list. */
-    filmCaption: "Inner loop minutes · Outer loop hours to days",
+    filmCaption: "Fragments of production. No shared picture.",
     symptoms: [
-      "Alert with no deploy or drift attached",
-      "AI remediation that cannot land a policy-checked change",
-      "First 90 minutes of a P1 is a war room",
-      "Deploy lands on unchecked infrastructure drift",
-      "200 runbooks — maybe 30 still true",
+      "Alert with no change attached",
+      "A fix that cannot land",
+      "First hour of a P1 is a war room",
+      "Change lands on production you cannot see",
+      "Runbooks that no longer match production",
     ],
     learnMore: {
       label: "SRE tools compared",
@@ -53,17 +53,17 @@ export const replicaContent = {
   },
   solution: {
     eyebrow: "The solution",
-    heading: "Autonomous Operations Factory",
-    body: "One factory for Build, Operate, Observe, and Remediate — learning back into a Shared World Model, with humans keeping authority.",
-    claim: "Outcomes, not agents.",
+    heading: "Take back control with complete context",
+    body: "Filter false positives and let your agents act proactively.",
+    claim: "Focus on outcomes, not agents.",
     demoLabelLeft: "Ops lag",
     demoLabelRight: "Factory path",
-    demoCaption: "From intent to repeatable action under policy.",
+    demoCaption: "Incomplete context vs. complete context.",
   },
   assemblies: {
     eyebrow: "How it works",
     heading: "Intent → Spec → Runtime → Learning",
-    body: "State the outcome. Get a Factory Spec. Run it. Learn back into the Shared World Model — the Autonomous Operations Factory path.",
+    body: "State the outcome. Get a Factory Spec. Run it. Learn back into the Shared World Model. Build, Operate, Observe, and Remediate share one Autonomous Operations Factory path.",
     learnMore: {
       label: "Platform engineering + MCP",
       href: "/blog/the-10-best-mcp-servers-for-platform-engineers-in-2026",
@@ -71,45 +71,56 @@ export const replicaContent = {
   },
   shell: {
     eyebrow: "SHARED WORLD MODEL",
-    heading: "One Operational Context Graph",
-    body1: "Four Bodies of shared context so every Aiden product sees the same estate.",
-    body2: "Cross-domain plays without rebuilding the picture every page.",
+    heading: "Four bodies of truth. One Operational Context Graph.",
+    body1: "Infra, deploys, signals, and incidents share memory so every Aiden product sees the same production.",
+    body2: "Cross-domain plays without rebuilding the picture every alert.",
   },
   whoItsFor: {
     eyebrow: "Offerings",
     heading: "Four products on Aiden OS",
-    sub: "InfraOps, DevOps, Observability, and SRE — one context layer.",
+    sub: "Built for SRE. Developers and DevOps share the same context.",
     pillars: [
       {
         label: "Build",
         title: "Aiden for InfraOps",
-        body: "Intent to policy-checked infrastructure change in your Git.",
+        body: "Policy-checked change from the IDE. Before it becomes an alert.",
         href: "/product/aiden-for-infraops",
       },
       {
         label: "Operate",
         title: "Aiden for DevOps",
-        body: "Delivery and automation that verify themselves under policy.",
+        body: "Delivery from the IDP that on-call can trust.",
         href: "/product/aiden-for-devops",
       },
       {
         label: "Observe",
         title: "Aiden for Observability",
-        body: "Signals that already know what changed.",
+        body: "Investigation on Grafana and the stack you already run. Filter false positives.",
         href: "/product/aiden-for-observability",
       },
       {
         label: "Remediate",
         title: "Aiden for SRE",
-        body: "Context-backed incident response under bounded autonomy.",
+        body: "Detect the real incident. Let agents act. You keep the call.",
         href: "/product/aiden-for-sre",
       },
     ],
     roles: [
-      { title: "SRE", body: "Alerts arrive with deploys and drift attached" },
-      { title: "Platform Engineering", body: "Catch drift before deploy lands" },
-      { title: "Developers", body: "Ship without the platform ticket queue" },
-      { title: "DevSecOps", body: "Keep agent actions inside policy" },
+      {
+        title: "SRE",
+        body: "Detect the real incident. Let agents act. You keep the call.",
+        href: "/product/aiden-for-sre",
+      },
+      {
+        title: "Developer",
+        body: "Ship change on-call can see. No surprise deploys.",
+        href: "/product/aiden-for-infraops",
+      },
+      {
+        title: "DevOps",
+        body: "Keep control of how software ships. On-call stays in the loop.",
+        href: "/product/aiden-for-devops",
+      },
     ],
     osTitle: "Aiden OS",
     osChips: [
@@ -122,8 +133,8 @@ export const replicaContent = {
     ],
   },
   footer: {
-    ctaHeading: "Outcomes, not agents.",
-    ctaSub: "See the Autonomous Operations Factory on your stack — policy, context, and humans keeping authority.",
+    ctaHeading: "Take control of production.",
+    ctaSub: "Filter false positives and let your agents act proactively.",
     cta: "Schedule a demo",
     ctaHref: "/schedule-demo",
     brand: "Grounded. Governed. Useful.",

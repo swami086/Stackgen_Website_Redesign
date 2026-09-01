@@ -7,7 +7,8 @@
  * pattern as Integrations. Mobbin: 1Password / Neon / Rox / Headspace.
  * Reduced motion = one static row.
  */
-import { replicaContent } from "@/content/replica";
+import { useReplicaContent } from "@/components/replica/ReplicaContentContext";
+import type { ReplicaContent } from "@/content/replica";
 import { useReducedMotionSafe } from "@/components/replica/motion/useReducedMotionSafe";
 import { cn } from "@/lib/cn";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
@@ -19,7 +20,7 @@ type ReplicaLogosProps = {
 
 const MARQUEE_S = 40;
 
-type LogoItem = (typeof replicaContent.logos.items)[number];
+type LogoItem = ReplicaContent["logos"]["items"][number];
 
 function LogoMark({
   logo,
@@ -68,7 +69,7 @@ function LogoSet({
 }
 
 export function ReplicaLogos({ theme, className }: ReplicaLogosProps) {
-  const { eyebrow, items } = replicaContent.logos;
+  const { eyebrow, items } = useReplicaContent().logos;
   const reduced = useReducedMotionSafe();
 
   return (

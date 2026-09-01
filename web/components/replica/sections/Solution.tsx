@@ -1,7 +1,7 @@
 "use client";
 
 import { AtmosphereField } from "@/components/replica/shared/AtmosphereField";
-import { replicaContent } from "@/content/replica";
+import { useReplicaContent } from "@/components/replica/ReplicaContentContext";
 import { cn } from "@/lib/cn";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
 
@@ -23,7 +23,7 @@ function PlayIcon() {
 
 /** Prior Soft Structuralism video plate — stand-in until Factory pillars Pencil ships. */
 export function ReplicaSolution({ theme, className }: Props) {
-  const s = replicaContent.solution;
+  const s = useReplicaContent().solution;
 
   return (
     <section

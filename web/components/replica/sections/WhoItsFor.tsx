@@ -9,7 +9,7 @@
 import Link from "next/link";
 import { PhosphorIcon } from "@/components/primitives/PhosphorIcon";
 import { AtmosphereField } from "@/components/replica/shared/AtmosphereField";
-import { replicaContent } from "@/content/replica";
+import { useReplicaContent } from "@/components/replica/ReplicaContentContext";
 import { cn } from "@/lib/cn";
 import type { PhosphorIconName } from "@/lib/phosphor-icons";
 import type { ProductHeroSlug } from "@/lib/product-media";
@@ -58,7 +58,7 @@ const ROLE_ICONS: Record<string, PhosphorIconName> = {
 
 export function ReplicaWhoItsFor({ theme, className }: ReplicaWhoItsForProps) {
   const { eyebrow, heading, sub, pillars, roles, osTitle, osChips } =
-    replicaContent.whoItsFor;
+    useReplicaContent().whoItsFor;
 
   return (
     <section

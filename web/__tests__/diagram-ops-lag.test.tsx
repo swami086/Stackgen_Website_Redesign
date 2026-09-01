@@ -35,3 +35,9 @@ test("bans stray product titles and neon glow class spam", () => {
   const html = container.innerHTML;
   expect(html).not.toMatch(/neon|glow-\d|drop-shadow-\[\#0/i);
 });
+
+test("has data-figma-id on root", () => {
+  const { container } = render(<OpsLag theme="dark" />);
+  const root = container.querySelector('figure');
+  expect(root).toHaveAttribute("data-figma-id", "23:2");
+});

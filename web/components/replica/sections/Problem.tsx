@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { AtmosphereField } from "@/components/replica/shared/AtmosphereField";
 import { OpsLag } from "@/components/replica/diagrams/OpsLag";
-import { replicaContent } from "@/content/replica";
+import { useReplicaContent } from "@/components/replica/ReplicaContentContext";
 import { cn } from "@/lib/cn";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
 
@@ -14,7 +14,7 @@ type Props = { theme: "light" | "dark"; className?: string };
  * Copy stays short; anatomy lives in the diagram plate, not a symptom list.
  */
 export function ReplicaProblem({ theme, className }: Props) {
-  const p = replicaContent.problem;
+  const p = useReplicaContent().problem;
   return (
     <section
       id="problem"

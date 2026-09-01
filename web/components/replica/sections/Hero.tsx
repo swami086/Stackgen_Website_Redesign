@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
-import { replicaContent } from "@/content/replica";
+import { useReplicaContent } from "@/components/replica/ReplicaContentContext";
 import { cn } from "@/lib/cn";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
 import { DUR, EASE } from "@/lib/motion-tokens";
@@ -17,7 +17,7 @@ type ReplicaHeroProps = {
 
 export function ReplicaHero({ theme, className }: ReplicaHeroProps) {
   const { heading, sub, primaryCta, primaryHref, secondaryCta, secondaryHref } =
-    replicaContent.hero;
+    useReplicaContent().hero;
   const reduced = useReducedMotionSafe();
   const tokens = heading.split(/(\s+)/);
 

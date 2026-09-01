@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -6,7 +8,7 @@ import {
   XLogo,
 } from "@phosphor-icons/react";
 import { ReplicaLogo } from "@/components/replica/shared/ReplicaLogo";
-import { replicaContent } from "@/content/replica";
+import { useReplicaContent } from "@/components/replica/ReplicaContentContext";
 import { cn } from "@/lib/cn";
 import { PRODUCTS } from "@/lib/products";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
@@ -99,7 +101,7 @@ function FooterSocialLink({
  */
 export function ReplicaFooter({ theme, className }: ReplicaFooterProps) {
   const { ctaHeading, ctaSub, cta, ctaHref, brand, company, legal, legalLinks } =
-    replicaContent.footer;
+    useReplicaContent().footer;
 
   const companyLinks: FooterLink[] = company.map((label) => ({
     label,

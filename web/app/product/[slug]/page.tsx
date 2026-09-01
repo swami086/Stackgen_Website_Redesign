@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductPage } from "@/components/replica/ProductPage";
-import { getProductContent } from "@/content/products";
 import { getProduct, isProductSlug } from "@/lib/products";
+import { getOverlayProductContent } from "@/lib/webflow-cms";
 
 type ProductRoutePageProps = {
   params: Promise<{ slug: string }>;
@@ -15,7 +15,7 @@ export async function generateMetadata({
   if (!isProductSlug(slug)) {
     return { title: "StackGen" };
   }
-  const content = getProductContent(slug);
+  const content = await getOverlayProductContent(slug);
   return {
     title: `${content.hero.heading} | StackGen`,
     description: content.hero.subhead,
@@ -34,5 +34,6 @@ export default async function ProductRoutePage({ params }: ProductRoutePageProps
     notFound();
   }
 
-  return <ProductPage slug={slug} />;
+  const content = await getOverlayProductContent(slug);
+  return <ProductPage slug={slug} content={content} />;
 }

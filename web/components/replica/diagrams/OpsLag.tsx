@@ -5,7 +5,7 @@ import { Hourglass } from "@phosphor-icons/react/dist/ssr";
 import { motion } from "motion/react";
 import { useReducedMotionSafe } from "@/components/replica/motion/useReducedMotionSafe";
 import { cn } from "@/lib/cn";
-import { AMBIENT, DUR, EASE, RING_OPACITY } from "@/lib/motion-tokens";
+import { AMBIENT, DUR, EASE, RING_OPACITY, STAGGER } from "@/lib/motion-tokens";
 
 /** Quiet inner-loop speed highlight — matches ParticleField / DESIGN.md */
 const INNER_CYAN = "#A8E0F8";
@@ -46,14 +46,18 @@ function Chip({ label, active }: { label: string; active?: boolean }) {
   );
 }
 
-function SegmentedBar() {
+function SegmentedBar({ reduced }: { reduced: boolean }) {
   return (
     <div className="flex h-1 w-full gap-px overflow-hidden rounded-sm" aria-hidden>
       {[0.55, 0.35, 0.7, 0.25, 0.5].map((w, i) => (
-        <span
+        <motion.span
           key={i}
           className="h-full rounded-sm bg-border"
-          style={{ flex: w }}
+          style={{ flexGrow: w, flexBasis: 0 }}
+          initial={reduced ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ duration: 0.4, delay: reduced ? 0 : 0.4 + i * 0.05, ease: EASE.standard }}
+          // ponytail: scaleX reveal — flexGrow alone is not a reliable motion target
         />
       ))}
     </div>
@@ -79,17 +83,30 @@ export function OpsLag({ caption, className, theme }: Props) {
 
   const chipOrbitR = 72;
 
+  const itemVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: DUR.chip, ease: EASE.standard } }
+  };
+
   return (
-    <figure className={cn("w-full", className)}>
-      <div
+    <figure className={cn("w-full", className)} data-figma-id="23:2">
+      <motion.div
         role="img"
         aria-label="Ops lag diagram: fast inner Dev loop with AI-assisted build, deploy, and debug orbiting a bridge of slow feedback and noisy signal into a slower outer Ops loop with observe, operate, remediate around an hourglass hub, plus compliance and observability"
         data-problem-diagram="ops-lag"
         data-pencil-id="ifJjx"
         className="glass-specular relative flex min-h-[420px] w-full flex-col gap-2 overflow-hidden rounded-[16px] border border-border p-2.5 md:min-h-[480px] md:flex-row md:gap-3 md:p-3"
+        initial={reduced ? "visible" : "hidden"}
+        animate="visible"
+        variants={{
+          hidden: {},
+          // Cap: 12 children × 40ms ≈ 0.44s < 0.6s budget (impeccable animate)
+          visible: { transition: { staggerChildren: STAGGER.chip, delayChildren: 0.04 } },
+        }}
       >
         {/* LEFT — Inner Loop */}
-        <div
+        <motion.div
+          variants={itemVariants}
           className="relative flex flex-1 flex-col gap-2 rounded-xl border border-border bg-surface p-3"
           data-ops-panel="inner"
         >
@@ -107,7 +124,8 @@ export function OpsLag({ caption, className, theme }: Props) {
           </div>
 
           <div className="relative mx-auto flex min-h-[220px] w-full flex-1 items-center justify-center md:min-h-[280px]">
-            <div
+            <motion.div
+              variants={itemVariants}
               className="absolute rounded-full border border-dashed"
               style={{
                 width: chipOrbitR * 2 + 48,
@@ -119,7 +137,24 @@ export function OpsLag({ caption, className, theme }: Props) {
               }}
               data-motion="inner-orbit-ring"
               aria-hidden
-            />
+            >
+              {/* 3 tiny cyan particles on the ring */}
+              {[0, 120, 240].map((deg, i) => (
+                <div
+                  key={i}
+                  className="absolute rounded-full"
+                  style={{
+                    width: 3,
+                    height: 3,
+                    backgroundColor: INNER_CYAN,
+                    top: "50%",
+                    left: "50%",
+                    opacity: 0.6,
+                    transform: `translate(-50%, -50%) rotate(${deg}deg) translateY(-${chipOrbitR + 24}px)`,
+                  }}
+                />
+              ))}
+            </motion.div>
 
             {INNER_CHIPS.map((chip, i) => {
               const rad = (chip.angle * Math.PI) / 180;
@@ -128,7 +163,8 @@ export function OpsLag({ caption, className, theme }: Props) {
               const active = !reduced && pulseIndex === i;
 
               return (
-                <div
+                <motion.div
+                  variants={itemVariants}
                   key={chip.id}
                   className="absolute z-[2]"
                   style={{
@@ -140,14 +176,15 @@ export function OpsLag({ caption, className, theme }: Props) {
                   data-ops-chip="inner"
                 >
                   <Chip label={chip.label} active={active} />
-                </div>
+                </motion.div>
               );
             })}
           </div>
-        </div>
+        </motion.div>
 
         {/* BRIDGE */}
-        <div
+        <motion.div
+          variants={itemVariants}
           className="relative flex shrink-0 flex-col items-center justify-center gap-2 px-1 md:w-[108px]"
           data-ops-panel="bridge"
         >
@@ -160,10 +197,9 @@ export function OpsLag({ caption, className, theme }: Props) {
             <motion.path
               d="M4 60 C14 58, 26 58, 36 60"
               fill="none"
-              stroke="currentColor"
+              stroke="#F0883E"
               strokeWidth={0.6}
               strokeDasharray="3 2"
-              className="text-border"
               data-motion="bridge-flow"
               initial={false}
               animate={
@@ -180,10 +216,9 @@ export function OpsLag({ caption, className, theme }: Props) {
             <motion.path
               d="M4 68 C14 66, 26 66, 36 68"
               fill="none"
-              stroke="currentColor"
+              stroke="#F0883E"
               strokeWidth={0.5}
               strokeDasharray="2 2"
-              className="text-text-tertiary"
               data-motion="lag-lines"
               initial={false}
               animate={
@@ -197,14 +232,26 @@ export function OpsLag({ caption, className, theme }: Props) {
                   : { duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.4 }
               }
             />
+            {/* Traveling packet */}
+            {!reduced && (
+              <circle
+                r="1.5"
+                fill="#F0883E"
+                style={{
+                  offsetPath: "path('M4 60 C14 58, 26 58, 36 60')",
+                  animation: "ops-travel 1.4s linear infinite"
+                }}
+              />
+            )}
           </svg>
-          <p className="relative z-[1] max-w-[9rem] text-center text-[10px] font-semibold leading-snug text-text-secondary md:text-[11px]">
+          <p className="relative z-[1] max-w-[9rem] text-center text-[10px] font-semibold leading-snug text-halt md:text-[11px]">
             Slow Feedback / Noisy Signal
           </p>
-        </div>
+        </motion.div>
 
         {/* RIGHT — Outer Loop */}
-        <div
+        <motion.div
+          variants={itemVariants}
           className="relative flex flex-1 flex-col gap-2 rounded-xl border border-border bg-surface p-3"
           data-ops-panel="outer"
         >
@@ -218,14 +265,15 @@ export function OpsLag({ caption, className, theme }: Props) {
           </div>
 
           <div className="relative mx-auto flex min-h-[220px] w-full flex-1 flex-col items-center justify-center md:min-h-[280px]">
-            <div
+            <motion.div
+              variants={itemVariants}
               className="absolute rounded-[28px] border border-dashed border-border/60"
               style={{
                 width: chipOrbitR * 2 + 56,
                 height: chipOrbitR * 2 + 40,
                 animation: reduced
                   ? undefined
-                  : `ops-outer-orbit ${AMBIENT.orbit * 1.4}s linear infinite reverse`,
+                  : `ops-outer-orbit ${AMBIENT.orbit * 1.8}s linear infinite reverse`,
               }}
               data-motion="outer-orbit-slow"
               aria-hidden
@@ -237,7 +285,8 @@ export function OpsLag({ caption, className, theme }: Props) {
               const y = Math.sin(rad) * (chipOrbitR - 4);
 
               return (
-                <div
+                <motion.div
+                  variants={itemVariants}
                   key={chip.id}
                   className="absolute z-[2]"
                   style={{
@@ -248,12 +297,12 @@ export function OpsLag({ caption, className, theme }: Props) {
                   data-ops-chip="outer"
                 >
                   <Chip label={chip.label} />
-                </div>
+                </motion.div>
               );
             })}
 
             {/* Hourglass hub */}
-            <div className="relative z-[3] flex flex-col items-center gap-1">
+            <motion.div variants={itemVariants} className="relative z-[3] flex flex-col items-center gap-1">
               <div className="flex size-14 items-center justify-center rounded-md border border-border bg-surface-raised">
                 <Hourglass size={22} weight="regular" className="text-accent" aria-hidden />
               </div>
@@ -267,7 +316,7 @@ export function OpsLag({ caption, className, theme }: Props) {
                 }}
                 aria-hidden
               />
-            </div>
+            </motion.div>
 
             {/* Lag lines into hub */}
             <svg
@@ -308,16 +357,17 @@ export function OpsLag({ caption, className, theme }: Props) {
 
           <div className="grid grid-cols-2 gap-2">
             {BOTTOM_ROW.map((label) => (
-              <div
+              <motion.div
+                variants={itemVariants}
                 key={label}
                 className="flex flex-col gap-1 rounded-md border border-border bg-surface-raised px-2 py-1.5"
               >
-                <SegmentedBar />
+                <SegmentedBar reduced={reduced} />
                 <span className="text-[11px] font-medium text-text-primary">{label}</span>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         <style>{`
           @media (prefers-reduced-motion: no-preference) {
@@ -333,9 +383,15 @@ export function OpsLag({ caption, className, theme }: Props) {
               0%, 100% { opacity: ${RING_OPACITY.from}; transform: scaleY(0.6); }
               50% { opacity: ${RING_OPACITY.to}; transform: scaleY(1); }
             }
+            @keyframes ops-travel {
+              0% { offset-distance: 0%; opacity: 0; }
+              10% { opacity: 1; }
+              90% { opacity: 1; }
+              100% { offset-distance: 100%; opacity: 0; }
+            }
           }
         `}</style>
-      </div>
+      </motion.div>
       {caption ? (
         <figcaption className="sr-only">{caption}</figcaption>
       ) : null}

@@ -1,6 +1,8 @@
+"use client";
+
 import { OperationalContextGraph } from "@/components/replica/diagrams/OperationalContextGraph";
 import { AtmosphereField } from "@/components/replica/shared/AtmosphereField";
-import { replicaContent } from "@/content/replica";
+import { useReplicaContent } from "@/components/replica/ReplicaContentContext";
 import { cn } from "@/lib/cn";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
 
@@ -10,7 +12,7 @@ type ReplicaShellProps = {
 };
 
 export function ReplicaShell({ theme, className }: ReplicaShellProps) {
-  const { eyebrow, heading, body1, body2 } = replicaContent.shell;
+  const { eyebrow, heading, body1, body2 } = useReplicaContent().shell;
 
   return (
     <section

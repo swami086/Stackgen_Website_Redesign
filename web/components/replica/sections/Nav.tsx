@@ -24,7 +24,7 @@ import {
 } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { replicaContent } from "@/content/replica";
+import { useReplicaContent } from "@/components/replica/ReplicaContentContext";
 import { ReplicaLogo } from "@/components/replica/shared/ReplicaLogo";
 import { ReplicaPrimaryPill } from "@/components/replica/shared/ReplicaPrimaryPill";
 import { ThemeToggle } from "@/components/replica/theme/ThemeToggle";
@@ -58,7 +58,7 @@ function isNavLinkActive(pathname: string | null, href: string) {
 }
 
 export function ReplicaNav({ theme, className }: ReplicaNavProps) {
-  const { links, cta } = replicaContent.nav;
+  const { links, cta } = useReplicaContent().nav;
   const pathname = usePathname();
   /** clear = over hero media; regular = content scrolled under (Apple variants). */
   const [liquidVariant, setLiquidVariant] = useState<"clear" | "regular">(

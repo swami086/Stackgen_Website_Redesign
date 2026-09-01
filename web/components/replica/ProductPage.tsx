@@ -1,6 +1,6 @@
 "use client";
 
-import { getProductContent } from "@/content/products";
+import { getProductContent, type ProductPageContent } from "@/content/products";
 import { ReplicaFooter } from "@/components/replica/sections/Footer";
 import { ReplicaNav } from "@/components/replica/sections/Nav";
 import { useTheme } from "@/components/replica/theme/ThemeProvider";
@@ -24,12 +24,13 @@ import { ProductVideo } from "@/components/replica/product/ProductVideo";
 
 type ProductPageProps = {
   slug: ProductSlug;
+  content?: ProductPageContent;
 };
 
-export function ProductPage({ slug }: ProductPageProps) {
+export function ProductPage({ slug, content }: ProductPageProps) {
   const { theme } = useTheme();
   const meta = getProduct(slug)!;
-  const content = getProductContent(slug);
+  const resolved = content ?? getProductContent(slug);
 
   return (
     <main
@@ -39,31 +40,31 @@ export function ProductPage({ slug }: ProductPageProps) {
       className="flex w-full flex-col bg-bg text-text-primary"
     >
       <ReplicaNav theme={theme} />
-      {content.flags.subNav ? (
-        <ProductSubNav theme={theme} content={content} />
+      {resolved.flags.subNav ? (
+        <ProductSubNav theme={theme} content={resolved} />
       ) : null}
       <ProductHero
         theme={theme}
-        content={content}
+        content={resolved}
         pencilFrameId={meta.pencilFrameId}
       />
-      {content.flags.pillars ? (
-        <ProductPillars theme={theme} content={content} />
+      {resolved.flags.pillars ? (
+        <ProductPillars theme={theme} content={resolved} />
       ) : null}
-      <ProductLogos theme={theme} content={content} />
-      <ProductProblem theme={theme} content={content} />
-      <ProductVideo theme={theme} caption={content.video.caption} />
-      <ProductSpotlight theme={theme} content={content} />
-      <ProductCapabilities theme={theme} content={content} />
-      <ProductPlatformLink theme={theme} content={content} />
-      <ProductIntegrations theme={theme} content={content} />
-      <ProductEnterprise theme={theme} content={content} />
-      <ProductProof theme={theme} content={content} />
-      {content.flags.offers ? <ProductOffers theme={theme} content={content} /> : null}
-      <ProductFinalCta theme={theme} content={content} />
-      <ProductFaq theme={theme} content={content} />
-      {content.flags.resources ? (
-        <ProductResources theme={theme} content={content} />
+      <ProductLogos theme={theme} content={resolved} />
+      <ProductProblem theme={theme} content={resolved} />
+      <ProductVideo theme={theme} caption={resolved.video.caption} />
+      <ProductSpotlight theme={theme} content={resolved} />
+      <ProductCapabilities theme={theme} content={resolved} />
+      <ProductPlatformLink theme={theme} content={resolved} />
+      <ProductIntegrations theme={theme} content={resolved} />
+      <ProductEnterprise theme={theme} content={resolved} />
+      <ProductProof theme={theme} content={resolved} />
+      {resolved.flags.offers ? <ProductOffers theme={theme} content={resolved} /> : null}
+      <ProductFinalCta theme={theme} content={resolved} />
+      <ProductFaq theme={theme} content={resolved} />
+      {resolved.flags.resources ? (
+        <ProductResources theme={theme} content={resolved} />
       ) : null}
       <ReplicaFooter theme={theme} />
     </main>

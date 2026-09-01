@@ -1,9 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { AtmosphereField } from "@/components/replica/shared/AtmosphereField";
 import { InnerOuterLoop } from "@/components/replica/diagrams/InnerOuterLoop";
 import { Integrations } from "@/components/replica/diagrams/Integrations";
 import { Offerings } from "@/components/replica/diagrams/Offerings";
-import { replicaContent } from "@/content/replica";
+import { useReplicaContent } from "@/components/replica/ReplicaContentContext";
 import { cn } from "@/lib/cn";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
 
@@ -13,7 +15,7 @@ type ReplicaAssembliesProps = {
 };
 
 export function ReplicaAssemblies({ theme, className }: ReplicaAssembliesProps) {
-  const { eyebrow, heading, body, learnMore } = replicaContent.assemblies;
+  const { eyebrow, heading, body, learnMore } = useReplicaContent().assemblies;
 
   return (
     <section

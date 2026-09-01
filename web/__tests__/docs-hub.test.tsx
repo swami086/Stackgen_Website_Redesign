@@ -1,5 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
-import DocsHubPage from "@/app/docs/page";
+import DocsHubPage from "@/app/(site)/docs/page";
 import { docsHub } from "@/content/docs/hub";
 
 test("hub lists three products and three developer tools", () => {

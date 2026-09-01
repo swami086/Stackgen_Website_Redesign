@@ -10,6 +10,9 @@ export default defineConfig({
     globals: true,
   },
   resolve: {
-    alias: { "@": path.resolve(import.meta.dirname, ".") },
+    alias: {
+      "@": path.resolve(import.meta.dirname, "."),
+      "@payload-config": path.resolve(import.meta.dirname, "payload/payload.config.ts"),
+    },
   },
 });

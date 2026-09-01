@@ -23,3 +23,13 @@ design-reference/
 # Linked git worktrees
 .worktrees/
 .firecrawl/
+
+# Payload uploads (embedded in web)
+web/media/
+
+# Local tooling / caches (do not commit)
+.DS_Store
+.obsidian/
+.torbit-index/
+mcp-remote-*.tgz
+web/6a9633dcaa54094e2beda4f6/

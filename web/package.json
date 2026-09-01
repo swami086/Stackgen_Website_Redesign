@@ -4,28 +4,40 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --port 3000 --hostname 0.0.0.0",
-    "build": "next build",
+    "dev": "NODE_OPTIONS=--no-deprecation next dev --port 3000 --hostname 0.0.0.0",
+    "build": "NODE_OPTIONS=--no-deprecation next build",
     "start": "node server.js",
+    "payload": "NODE_OPTIONS=--no-deprecation payload",
+    "generate:types": "NODE_OPTIONS=--no-deprecation payload generate:types",
+    "generate:importmap": "NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "seed:app": "NODE_OPTIONS=--no-deprecation tsx scripts/seed-app.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.20.4",
+    "@payloadcms/db-postgres": "3.88.0",
+    "@payloadcms/next": "3.88.0",
+    "@payloadcms/richtext-lexical": "3.88.0",
+    "@payloadcms/ui": "3.88.0",
     "@phosphor-icons/react": "^2.1.10",
     "clsx": "^2.1.1",
+    "cross-env": "^10.1.0",
     "framer-motion": "^13.1.1",
     "geist": "^1.7.2",
+    "graphql": "^16.11.0",
     "gray-matter": "^4.0.3",
     "gsap": "^3.15.0",
     "lenis": "^1.3.26",
     "motion": "^13.1.1",
     "next": "~16.3.1",
+    "payload": "3.88.0",
     "react": "~19.2.8",
     "react-dom": "~19.2.8",
     "react-markdown": "^10.1.0",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "sharp": "0.34.2"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",
@@ -41,6 +53,7 @@
     "jsdom": "^30.0.1",
     "postcss": "^8.5.26",
     "tailwindcss": "^4.3.3",
+    "tsx": "^4.22.4",
     "typescript": "^5.9.3",
     "vitest": "^4.1.11"
   }

@@ -1,6 +1,8 @@
-# StackGen website — GKE Standard, 1 node, us-west1-b
-# Cluster: stackgen-web (propane-galaxy-498403-n8). Reuse; do not create another.
+# StackGen website + embedded Payload CMS — GKE Standard, us-west1-b
+# Cluster: stackgen-web (propane-galaxy-498403-n8). Admin at /admin on this Service.
 # Image: us-west1-docker.pkg.dev/propane-galaxy-498403-n8/stackgen-web/web:<tag>
+# Secrets (kubectl create secret generic stackgen-web): PAYLOAD_SECRET, DATABASE_URL
+# ConfigMap stackgen-web: PAYLOAD_PUBLIC_SERVER_URL (public LB URL of this service)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,7 +26,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: us-west1-docker.pkg.dev/propane-galaxy-498403-n8/stackgen-web/web:latest
+          image: ${WEB_IMAGE}
           imagePullPolicy: Always
           ports:
             - name: http
@@ -36,13 +38,34 @@ spec:
               value: "3000"
             - name: HOSTNAME
               value: "0.0.0.0"
+            - name: CMS_PROVIDER
+              value: payload
+            - name: PAYLOAD_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: stackgen-web
+                  key: PAYLOAD_SECRET
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: stackgen-web
+                  key: DATABASE_URL
+            - name: PAYLOAD_PUBLIC_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: stackgen-web
+                  key: PAYLOAD_PUBLIC_SERVER_URL
+                  optional: true
+          volumeMounts:
+            - name: media
+              mountPath: /app/media
           resources:
             requests:
               cpu: "250m"
               memory: "512Mi"
             limits:
-              cpu: "500m"
-              memory: "1Gi"
+              cpu: "1000m"
+              memory: "1536Mi"
           securityContext:
             runAsNonRoot: true
             runAsUser: 1001
@@ -53,14 +76,38 @@ spec:
             httpGet:
               path: /
               port: http
-            initialDelaySeconds: 5
+            initialDelaySeconds: 10
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /
               port: http
-            initialDelaySeconds: 20
+            initialDelaySeconds: 30
             periodSeconds: 20
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+            failureThreshold: 30
+            periodSeconds: 5
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+            claimName: stackgen-web-media
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: stackgen-web-media
+  labels:
+    app: stackgen-web
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard-rwo
+  resources:
+    requests:
+      storage: 5Gi
 ---
 apiVersion: v1
 kind: Service
@@ -70,6 +117,8 @@ metadata:
     app: stackgen-web
 spec:
   type: LoadBalancer
+  loadBalancerSourceRanges:
+    - 0.0.0.0/0
   selector:
     app: stackgen-web
   ports:

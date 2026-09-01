@@ -10,5 +10,5 @@ gcloud container clusters get-credentials "$CLUSTER" --zone "$ZONE" --project "$
 DBPOD="$(kubectl get pod -l app=stackgen-payload-db -o jsonpath='{.items[0].metadata.name}')"
 kubectl exec "$DBPOD" -- psql -U payload -d payload -c "DELETE FROM users_sessions; DELETE FROM users;"
 
-IP="$(kubectl get svc stackgen-payload -o jsonpath='{.status.loadBalancer.ingress[0].ip}')"
+IP="$(kubectl get svc stackgen-web -o jsonpath='{.status.loadBalancer.ingress[0].ip}')"
 echo "Admin users cleared. Open http://${IP}/admin/create-first-user (wait ~5s for the form to hydrate)."

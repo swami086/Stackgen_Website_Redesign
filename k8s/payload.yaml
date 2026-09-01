@@ -1,0 +1,238 @@
+# StackGen Payload CMS — same GKE cluster as the website (stackgen-web, us-west1-b).
+# 1 replica + maxSurge 0: a second Payload pod will not fit next to Postgres on a busy node.
+# Secrets are created with kubectl (not this file). Image tag is pinned at apply time.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: stackgen-payload
+  namespace: default
+  labels:
+    app: stackgen-payload
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: stackgen-payload-pgdata
+  namespace: default
+  labels:
+    app: stackgen-payload-db
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard-rwo
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: stackgen-payload-media
+  namespace: default
+  labels:
+    app: stackgen-payload
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard-rwo
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stackgen-payload-db
+  namespace: default
+  labels:
+    app: stackgen-payload-db
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: stackgen-payload-db
+  template:
+    metadata:
+      labels:
+        app: stackgen-payload-db
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        fsGroup: 70
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - name: postgres
+              containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: payload
+            - name: POSTGRES_DB
+              value: payload
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: stackgen-payload
+                  key: POSTGRES_PASSWORD
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          volumeMounts:
+            - name: pgdata
+              mountPath: /var/lib/postgresql/data
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "payload", "-d", "payload"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["pg_isready", "-U", "payload", "-d", "payload"]
+            initialDelaySeconds: 20
+            periodSeconds: 20
+      volumes:
+        - name: pgdata
+          persistentVolumeClaim:
+            claimName: stackgen-payload-pgdata
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stackgen-payload-db
+  namespace: default
+  labels:
+    app: stackgen-payload-db
+spec:
+  type: ClusterIP
+  selector:
+    app: stackgen-payload-db
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: postgres
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stackgen-payload
+  namespace: default
+  labels:
+    app: stackgen-payload
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: stackgen-payload
+  template:
+    metadata:
+      labels:
+        app: stackgen-payload
+    spec:
+      serviceAccountName: stackgen-payload
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        fsGroup: 1001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: payload
+          image: ${PAYLOAD_IMAGE}
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: PORT
+              value: "3000"
+            - name: HOSTNAME
+              value: "0.0.0.0"
+            - name: PAYLOAD_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: stackgen-payload
+                  key: PAYLOAD_SECRET
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: stackgen-payload
+                  key: DATABASE_URL
+            - name: PAYLOAD_PUBLIC_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: stackgen-payload
+                  key: PAYLOAD_PUBLIC_SERVER_URL
+                  optional: true
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: media
+              mountPath: /app/media
+            - name: tmp
+              mountPath: /tmp
+          readinessProbe:
+            httpGet:
+              path: /admin
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /admin
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+          startupProbe:
+            httpGet:
+              path: /admin
+              port: http
+            failureThreshold: 30
+            periodSeconds: 5
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+            claimName: stackgen-payload-media
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stackgen-payload
+  namespace: default
+  labels:
+    app: stackgen-payload
+spec:
+  type: LoadBalancer
+  selector:
+    app: stackgen-payload
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

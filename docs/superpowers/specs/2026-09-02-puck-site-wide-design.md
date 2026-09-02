@@ -85,9 +85,19 @@ Use `mergeConfigs` from `@delmaredigital/payload-puck/config` to extend POC `bas
 
 ### Data model
 
-| Product pages | **`pages` row per product slug** — layout in `puckData`; `/product/[slug]` resolves `pages` where `slug` matches |
-| Blog | **Full Puck layout per post** — composable blog blocks (eyebrow, title, excerpt, body, paragraph, quote) |
-| Diagrams | **Copy-only** — diagram structure stays in React; Puck exposes captions/headings only |
+| Decision | Choice |
+|----------|--------|
+| Product pages | **`pages` row per product slug** — `/product/[slug]` loads `pages` where `slug` matches |
+| Blog | **Full Puck layout per post** — composable blog blocks |
+| Diagrams | **Copy-only** — diagram structure stays in React |
+
+| Entity | Steady state |
+|--------|--------------|
+| `pages` | Homepage (`isHomepage`), product pages, blog pages, `/puck-demo` |
+| `products` | Slug + SEO; layout from matching `pages` row |
+| `posts` | Blog index metadata; article layout from matching `pages` row when seeded |
+| `home` global | Legacy fallback until homepage Puck row is canonical |
+| `cards` / `faqs` | Legacy overlay until Puck zones (Phase 5) |
 
 **Homepage routing:** `/` renders `pages` where `isHomepage === true` (plugin field already exists).
 

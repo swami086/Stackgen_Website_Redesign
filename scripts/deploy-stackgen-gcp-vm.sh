@@ -15,8 +15,8 @@ IMAGE="${REGISTRY}/web:${SHA}"
 TAG=stackgen-web
 FW=allow-stackgen-web-3000
 
-POSTGRES_PASSWORD="$(openssl rand -base64 24 | tr -d '/+=' | head -c 32)"
-PAYLOAD_SECRET="$(openssl rand -hex 32)"
+source "$ROOT/scripts/lib/secrets.sh"
+sg_load_deploy_secrets "$PROJECT"
 
 echo "==> build and push ${IMAGE}"
 gcloud auth configure-docker us-west1-docker.pkg.dev --quiet
@@ -35,9 +35,18 @@ if ! gcloud compute firewall-rules describe "$FW" --project="$PROJECT" >/dev/nul
 fi
 
 if gcloud compute instances describe "$VM_NAME" --zone="$ZONE" --project="$PROJECT" >/dev/null 2>&1; then
-  echo "==> deleting existing $VM_NAME (fresh disk for compose secrets)"
-  gcloud compute instances delete "$VM_NAME" --zone="$ZONE" --project="$PROJECT" --quiet
-fi
+  # Secrets are stable now, so an existing disk is reusable. Recreating it here
+  # used to be the only way to resync the randomly-regenerated compose secrets,
+  # and it destroyed the Payload database (and every admin user) each deploy.
+  echo "==> $VM_NAME exists — refreshing metadata instead of recreating"
+  gcloud compute instances add-metadata "$VM_NAME" \
+    --zone="$ZONE" --project="$PROJECT" \
+    --metadata=git-repo="$GIT_REPO",git-branch="$GIT_BRANCH",web-image="$IMAGE",postgres-password="$POSTGRES_PASSWORD",payload-secret="$PAYLOAD_SECRET" \
+    --metadata-from-file=startup-script="$ROOT/scripts/gcp-vm-startup.sh"
+  echo "==> re-running startup script"
+  gcloud compute ssh "$VM_NAME" --zone="$ZONE" --project="$PROJECT" \
+    --command='sudo google_metadata_script_runner startup' >/dev/null
+else
 
 echo "==> creating VM $VM_NAME ($MACHINE_TYPE)"
 gcloud compute instances create "$VM_NAME" \
@@ -51,6 +60,7 @@ gcloud compute instances create "$VM_NAME" \
   --scopes=https://www.googleapis.com/auth/cloud-platform \
   --metadata=git-repo="$GIT_REPO",git-branch="$GIT_BRANCH",web-image="$IMAGE",postgres-password="$POSTGRES_PASSWORD",payload-secret="$PAYLOAD_SECRET" \
   --metadata-from-file=startup-script="$ROOT/scripts/gcp-vm-startup.sh"
+fi
 
 echo "==> waiting for external IP"
 IP=""

@@ -10,8 +10,8 @@ GIT_BRANCH="${GIT_BRANCH:-main}"
 GIT_REPO="${GIT_REPO:-https://github.com/swami086/Stackgen_Website_Redesign.git}"
 SEED_CMS="${SEED_CMS:-0}"
 
-POSTGRES_PASSWORD="$(openssl rand -base64 24 | tr -d '/+=' | head -c 32)"
-PAYLOAD_SECRET="$(openssl rand -hex 32)"
+source "$ROOT/scripts/lib/secrets.sh"
+sg_load_deploy_secrets "$PROJECT"
 
 echo "==> native deploy on $VM_NAME"
 

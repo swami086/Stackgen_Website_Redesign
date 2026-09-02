@@ -12,10 +12,12 @@ GIT_REPO="${GIT_REPO:-https://github.com/swami086/Stackgen_Website_Redesign.git}
 REGISTRY="us-west1-docker.pkg.dev/${PROJECT}/stackgen-web"
 SHA="$(git -C "$ROOT" rev-parse --short HEAD)"
 IMAGE="${REGISTRY}/web:${SHA}"
-FRESH_DB="${FRESH_DB:-1}"
+# Opt-in only: dropping the volume deletes every admin user, which leaves
+# browsers holding a cookie for a user that no longer exists.
+FRESH_DB="${FRESH_DB:-0}"
 
-POSTGRES_PASSWORD="$(openssl rand -base64 24 | tr -d '/+=' | head -c 32)"
-PAYLOAD_SECRET="$(openssl rand -hex 32)"
+source "$ROOT/scripts/lib/secrets.sh"
+sg_load_deploy_secrets "$PROJECT"
 
 echo "==> build & push ${IMAGE}"
 docker build --platform linux/amd64 -t "$IMAGE" -t "${REGISTRY}/web:latest" "$ROOT/web"

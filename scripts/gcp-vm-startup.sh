@@ -41,57 +41,22 @@ else
   git clone --branch "$GIT_BRANCH" --depth 1 "$GIT_REPO" "$APP_DIR"
 fi
 
+# stack/docker-compose.vm.yml is the single source of truth (it ships in the
+# repo we just cloned); this only supplies the values it interpolates.
 cat > "$APP_DIR/stack/.env" <<ENV
 POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 PAYLOAD_SECRET=${PAYLOAD_SECRET}
 PAYLOAD_PUBLIC_SERVER_URL=${PUBLIC_URL}
+WEB_IMAGE=${WEB_IMAGE}
 ENV
 chmod 600 "$APP_DIR/stack/.env"
 
 gcloud auth configure-docker us-west1-docker.pkg.dev --quiet 2>/dev/null || true
-docker pull "$WEB_IMAGE"
-
-cat > "$APP_DIR/stack/docker-compose.vm.yml" <<YML
-name: stackgen-stack
-services:
-  postgres:
-    image: postgres:16-alpine
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: payload
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: payload
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U payload -d payload"]
-      interval: 5s
-      timeout: 5s
-      retries: 12
-  web:
-    image: ${WEB_IMAGE}
-    restart: unless-stopped
-    depends_on:
-      postgres:
-        condition: service_healthy
-    ports:
-      - "3000:3000"
-    environment:
-      NODE_ENV: production
-      HOSTNAME: 0.0.0.0
-      PORT: "3000"
-      CMS_PROVIDER: payload
-      PAYLOAD_SECRET: ${PAYLOAD_SECRET}
-      DATABASE_URL: postgresql://payload:${POSTGRES_PASSWORD}@postgres:5432/payload
-      PAYLOAD_PUBLIC_SERVER_URL: ${PUBLIC_URL}
-    volumes:
-      - payload-media:/app/media
-volumes:
-  pgdata:
-  payload-media:
-YML
 
 cd "$APP_DIR"
+docker compose -f stack/docker-compose.vm.yml pull
+# No `down -v` here: the volume holds the Payload database, and dropping it
+# deletes every admin user while browsers keep replaying their session cookie.
 docker compose -f stack/docker-compose.vm.yml up -d
 
 echo "==> startup finished $(date -Is) PUBLIC_URL=${PUBLIC_URL}"

@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { createPuckPlugin } from '@delmaredigital/payload-puck/plugin'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -37,6 +38,9 @@ export default buildConfig({
       // web/ root — importMap lives under app/(payload)/admin
       baseDir: path.resolve(dirname, '..'),
     },
+    components: {
+      providers: ['@/components/admin/PuckProvider'],
+    },
     // Live Preview for all CMS-editable page content. Cards/Faqs preview on
     // their parent home or product page (no dedicated route).
     livePreview: {
@@ -46,6 +50,9 @@ export default buildConfig({
         const slug = typeof data?.slug === 'string' ? data.slug : ''
         const productSlug =
           typeof data?.['product-slug'] === 'string' ? data['product-slug'] : ''
+        if (collectionConfig?.slug === 'pages' && slug) {
+          return `${base}/${slug}`
+        }
         if (collectionConfig?.slug === 'products' && slug) {
           return `${base}/product/${slug}`
         }
@@ -60,7 +67,7 @@ export default buildConfig({
         }
         return base || '/'
       },
-      collections: ['products', 'posts', 'cards', 'faqs'],
+      collections: ['pages', 'products', 'posts', 'cards', 'faqs'],
       globals: ['home'],
       breakpoints: [
         { label: 'Mobile', name: 'mobile', width: 390, height: 844 },
@@ -83,5 +90,11 @@ export default buildConfig({
     prodMigrations: migrations,
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    createPuckPlugin({
+      pagesCollection: 'pages',
+      editorStylesheets: ['/puck-editor-styles.css'],
+      previewUrl: (page) => `/${page.slug || ''}`,
+    }),
+  ],
 })

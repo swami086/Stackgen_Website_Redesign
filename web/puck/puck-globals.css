@@ -1,0 +1,49 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@source "../node_modules/@delmaredigital/payload-puck";
+
+/* shadcn-style vars used by payload-puck components */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 222.2 84% 4.9%;
+  --radius: 0.5rem;
+}
+
+/* StackGen design tokens (subset for Puck editor iframe) */
+:root {
+  --ds-bg: #fcfcfd;
+  --ds-surface: #f4f5f7;
+  --ds-text-primary: #12141a;
+  --ds-text-secondary: #5b6069;
+  --ds-accent: #5b4fe8;
+  --ds-on-accent: #ffffff;
+}
+
+[data-theme="dark"] {
+  --ds-bg: #0b0c0e;
+  --ds-surface: #151619;
+  --ds-text-primary: #f3f4f6;
+  --ds-text-secondary: #9aa0ac;
+  --ds-accent: #8c85ff;
+  --ds-on-accent: #0b0c0e;
+}
+
+@theme {
+  --color-bg: var(--ds-bg);
+  --color-accent: var(--ds-accent);
+  --color-text-primary: var(--ds-text-primary);
+  --color-text-secondary: var(--ds-text-secondary);
+}

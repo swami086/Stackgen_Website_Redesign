@@ -73,6 +73,8 @@ export interface Config {
     posts: Post;
     products: Product;
     faqs: Faq;
+    'puck-templates': PuckTemplate;
+    pages: Page;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +88,8 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
+    'puck-templates': PuckTemplatesSelect<false> | PuckTemplatesSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -232,6 +236,127 @@ export interface Faq {
   createdAt: string;
 }
 /**
+ * Reusable component templates for the visual editor
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "puck-templates".
+ */
+export interface PuckTemplate {
+  id: number;
+  /**
+   * A descriptive name for this template
+   */
+  name: string;
+  /**
+   * Optional description of what this template contains
+   */
+  description?: string | null;
+  /**
+   * Category for organizing templates (e.g., "Hero", "Footer", "CTA")
+   */
+  category?: string | null;
+  /**
+   * Serialized Puck component data
+   */
+  content:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * Optional thumbnail URL for template preview
+   */
+  thumbnail?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * URL path for this page (auto-generated from title)
+   */
+  slug: string;
+  /**
+   * Overall page structure and layout style
+   */
+  pageLayout: 'default' | 'landing' | 'full-width';
+  /**
+   * Which editor was used to create this page
+   */
+  editorVersion?: ('legacy' | 'puck') | null;
+  /**
+   * Mark this page as the homepage
+   */
+  isHomepage?: boolean | null;
+  /**
+   * Puck editor data - managed via visual editor
+   */
+  puckData?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  meta?: {
+    /**
+     * Override the page title for search engines
+     */
+    title?: string | null;
+    /**
+     * Description shown in search engine results
+     */
+    description?: string | null;
+    /**
+     * Image shown when sharing on social media
+     */
+    image?: (number | null) | Media;
+    /**
+     * Prevent search engines from indexing this page
+     */
+    noindex?: boolean | null;
+    /**
+     * Prevent search engines from following links on this page
+     */
+    nofollow?: boolean | null;
+    /**
+     * Exclude this page from the XML sitemap
+     */
+    excludeFromSitemap?: boolean | null;
+  };
+  /**
+   * Configure conversion tracking for analytics
+   */
+  conversionTracking?: {
+    /**
+     * Check this if this page represents a completed conversion (e.g., thank you page)
+     */
+    isConversionPage?: boolean | null;
+    /**
+     * Type of conversion this page represents
+     */
+    conversionType?: ('lead' | 'registration' | 'purchase' | 'donation' | 'newsletter' | 'contact' | 'custom') | null;
+    /**
+     * Monetary value of this conversion (0 for non-monetary conversions)
+     */
+    conversionValue?: number | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -278,6 +403,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'faqs';
         value: number | Faq;
+      } | null)
+    | ({
+        relationTo: 'puck-templates';
+        value: number | PuckTemplate;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: number | Page;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -414,6 +547,51 @@ export interface FaqsSelect<T extends boolean = true> {
   answer?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "puck-templates_select".
+ */
+export interface PuckTemplatesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  category?: T;
+  content?: T;
+  thumbnail?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  pageLayout?: T;
+  editorVersion?: T;
+  isHomepage?: T;
+  puckData?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noindex?: T;
+        nofollow?: T;
+        excludeFromSitemap?: T;
+      };
+  conversionTracking?:
+    | T
+    | {
+        isConversionPage?: T;
+        conversionType?: T;
+        conversionValue?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

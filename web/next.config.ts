@@ -14,6 +14,8 @@ const redirectsJson = JSON.parse(
 const nextConfig: NextConfig = {
   output: "standalone",
   reactStrictMode: true,
+  // Next 16 blocks dev JS/HMR when host differs from dev server binding.
+  allowedDevOrigins: ["127.0.0.1", "localhost"],
   images: {
     remotePatterns: [
       {

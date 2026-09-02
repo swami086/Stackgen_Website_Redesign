@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source "../node_modules/@delmaredigital/payload-puck";
 
 @theme {
   --color-bg: var(--ds-bg);

@@ -1,0 +1,20 @@
+[Unit]
+Description=StackGen Next.js + Payload CMS
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=stackgen
+Group=stackgen
+WorkingDirectory=/opt/stackgen/web/.next/standalone
+EnvironmentFile=/etc/stackgen/web.env
+Environment=NODE_ENV=production
+Environment=HOSTNAME=0.0.0.0
+Environment=PORT=3000
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

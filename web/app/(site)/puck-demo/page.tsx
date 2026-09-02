@@ -1,10 +1,9 @@
-import { PageRenderer } from "@delmaredigital/payload-puck/render";
+import { PuckSitePage } from "@/components/puck/PuckSitePage";
 import type { Data } from "@puckeditor/core";
 import config from "@payload-config";
 import { getPayload } from "payload";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { baseConfig } from "@/puck/config";
 
 export const revalidate = 60;
 
@@ -39,9 +38,5 @@ export default async function PuckDemoPage() {
   const page = await getPuckDemoPage();
   if (!page?.puckData) notFound();
 
-  return (
-    <main className="min-h-screen bg-bg text-text-primary">
-      <PageRenderer config={baseConfig} data={page.puckData as Data} />
-    </main>
-  );
+  return <PuckSitePage data={page.puckData as Data} />;
 }

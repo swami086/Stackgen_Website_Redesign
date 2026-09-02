@@ -14,6 +14,7 @@ import { Products } from './collections/Products'
 import { Users } from './collections/Users'
 import { Home } from './globals/Home'
 import { migrations } from './migrations'
+import { isProductSlug } from '../lib/products'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -51,7 +52,11 @@ export default buildConfig({
         const productSlug =
           typeof data?.['product-slug'] === 'string' ? data['product-slug'] : ''
         if (collectionConfig?.slug === 'pages' && slug) {
-          return `${base}/${slug}`
+          const doc = data as { isHomepage?: boolean }
+          if (doc.isHomepage) return `${base}/`
+          if (slug === 'puck-demo') return `${base}/puck-demo`
+          if (isProductSlug(slug)) return `${base}/product/${slug}`
+          return `${base}/blog/${slug}`
         }
         if (collectionConfig?.slug === 'products' && slug) {
           return `${base}/product/${slug}`

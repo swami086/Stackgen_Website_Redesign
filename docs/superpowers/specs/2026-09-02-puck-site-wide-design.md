@@ -1,6 +1,6 @@
 # Puck site-wide rollout — design spec
 
-**Status:** Awaiting approval  
+**Status:** Approved — Phase 0–5 foundation implemented (2026-09-02)  
 **Date:** 2026-09-02  
 **Builds on:** [Puck POC](./2026-09-02-puck-poc-design.md) (commit `4a652db`)  
 **Torbit index:** `Stackgen_Website_Redesign` @ main — 1,331 files, 2,973 definitions
@@ -85,13 +85,9 @@ Use `mergeConfigs` from `@delmaredigital/payload-puck/config` to extend POC `bas
 
 ### Data model
 
-| Entity | Phase 1 | Steady state |
-|--------|---------|--------------|
-| `pages` | Ad-hoc pages + `/puck-demo` | Homepage (`isHomepage: true`), product pages, optional landing pages |
-| `products` | Keep slug + SEO fields | Add `puckData` via `getPuckFields()` **or** redirect to `pages` row per slug |
-| `posts` | Keep for blog index | Add `puckData` for article body layout **or** single `BlogArticle` block with rich fields |
-| `home` global | Unchanged during migration | **Deprecated** once homepage `pages` row is canonical |
-| `cards` / `faqs` | Unchanged during migration | **Inlined** into parent page `puckData` as repeatable block zones |
+| Product pages | **`pages` row per product slug** — layout in `puckData`; `/product/[slug]` resolves `pages` where `slug` matches |
+| Blog | **Full Puck layout per post** — composable blog blocks (eyebrow, title, excerpt, body, paragraph, quote) |
+| Diagrams | **Copy-only** — diagram structure stays in React; Puck exposes captions/headings only |
 
 **Homepage routing:** `/` renders `pages` where `isHomepage === true` (plugin field already exists).
 
@@ -178,12 +174,8 @@ Scripts are **idempotent** (like `seed-puck-demo.ts`); never overwrite editor ch
 3. No dependency on `cms-overlay.ts` for migrated routes
 4. POC `/puck-demo` continues to work
 
-## Open questions (resolve before implementation plan)
+## Remaining work
 
-1. **Product pages:** one `pages` row per product slug, or `puckData` field added to existing `products` collection?
-2. **Blog:** full Puck layout per post, or single article template block with title/excerpt/body fields only?
-3. **Diagrams:** editable copy only, or also layout variants in Puck?
-
----
-
-**Next step after approval:** invoke `writing-plans` → phased implementation plan with file-level tasks.
+- Run `pnpm seed:puck-all` against local Payload DB to activate Puck on `/`, `/product/*`, `/blog/*`
+- Phase 5–8: cards/faqs zones, catch-all slug route, retire `cms-overlay`, Live Preview cleanup
+- Visual QA per route after seeding

@@ -5,7 +5,7 @@ import {
   overlayProductContent,
   overlayReplicaContent,
   stripHtml,
-} from "@/lib/webflow-cms";
+} from "@/lib/cms-overlay";
 
 test("stripHtml and hrefPath keep overlay values usable in React text", () => {
   expect(stripHtml("<p>Keep control of how software ships.</p>")).toBe(

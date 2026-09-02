@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-/** Field slugs match web/lib/webflow-cms overlay keys. */
+/** Field slugs match lib/cms-overlay overlay keys. */
 export const Home: GlobalConfig = {
   slug: 'home',
   label: 'Homepage',

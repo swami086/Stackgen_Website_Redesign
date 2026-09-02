@@ -7,11 +7,11 @@ import {
   overlayReplicaContent,
   type CmsFieldData,
   type CmsPost,
-} from "@/lib/webflow-cms";
+} from "@/lib/cms-overlay";
+
+export type { CmsFieldData, CmsPost };
 
 export function isPayloadCmsEnabled(): boolean {
-  if (process.env.CMS_PROVIDER === "webflow") return false;
-  if (process.env.CMS_PROVIDER === "payload") return true;
   return Boolean(process.env.DATABASE_URL && process.env.PAYLOAD_SECRET);
 }
 
@@ -79,12 +79,12 @@ async function fetchHomeGlobal(): Promise<CmsFieldData | undefined> {
   }
 }
 
-export async function getPayloadOverlayReplicaContent(): Promise<ReplicaContent> {
+export async function getOverlayReplicaContent(): Promise<ReplicaContent> {
   const [home, cards] = await Promise.all([fetchHomeGlobal(), fetchCollection("cards")]);
   return overlayReplicaContent(home, cards);
 }
 
-export async function getPayloadOverlayProductContent(
+export async function getOverlayProductContent(
   slug: ProductSlug,
 ): Promise<ProductPageContent> {
   const [products, cards, faqs] = await Promise.all([
@@ -92,16 +92,18 @@ export async function getPayloadOverlayProductContent(
     fetchCollection("cards"),
     fetchCollection("faqs"),
   ]);
-  const product = products.find((item) => item.slug === slug);
+  const product = products.find(
+    (item) => typeof item.slug === "string" && item.slug === slug,
+  );
   return overlayProductContent(slug, product, cards, faqs);
 }
 
-export async function getPayloadPublishedPosts(): Promise<CmsPost[]> {
+export async function getPublishedPosts(): Promise<CmsPost[]> {
   return mapPosts(await fetchCollection("posts"));
 }
 
-export async function getPayloadPublishedPost(slug: string): Promise<CmsPost | undefined> {
-  return (await getPayloadPublishedPosts()).find((post) => post.slug === slug);
+export async function getPublishedPost(slug: string): Promise<CmsPost | undefined> {
+  return (await getPublishedPosts()).find((post) => post.slug === slug);
 }
 
 /** Server-side health check — Local API connected. */

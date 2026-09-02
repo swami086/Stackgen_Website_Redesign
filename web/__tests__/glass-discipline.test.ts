@@ -11,7 +11,7 @@ function walk(dir: string, out: string[] = []): string[] {
 }
 
 test("globals.css defines all three material tiers", () => {
-  const css = readFileSync("app/globals.css", "utf8");
+  const css = readFileSync("app/(site)/globals.css", "utf8");
   expect(css).toContain(".glass-real");
   expect(css).toContain(".glass-specular");
   expect(css).toContain(".glow-source");
@@ -21,7 +21,7 @@ test("globals.css defines all three material tiers", () => {
 });
 
 test("globals.css light glass-specular uses stronger edge definition", () => {
-  const css = readFileSync("app/globals.css", "utf8");
+  const css = readFileSync("app/(site)/globals.css", "utf8");
   expect(css).toContain(':root[data-theme="light"] .glass-specular');
   expect(css).toContain("layer-intent-bg");
   expect(css).toContain(':root[data-theme="light"] .glass-hub-shine::after');
@@ -35,7 +35,7 @@ test("globals.css light glass-specular uses stronger edge definition", () => {
 
 
 test("globals.css caps non–Liquid-Glass blur at 24px; Tier-1 may go to 48", () => {
-  const css = readFileSync("app/globals.css", "utf8");
+  const css = readFileSync("app/(site)/globals.css", "utf8");
   // Strip Tier-1 liquid glass blocks — Apple Liquid Glass needs heavier frost.
   const withoutTier1 = css
     .replace(/\.glass-real[\s\S]*?(?=\/\* --- Tier 2)/, "")
@@ -58,14 +58,14 @@ test("globals.css caps non–Liquid-Glass blur at 24px; Tier-1 may go to 48", ()
 });
 
 test("globals.css defines light-theme Liquid Glass materials", () => {
-  const css = readFileSync("app/globals.css", "utf8");
+  const css = readFileSync("app/(site)/globals.css", "utf8");
   expect(css).toContain(':root[data-theme="light"] .glass-real');
   expect(css).toContain(':root[data-theme="light"] .glass-real-dense');
   expect(css).toContain(':root[data-theme="light"] .nav-scroll-edge');
 });
 
 test("globals.css themes every browser surface", () => {
-  const css = readFileSync("app/globals.css", "utf8");
+  const css = readFileSync("app/(site)/globals.css", "utf8");
   for (const token of [
     "::selection",
     "caret-color",
@@ -79,7 +79,7 @@ test("globals.css themes every browser surface", () => {
 });
 
 test("globals.css provides reduced-transparency and forced-colors fallbacks", () => {
-  const css = readFileSync("app/globals.css", "utf8");
+  const css = readFileSync("app/(site)/globals.css", "utf8");
   expect(css).toContain("prefers-reduced-transparency");
   expect(css).toContain("forced-colors");
 });

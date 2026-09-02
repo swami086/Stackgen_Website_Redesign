@@ -14,24 +14,15 @@ describe("payload-cms config", () => {
     expect(payloadBaseUrl()).toBe("http://127.0.0.1:3000");
   });
 
-  it("enables Payload when CMS_PROVIDER=payload", () => {
-    process.env.CMS_PROVIDER = "payload";
+  it("enables Payload when DATABASE_URL + PAYLOAD_SECRET are set", () => {
+    process.env.DATABASE_URL = "postgresql://x";
+    process.env.PAYLOAD_SECRET = "secret";
+    expect(isPayloadCmsEnabled()).toBe(true);
+  });
+
+  it("is disabled without DATABASE_URL or PAYLOAD_SECRET", () => {
     delete process.env.DATABASE_URL;
     delete process.env.PAYLOAD_SECRET;
-    expect(isPayloadCmsEnabled()).toBe(true);
-  });
-
-  it("enables Payload when DATABASE_URL + PAYLOAD_SECRET are set", () => {
-    delete process.env.CMS_PROVIDER;
-    process.env.DATABASE_URL = "postgresql://x";
-    process.env.PAYLOAD_SECRET = "secret";
-    expect(isPayloadCmsEnabled()).toBe(true);
-  });
-
-  it("prefers Webflow when CMS_PROVIDER=webflow", () => {
-    process.env.CMS_PROVIDER = "webflow";
-    process.env.DATABASE_URL = "postgresql://x";
-    process.env.PAYLOAD_SECRET = "secret";
     expect(isPayloadCmsEnabled()).toBe(false);
   });
 });

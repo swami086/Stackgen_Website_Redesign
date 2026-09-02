@@ -8,7 +8,7 @@ const LenisReadyContext = createContext(false);
 /**
  * Single owner of smooth scroll and ScrollTrigger registration.
  * GSAP is imported dynamically so it stays out of the initial bundle;
- * only ContextGraph needs it.
+ * Shell OCG pinning uses it when Lenis is enabled.
  *
  * Lenis go/no-go (spec, Wave 0 decision): if the pinned scrub jitters at
  * 120Hz, set LENIS_ENABLED to false and ship native scroll. Do not defer

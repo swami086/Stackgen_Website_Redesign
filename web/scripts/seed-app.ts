@@ -7,7 +7,6 @@
  *
  * Remote/GKE: use scripts/seed-payload-gke.sh (sets NODE_ENV=production).
  */
-import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { getPayload } from "payload";
@@ -18,32 +17,8 @@ import { PRODUCT_SLUGS, type ProductSlug } from "../lib/products";
 import type { ProductCard, ProductPageContent } from "../content/products";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const WEBFLOW_POSTS_COLLECTION = "6a9636d16f1d9c226162c6b2";
 
 type Payload = Awaited<ReturnType<typeof getPayload>>;
-
-function loadWebEnv(): void {
-  const envPath = path.resolve(__dirname, "../.env");
-  try {
-    for (const line of readFileSync(envPath, "utf8").split("\n")) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith("#")) continue;
-      const eq = trimmed.indexOf("=");
-      if (eq <= 0) continue;
-      const key = trimmed.slice(0, eq);
-      let val = trimmed.slice(eq + 1);
-      if (
-        (val.startsWith('"') && val.endsWith('"')) ||
-        (val.startsWith("'") && val.endsWith("'"))
-      ) {
-        val = val.slice(1, -1);
-      }
-      if (!process.env[key]) process.env[key] = val;
-    }
-  } catch {
-    // ponytail: Webflow post seed skipped when web/.env missing
-  }
-}
 
 function productSlugFromHref(href: string): string {
   const m = href.match(/\/product\/([^/?#]+)/);
@@ -168,46 +143,7 @@ async function seedProduct(payload: Payload, slug: ProductSlug, p: ProductPageCo
   }
 }
 
-type WebflowFieldData = Record<string, unknown>;
-
-async function fetchWebflowPosts(): Promise<WebflowFieldData[]> {
-  const token = process.env.WEBFLOW_API_TOKEN;
-  if (!token) return [];
-  const res = await fetch(
-    `https://api.webflow.com/v2/collections/${WEBFLOW_POSTS_COLLECTION}/items/live?limit=100`,
-    { headers: { Authorization: `Bearer ${token}`, accept: "application/json" } },
-  );
-  if (!res.ok) return [];
-  const json = (await res.json()) as { items?: { fieldData?: WebflowFieldData }[] };
-  return (json.items ?? []).map((item) => item.fieldData ?? {});
-}
-
-function text(fd: WebflowFieldData, key: string): string {
-  return typeof fd[key] === "string" ? fd[key] : "";
-}
-
-async function seedPosts(payload: Payload) {
-  const items = await fetchWebflowPosts();
-  for (const fd of items) {
-    const slug = text(fd, "slug");
-    const name = text(fd, "name");
-    if (!slug || !name) continue;
-    await payload.create({
-      collection: "posts",
-      data: {
-        slug,
-        name,
-        excerpt: text(fd, "excerpt"),
-        body: typeof fd.body === "string" ? fd.body : text(fd, "body"),
-        "published-on-2": text(fd, "published-on-2") || undefined,
-      },
-    });
-  }
-  return items.length;
-}
-
 async function main() {
-  loadWebEnv();
   const payload = await getPayload({ config });
 
   await clearCollection(payload, "cards");
@@ -221,8 +157,6 @@ async function main() {
     await seedProduct(payload, slug, productContentBySlug[slug]);
   }
 
-  const postCount = await seedPosts(payload);
-
   const counts = await Promise.all(
     (["cards", "products", "faqs", "posts"] as const).map(async (col) => {
       const { totalDocs } = await payload.find({ collection: col, limit: 1 });
@@ -230,11 +164,8 @@ async function main() {
     }),
   );
 
-  console.log("Seeded Payload from web/content (+ Webflow posts when token present):");
+  console.log("Seeded Payload from web/content:");
   for (const [col, n] of counts) console.log(`  ${col}: ${n}`);
-  if (postCount === 0 && !process.env.WEBFLOW_API_TOKEN) {
-    console.log("  (posts skipped — set WEBFLOW_API_TOKEN via web/.env)");
-  }
   process.exit(0);
 }
 

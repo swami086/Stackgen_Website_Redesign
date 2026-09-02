@@ -4,19 +4,7 @@ import {
   type ProductCard,
   type ProductPageContent,
 } from "@/content/products";
-import { PRODUCT_SLUGS, isProductSlug, type ProductSlug } from "@/lib/products";
-
-/** Stackgen_CMS collection IDs. Cloud site `WEBFLOW_SITE_ID` is deploy-only. */
-export const WEBFLOW_CMS_COLLECTIONS = {
-  cards: "6a9636cf1715c584f2dd5e15",
-  faqs: "6a9636d091feefafaa51f2d3",
-  posts: "6a9636d16f1d9c226162c6b2",
-  home: "6a9636d2c11a779053907675",
-  products: "6a9636d22da825b206916f38",
-} as const;
-
-const API = "https://api.webflow.com/v2";
-const REVALIDATE = 300;
+import { PRODUCT_SLUGS, type ProductSlug } from "@/lib/products";
 
 export type CmsFieldData = Record<string, unknown>;
 
@@ -222,58 +210,4 @@ export function mapPosts(items: CmsFieldData[]): CmsPost[] {
       publishedOn: text(item, "published-on-2") || null,
     }))
     .filter((post) => post.slug && post.title);
-}
-
-async function fetchCollectionItems(collectionId: string): Promise<CmsFieldData[]> {
-  const token = process.env.WEBFLOW_API_TOKEN;
-  if (!token) return [];
-  try {
-    const res = await fetch(
-      `${API}/collections/${collectionId}/items/live?limit=100`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          accept: "application/json",
-        },
-        next: { revalidate: REVALIDATE },
-      },
-    );
-    if (!res.ok) return [];
-    const json = (await res.json()) as { items?: { fieldData?: CmsFieldData }[] };
-    return (json.items ?? []).map((item) => item.fieldData ?? {});
-  } catch {
-    return [];
-  }
-}
-
-export async function getOverlayReplicaContent(): Promise<ReplicaContent> {
-  const [homes, cards] = await Promise.all([
-    fetchCollectionItems(WEBFLOW_CMS_COLLECTIONS.home),
-    fetchCollectionItems(WEBFLOW_CMS_COLLECTIONS.cards),
-  ]);
-  const home = homes.find((item) => text(item, "slug") === "home") ?? homes[0];
-  return overlayReplicaContent(home, cards);
-}
-
-export async function getOverlayProductContent(
-  slug: ProductSlug,
-): Promise<ProductPageContent> {
-  const [products, cards, faqs] = await Promise.all([
-    fetchCollectionItems(WEBFLOW_CMS_COLLECTIONS.products),
-    fetchCollectionItems(WEBFLOW_CMS_COLLECTIONS.cards),
-    fetchCollectionItems(WEBFLOW_CMS_COLLECTIONS.faqs),
-  ]);
-  const product = products.find((item) => {
-    const itemSlug = text(item, "slug");
-    return isProductSlug(itemSlug) && itemSlug === slug;
-  });
-  return overlayProductContent(slug, product, cards, faqs);
-}
-
-export async function getPublishedPosts(): Promise<CmsPost[]> {
-  return mapPosts(await fetchCollectionItems(WEBFLOW_CMS_COLLECTIONS.posts));
-}
-
-export async function getPublishedPost(slug: string): Promise<CmsPost | undefined> {
-  return (await getPublishedPosts()).find((post) => post.slug === slug);
 }

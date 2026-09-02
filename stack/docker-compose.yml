@@ -37,7 +37,6 @@ services:
       NODE_ENV: production
       HOSTNAME: 0.0.0.0
       PORT: "3000"
-      CMS_PROVIDER: payload
       PAYLOAD_SECRET: ${PAYLOAD_SECRET:?set PAYLOAD_SECRET in stack/.env}
       DATABASE_URL: postgresql://payload:${POSTGRES_PASSWORD}@postgres:5432/payload
       PAYLOAD_PUBLIC_SERVER_URL: ${PAYLOAD_PUBLIC_SERVER_URL:-http://127.0.0.1:3000}

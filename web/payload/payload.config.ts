@@ -16,8 +16,11 @@ import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-// Same origin as the marketing site — admin lives at /admin on this Next app.
-const serverURL = process.env.PAYLOAD_PUBLIC_SERVER_URL || undefined
+// Remote admin requires absolute URL — never localhost in production.
+const serverURL =
+  process.env.PAYLOAD_PUBLIC_SERVER_URL ||
+  process.env.NEXT_PUBLIC_SERVER_URL ||
+  undefined
 
 export default buildConfig({
   ...(serverURL ? { serverURL, cors: [serverURL], csrf: [serverURL] } : {}),

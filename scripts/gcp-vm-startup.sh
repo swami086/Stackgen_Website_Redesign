@@ -19,6 +19,12 @@ APP_DIR=/opt/stackgen
 
 echo "==> stackgen VM startup $(date -Is) image=${WEB_IMAGE:-unset}"
 
+# Remove native/systemd install if present
+systemctl stop stackgen-web 2>/dev/null || true
+systemctl disable stackgen-web 2>/dev/null || true
+rm -f /etc/systemd/system/stackgen-web.service
+systemctl daemon-reload 2>/dev/null || true
+
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -y
 apt-get install -y ca-certificates curl git
@@ -68,6 +74,7 @@ ENV
 chmod 600 "$APP_DIR/stack/.env"
 
 cd "$APP_DIR"
+docker compose -f stack/docker-compose.vm.yml down -v --remove-orphans 2>/dev/null || true
 docker compose -f stack/docker-compose.vm.yml pull web
 docker compose -f stack/docker-compose.vm.yml up -d
 

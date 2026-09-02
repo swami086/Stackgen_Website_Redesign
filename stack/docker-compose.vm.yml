@@ -33,7 +33,8 @@ services:
       PORT: "3000"
       PAYLOAD_SECRET: ${PAYLOAD_SECRET:?set PAYLOAD_SECRET in stack/.env}
       DATABASE_URL: postgresql://payload:${POSTGRES_PASSWORD}@postgres:5432/payload
-      PAYLOAD_PUBLIC_SERVER_URL: ${PAYLOAD_PUBLIC_SERVER_URL:-http://127.0.0.1:3000}
+      PAYLOAD_PUBLIC_SERVER_URL: ${PAYLOAD_PUBLIC_SERVER_URL:?set PAYLOAD_PUBLIC_SERVER_URL to http://<VM_IP>:3000}
+      NEXT_PUBLIC_SERVER_URL: ${PAYLOAD_PUBLIC_SERVER_URL}
     volumes:
       - payload-media:/app/media
 

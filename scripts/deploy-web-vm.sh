@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Build web image locally, push to Artifact Registry, deploy on stackgen-web-vm (pull-only, no VM build).
+# Build web image locally, push to Artifact Registry, deploy on VM via Docker Compose (pull-only).
+# Wipes native/systemd install if present. Fixes Payload remote admin URL + postgres service hostname.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
@@ -11,13 +12,16 @@ GIT_REPO="${GIT_REPO:-https://github.com/swami086/Stackgen_Website_Redesign.git}
 REGISTRY="us-west1-docker.pkg.dev/${PROJECT}/stackgen-web"
 SHA="$(git -C "$ROOT" rev-parse --short HEAD)"
 IMAGE="${REGISTRY}/web:${SHA}"
+FRESH_DB="${FRESH_DB:-1}"
+
+POSTGRES_PASSWORD="$(openssl rand -base64 24 | tr -d '/+=' | head -c 32)"
+PAYLOAD_SECRET="$(openssl rand -hex 32)"
 
 echo "==> build & push ${IMAGE}"
 docker build --platform linux/amd64 -t "$IMAGE" -t "${REGISTRY}/web:latest" "$ROOT/web"
 docker push "$IMAGE"
 docker push "${REGISTRY}/web:latest"
 
-# Ensure compute SA can pull (idempotent).
 PROJECT_NUM="$(gcloud projects describe "$PROJECT" --format='value(projectNumber)')"
 gcloud artifacts repositories add-iam-policy-binding stackgen-web \
   --location=us-west1 --project="$PROJECT" \
@@ -25,62 +29,87 @@ gcloud artifacts repositories add-iam-policy-binding stackgen-web \
   --role="roles/artifactregistry.reader" \
   --quiet >/dev/null 2>&1 || true
 
-POSTGRES_PASSWORD="$(openssl rand -base64 24 | tr -d '/+=' | head -c 32)"
-PAYLOAD_SECRET="$(openssl rand -hex 32)"
-TAG=stackgen-web
 FW=allow-stackgen-web-3000
-
+TAG=stackgen-web
 if ! gcloud compute firewall-rules describe "$FW" --project="$PROJECT" >/dev/null 2>&1; then
   gcloud compute firewall-rules create "$FW" \
     --project="$PROJECT" --allow=tcp:3000 --target-tags="$TAG" \
     --source-ranges=0.0.0.0/0 --description="StackGen Next.js port 3000"
 fi
 
-STARTUP="$ROOT/scripts/gcp-vm-startup.sh"
-META="git-repo=${GIT_REPO},git-branch=${GIT_BRANCH},postgres-password=${POSTGRES_PASSWORD},payload-secret=${PAYLOAD_SECRET},web-image=${IMAGE}"
+IP="$(gcloud compute instances describe "$VM_NAME" --zone="$ZONE" --project="$PROJECT" \
+  --format='get(networkInterfaces[0].accessConfigs[0].natIP)')"
+PUBLIC_URL="http://${IP}:3000"
+echo "==> deploy to $VM_NAME @ $IP ($PUBLIC_URL)"
 
-if gcloud compute instances describe "$VM_NAME" --zone="$ZONE" --project="$PROJECT" >/dev/null 2>&1; then
-  echo "==> stop stuck VM, update metadata, restart"
-  gcloud compute instances stop "$VM_NAME" --zone="$ZONE" --project="$PROJECT" --quiet
-  gcloud compute instances add-metadata "$VM_NAME" \
-    --zone="$ZONE" --project="$PROJECT" \
-    --metadata="$META" \
-    --metadata-from-file=startup-script="$STARTUP"
-  gcloud compute instances start "$VM_NAME" --zone="$ZONE" --project="$PROJECT"
+# Remote deploy — no VM stop/start, no on-VM build
+gcloud compute ssh "$VM_NAME" --zone="$ZONE" --project="$PROJECT" --command="
+set -euo pipefail
+export DEBIAN_FRONTEND=noninteractive
+
+# Wipe native/on-prem install
+systemctl stop stackgen-web 2>/dev/null || true
+systemctl disable stackgen-web 2>/dev/null || true
+rm -f /etc/systemd/system/stackgen-web.service
+systemctl daemon-reload 2>/dev/null || true
+
+if ! command -v docker >/dev/null 2>&1; then
+  curl -fsSL https://get.docker.com | sh
+fi
+systemctl enable --now docker
+
+if ! command -v gcloud >/dev/null 2>&1; then
+  apt-get update -y && apt-get install -y apt-transport-https gnupg curl
+  echo 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main' > /etc/apt/sources.list.d/google-cloud-sdk.list
+  curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
+  apt-get update -y && apt-get install -y google-cloud-cli
+fi
+gcloud auth configure-docker us-west1-docker.pkg.dev --quiet
+
+APP_DIR=/opt/stackgen
+if [[ -d \"\$APP_DIR/.git\" ]]; then
+  git -C \"\$APP_DIR\" fetch origin ${GIT_BRANCH}
+  git -C \"\$APP_DIR\" checkout ${GIT_BRANCH}
+  git -C \"\$APP_DIR\" reset --hard origin/${GIT_BRANCH}
 else
-  echo "==> create VM $VM_NAME"
-  gcloud compute instances create "$VM_NAME" \
-    --project="$PROJECT" --zone="$ZONE" \
-    --machine-type="${MACHINE_TYPE:-e2-standard-2}" \
-    --tags="$TAG" \
-    --image-family=ubuntu-2204-lts --image-project=ubuntu-os-cloud \
-    --boot-disk-size=30GB \
-    --scopes=cloud-platform \
-    --metadata="$META" \
-    --metadata-from-file=startup-script="$STARTUP"
+  rm -rf \"\$APP_DIR\"
+  git clone --branch ${GIT_BRANCH} --depth 1 ${GIT_REPO} \"\$APP_DIR\"
 fi
 
-IP=""
-for _ in $(seq 1 40); do
-  IP="$(gcloud compute instances describe "$VM_NAME" --zone="$ZONE" --project="$PROJECT" \
-    --format='get(networkInterfaces[0].accessConfigs[0].natIP,status)' 2>/dev/null | head -1)"
-  STATUS="$(gcloud compute instances describe "$VM_NAME" --zone="$ZONE" --project="$PROJECT" \
-    --format='get(status)' 2>/dev/null)"
-  [[ "$STATUS" == "RUNNING" && -n "$IP" ]] && break
-  sleep 5
-done
+mkdir -p \"\$APP_DIR/stack\"
+cat > \"\$APP_DIR/stack/.env\" <<ENV
+POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+PAYLOAD_SECRET=${PAYLOAD_SECRET}
+PAYLOAD_PUBLIC_SERVER_URL=${PUBLIC_URL}
+WEB_IMAGE=${IMAGE}
+ENV
+chmod 600 \"\$APP_DIR/stack/.env\"
 
-URL="http://${IP}:3000/"
-echo "External IP: $IP — waiting for $URL"
+cd \"\$APP_DIR\"
+if [[ ${FRESH_DB} == 1 ]]; then
+  docker compose -f stack/docker-compose.vm.yml down -v --remove-orphans 2>/dev/null || true
+else
+  docker compose -f stack/docker-compose.vm.yml down --remove-orphans 2>/dev/null || true
+fi
+docker compose -f stack/docker-compose.vm.yml pull
+docker compose -f stack/docker-compose.vm.yml up -d
+docker compose -f stack/docker-compose.vm.yml ps
+"
+
+URL="${PUBLIC_URL}/"
+echo "==> waiting for $URL"
 for i in $(seq 1 40); do
   if curl -sf --connect-timeout 5 --max-time 15 "$URL" >/dev/null 2>&1; then
+    ADMIN_CODE=$(curl -sf --max-time 10 -o /dev/null -w '%{http_code}' "${PUBLIC_URL}/admin" 2>/dev/null || echo 000)
     echo "✅ Site:  $URL"
-    echo "✅ Admin: http://${IP}:3000/admin"
+    echo "✅ Admin: ${PUBLIC_URL}/admin (HTTP $ADMIN_CODE)"
+    echo "   First user: ${PUBLIC_URL}/admin/create-first-user"
+    echo "   PAYLOAD_PUBLIC_SERVER_URL=${PUBLIC_URL}"
     exit 0
   fi
-  sleep 15
+  sleep 10
 done
 
-echo "⚠️  Timed out. Check log:"
-echo "  gcloud compute ssh $VM_NAME --zone=$ZONE --project=$PROJECT --command='sudo tail -50 /var/log/stackgen-startup.log'"
+echo "⚠️  Timed out. Logs:"
+echo "  gcloud compute ssh $VM_NAME --zone=$ZONE --project=$PROJECT --command='docker compose -f /opt/stackgen/stack/docker-compose.vm.yml logs --tail=40'"
 exit 1

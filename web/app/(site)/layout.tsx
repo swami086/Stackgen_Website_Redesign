@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import Script from "next/script";
 import { ThemeProvider } from "@/components/replica/theme/ThemeProvider";
 import { MotionProvider } from "@/components/replica/motion/MotionProvider";
+import { THEME_INIT_SCRIPT } from "@/lib/theme-init-script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -24,10 +25,10 @@ export default function RootLayout({
       data-theme="dark"
       suppressHydrationWarning
     >
-      <head>
-        <Script src="/theme-init.js" strategy="beforeInteractive" />
-      </head>
       <body>
+        <Script id="stackgen-theme-init" strategy="beforeInteractive">
+          {THEME_INIT_SCRIPT}
+        </Script>
         <ThemeProvider>
           <MotionProvider>{children}</MotionProvider>
         </ThemeProvider>

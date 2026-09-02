@@ -3,16 +3,19 @@
  * Merges Payload home global + cards into puckData.
  *
  *   cd web && pnpm seed:puck-home
+ *   cd web && pnpm seed:puck-home -- --force   # rebuild puckData
  */
 import { getPayload } from "payload";
 import config from "@payload-config";
 import type { CmsFieldData } from "@/lib/cms-overlay";
 import { overlayReplicaContent } from "@/lib/cms-overlay";
 import { buildHomePuckDataFromContent } from "@/puck/lib/build-page-data";
+import { seedForceFlag } from "./lib/seed-args";
 
 const HOME_SLUG = "home";
 
 async function main() {
+  const force = seedForceFlag();
   const payload = await getPayload({ config });
   const [{ docs: existing }, homeGlobal, { docs: cards }] = await Promise.all([
     payload.find({
@@ -31,7 +34,17 @@ async function main() {
   const puckData = buildHomePuckDataFromContent(content);
 
   if (existing[0]) {
-    console.log(`Homepage pages row exists (id=${existing[0].id}) — skipping`);
+    if (!force) {
+      console.log(`Homepage pages row exists (id=${existing[0].id}) — skipping (use --force)`);
+      return;
+    }
+    await payload.update({
+      collection: "pages",
+      id: existing[0].id,
+      draft: false,
+      data: { puckData },
+    });
+    console.log(`Updated homepage pages row (id=${existing[0].id}) — visit /`);
     return;
   }
 

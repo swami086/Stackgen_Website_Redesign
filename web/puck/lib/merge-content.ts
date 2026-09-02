@@ -12,7 +12,10 @@ type ReplicaOverrides = {
     cta?: { label: string; href: string };
   };
   hero?: Partial<Record<keyof ReplicaContent["hero"], string>>;
-  logos?: Partial<{ eyebrow: string }>;
+  logos?: Partial<{
+    eyebrow: string;
+    items?: Array<{ src: string; alt: string }>;
+  }>;
   problem?: Partial<
     Record<keyof Omit<ReplicaContent["problem"], "learnMore" | "symptoms">, string>
   > & {
@@ -49,6 +52,7 @@ export function mergeReplicaContent(overrides: ReplicaOverrides): ReplicaContent
     logos: {
       ...replicaContent.logos,
       ...overrides.logos,
+      items: overrides.logos?.items ?? replicaContent.logos.items,
     },
     problem: {
       ...replicaContent.problem,

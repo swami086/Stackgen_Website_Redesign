@@ -9,6 +9,7 @@ import { DUR, EASE } from "@/lib/motion-tokens";
 import { useReducedMotionSafe } from "@/components/replica/motion/useReducedMotionSafe";
 import { GridSubstrate } from "@/components/replica/motion/GridSubstrate";
 import { AtmosphereField } from "@/components/replica/shared/AtmosphereField";
+import { usePuckCanvas } from "@/puck/PuckCanvasContext";
 
 type ReplicaHeroProps = {
   theme: "light" | "dark";
@@ -19,13 +20,15 @@ export function ReplicaHero({ theme, className }: ReplicaHeroProps) {
   const { heading, sub, primaryCta, primaryHref, secondaryCta, secondaryHref } =
     useReplicaContent().hero;
   const reduced = useReducedMotionSafe();
+  const isPuckCanvas = usePuckCanvas();
   const tokens = heading.split(/(\s+)/);
 
   return (
     <section
       data-pencil-id={REPLICA_FRAMES[theme].hero}
       className={cn(
-        "relative flex min-h-[100dvh] w-full flex-col items-center pt-24",
+        "relative flex w-full flex-col items-center pt-24",
+        isPuckCanvas ? "min-h-[50vh]" : "min-h-[100dvh]",
         className,
       )}
     >

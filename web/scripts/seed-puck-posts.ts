@@ -2,12 +2,15 @@
  * Idempotent seed — pages row per published blog post (same slug).
  *
  *   cd web && pnpm seed:puck-posts
+ *   cd web && pnpm seed:puck-posts -- --force
  */
 import { getPayload } from "payload";
 import config from "@payload-config";
 import { buildBlogPuckData } from "@/puck/lib/build-page-data";
+import { seedForceFlag } from "./lib/seed-args";
 
 async function main() {
+  const force = seedForceFlag();
   const payload = await getPayload({ config });
   const { docs: posts } = await payload.find({
     collection: "posts",
@@ -24,12 +27,11 @@ async function main() {
       limit: 1,
     });
 
-    if (existing[0]) {
-      console.log(`pages/${slug} exists (id=${existing[0].id}) — skipping`);
-      continue;
-    }
-
-    const title = String((post as { name?: string; title?: string }).name ?? (post as { title?: string }).title ?? slug);
+    const title = String(
+      (post as { name?: string; title?: string }).name ??
+        (post as { title?: string }).title ??
+        slug,
+    );
     const excerpt = typeof post.excerpt === "string" ? post.excerpt : "";
     const bodyHtml =
       typeof post.body === "string"
@@ -37,6 +39,23 @@ async function main() {
         : post.body
           ? JSON.stringify(post.body)
           : "<p></p>";
+
+    const puckData = buildBlogPuckData({ title, excerpt, bodyHtml });
+
+    if (existing[0]) {
+      if (!force) {
+        console.log(`pages/${slug} exists (id=${existing[0].id}) — skipping (use --force)`);
+        continue;
+      }
+      await payload.update({
+        collection: "pages",
+        id: existing[0].id,
+        draft: false,
+        data: { puckData, title },
+      });
+      console.log(`Updated blog pages/${slug} (id=${existing[0].id})`);
+      continue;
+    }
 
     const doc = await payload.create({
       collection: "pages",
@@ -47,7 +66,7 @@ async function main() {
         editorVersion: "puck",
         pageLayout: "default",
         isHomepage: false,
-        puckData: buildBlogPuckData({ title, excerpt, bodyHtml }),
+        puckData,
         _status: "published",
       },
     });

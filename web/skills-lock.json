@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "cms-migration": {
+      "source": "payloadcms/skills",
+      "sourceType": "github",
+      "skillPath": "skills/cms-migration/SKILL.md",
+      "computedHash": "c88f1e554c081d5c068f0c20cfd5a21331bb5a4e0bf9c97e80dd8175e18af94a"
+    },
     "diagram-animation": {
       "source": "iart-ai/explainer-video-skills",
       "sourceType": "github",
@@ -18,6 +24,12 @@
       "sourceType": "github",
       "skillPath": "skills/07-by-ui-element/navigation-menus/SKILL.md",
       "computedHash": "ea979bdd07ffe92fce609d72a606f57f5f2250ccc644c720a85c07e4e2efa29e"
+    },
+    "puck": {
+      "source": "puckeditor/skills",
+      "sourceType": "github",
+      "skillPath": "skills/puck/SKILL.md",
+      "computedHash": "c41bf408111ac2bcd7c44b7203e1c3b68e8c4bfb8d38fd4add6582f496ec645d"
     }
   }
 }

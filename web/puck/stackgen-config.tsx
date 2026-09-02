@@ -9,6 +9,13 @@ import { chromeBlocks } from "@/puck/blocks/chrome/chrome-blocks";
 import { homeBlocks } from "@/puck/blocks/home/home-blocks";
 import { productBlocks } from "@/puck/blocks/product/product-blocks";
 import { blogBlocks } from "@/puck/blocks/blog/blog-blocks";
+import { PuckRenderProviders } from "@/puck/PuckRenderProviders";
+
+const stackGenRoot = {
+  render: ({ children }: { children: React.ReactNode }) => (
+    <PuckRenderProviders>{children}</PuckRenderProviders>
+  ),
+};
 
 const stackGenComponents = {
   ...chromeBlocks,
@@ -49,6 +56,7 @@ export const stackgenConfig = mergeConfigs({
   base: baseConfig,
   components: stackGenComponents,
   categories: stackGenCategories,
+  root: stackGenRoot,
 });
 
 /** Editor config — full interactivity for Payload Puck admin. */
@@ -56,4 +64,5 @@ export const stackgenEditorConfig = mergeConfigs({
   base: editorConfig,
   components: stackGenComponents,
   categories: stackGenCategories,
+  root: stackGenRoot,
 });

@@ -38,6 +38,11 @@ export const productSlugField = {
   ],
 };
 
+export const logoItemFields = {
+  src: { type: "text" as const, label: "Image path" },
+  alt: { type: "text" as const, label: "Alt text" },
+};
+
 export const cardFields = {
   title: { type: "text" as const, label: "Title" },
   body: { type: "textarea" as const, label: "Body" },

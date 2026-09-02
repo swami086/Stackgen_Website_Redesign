@@ -1,6 +1,6 @@
+// Legacy static file — theme init now inlined via app/(site)/layout.tsx
+// (lib/theme-init-script.ts). Kept for bookmarks; not loaded by the app.
 (function () {
-  // Default must match layout.tsx SSR `data-theme="dark"` so empty storage
-  // does not flip cream→dark (or the reverse) across hydration.
   try {
     var t = localStorage.getItem("stackgen-theme");
     document.documentElement.dataset.theme =

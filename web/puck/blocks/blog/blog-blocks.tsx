@@ -1,15 +1,7 @@
 "use client";
 
 import type { ComponentConfig } from "@puckeditor/core";
-import { stripHtml } from "@/lib/cms-overlay";
-
-function paragraphsFromHtml(html: string): string[] {
-  const matches = [...html.matchAll(/<p\b[^>]*>(.*?)<\/p>/gi)].map((match) =>
-    stripHtml(match[1]),
-  );
-  const blocks = matches.filter(Boolean);
-  return blocks.length ? blocks : [stripHtml(html)].filter(Boolean);
-}
+import { paragraphsFromHtml } from "@/puck/lib/blog-html";
 
 export const stackGenBlogEyebrowBlock: ComponentConfig = {
   label: "Blog Eyebrow",

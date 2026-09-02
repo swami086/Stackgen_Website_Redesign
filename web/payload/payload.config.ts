@@ -42,15 +42,12 @@ export default buildConfig({
     components: {
       providers: ['@/components/admin/PuckProvider'],
     },
-    // Live Preview for all CMS-editable page content. Cards/Faqs preview on
-    // their parent home or product page (no dedicated route).
+    // Live Preview for pages, products, posts, and home global.
     livePreview: {
       url: ({ data, collectionConfig, globalConfig }) => {
         const base = serverURL || ''
         if (globalConfig?.slug === 'home') return `${base}/`
         const slug = typeof data?.slug === 'string' ? data.slug : ''
-        const productSlug =
-          typeof data?.['product-slug'] === 'string' ? data['product-slug'] : ''
         if (collectionConfig?.slug === 'pages' && slug) {
           const doc = data as { isHomepage?: boolean }
           if (doc.isHomepage) return `${base}/`
@@ -66,15 +63,9 @@ export default buildConfig({
         if (collectionConfig?.slug === 'posts' && slug) {
           return `${base}/blog/${slug}`
         }
-        if (collectionConfig?.slug === 'cards') {
-          return productSlug ? `${base}/product/${productSlug}` : `${base}/`
-        }
-        if (collectionConfig?.slug === 'faqs' && productSlug) {
-          return `${base}/product/${productSlug}`
-        }
         return base || '/'
       },
-      collections: ['pages', 'products', 'posts', 'cards', 'faqs'],
+      collections: ['pages', 'products', 'posts'],
       globals: ['home'],
       breakpoints: [
         { label: 'Mobile', name: 'mobile', width: 390, height: 844 },

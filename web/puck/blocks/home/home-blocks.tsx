@@ -13,7 +13,7 @@ import { ReplicaContentProvider } from "@/components/replica/ReplicaContentConte
 import { useTheme } from "@/components/replica/theme/ThemeProvider";
 import { replicaContent } from "@/content/replica";
 import { mergeReplicaContent } from "@/puck/lib/merge-content";
-import { bodyField, ctaFields, eyebrowField, headingField, linkFields } from "@/puck/fields/common";
+import { bodyField, ctaFields, eyebrowField, headingField, linkFields, logoItemFields } from "@/puck/fields/common";
 
 function homeSectionBlock(
   label: string,
@@ -74,10 +74,30 @@ export const stackGenHomeLogosBlock = homeSectionBlock(
   "Home Logos",
   {
     eyebrow: eyebrowField,
+    items: {
+      type: "array",
+      label: "Customer logos",
+      getItemSummary: (item: { alt?: string }) => item.alt || "Logo",
+      arrayFields: logoItemFields,
+    },
   },
-  { id: "home-logos", eyebrow: replicaContent.logos.eyebrow },
+  {
+    id: "home-logos",
+    eyebrow: replicaContent.logos.eyebrow,
+    items: replicaContent.logos.items.map((logo) => ({ ...logo })),
+  },
   (_t, props) =>
-    mergeReplicaContent({ logos: { eyebrow: String(props.eyebrow) } }),
+    mergeReplicaContent({
+      logos: {
+        eyebrow: String(props.eyebrow),
+        items: Array.isArray(props.items)
+          ? props.items.map((item: { src?: string; alt?: string }) => ({
+              src: String(item.src ?? ""),
+              alt: String(item.alt ?? ""),
+            }))
+          : undefined,
+      },
+    }),
   ReplicaLogos,
 );
 

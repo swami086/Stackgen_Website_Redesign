@@ -2,7 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 export const Cards: CollectionConfig = {
   slug: 'cards',
-  admin: { useAsTitle: 'title', defaultColumns: ['title', 'slot', 'product-slug'] },
+  admin: { useAsTitle: 'title', defaultColumns: ['title', 'slot', 'product-slug'], hidden: true },
   access: { read: () => true },
   fields: [
     { name: 'slot', type: 'text', required: true },

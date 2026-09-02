@@ -67,7 +67,14 @@ function getServerSnapshot(): Theme {
   return "dark";
 }
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
+export function ThemeProvider({
+  children,
+  initialTheme,
+}: {
+  children: ReactNode;
+  /** When set (Puck canvas), overrides stored preference on mount. */
+  initialTheme?: Theme;
+}) {
   const theme = useSyncExternalStore(
     subscribe,
     getSnapshot,
@@ -78,12 +85,16 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   // React can leave SSR `data-theme="dark"` on the document even when
   // theme-init / localStorage already chose light (Wave 5 race).
   useEffect(() => {
+    if (initialTheme) {
+      applyTheme(initialTheme);
+      return;
+    }
     try {
       applyTheme(validateTheme(localStorage.getItem(STORAGE_KEY)));
     } catch {
       applyTheme(readThemeFromDocument());
     }
-  }, []);
+  }, [initialTheme]);
 
   const setTheme = useCallback((t: Theme) => {
     applyTheme(t);

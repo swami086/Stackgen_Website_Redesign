@@ -3,6 +3,7 @@
  * Merges Payload product doc + cards + faqs into puckData.
  *
  *   cd web && pnpm seed:puck-products
+ *   cd web && pnpm seed:puck-products -- --force
  */
 import { getPayload } from "payload";
 import config from "@payload-config";
@@ -13,8 +14,10 @@ import {
   buildProductPuckDataFromContent,
 } from "@/puck/lib/build-page-data";
 import type { ProductSlug } from "@/lib/products";
+import { seedForceFlag } from "./lib/seed-args";
 
 async function main() {
+  const force = seedForceFlag();
   const payload = await getPayload({ config });
   const [{ docs: products }, { docs: cards }, { docs: faqs }] = await Promise.all([
     payload.find({ collection: "products", limit: 20 }),
@@ -29,11 +32,6 @@ async function main() {
       limit: 1,
     });
 
-    if (docs[0]) {
-      console.log(`pages/${slug} exists (id=${docs[0].id}) — skipping`);
-      continue;
-    }
-
     const productDoc = products.find(
       (p) => typeof p.slug === "string" && p.slug === slug,
     ) as CmsFieldData | undefined;
@@ -44,6 +42,22 @@ async function main() {
       cards as unknown as CmsFieldData[],
       faqs as unknown as CmsFieldData[],
     );
+    const puckData = buildProductPuckDataFromContent(slug as ProductSlug, content);
+
+    if (docs[0]) {
+      if (!force) {
+        console.log(`pages/${slug} exists (id=${docs[0].id}) — skipping (use --force)`);
+        continue;
+      }
+      await payload.update({
+        collection: "pages",
+        id: docs[0].id,
+        draft: false,
+        data: { puckData },
+      });
+      console.log(`Updated pages/${slug} (id=${docs[0].id})`);
+      continue;
+    }
 
     const doc = await payload.create({
       collection: "pages",
@@ -54,7 +68,7 @@ async function main() {
         editorVersion: "puck",
         pageLayout: "default",
         isHomepage: false,
-        puckData: buildProductPuckDataFromContent(slug as ProductSlug, content),
+        puckData,
         _status: "published",
       },
     });

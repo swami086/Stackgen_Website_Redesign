@@ -1,5 +1,6 @@
 import type { Data } from "@puckeditor/core";
 import { replicaContent, type ReplicaContent } from "@/content/replica";
+import { paragraphsFromHtml } from "@/puck/lib/blog-html";
 import { getProductContent, type ProductPageContent } from "@/content/products";
 import type { ProductSlug } from "@/lib/products";
 import { PRODUCT_SLUGS } from "@/lib/products";
@@ -35,7 +36,10 @@ export function buildHomePuckDataFromContent(c: ReplicaContent): Data {
         ctaHref: c.nav.cta.href,
       }),
       block("StackGenHomeHero", { ...c.hero }),
-      block("StackGenHomeLogos", { eyebrow: c.logos.eyebrow }),
+      block("StackGenHomeLogos", {
+        eyebrow: c.logos.eyebrow,
+        items: c.logos.items.map((logo) => ({ src: logo.src, alt: logo.alt })),
+      }),
       block("StackGenHomeProblem", {
         eyebrow: c.problem.eyebrow,
         heading: c.problem.heading,
@@ -241,6 +245,14 @@ export function buildBlogPuckData(input: {
   excerpt: string;
   bodyHtml: string;
 }): Data {
+  const paragraphs = paragraphsFromHtml(input.bodyHtml);
+  const bodyBlocks = paragraphs.map((text, index) =>
+    block("StackGenBlogParagraph", {
+      id: `blog-paragraph-${index}`,
+      text,
+    }),
+  );
+
   return {
     root: {
       props: {
@@ -262,7 +274,7 @@ export function buildBlogPuckData(input: {
       ...(input.excerpt
         ? [block("StackGenBlogExcerpt", { excerpt: input.excerpt })]
         : []),
-      block("StackGenBlogBody", { bodyHtml: input.bodyHtml }),
+      ...bodyBlocks,
       block("StackGenFooter", {
         ctaHeading: replicaContent.footer.ctaHeading,
         ctaSub: replicaContent.footer.ctaSub,

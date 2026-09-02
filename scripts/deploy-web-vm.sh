@@ -50,15 +50,15 @@ set -euo pipefail
 export DEBIAN_FRONTEND=noninteractive
 
 # Wipe native/on-prem install
-systemctl stop stackgen-web 2>/dev/null || true
-systemctl disable stackgen-web 2>/dev/null || true
-rm -f /etc/systemd/system/stackgen-web.service
-systemctl daemon-reload 2>/dev/null || true
+sudo systemctl stop stackgen-web 2>/dev/null || true
+sudo systemctl disable stackgen-web 2>/dev/null || true
+sudo rm -f /etc/systemd/system/stackgen-web.service
+sudo systemctl daemon-reload 2>/dev/null || true
 
 if ! command -v docker >/dev/null 2>&1; then
   curl -fsSL https://get.docker.com | sh
 fi
-systemctl enable --now docker
+sudo systemctl enable --now docker
 
 if ! command -v gcloud >/dev/null 2>&1; then
   apt-get update -y && apt-get install -y apt-transport-https gnupg curl
@@ -89,13 +89,13 @@ chmod 600 \"\$APP_DIR/stack/.env\"
 
 cd \"\$APP_DIR\"
 if [[ ${FRESH_DB} == 1 ]]; then
-  docker compose -f stack/docker-compose.vm.yml down -v --remove-orphans 2>/dev/null || true
+  sudo docker compose -f stack/docker-compose.vm.yml down -v --remove-orphans 2>/dev/null || true
 else
-  docker compose -f stack/docker-compose.vm.yml down --remove-orphans 2>/dev/null || true
+  sudo docker compose -f stack/docker-compose.vm.yml down --remove-orphans 2>/dev/null || true
 fi
-docker compose -f stack/docker-compose.vm.yml pull
-docker compose -f stack/docker-compose.vm.yml up -d
-docker compose -f stack/docker-compose.vm.yml ps
+sudo docker compose -f stack/docker-compose.vm.yml pull
+sudo docker compose -f stack/docker-compose.vm.yml up -d
+sudo docker compose -f stack/docker-compose.vm.yml ps
 "
 
 URL="${PUBLIC_URL}/"
@@ -107,6 +107,7 @@ for i in $(seq 1 40); do
     echo "✅ Admin: ${PUBLIC_URL}/admin (HTTP $ADMIN_CODE)"
     echo "   First user: ${PUBLIC_URL}/admin/create-first-user"
     echo "   PAYLOAD_PUBLIC_SERVER_URL=${PUBLIC_URL}"
+    echo "   Seed CMS content: ./scripts/seed-payload-vm.sh"
     exit 0
   fi
   sleep 10

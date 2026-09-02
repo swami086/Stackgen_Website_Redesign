@@ -23,7 +23,14 @@ const serverURL =
   undefined
 
 export default buildConfig({
-  ...(serverURL ? { serverURL, cors: [serverURL], csrf: [serverURL] } : {}),
+  // serverURL: absolute links in admin (emails, OG, redirects).
+  // cors: allow the public origin for API fetches that send Origin.
+  // Do NOT set csrf here for same-origin embedded admin. Payload's
+  // extractJWT rejects cookies when csrf is non-empty AND Origin is
+  // missing AND Sec-Fetch-Site is absent — which is exactly what
+  // document navigations to /admin look like over plain HTTP IP, so
+  // login succeeds then /admin immediately bounces back to /admin/login.
+  ...(serverURL ? { serverURL, cors: [serverURL] } : {}),
   admin: {
     user: Users.slug,
     importMap: {

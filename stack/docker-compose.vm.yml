@@ -1,0 +1,42 @@
+# VM/production pull — web image built locally/CI (see scripts/deploy-web-vm.sh).
+# Postgres still runs on-host; web pulls from Artifact Registry.
+name: stackgen-stack
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: payload
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in stack/.env}
+      POSTGRES_DB: payload
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U payload -d payload"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  web:
+    image: ${WEB_IMAGE:?set WEB_IMAGE — run scripts/deploy-web-vm.sh}
+    pull_policy: always
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      PORT: "3000"
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET:?set PAYLOAD_SECRET in stack/.env}
+      DATABASE_URL: postgresql://payload:${POSTGRES_PASSWORD}@postgres:5432/payload
+      PAYLOAD_PUBLIC_SERVER_URL: ${PAYLOAD_PUBLIC_SERVER_URL:-http://127.0.0.1:3000}
+    volumes:
+      - payload-media:/app/media
+
+volumes:
+  pgdata:
+  payload-media:

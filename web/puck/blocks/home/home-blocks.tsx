@@ -90,6 +90,12 @@ export const stackGenHomeProblemBlock = homeSectionBlock(
     filmCaption: { type: "text", label: "Diagram caption" },
     learnMoreLabel: linkFields.label,
     learnMoreHref: linkFields.href,
+    symptoms: {
+      type: "array",
+      label: "Symptoms (diagram fragments)",
+      getItemSummary: (item: { title?: string }) => item.title || "Symptom",
+      arrayFields: { title: { type: "text", label: "Text" } },
+    },
   },
   {
     id: "home-problem",
@@ -99,6 +105,7 @@ export const stackGenHomeProblemBlock = homeSectionBlock(
     filmCaption: replicaContent.problem.filmCaption,
     learnMoreLabel: replicaContent.problem.learnMore.label,
     learnMoreHref: replicaContent.problem.learnMore.href,
+    symptoms: replicaContent.problem.symptoms.map((s) => ({ title: s })),
   },
   (_t, props) =>
     mergeReplicaContent({
@@ -111,6 +118,9 @@ export const stackGenHomeProblemBlock = homeSectionBlock(
           label: String(props.learnMoreLabel),
           href: String(props.learnMoreHref),
         },
+        symptoms: Array.isArray(props.symptoms)
+          ? props.symptoms.map((item: { title?: string }) => String(item.title ?? ""))
+          : undefined,
       },
     }),
   ReplicaProblem,
@@ -212,6 +222,33 @@ export const stackGenHomeWhoItsForBlock = homeSectionBlock(
     heading: headingField,
     sub: bodyField,
     osTitle: { type: "text", label: "OS title" },
+    pillars: {
+      type: "array",
+      label: "Product pillars",
+      getItemSummary: (item: { title?: string }) => item.title || "Pillar",
+      arrayFields: {
+        label: { type: "text", label: "Phase label" },
+        title: { type: "text", label: "Title" },
+        body: { type: "textarea", label: "Body" },
+        href: { type: "text", label: "Link URL" },
+      },
+    },
+    roles: {
+      type: "array",
+      label: "Audience roles",
+      getItemSummary: (item: { title?: string }) => item.title || "Role",
+      arrayFields: {
+        title: { type: "text", label: "Role" },
+        body: { type: "textarea", label: "Body" },
+        href: { type: "text", label: "Link URL" },
+      },
+    },
+    osChips: {
+      type: "array",
+      label: "OS chips",
+      getItemSummary: (item: { label?: string }) => item.label || "Chip",
+      arrayFields: { label: { type: "text", label: "Label" } },
+    },
   },
   {
     id: "home-who",
@@ -219,6 +256,9 @@ export const stackGenHomeWhoItsForBlock = homeSectionBlock(
     heading: replicaContent.whoItsFor.heading,
     sub: replicaContent.whoItsFor.sub,
     osTitle: replicaContent.whoItsFor.osTitle,
+    pillars: replicaContent.whoItsFor.pillars.map((p) => ({ ...p })),
+    roles: replicaContent.whoItsFor.roles.map((r) => ({ ...r })),
+    osChips: replicaContent.whoItsFor.osChips.map((label) => ({ label })),
   },
   (_t, props) =>
     mergeReplicaContent({
@@ -227,6 +267,26 @@ export const stackGenHomeWhoItsForBlock = homeSectionBlock(
         heading: String(props.heading),
         sub: String(props.sub),
         osTitle: String(props.osTitle),
+        pillars: Array.isArray(props.pillars)
+          ? props.pillars.map(
+              (item: { label?: string; title?: string; body?: string; href?: string }) => ({
+                label: String(item.label ?? ""),
+                title: String(item.title ?? ""),
+                body: String(item.body ?? ""),
+                href: String(item.href ?? ""),
+              }),
+            )
+          : undefined,
+        roles: Array.isArray(props.roles)
+          ? props.roles.map((item: { title?: string; body?: string; href?: string }) => ({
+              title: String(item.title ?? ""),
+              body: String(item.body ?? ""),
+              href: String(item.href ?? ""),
+            }))
+          : undefined,
+        osChips: Array.isArray(props.osChips)
+          ? props.osChips.map((item: { label?: string }) => String(item.label ?? ""))
+          : undefined,
       },
     }),
   ReplicaWhoItsFor,

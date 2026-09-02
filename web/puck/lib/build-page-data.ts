@@ -1,6 +1,6 @@
 import type { Data } from "@puckeditor/core";
-import { replicaContent } from "@/content/replica";
-import { getProductContent } from "@/content/products";
+import { replicaContent, type ReplicaContent } from "@/content/replica";
+import { getProductContent, type ProductPageContent } from "@/content/products";
 import type { ProductSlug } from "@/lib/products";
 import { PRODUCT_SLUGS } from "@/lib/products";
 
@@ -14,7 +14,10 @@ function block(type: string, props: Record<string, unknown>): PuckBlock {
 }
 
 export function buildHomePuckData(): Data {
-  const c = replicaContent;
+  return buildHomePuckDataFromContent(replicaContent);
+}
+
+export function buildHomePuckDataFromContent(c: ReplicaContent): Data {
   return {
     root: {
       props: {
@@ -40,6 +43,7 @@ export function buildHomePuckData(): Data {
         filmCaption: c.problem.filmCaption,
         learnMoreLabel: c.problem.learnMore.label,
         learnMoreHref: c.problem.learnMore.href,
+        symptoms: c.problem.symptoms.map((title) => ({ title })),
       }),
       block("StackGenHomeSolution", {
         eyebrow: c.solution.eyebrow,
@@ -66,6 +70,9 @@ export function buildHomePuckData(): Data {
         heading: c.whoItsFor.heading,
         sub: c.whoItsFor.sub,
         osTitle: c.whoItsFor.osTitle,
+        pillars: c.whoItsFor.pillars.map((p) => ({ ...p })),
+        roles: c.whoItsFor.roles.map((r) => ({ ...r })),
+        osChips: c.whoItsFor.osChips.map((label) => ({ label })),
       }),
       block("StackGenFooter", {
         ctaHeading: c.footer.ctaHeading,
@@ -81,7 +88,13 @@ export function buildHomePuckData(): Data {
 }
 
 export function buildProductPuckData(slug: ProductSlug): Data {
-  const p = getProductContent(slug);
+  return buildProductPuckDataFromContent(slug, getProductContent(slug));
+}
+
+export function buildProductPuckDataFromContent(
+  slug: ProductSlug,
+  p: ProductPageContent,
+): Data {
   const blocks: PuckBlock[] = [
     block("StackGenNav", {
       links: replicaContent.nav.links,
@@ -113,7 +126,12 @@ export function buildProductPuckData(slug: ProductSlug): Data {
   );
 
   if (p.flags.pillars) {
-    blocks.push(block("StackGenProductPillars", { productSlug: slug }));
+    blocks.push(
+      block("StackGenProductPillars", {
+        productSlug: slug,
+        items: p.pillars.items.map((item) => ({ ...item })),
+      }),
+    );
   }
 
   blocks.push(
@@ -128,10 +146,12 @@ export function buildProductPuckData(slug: ProductSlug): Data {
       productSlug: slug,
       heading: p.spotlight.heading,
       body: p.spotlight.body,
+      cards: p.spotlight.cards.map((item) => ({ ...item })),
     }),
     block("StackGenProductCapabilities", {
       productSlug: slug,
       heading: p.capabilities.heading,
+      items: p.capabilities.items.map((item) => ({ ...item })),
     }),
     block("StackGenProductPlatformLink", {
       productSlug: slug,
@@ -146,6 +166,7 @@ export function buildProductPuckData(slug: ProductSlug): Data {
     block("StackGenProductEnterprise", {
       productSlug: slug,
       heading: p.enterprise.heading,
+      items: p.enterprise.items.map((item) => ({ ...item })),
     }),
     block("StackGenProductProof", {
       productSlug: slug,
@@ -159,6 +180,7 @@ export function buildProductPuckData(slug: ProductSlug): Data {
       block("StackGenProductOffers", {
         productSlug: slug,
         heading: p.offers.heading,
+        items: p.offers.items.map((item) => ({ ...item })),
       }),
     );
   }
@@ -183,6 +205,7 @@ export function buildProductPuckData(slug: ProductSlug): Data {
       block("StackGenProductResources", {
         productSlug: slug,
         heading: p.resources.heading,
+        items: p.resources.items.map((item) => ({ ...item })),
       }),
     );
   }

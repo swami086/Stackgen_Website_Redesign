@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { Data } from "@puckeditor/core";
-import { ProductPage } from "@/components/replica/ProductPage";
 import { PuckSitePage } from "@/components/puck/PuckSitePage";
 import { getProduct, isProductSlug } from "@/lib/products";
-import { getCardsRaw, getFaqsRaw, getOverlayProductContent, getProductRaw } from "@/lib/cms";
+import { getOverlayProductContent } from "@/lib/cms";
 import { getPublishedPageBySlug } from "@/lib/puck-pages";
 
 type ProductRoutePageProps = {
@@ -28,33 +27,12 @@ export async function generateMetadata({
 export default async function ProductRoutePage({ params }: ProductRoutePageProps) {
   const { slug } = await params;
 
-  if (!isProductSlug(slug)) {
-    notFound();
-  }
-
-  const product = getProduct(slug);
-  if (!product) {
+  if (!isProductSlug(slug) || !getProduct(slug)) {
     notFound();
   }
 
   const puckPage = await getPublishedPageBySlug(slug);
-  if (puckPage?.puckData) {
-    return <PuckSitePage data={puckPage.puckData as Data} />;
-  }
+  if (!puckPage?.puckData) notFound();
 
-  const [content, rawProduct, cards, faqs] = await Promise.all([
-    getOverlayProductContent(slug),
-    getProductRaw(slug),
-    getCardsRaw(),
-    getFaqsRaw(),
-  ]);
-  return (
-    <ProductPage
-      slug={slug}
-      content={content}
-      rawProduct={rawProduct}
-      cards={cards}
-      faqs={faqs}
-    />
-  );
+  return <PuckSitePage data={puckPage.puckData as Data} />;
 }

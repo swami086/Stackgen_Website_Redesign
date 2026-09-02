@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { Data } from "@puckeditor/core";
-import { BlogChrome } from "@/components/replica/BlogChrome";
-import { BlogPostArticle } from "@/components/replica/BlogPostArticle";
 import { PuckSitePage } from "@/components/puck/PuckSitePage";
-import { getPostRaw, getPublishedPost, getPublishedPosts } from "@/lib/cms";
+import { getPublishedPost, getPublishedPosts } from "@/lib/cms";
 import { getPublishedPageBySlug } from "@/lib/puck-pages";
 
 export const revalidate = 300;
@@ -32,20 +30,13 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const [post, rawPost, puckPage] = await Promise.all([
+  const [post, puckPage] = await Promise.all([
     getPublishedPost(slug),
-    getPostRaw(slug),
     getPublishedPageBySlug(slug),
   ]);
   if (!post) notFound();
 
-  if (puckPage?.puckData) {
-    return <PuckSitePage data={puckPage.puckData as Data} />;
-  }
+  if (!puckPage?.puckData) notFound();
 
-  return (
-    <BlogChrome>
-      <BlogPostArticle post={post} rawPost={rawPost} />
-    </BlogChrome>
-  );
+  return <PuckSitePage data={puckPage.puckData as Data} />;
 }

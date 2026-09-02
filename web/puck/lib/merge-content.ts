@@ -17,6 +17,7 @@ type ReplicaOverrides = {
     Record<keyof Omit<ReplicaContent["problem"], "learnMore" | "symptoms">, string>
   > & {
     learnMore?: { label: string; href: string };
+    symptoms?: string[];
   };
   solution?: Partial<Record<keyof ReplicaContent["solution"], string>>;
   assemblies?: Partial<
@@ -25,7 +26,11 @@ type ReplicaOverrides = {
   shell?: Partial<Record<keyof ReplicaContent["shell"], string>>;
   whoItsFor?: Partial<
     Record<keyof Omit<ReplicaContent["whoItsFor"], "pillars" | "roles" | "osChips">, string>
-  >;
+  > & {
+    pillars?: Array<{ label: string; title: string; body: string; href: string }>;
+    roles?: Array<{ title: string; body: string; href: string }>;
+    osChips?: string[];
+  };
   footer?: Partial<Record<keyof ReplicaContent["footer"], string>>;
 };
 
@@ -45,13 +50,20 @@ export function mergeReplicaContent(overrides: ReplicaOverrides): ReplicaContent
       ...replicaContent.logos,
       ...overrides.logos,
     },
-    problem: { ...replicaContent.problem, ...overrides.problem },
+    problem: {
+      ...replicaContent.problem,
+      ...overrides.problem,
+      symptoms: overrides.problem?.symptoms ?? replicaContent.problem.symptoms,
+    },
     solution: { ...replicaContent.solution, ...overrides.solution },
     assemblies: { ...replicaContent.assemblies, ...overrides.assemblies },
     shell: { ...replicaContent.shell, ...overrides.shell },
     whoItsFor: {
       ...replicaContent.whoItsFor,
       ...overrides.whoItsFor,
+      pillars: overrides.whoItsFor?.pillars ?? replicaContent.whoItsFor.pillars,
+      roles: overrides.whoItsFor?.roles ?? replicaContent.whoItsFor.roles,
+      osChips: overrides.whoItsFor?.osChips ?? replicaContent.whoItsFor.osChips,
     },
     footer: { ...replicaContent.footer, ...overrides.footer },
   } as ReplicaContent;

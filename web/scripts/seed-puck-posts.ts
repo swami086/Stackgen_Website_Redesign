@@ -11,7 +11,6 @@ async function main() {
   const payload = await getPayload({ config });
   const { docs: posts } = await payload.find({
     collection: "posts",
-    where: { _status: { equals: "published" } },
     limit: 500,
   });
 
@@ -30,7 +29,7 @@ async function main() {
       continue;
     }
 
-    const title = String((post as { title?: string }).title ?? slug);
+    const title = String((post as { name?: string; title?: string }).name ?? (post as { title?: string }).title ?? slug);
     const excerpt = typeof post.excerpt === "string" ? post.excerpt : "";
     const bodyHtml =
       typeof post.body === "string"

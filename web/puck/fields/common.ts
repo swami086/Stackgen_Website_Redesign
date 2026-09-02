@@ -37,3 +37,26 @@ export const productSlugField = {
     { label: "Aiden for SRE", value: "aiden-for-sre" },
   ],
 };
+
+export const cardFields = {
+  title: { type: "text" as const, label: "Title" },
+  body: { type: "textarea" as const, label: "Body" },
+};
+
+export const pillarCardFields = {
+  label: { type: "text" as const, label: "Phase label" },
+  title: { type: "text" as const, label: "Title" },
+  body: { type: "textarea" as const, label: "Body" },
+  href: { type: "text" as const, label: "Link URL" },
+};
+
+export const roleCardFields = {
+  title: { type: "text" as const, label: "Role" },
+  body: { type: "textarea" as const, label: "Body" },
+  href: { type: "text" as const, label: "Link URL" },
+};
+
+export const faqItemFields = {
+  question: { type: "text" as const, label: "Question" },
+  answer: { type: "textarea" as const, label: "Answer" },
+};

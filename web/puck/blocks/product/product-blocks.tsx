@@ -24,6 +24,7 @@ import { getProductContent, type ProductPageContent } from "@/content/products";
 import { mergeProductContent } from "@/puck/lib/merge-content";
 import {
   bodyField,
+  cardFields,
   ctaFields,
   headingField,
   productSlugField,
@@ -153,24 +154,54 @@ export const stackGenProductVideoBlock = productBlock(
 
 export const stackGenProductSpotlightBlock = productBlock(
   "Product Spotlight",
-  { heading: headingField, body: bodyField },
+  {
+    heading: headingField,
+    body: bodyField,
+    cards: {
+      type: "array",
+      label: "Spotlight cards",
+      getItemSummary: (item: { title?: string }) => item.title || "Card",
+      arrayFields: cardFields,
+    },
+  },
   "aiden-for-infraops",
   {
     heading: getProductContent("aiden-for-infraops").spotlight.heading,
     body: getProductContent("aiden-for-infraops").spotlight.body,
+    cards: [...getProductContent("aiden-for-infraops").spotlight.cards],
   },
   (props) => ({
-    spotlight: { heading: str(props.heading), body: str(props.body) },
+    spotlight: {
+      heading: str(props.heading),
+      body: str(props.body),
+      cards: props.cards as ProductPageContent["spotlight"]["cards"],
+    },
   }),
   ProductSpotlight as ComponentType<Record<string, unknown>>,
 );
 
 export const stackGenProductCapabilitiesBlock = productBlock(
   "Product Capabilities",
-  { heading: headingField },
+  {
+    heading: headingField,
+    items: {
+      type: "array",
+      label: "Capability cards",
+      getItemSummary: (item: { title?: string }) => item.title || "Card",
+      arrayFields: cardFields,
+    },
+  },
   "aiden-for-infraops",
-  { heading: getProductContent("aiden-for-infraops").capabilities.heading },
-  (props) => ({ capabilities: { heading: str(props.heading) } }),
+  {
+    heading: getProductContent("aiden-for-infraops").capabilities.heading,
+    items: [...getProductContent("aiden-for-infraops").capabilities.items],
+  },
+  (props) => ({
+    capabilities: {
+      heading: str(props.heading),
+      items: props.items as ProductPageContent["capabilities"]["items"],
+    },
+  }),
   ProductCapabilities as ComponentType<Record<string, unknown>>,
 );
 
@@ -204,10 +235,26 @@ export const stackGenProductIntegrationsBlock = productBlock(
 
 export const stackGenProductEnterpriseBlock = productBlock(
   "Product Enterprise",
-  { heading: headingField },
+  {
+    heading: headingField,
+    items: {
+      type: "array",
+      label: "Enterprise cards",
+      getItemSummary: (item: { title?: string }) => item.title || "Card",
+      arrayFields: cardFields,
+    },
+  },
   "aiden-for-infraops",
-  { heading: getProductContent("aiden-for-infraops").enterprise.heading },
-  (props) => ({ enterprise: { heading: str(props.heading) } }),
+  {
+    heading: getProductContent("aiden-for-infraops").enterprise.heading,
+    items: [...getProductContent("aiden-for-infraops").enterprise.items],
+  },
+  (props) => ({
+    enterprise: {
+      heading: str(props.heading),
+      items: props.items as ProductPageContent["enterprise"]["items"],
+    },
+  }),
   ProductEnterprise as ComponentType<Record<string, unknown>>,
 );
 
@@ -279,28 +326,69 @@ export const stackGenProductFaqBlock = productBlock(
 
 export const stackGenProductPillarsBlock = productBlock(
   "Product Pillars",
-  {},
+  {
+    items: {
+      type: "array",
+      label: "Pillar cards",
+      getItemSummary: (item: { title?: string }) => item.title || "Pillar",
+      arrayFields: cardFields,
+    },
+  },
   "aiden-for-infraops",
-  {},
-  () => ({}),
+  { items: [...getProductContent("aiden-for-infraops").pillars.items] },
+  (props) => ({
+    pillars: { items: props.items as ProductPageContent["pillars"]["items"] },
+  }),
   ProductPillars as ComponentType<Record<string, unknown>>,
 );
 
 export const stackGenProductOffersBlock = productBlock(
   "Product Offers",
-  { heading: headingField },
+  {
+    heading: headingField,
+    items: {
+      type: "array",
+      label: "Offer cards",
+      getItemSummary: (item: { title?: string }) => item.title || "Offer",
+      arrayFields: cardFields,
+    },
+  },
   "aiden-for-devops",
-  { heading: getProductContent("aiden-for-devops").offers.heading },
-  (props) => ({ offers: { heading: str(props.heading) } }),
+  {
+    heading: getProductContent("aiden-for-devops").offers.heading,
+    items: [...getProductContent("aiden-for-devops").offers.items],
+  },
+  (props) => ({
+    offers: {
+      heading: str(props.heading),
+      items: props.items as ProductPageContent["offers"]["items"],
+    },
+  }),
   ProductOffers as ComponentType<Record<string, unknown>>,
 );
 
 export const stackGenProductResourcesBlock = productBlock(
   "Product Resources",
-  { heading: headingField },
+  {
+    heading: headingField,
+    items: {
+      type: "array",
+      label: "Resource cards",
+      getItemSummary: (item: { title?: string }) => item.title || "Resource",
+      arrayFields: cardFields,
+    },
+  },
   "aiden-for-devops",
-  { heading: getProductContent("aiden-for-devops").resources.heading },
-  (props) => ({ resources: { heading: str(props.heading) } }),
+  {
+    heading: getProductContent("aiden-for-devops").resources.heading,
+    items: [...getProductContent("aiden-for-devops").resources.items],
+  },
+  (props) => ({
+    resources: {
+      heading: str(props.heading),
+      items: props.items as ProductPageContent["resources"]["items"],
+    },
+  }),
   ProductResources as ComponentType<Record<string, unknown>>,
 );
 

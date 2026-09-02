@@ -56,7 +56,9 @@ export default buildConfig({
           if (doc.isHomepage) return `${base}/`
           if (slug === 'puck-demo') return `${base}/puck-demo`
           if (isProductSlug(slug)) return `${base}/product/${slug}`
-          return `${base}/blog/${slug}`
+          // Blog post slugs are long SEO paths; product slugs are fixed four.
+          if (slug.includes('-') && slug.length > 24) return `${base}/blog/${slug}`
+          return `${base}/${slug}`
         }
         if (collectionConfig?.slug === 'products' && slug) {
           return `${base}/product/${slug}`

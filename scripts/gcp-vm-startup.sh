@@ -33,9 +33,12 @@ EXT_IP="$(curl -sf -H "Metadata-Flavor: Google" \
 PUBLIC_URL="http://${EXT_IP:-127.0.0.1}:3000"
 
 if [[ -d "$APP_DIR/.git" ]]; then
+  # Hard reset: earlier revisions of this script overwrote tracked files (e.g. a
+  # generated compose file pinning a stale image tag), and a pull leaves those
+  # local modifications in place.
   git -C "$APP_DIR" fetch origin "$GIT_BRANCH"
   git -C "$APP_DIR" checkout "$GIT_BRANCH"
-  git -C "$APP_DIR" pull --ff-only origin "$GIT_BRANCH" || true
+  git -C "$APP_DIR" reset --hard "origin/${GIT_BRANCH}"
 else
   rm -rf "$APP_DIR"
   git clone --branch "$GIT_BRANCH" --depth 1 "$GIT_REPO" "$APP_DIR"

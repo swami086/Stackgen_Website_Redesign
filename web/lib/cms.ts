@@ -12,6 +12,7 @@ export {
   getHomeGlobalRaw,
   getOverlayProductContent,
   getOverlayReplicaContent,
+  getPostRaw,
   getProductRaw,
   getPublishedPost,
   getPublishedPosts,

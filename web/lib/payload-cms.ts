@@ -91,6 +91,12 @@ export async function getProductRaw(slug: ProductSlug): Promise<CmsFieldData | u
   return products.find((item) => typeof item.slug === "string" && item.slug === slug);
 }
 
+/** Raw post doc fields (unmerged) — for client-side Live Preview. */
+export async function getPostRaw(slug: string): Promise<CmsFieldData | undefined> {
+  const posts = await fetchCollection("posts");
+  return posts.find((item) => typeof item.slug === "string" && item.slug === slug);
+}
+
 export async function getOverlayReplicaContent(): Promise<ReplicaContent> {
   const [home, cards] = await Promise.all([fetchHomeGlobal(), fetchCollection("cards")]);
   return overlayReplicaContent(home, cards);

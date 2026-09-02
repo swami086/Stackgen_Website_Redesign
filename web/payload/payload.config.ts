@@ -37,13 +37,8 @@ export default buildConfig({
       // web/ root — importMap lives under app/(payload)/admin
       baseDir: path.resolve(dirname, '..'),
     },
-    // Native Live Preview (payloadcms.com/docs/live-preview/overview) — no
-    // third-party plugin needed. Only covers direct text fields on the
-    // `home` global and `products` collection (the fields those schemas
-    // define); Cards/Faqs contribute to the same pages but aren't
-    // document-scoped the way Live Preview expects, so they render from
-    // whatever was last loaded rather than updating live. See
-    // applyHomeGlobalOverlay / applyProductGlobalOverlay in lib/cms-overlay.ts.
+    // Native Live Preview — collections/globals with a dedicated front-end route.
+    // Cards/Faqs have no own URL; they merge into home/product at load time.
     livePreview: {
       url: ({ data, collectionConfig, globalConfig }) => {
         const base = serverURL || ''
@@ -51,9 +46,12 @@ export default buildConfig({
         if (collectionConfig?.slug === 'products' && typeof data?.slug === 'string') {
           return `${base}/product/${data.slug}`
         }
+        if (collectionConfig?.slug === 'posts' && typeof data?.slug === 'string') {
+          return `${base}/blog/${data.slug}`
+        }
         return base || '/'
       },
-      collections: ['products'],
+      collections: ['products', 'posts'],
       globals: ['home'],
       breakpoints: [
         { label: 'Mobile', name: 'mobile', width: 390, height: 844 },

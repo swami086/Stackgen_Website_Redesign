@@ -238,12 +238,26 @@ export function overlayProductContent(
 
 export function mapPosts(items: CmsFieldData[]): CmsPost[] {
   return items
-    .map((item) => ({
-      slug: text(item, "slug"),
-      title: text(item, "name"),
-      excerpt: text(item, "excerpt"),
-      body: typeof item.body === "string" ? item.body : "",
-      publishedOn: text(item, "published-on-2") || null,
-    }))
-    .filter((post) => post.slug && post.title);
+    .map((item) => mapSinglePost(item))
+    .filter((post): post is CmsPost => Boolean(post?.slug && post?.title));
+}
+
+/** Map one Payload `posts` doc — shared by mapPosts and Live Preview overlay. */
+export function mapSinglePost(item: CmsFieldData): CmsPost | undefined {
+  const slug = text(item, "slug");
+  const title = text(item, "name");
+  if (!slug || !title) return undefined;
+  return {
+    slug,
+    title,
+    excerpt: text(item, "excerpt"),
+    body: typeof item.body === "string" ? item.body : "",
+    publishedOn: text(item, "published-on-2") || null,
+  };
+}
+
+/** Apply live `posts` doc fields onto a resolved CmsPost (BlogPost Live Preview). */
+export function applyPostOverlay(post: CmsPost, live: CmsFieldData): CmsPost {
+  const overlay = mapSinglePost(live);
+  return overlay ? { ...post, ...overlay } : post;
 }

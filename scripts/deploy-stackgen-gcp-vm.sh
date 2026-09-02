@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Create (or reuse) stackgen-web-vm and wait for http://IP:3000/
+# Build/push web image, create stackgen-web-vm, wait for :3000 health.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
@@ -8,12 +8,21 @@ ZONE="${GCP_ZONE:-us-west1-b}"
 VM_NAME="${VM_NAME:-stackgen-web-vm}"
 GIT_BRANCH="${GIT_BRANCH:-main}"
 GIT_REPO="${GIT_REPO:-https://github.com/swami086/Stackgen_Website_Redesign.git}"
-MACHINE_TYPE="${MACHINE_TYPE:-e2-standard-4}"
+MACHINE_TYPE="${MACHINE_TYPE:-e2-micro}"
+REGISTRY="us-west1-docker.pkg.dev/${PROJECT}/stackgen-web"
+SHA="$(git -C "$ROOT" rev-parse --short HEAD)"
+IMAGE="${REGISTRY}/web:${SHA}"
 TAG=stackgen-web
 FW=allow-stackgen-web-3000
 
 POSTGRES_PASSWORD="$(openssl rand -base64 24 | tr -d '/+=' | head -c 32)"
 PAYLOAD_SECRET="$(openssl rand -hex 32)"
+
+echo "==> build and push ${IMAGE}"
+gcloud auth configure-docker us-west1-docker.pkg.dev --quiet
+docker build --platform linux/amd64 -t "$IMAGE" -t "${REGISTRY}/web:latest" "$ROOT/web"
+docker push "$IMAGE"
+docker push "${REGISTRY}/web:latest"
 
 if ! gcloud compute firewall-rules describe "$FW" --project="$PROJECT" >/dev/null 2>&1; then
   echo "==> firewall $FW"
@@ -26,25 +35,22 @@ if ! gcloud compute firewall-rules describe "$FW" --project="$PROJECT" >/dev/nul
 fi
 
 if gcloud compute instances describe "$VM_NAME" --zone="$ZONE" --project="$PROJECT" >/dev/null 2>&1; then
-  echo "==> VM $VM_NAME already exists; updating metadata and restarting"
-  gcloud compute instances add-metadata "$VM_NAME" \
-    --zone="$ZONE" --project="$PROJECT" \
-    --metadata=git-repo="$GIT_REPO",git-branch="$GIT_BRANCH",postgres-password="$POSTGRES_PASSWORD",payload-secret="$PAYLOAD_SECRET" \
-    --metadata-from-file=startup-script="$ROOT/scripts/gcp-vm-startup.sh"
-  gcloud compute instances reset "$VM_NAME" --zone="$ZONE" --project="$PROJECT"
-else
-  echo "==> creating VM $VM_NAME"
-  gcloud compute instances create "$VM_NAME" \
-    --project="$PROJECT" \
-    --zone="$ZONE" \
-    --machine-type="$MACHINE_TYPE" \
-    --tags="$TAG" \
-    --image-family=ubuntu-2204-lts \
-    --image-project=ubuntu-os-cloud \
-    --boot-disk-size=50GB \
-    --metadata=git-repo="$GIT_REPO",git-branch="$GIT_BRANCH",postgres-password="$POSTGRES_PASSWORD",payload-secret="$PAYLOAD_SECRET" \
-    --metadata-from-file=startup-script="$ROOT/scripts/gcp-vm-startup.sh"
+  echo "==> deleting existing $VM_NAME (fresh disk for compose secrets)"
+  gcloud compute instances delete "$VM_NAME" --zone="$ZONE" --project="$PROJECT" --quiet
 fi
+
+echo "==> creating VM $VM_NAME ($MACHINE_TYPE)"
+gcloud compute instances create "$VM_NAME" \
+  --project="$PROJECT" \
+  --zone="$ZONE" \
+  --machine-type="$MACHINE_TYPE" \
+  --tags="$TAG" \
+  --image-family=ubuntu-2204-lts \
+  --image-project=ubuntu-os-cloud \
+  --boot-disk-size=30GB \
+  --scopes=https://www.googleapis.com/auth/cloud-platform \
+  --metadata=git-repo="$GIT_REPO",git-branch="$GIT_BRANCH",web-image="$IMAGE",postgres-password="$POSTGRES_PASSWORD",payload-secret="$PAYLOAD_SECRET" \
+  --metadata-from-file=startup-script="$ROOT/scripts/gcp-vm-startup.sh"
 
 echo "==> waiting for external IP"
 IP=""
@@ -54,31 +60,26 @@ for _ in $(seq 1 60); do
   [[ -n "$IP" ]] && break
   sleep 5
 done
-if [[ -z "$IP" ]]; then
-  echo "ERROR: no external IP for $VM_NAME" >&2
-  exit 1
-fi
+[[ -n "$IP" ]] || { echo "ERROR: no external IP" >&2; exit 1; }
 echo "External IP: $IP"
 
 URL="http://${IP}:3000/"
 echo "==> waiting for health $URL"
-for i in $(seq 1 120); do
-  if curl -sf --connect-timeout 5 --max-time 15 "$URL" >/dev/null; then
+for i in $(seq 1 80); do
+  if curl -sf --connect-timeout 5 --max-time 20 "$URL" >/dev/null; then
     echo "Site is up after ${i} attempt(s)"
     echo "Site:  $URL"
     echo "Admin: http://${IP}:3000/admin"
     echo ""
-    echo "==> startup log tail (from VM)"
-    gcloud compute ssh "$VM_NAME" --zone="$ZONE" --project="$PROJECT" \
-      --command='sudo tail -80 /var/log/stackgen-startup.log 2>/dev/null || echo "(no log yet)"' \
-      2>/dev/null || true
+    echo "==> startup log tail"
+    gcloud compute instances get-serial-port-output "$VM_NAME" --zone="$ZONE" --project="$PROJECT" 2>/dev/null \
+      | rg 'startup-script:|startup-script exit' | tail -40 || true
     exit 0
   fi
-  sleep 15
+  sleep 20
 done
 
 echo "ERROR: timed out waiting for $URL" >&2
-gcloud compute ssh "$VM_NAME" --zone="$ZONE" --project="$PROJECT" \
-  --command='sudo tail -100 /var/log/stackgen-startup.log; docker ps -a 2>/dev/null; sudo docker compose -f /opt/stackgen/stack/docker-compose.yml logs --tail=40 2>/dev/null' \
-  2>/dev/null || true
+gcloud compute instances get-serial-port-output "$VM_NAME" --zone="$ZONE" --project="$PROJECT" 2>/dev/null \
+  | rg 'startup-script:|Error|error|exit status' | tail -60 || true
 exit 1

@@ -261,3 +261,68 @@ export function applyPostOverlay(post: CmsPost, live: CmsFieldData): CmsPost {
   const overlay = mapSinglePost(live);
   return overlay ? { ...post, ...overlay } : post;
 }
+
+export function isCardDoc(data: CmsFieldData): boolean {
+  return typeof data.slot === "string" && data.slot.length > 0;
+}
+
+export function isFaqDoc(data: CmsFieldData): boolean {
+  return typeof data.question === "string" && data.question.length > 0;
+}
+
+/** Replace one collection row by Payload `id`, or append if new. */
+export function mergeLiveDocIntoCollection(
+  items: CmsFieldData[],
+  live: CmsFieldData,
+): CmsFieldData[] {
+  if (live.id != null) {
+    const idx = items.findIndex((item) => item.id === live.id);
+    if (idx >= 0) {
+      const next = items.slice();
+      next[idx] = { ...items[idx], ...live };
+      return next;
+    }
+  }
+  return [...items, live];
+}
+
+/** Home Live Preview: home global text, or a card merged into the full page. */
+export function applyHomeLivePreview(
+  content: ReplicaContent,
+  live: CmsFieldData,
+  rawHome: CmsFieldData | undefined,
+  cards: CmsFieldData[],
+): ReplicaContent {
+  if (isCardDoc(live)) {
+    return overlayReplicaContent(rawHome, mergeLiveDocIntoCollection(cards, live));
+  }
+  return applyHomeGlobalOverlay(content, live);
+}
+
+/** Product Live Preview: product text, a card, or an FAQ merged into the page. */
+export function applyProductLivePreview(
+  content: ProductPageContent,
+  live: CmsFieldData,
+  slug: ProductSlug,
+  rawProduct: CmsFieldData | undefined,
+  cards: CmsFieldData[],
+  faqs: CmsFieldData[],
+): ProductPageContent {
+  if (isCardDoc(live)) {
+    return overlayProductContent(
+      slug,
+      rawProduct,
+      mergeLiveDocIntoCollection(cards, live),
+      faqs,
+    );
+  }
+  if (isFaqDoc(live)) {
+    return overlayProductContent(
+      slug,
+      rawProduct,
+      cards,
+      mergeLiveDocIntoCollection(faqs, live),
+    );
+  }
+  return applyProductGlobalOverlay(content, live);
+}

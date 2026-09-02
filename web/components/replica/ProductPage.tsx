@@ -1,7 +1,7 @@
 "use client";
 
 import { useLivePreview } from "@payloadcms/live-preview-react";
-import { applyProductGlobalOverlay, type CmsFieldData } from "@/lib/cms-overlay";
+import { applyProductLivePreview, type CmsFieldData } from "@/lib/cms-overlay";
 import { getProductContent, type ProductPageContent } from "@/content/products";
 import { ReplicaFooter } from "@/components/replica/sections/Footer";
 import { ReplicaNav } from "@/components/replica/sections/Nav";
@@ -27,20 +27,25 @@ import { ProductVideo } from "@/components/replica/product/ProductVideo";
 type ProductPageProps = {
   slug: ProductSlug;
   content?: ProductPageContent;
-  /** Raw product doc fields — enables Payload admin Live Preview when set.
-   * See lib/cms-overlay.ts applyProductGlobalOverlay for scope (direct
-   * product text fields only; cards/faqs-derived sections don't
-   * live-update). */
+  /** Raw product doc fields — enables Payload admin Live Preview when set. */
   rawProduct?: CmsFieldData;
+  /** Card/FAQ docs for Live Preview merge on this product page. */
+  cards?: CmsFieldData[];
+  faqs?: CmsFieldData[];
 };
 
-export function ProductPage({ slug, content, rawProduct }: ProductPageProps) {
+export function ProductPage({
+  slug,
+  content,
+  rawProduct,
+  cards = [],
+  faqs = [],
+}: ProductPageProps) {
   const { theme } = useTheme();
   const meta = getProduct(slug)!;
   const base = content ?? getProductContent(slug);
 
-  // Inert outside Payload's Live Preview iframe — just returns initialData.
-  const { data: liveProduct } = useLivePreview<CmsFieldData>({
+  const { data: liveData } = useLivePreview<CmsFieldData>({
     initialData: rawProduct ?? {},
     serverURL:
       process.env.NEXT_PUBLIC_SERVER_URL ??
@@ -48,7 +53,7 @@ export function ProductPage({ slug, content, rawProduct }: ProductPageProps) {
     depth: 0,
   });
 
-  const resolved = rawProduct ? applyProductGlobalOverlay(base, liveProduct) : base;
+  const resolved = applyProductLivePreview(base, liveData, slug, rawProduct, cards, faqs);
 
   return (
     <main

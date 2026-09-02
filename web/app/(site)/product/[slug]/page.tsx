@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductPage } from "@/components/replica/ProductPage";
 import { getProduct, isProductSlug } from "@/lib/products";
-import { getOverlayProductContent, getProductRaw } from "@/lib/cms";
+import { getCardsRaw, getFaqsRaw, getOverlayProductContent, getProductRaw } from "@/lib/cms";
 
 type ProductRoutePageProps = {
   params: Promise<{ slug: string }>;
@@ -34,9 +34,19 @@ export default async function ProductRoutePage({ params }: ProductRoutePageProps
     notFound();
   }
 
-  const [content, rawProduct] = await Promise.all([
+  const [content, rawProduct, cards, faqs] = await Promise.all([
     getOverlayProductContent(slug),
     getProductRaw(slug),
+    getCardsRaw(),
+    getFaqsRaw(),
   ]);
-  return <ProductPage slug={slug} content={content} rawProduct={rawProduct} />;
+  return (
+    <ProductPage
+      slug={slug}
+      content={content}
+      rawProduct={rawProduct}
+      cards={cards}
+      faqs={faqs}
+    />
+  );
 }

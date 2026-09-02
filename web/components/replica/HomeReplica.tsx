@@ -1,7 +1,7 @@
 "use client";
 
 import { useLivePreview } from "@payloadcms/live-preview-react";
-import { applyHomeGlobalOverlay, type CmsFieldData } from "@/lib/cms-overlay";
+import { applyHomeLivePreview, type CmsFieldData } from "@/lib/cms-overlay";
 import { ReplicaAssemblies } from "@/components/replica/sections/Assemblies";
 import { ReplicaFooter } from "@/components/replica/sections/Footer";
 import { ReplicaHero } from "@/components/replica/sections/Hero";
@@ -18,18 +18,17 @@ import { REPLICA_FRAMES } from "@/lib/replica-frames";
 
 type HomeReplicaProps = {
   content?: ReplicaContent;
-  /** Raw `home` global fields — enables Payload admin Live Preview when set.
-   * See lib/cms-overlay.ts applyHomeGlobalOverlay for scope (direct home
-   * text fields only; cards-derived sections don't live-update). */
+  /** Raw `home` global fields — enables Payload admin Live Preview when set. */
   rawHome?: CmsFieldData;
+  /** All card docs — merged client-side when previewing a card. */
+  cards?: CmsFieldData[];
 };
 
-export function HomeReplica({ content = replicaContent, rawHome }: HomeReplicaProps) {
+export function HomeReplica({ content = replicaContent, rawHome, cards = [] }: HomeReplicaProps) {
   const { theme } = useTheme();
   const frames = REPLICA_FRAMES[theme];
 
-  // Inert outside Payload's Live Preview iframe — just returns initialData.
-  const { data: liveHome } = useLivePreview<CmsFieldData>({
+  const { data: liveData } = useLivePreview<CmsFieldData>({
     initialData: rawHome ?? {},
     serverURL:
       process.env.NEXT_PUBLIC_SERVER_URL ??
@@ -37,7 +36,7 @@ export function HomeReplica({ content = replicaContent, rawHome }: HomeReplicaPr
     depth: 0,
   });
 
-  const liveContent = rawHome ? applyHomeGlobalOverlay(content, liveHome) : content;
+  const liveContent = applyHomeLivePreview(content, liveData, rawHome, cards);
 
   return (
     <ReplicaContentProvider value={liveContent}>

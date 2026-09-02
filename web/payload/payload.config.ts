@@ -37,21 +37,30 @@ export default buildConfig({
       // web/ root — importMap lives under app/(payload)/admin
       baseDir: path.resolve(dirname, '..'),
     },
-    // Native Live Preview — collections/globals with a dedicated front-end route.
-    // Cards/Faqs have no own URL; they merge into home/product at load time.
+    // Live Preview for all CMS-editable page content. Cards/Faqs preview on
+    // their parent home or product page (no dedicated route).
     livePreview: {
       url: ({ data, collectionConfig, globalConfig }) => {
         const base = serverURL || ''
         if (globalConfig?.slug === 'home') return `${base}/`
-        if (collectionConfig?.slug === 'products' && typeof data?.slug === 'string') {
-          return `${base}/product/${data.slug}`
+        const slug = typeof data?.slug === 'string' ? data.slug : ''
+        const productSlug =
+          typeof data?.['product-slug'] === 'string' ? data['product-slug'] : ''
+        if (collectionConfig?.slug === 'products' && slug) {
+          return `${base}/product/${slug}`
         }
-        if (collectionConfig?.slug === 'posts' && typeof data?.slug === 'string') {
-          return `${base}/blog/${data.slug}`
+        if (collectionConfig?.slug === 'posts' && slug) {
+          return `${base}/blog/${slug}`
+        }
+        if (collectionConfig?.slug === 'cards') {
+          return productSlug ? `${base}/product/${productSlug}` : `${base}/`
+        }
+        if (collectionConfig?.slug === 'faqs' && productSlug) {
+          return `${base}/product/${productSlug}`
         }
         return base || '/'
       },
-      collections: ['products', 'posts'],
+      collections: ['products', 'posts', 'cards', 'faqs'],
       globals: ['home'],
       breakpoints: [
         { label: 'Mobile', name: 'mobile', width: 390, height: 844 },

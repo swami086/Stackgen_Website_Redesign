@@ -9,6 +9,8 @@ export {
 } from "@/lib/cms-overlay";
 
 export {
+  getCardsRaw,
+  getFaqsRaw,
   getHomeGlobalRaw,
   getOverlayProductContent,
   getOverlayReplicaContent,

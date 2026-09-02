@@ -97,6 +97,16 @@ export async function getPostRaw(slug: string): Promise<CmsFieldData | undefined
   return posts.find((item) => typeof item.slug === "string" && item.slug === slug);
 }
 
+/** All card docs — for Live Preview merge on home/product pages. */
+export async function getCardsRaw(): Promise<CmsFieldData[]> {
+  return fetchCollection("cards");
+}
+
+/** All FAQ docs — for Live Preview merge on product pages. */
+export async function getFaqsRaw(): Promise<CmsFieldData[]> {
+  return fetchCollection("faqs");
+}
+
 export async function getOverlayReplicaContent(): Promise<ReplicaContent> {
   const [home, cards] = await Promise.all([fetchHomeGlobal(), fetchCollection("cards")]);
   return overlayReplicaContent(home, cards);

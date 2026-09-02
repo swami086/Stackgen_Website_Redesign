@@ -1,9 +1,12 @@
 import { HomeReplica } from "@/components/replica/HomeReplica";
-import { getOverlayReplicaContent } from "@/lib/cms";
+import { getHomeGlobalRaw, getOverlayReplicaContent } from "@/lib/cms";
 
 export const revalidate = 300;
 
 export default async function HomePage() {
-  const content = await getOverlayReplicaContent();
-  return <HomeReplica content={content} />;
+  const [content, rawHome] = await Promise.all([
+    getOverlayReplicaContent(),
+    getHomeGlobalRaw(),
+  ]);
+  return <HomeReplica content={content} rawHome={rawHome} />;
 }

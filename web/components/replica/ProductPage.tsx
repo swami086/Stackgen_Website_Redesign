@@ -1,5 +1,7 @@
 "use client";
 
+import { useLivePreview } from "@payloadcms/live-preview-react";
+import { applyProductGlobalOverlay, type CmsFieldData } from "@/lib/cms-overlay";
 import { getProductContent, type ProductPageContent } from "@/content/products";
 import { ReplicaFooter } from "@/components/replica/sections/Footer";
 import { ReplicaNav } from "@/components/replica/sections/Nav";
@@ -25,12 +27,28 @@ import { ProductVideo } from "@/components/replica/product/ProductVideo";
 type ProductPageProps = {
   slug: ProductSlug;
   content?: ProductPageContent;
+  /** Raw product doc fields — enables Payload admin Live Preview when set.
+   * See lib/cms-overlay.ts applyProductGlobalOverlay for scope (direct
+   * product text fields only; cards/faqs-derived sections don't
+   * live-update). */
+  rawProduct?: CmsFieldData;
 };
 
-export function ProductPage({ slug, content }: ProductPageProps) {
+export function ProductPage({ slug, content, rawProduct }: ProductPageProps) {
   const { theme } = useTheme();
   const meta = getProduct(slug)!;
-  const resolved = content ?? getProductContent(slug);
+  const base = content ?? getProductContent(slug);
+
+  // Inert outside Payload's Live Preview iframe — just returns initialData.
+  const { data: liveProduct } = useLivePreview<CmsFieldData>({
+    initialData: rawProduct ?? {},
+    serverURL:
+      process.env.NEXT_PUBLIC_SERVER_URL ??
+      (typeof window !== "undefined" ? window.location.origin : ""),
+    depth: 0,
+  });
+
+  const resolved = rawProduct ? applyProductGlobalOverlay(base, liveProduct) : base;
 
   return (
     <main

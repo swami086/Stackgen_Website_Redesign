@@ -6,6 +6,13 @@
  *   pnpm seed:app
  *
  * Remote/GKE: use scripts/seed-payload-gke.sh (sets NODE_ENV=production).
+ *
+ * SAFETY: this clears cards/products/faqs/posts and overwrites the home
+ * global before reseeding from web/content/*.ts. If a content editor has
+ * made real edits in /admin, rerunning this silently deletes that work.
+ * Refuses to run once any of those collections already has content —
+ * pass --force (or SEED_FORCE=1) to intentionally reset back to the TS
+ * defaults.
  */
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -23,6 +30,18 @@ type Payload = Awaited<ReturnType<typeof getPayload>>;
 function productSlugFromHref(href: string): string {
   const m = href.match(/\/product\/([^/?#]+)/);
   return m?.[1] ?? "";
+}
+
+const FORCE = process.argv.includes("--force") || process.env.SEED_FORCE === "1";
+
+async function hasExistingContent(payload: Payload): Promise<boolean> {
+  const counts = await Promise.all(
+    (["cards", "products", "faqs", "posts"] as const).map(async (col) => {
+      const { totalDocs } = await payload.find({ collection: col, limit: 1 });
+      return totalDocs;
+    }),
+  );
+  return counts.some((n) => n > 0);
 }
 
 async function clearCollection(
@@ -145,6 +164,17 @@ async function seedProduct(payload: Payload, slug: ProductSlug, p: ProductPageCo
 
 async function main() {
   const payload = await getPayload({ config });
+
+  if (!FORCE && (await hasExistingContent(payload))) {
+    console.error(
+      "Refusing to reseed: cards/products/faqs/posts already contain content.\n" +
+        "Re-running this script deletes and replaces those collections with\n" +
+        "web/content/*.ts defaults, which would wipe any edits made in /admin.\n" +
+        "Pass --force (or SEED_FORCE=1) if you intend to reset content back\n" +
+        "to the TS defaults.",
+    );
+    process.exit(1);
+  }
 
   await clearCollection(payload, "cards");
   await clearCollection(payload, "products");

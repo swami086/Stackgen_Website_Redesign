@@ -79,6 +79,18 @@ async function fetchHomeGlobal(): Promise<CmsFieldData | undefined> {
   }
 }
 
+/** Raw `home` global fields (unmerged) — for client-side Live Preview, which
+ * needs the same shape Payload's admin sends over postMessage. */
+export async function getHomeGlobalRaw(): Promise<CmsFieldData | undefined> {
+  return fetchHomeGlobal();
+}
+
+/** Raw product doc fields (unmerged) — for client-side Live Preview. */
+export async function getProductRaw(slug: ProductSlug): Promise<CmsFieldData | undefined> {
+  const products = await fetchCollection("products");
+  return products.find((item) => typeof item.slug === "string" && item.slug === slug);
+}
+
 export async function getOverlayReplicaContent(): Promise<ReplicaContent> {
   const [home, cards] = await Promise.all([fetchHomeGlobal(), fetchCollection("cards")]);
   return overlayReplicaContent(home, cards);

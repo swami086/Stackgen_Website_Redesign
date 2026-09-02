@@ -9,8 +9,10 @@ export {
 } from "@/lib/cms-overlay";
 
 export {
+  getHomeGlobalRaw,
   getOverlayProductContent,
   getOverlayReplicaContent,
+  getProductRaw,
   getPublishedPost,
   getPublishedPosts,
   isPayloadCmsEnabled,

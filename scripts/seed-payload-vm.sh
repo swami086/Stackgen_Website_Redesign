@@ -54,7 +54,12 @@ cd "$ROOT/web"
 echo "==> migrate"
 pnpm exec payload migrate
 echo "==> seed"
-pnpm seed:app
+if [[ "${SEED_FORCE:-0}" == "1" ]]; then
+  echo "    (SEED_FORCE=1 — will overwrite existing admin edits)"
+  SEED_FORCE=1 pnpm seed:app
+else
+  pnpm seed:app
+fi
 
 echo "==> remote counts"
 gcloud compute ssh "$VM_NAME" --zone="$ZONE" --project="$PROJECT" --quiet --command="

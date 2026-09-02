@@ -69,23 +69,25 @@ fi
 gcloud auth configure-docker us-west1-docker.pkg.dev --quiet
 
 APP_DIR=/opt/stackgen
+# Repo is often root-owned after prior sudo deploys; avoid git safe.directory failures.
+sudo git config --global --add safe.directory \"\$APP_DIR\" 2>/dev/null || true
 if [[ -d \"\$APP_DIR/.git\" ]]; then
-  git -C \"\$APP_DIR\" fetch origin ${GIT_BRANCH}
-  git -C \"\$APP_DIR\" checkout ${GIT_BRANCH}
-  git -C \"\$APP_DIR\" reset --hard origin/${GIT_BRANCH}
+  sudo git -C \"\$APP_DIR\" fetch origin ${GIT_BRANCH}
+  sudo git -C \"\$APP_DIR\" checkout ${GIT_BRANCH}
+  sudo git -C \"\$APP_DIR\" reset --hard origin/${GIT_BRANCH}
 else
-  rm -rf \"\$APP_DIR\"
-  git clone --branch ${GIT_BRANCH} --depth 1 ${GIT_REPO} \"\$APP_DIR\"
+  sudo rm -rf \"\$APP_DIR\"
+  sudo git clone --branch ${GIT_BRANCH} --depth 1 ${GIT_REPO} \"\$APP_DIR\"
 fi
 
 mkdir -p \"\$APP_DIR/stack\"
-cat > \"\$APP_DIR/stack/.env\" <<ENV
+sudo tee \"\$APP_DIR/stack/.env\" >/dev/null <<ENV
 POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 PAYLOAD_SECRET=${PAYLOAD_SECRET}
 PAYLOAD_PUBLIC_SERVER_URL=${PUBLIC_URL}
 WEB_IMAGE=${IMAGE}
 ENV
-chmod 600 \"\$APP_DIR/stack/.env\"
+sudo chmod 600 \"\$APP_DIR/stack/.env\"
 
 cd \"\$APP_DIR\"
 if [[ ${FRESH_DB} == 1 ]]; then

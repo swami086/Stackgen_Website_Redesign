@@ -1,10 +1,18 @@
 import type { GlobalConfig } from 'payload'
 
+import { authenticatedOrPublished } from '../access/authenticatedOrPublished'
+
 /** Field slugs match lib/cms-overlay overlay keys. */
 export const Home: GlobalConfig = {
   slug: 'home',
   label: 'Homepage',
-  access: { read: () => true },
+  access: { read: authenticatedOrPublished },
+  versions: {
+    drafts: {
+      autosave: true,
+    },
+    maxPerDoc: 100,
+  },
   fields: [
     { name: 'hero-heading', type: 'text' },
     { name: 'hero-sub', type: 'text' },

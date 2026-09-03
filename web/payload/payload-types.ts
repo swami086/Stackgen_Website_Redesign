@@ -191,6 +191,7 @@ export interface Card {
   'product-slug'?: string | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -205,6 +206,7 @@ export interface Post {
   'published-on-2'?: string | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -222,6 +224,7 @@ export interface Product {
   'faq-heading'?: string | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -234,6 +237,7 @@ export interface Faq {
   answer?: string | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * Reusable component templates for the visual editor
@@ -507,6 +511,7 @@ export interface CardsSelect<T extends boolean = true> {
   'product-slug'?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -520,6 +525,7 @@ export interface PostsSelect<T extends boolean = true> {
   'published-on-2'?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -536,6 +542,7 @@ export interface ProductsSelect<T extends boolean = true> {
   'faq-heading'?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -547,6 +554,7 @@ export interface FaqsSelect<T extends boolean = true> {
   answer?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -669,6 +677,7 @@ export interface Home {
   'footer-cta'?: string | null;
   'footer-brand'?: string | null;
   'footer-legal'?: string | null;
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -707,6 +716,7 @@ export interface HomeSelect<T extends boolean = true> {
   'footer-cta'?: T;
   'footer-brand'?: T;
   'footer-legal'?: T;
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

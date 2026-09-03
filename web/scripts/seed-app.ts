@@ -37,7 +37,11 @@ const FORCE = process.argv.includes("--force") || process.env.SEED_FORCE === "1"
 async function hasExistingContent(payload: Payload): Promise<boolean> {
   const counts = await Promise.all(
     (["cards", "products", "faqs", "posts"] as const).map(async (col) => {
-      const { totalDocs } = await payload.find({ collection: col, limit: 1 });
+      const { totalDocs } = await payload.find({
+        collection: col,
+        limit: 1,
+        overrideAccess: true,
+      });
       return totalDocs;
     }),
   );
@@ -48,9 +52,14 @@ async function clearCollection(
   payload: Payload,
   slug: "cards" | "products" | "faqs" | "posts",
 ) {
-  const { docs } = await payload.find({ collection: slug, limit: 1000, pagination: false });
+  const { docs } = await payload.find({
+    collection: slug,
+    limit: 1000,
+    pagination: false,
+    overrideAccess: true,
+  });
   for (const doc of docs) {
-    await payload.delete({ collection: slug, id: doc.id });
+    await payload.delete({ collection: slug, id: doc.id, overrideAccess: true });
   }
 }
 
@@ -89,11 +98,17 @@ async function seedHome(payload: Payload) {
       "footer-cta": c.footer.cta,
       "footer-brand": c.footer.brand,
       "footer-legal": c.footer.legal,
+      _status: "published",
     },
+    overrideAccess: true,
   });
 
   for (const title of c.problem.symptoms) {
-    await payload.create({ collection: "cards", data: { slot: "home-symptom", title } });
+    await payload.create({
+      collection: "cards",
+      data: { slot: "home-symptom", title, _status: "published" },
+      overrideAccess: true,
+    });
   }
   for (const pillar of c.whoItsFor.pillars) {
     await payload.create({
@@ -105,13 +120,22 @@ async function seedHome(payload: Payload) {
         body: pillar.body,
         href: pillar.href,
         "product-slug": productSlugFromHref(pillar.href),
+        _status: "published",
       },
+      overrideAccess: true,
     });
   }
   for (const role of c.whoItsFor.roles) {
     await payload.create({
       collection: "cards",
-      data: { slot: "home-role", title: role.title, body: role.body, href: role.href },
+      data: {
+        slot: "home-role",
+        title: role.title,
+        body: role.body,
+        href: role.href,
+        _status: "published",
+      },
+      overrideAccess: true,
     });
   }
 }
@@ -126,7 +150,14 @@ async function seedProductCards(
     if (!item.title) continue;
     await payload.create({
       collection: "cards",
-      data: { slot, "product-slug": slug, title: item.title, body: item.body },
+      data: {
+        slot,
+        "product-slug": slug,
+        title: item.title,
+        body: item.body,
+        _status: "published",
+      },
+      overrideAccess: true,
     });
   }
 }
@@ -143,7 +174,9 @@ async function seedProduct(payload: Payload, slug: ProductSlug, p: ProductPageCo
       "final-cta-heading": p.finalCta.heading,
       "final-cta-subhead": p.finalCta.subhead,
       "faq-heading": p.faq.heading,
+      _status: "published",
     },
+    overrideAccess: true,
   });
 
   await seedProductCards(payload, slug, p.pillars.items, "product-pillar");
@@ -157,7 +190,13 @@ async function seedProduct(payload: Payload, slug: ProductSlug, p: ProductPageCo
     if (!item.question) continue;
     await payload.create({
       collection: "faqs",
-      data: { "product-slug": slug, question: item.question, answer: item.answer },
+      data: {
+        "product-slug": slug,
+        question: item.question,
+        answer: item.answer,
+        _status: "published",
+      },
+      overrideAccess: true,
     });
   }
 }

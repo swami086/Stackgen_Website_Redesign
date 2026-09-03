@@ -53,8 +53,11 @@ async function fetchCollection(slug: string): Promise<CmsFieldData[]> {
     const p = await payload();
     const result = await p.find({
       collection: slug as "cards" | "products" | "faqs" | "posts" | "media" | "users",
+      where: { _status: { equals: "published" } },
       limit: 100,
       depth: 0,
+      // overrideAccess + published filter: Local API must not surface drafts
+      // even though access would also constrain unauthenticated REST.
       overrideAccess: true,
     });
     return (result.docs as unknown as PayloadDoc[])
@@ -73,6 +76,9 @@ async function fetchHomeGlobal(): Promise<CmsFieldData | undefined> {
       depth: 0,
       overrideAccess: true,
     });
+    // Globals: published lives on the main row; skip if never published.
+    const status = (doc as unknown as PayloadDoc)._status;
+    if (status && status !== "published") return undefined;
     return docToFieldData(doc as unknown as PayloadDoc);
   } catch {
     return undefined;

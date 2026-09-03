@@ -11,7 +11,7 @@ export const Home: GlobalConfig = {
     drafts: {
       autosave: true,
     },
-    maxPerDoc: 100,
+    max: 100,
   },
   fields: [
     { name: 'hero-heading', type: 'text' },

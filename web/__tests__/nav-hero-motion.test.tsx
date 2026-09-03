@@ -3,6 +3,29 @@ import { ThemeProvider } from "@/components/replica/theme/ThemeProvider";
 import { ReplicaNav } from "@/components/replica/sections/Nav";
 import { ReplicaHero } from "@/components/replica/sections/Hero";
 import { replicaContent } from "@/content/replica";
+import { PuckCanvasProvider } from "@/puck/PuckCanvasContext";
+
+test("nav is fixed on the public site, sticky inside the Puck canvas", () => {
+  // Public site: `fixed` — Puck's overlay mis-measures fixed targets
+  // (puckeditor/puck#1456), so canvas rendering must avoid it (see Nav.tsx).
+  const { container: publicSite } = render(
+    <ThemeProvider>
+      <ReplicaNav theme="dark" />
+    </ThemeProvider>,
+  );
+  expect(publicSite.querySelector("header")).toHaveClass("fixed");
+  expect(publicSite.querySelector("header")).not.toHaveClass("sticky");
+
+  const { container: canvas } = render(
+    <PuckCanvasProvider>
+      <ThemeProvider>
+        <ReplicaNav theme="dark" />
+      </ThemeProvider>
+    </PuckCanvasProvider>,
+  );
+  expect(canvas.querySelector("header")).toHaveClass("sticky");
+  expect(canvas.querySelector("header")).not.toHaveClass("fixed");
+});
 
 test("nav starts as clear Liquid Glass over the hero", () => {
   const { container } = render(

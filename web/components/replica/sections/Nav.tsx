@@ -39,6 +39,7 @@ import {
   NAV_SCROLL_DENSITY_DEFAULTS,
   nextNavScrolled,
 } from "@/lib/nav-scroll-density";
+import { usePuckCanvas } from "@/puck/PuckCanvasContext";
 
 const NAV_LINK_CLASS =
   "relative z-[2] whitespace-nowrap text-[13.5px] tracking-[-0.1px] text-text-secondary no-underline transition-colors hover:text-text-primary";
@@ -63,6 +64,14 @@ function isNavLinkActive(pathname: string | null, href: string) {
 export function ReplicaNav({ theme, className }: ReplicaNavProps) {
   const { links, cta, megaMenu } = useReplicaContent().nav;
   const pathname = usePathname();
+  /**
+   * Puck's click-to-select overlay mis-measures `position: fixed` targets
+   * (puckeditor/puck#1456) — clicks land on the real Link/button instead of
+   * Puck's selection layer, so the nav becomes unselectable/unclickable in
+   * the editor canvas. Render it `sticky` (not `fixed`) inside Puck only;
+   * the public site keeps the floating fixed island unchanged.
+   */
+  const isPuckCanvas = usePuckCanvas();
   /** clear = over hero media; regular = content scrolled under (Apple variants). */
   const [liquidVariant, setLiquidVariant] = useState<"clear" | "regular">(
     "clear",
@@ -177,7 +186,8 @@ export function ReplicaNav({ theme, className }: ReplicaNavProps) {
       data-liquid-glass=""
       data-nav-minimize="on-scroll-down"
       className={cn(
-        "fixed left-0 right-0 top-0 z-50 flex justify-center transition-[padding]",
+        "left-0 right-0 top-0 z-50 flex justify-center transition-[padding]",
+        isPuckCanvas ? "sticky" : "fixed",
         density === "compact" ? "px-4 pt-4" : "px-6 pt-6",
         className,
       )}

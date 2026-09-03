@@ -14,6 +14,19 @@ function block(type: string, props: Record<string, unknown>): PuckBlock {
   return { type, props: { id: type, ...props } };
 }
 
+/** Shared StackGenNav props — keeps mega-menu columns in sync across home/product/blog seeds. */
+function navBlockProps(nav: ReplicaContent["nav"]) {
+  return {
+    links: nav.links,
+    ctaLabel: nav.cta.label,
+    ctaHref: nav.cta.href,
+    megaMenu: nav.megaMenu.columns.map((col) => ({
+      ...col,
+      capabilities: col.capabilities.map((text) => ({ text })),
+    })),
+  };
+}
+
 export function buildHomePuckData(): Data {
   return buildHomePuckDataFromContent(replicaContent);
 }
@@ -30,11 +43,7 @@ export function buildHomePuckDataFromContent(c: ReplicaContent): Data {
       },
     },
     content: [
-      block("StackGenNav", {
-        links: c.nav.links,
-        ctaLabel: c.nav.cta.label,
-        ctaHref: c.nav.cta.href,
-      }),
+      block("StackGenNav", navBlockProps(c.nav)),
       block("StackGenHomeHero", { ...c.hero }),
       block("StackGenHomeLogos", {
         eyebrow: c.logos.eyebrow,
@@ -44,6 +53,7 @@ export function buildHomePuckDataFromContent(c: ReplicaContent): Data {
         eyebrow: c.problem.eyebrow,
         heading: c.problem.heading,
         body: c.problem.body,
+        punchline: c.problem.punchline,
         filmCaption: c.problem.filmCaption,
         learnMoreLabel: c.problem.learnMore.label,
         learnMoreHref: c.problem.learnMore.href,
@@ -54,6 +64,8 @@ export function buildHomePuckDataFromContent(c: ReplicaContent): Data {
         heading: c.solution.heading,
         body: c.solution.body,
         claim: c.solution.claim,
+        demoLabelLeft: c.solution.demoLabelLeft,
+        demoLabelRight: c.solution.demoLabelRight,
         demoCaption: c.solution.demoCaption,
       }),
       block("StackGenHomeAssemblies", {
@@ -74,7 +86,10 @@ export function buildHomePuckDataFromContent(c: ReplicaContent): Data {
         heading: c.whoItsFor.heading,
         sub: c.whoItsFor.sub,
         osTitle: c.whoItsFor.osTitle,
-        pillars: c.whoItsFor.pillars.map((p) => ({ ...p })),
+        pillars: c.whoItsFor.pillars.map((p) => ({
+          ...p,
+          image: { id: p.title, url: p.image.url, alt: p.image.alt },
+        })),
         roles: c.whoItsFor.roles.map((r) => ({ ...r })),
         osChips: c.whoItsFor.osChips.map((label) => ({ label })),
       }),
@@ -84,7 +99,9 @@ export function buildHomePuckDataFromContent(c: ReplicaContent): Data {
         cta: c.footer.cta,
         ctaHref: c.footer.ctaHref,
         brand: c.footer.brand,
+        company: c.footer.company.map((label) => ({ label })),
         legal: c.footer.legal,
+        legalLinks: c.footer.legalLinks.map((label) => ({ label })),
       }),
     ],
     zones: {},
@@ -99,13 +116,7 @@ export function buildProductPuckDataFromContent(
   slug: ProductSlug,
   p: ProductPageContent,
 ): Data {
-  const blocks: PuckBlock[] = [
-    block("StackGenNav", {
-      links: replicaContent.nav.links,
-      ctaLabel: replicaContent.nav.cta.label,
-      ctaHref: replicaContent.nav.cta.href,
-    }),
-  ];
+  const blocks: PuckBlock[] = [block("StackGenNav", navBlockProps(replicaContent.nav))];
 
   if (p.flags.subNav) {
     blocks.push(
@@ -221,7 +232,9 @@ export function buildProductPuckDataFromContent(
       cta: replicaContent.footer.cta,
       ctaHref: replicaContent.footer.ctaHref,
       brand: replicaContent.footer.brand,
+      company: replicaContent.footer.company.map((label) => ({ label })),
       legal: replicaContent.footer.legal,
+      legalLinks: replicaContent.footer.legalLinks.map((label) => ({ label })),
     }),
   );
 
@@ -264,11 +277,7 @@ export function buildBlogPuckData(input: {
       },
     },
     content: [
-      block("StackGenNav", {
-        links: replicaContent.nav.links,
-        ctaLabel: replicaContent.nav.cta.label,
-        ctaHref: replicaContent.nav.cta.href,
-      }),
+      block("StackGenNav", navBlockProps(replicaContent.nav)),
       block("StackGenBlogEyebrow", { text: "News" }),
       block("StackGenBlogTitle", { title: input.title }),
       ...(input.excerpt
@@ -281,7 +290,9 @@ export function buildBlogPuckData(input: {
         cta: replicaContent.footer.cta,
         ctaHref: replicaContent.footer.ctaHref,
         brand: replicaContent.footer.brand,
+        company: replicaContent.footer.company.map((label) => ({ label })),
         legal: replicaContent.footer.legal,
+        legalLinks: replicaContent.footer.legalLinks.map((label) => ({ label })),
       }),
     ],
     zones: {},

@@ -1,4 +1,18 @@
 import type { Field } from "@puckeditor/core";
+import type { PhosphorIconName } from "@/lib/phosphor-icons";
+
+/** Curated subset of PhosphorIconName for role/feature icon pickers. */
+export const ROLE_ICON_OPTIONS: Array<{ label: string; value: PhosphorIconName }> = [
+  { label: "Heartbeat", value: "heartbeat" },
+  { label: "Terminal", value: "terminal-window" },
+  { label: "Sync arrows", value: "arrows-clockwise" },
+  { label: "Stack", value: "stack" },
+  { label: "Shield check", value: "shield-check" },
+  { label: "Chart line", value: "chart-line" },
+  { label: "Magnifying glass", value: "magnifying-glass" },
+  { label: "Broadcast", value: "broadcast" },
+  { label: "Compass", value: "compass" },
+];
 
 export const linkFields = {
   label: { type: "text" as const, label: "Label" },

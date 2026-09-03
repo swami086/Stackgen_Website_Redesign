@@ -93,7 +93,10 @@ export function ReplicaWhoItsFor({ theme, className }: ReplicaWhoItsForProps) {
         >
           {pillars.map((pillar, i) => {
             const slug = PILLAR_SLUGS[i]!;
-            const media = PORTRAIT_SRC[slug];
+            const pillarImage = (pillar as { image?: { url: string; alt: string } }).image;
+            const media = pillarImage?.url
+              ? { src: pillarImage.url, alt: pillarImage.alt }
+              : PORTRAIT_SRC[slug];
             return (
               <Link
                 key={pillar.title}
@@ -158,7 +161,11 @@ export function ReplicaWhoItsFor({ theme, className }: ReplicaWhoItsForProps) {
               >
                 <span className="inline-flex items-center gap-1.5">
                   <PhosphorIcon
-                    name={ROLE_ICONS[role.title] ?? "stack"}
+                    name={
+                      (role as { icon?: PhosphorIconName }).icon ??
+                      ROLE_ICONS[role.title] ??
+                      "stack"
+                    }
                     className="size-3.5 text-accent"
                   />
                   <span className="text-[12px] font-semibold text-text-primary">

@@ -10,6 +10,15 @@ type ReplicaOverrides = {
   nav?: {
     links?: typeof replicaContent.nav.links;
     cta?: { label: string; href: string };
+    megaMenu?: {
+      columns: Array<{
+        phase: string;
+        title: string;
+        description: string;
+        slug: string;
+        capabilities: string[];
+      }>;
+    };
   };
   hero?: Partial<Record<keyof ReplicaContent["hero"], string>>;
   logos?: Partial<{
@@ -22,7 +31,9 @@ type ReplicaOverrides = {
     learnMore?: { label: string; href: string };
     symptoms?: string[];
   };
-  solution?: Partial<Record<keyof ReplicaContent["solution"], string>>;
+  solution?: Partial<
+    Record<keyof ReplicaContent["solution"], string>
+  >;
   assemblies?: Partial<
     Record<keyof Omit<ReplicaContent["assemblies"], "learnMore">, string>
   > & { learnMore?: { label: string; href: string } };
@@ -30,11 +41,22 @@ type ReplicaOverrides = {
   whoItsFor?: Partial<
     Record<keyof Omit<ReplicaContent["whoItsFor"], "pillars" | "roles" | "osChips">, string>
   > & {
-    pillars?: Array<{ label: string; title: string; body: string; href: string }>;
-    roles?: Array<{ title: string; body: string; href: string }>;
+    pillars?: Array<{
+      label: string;
+      title: string;
+      body: string;
+      href: string;
+      image?: { url: string; alt: string } | null;
+    }>;
+    roles?: Array<{ title: string; body: string; href: string; icon?: string }>;
     osChips?: string[];
   };
-  footer?: Partial<Record<keyof ReplicaContent["footer"], string>>;
+  footer?: Partial<
+    Record<keyof Omit<ReplicaContent["footer"], "company" | "legalLinks" | "product" | "platform">, string>
+  > & {
+    company?: string[];
+    legalLinks?: string[];
+  };
 };
 
 /** Deep-merge editorial overrides onto home replica defaults. */
@@ -47,6 +69,7 @@ export function mergeReplicaContent(overrides: ReplicaOverrides): ReplicaContent
       ...overrides.nav,
       links: (overrides.nav?.links ?? replicaContent.nav.links) as typeof replicaContent.nav.links,
       cta: { ...replicaContent.nav.cta, ...overrides.nav?.cta },
+      megaMenu: overrides.nav?.megaMenu ?? replicaContent.nav.megaMenu,
     },
     hero: { ...replicaContent.hero, ...overrides.hero },
     logos: {
@@ -69,7 +92,12 @@ export function mergeReplicaContent(overrides: ReplicaOverrides): ReplicaContent
       roles: overrides.whoItsFor?.roles ?? replicaContent.whoItsFor.roles,
       osChips: overrides.whoItsFor?.osChips ?? replicaContent.whoItsFor.osChips,
     },
-    footer: { ...replicaContent.footer, ...overrides.footer },
+    footer: {
+      ...replicaContent.footer,
+      ...overrides.footer,
+      company: overrides.footer?.company ?? replicaContent.footer.company,
+      legalLinks: overrides.footer?.legalLinks ?? replicaContent.footer.legalLinks,
+    },
   } as ReplicaContent;
 }
 

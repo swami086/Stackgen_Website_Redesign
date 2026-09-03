@@ -150,6 +150,7 @@ export function overlayReplicaContent(
       const card = pillars.find((item) => text(item, "product-slug") === slug);
       if (!card) return base;
       return {
+        ...base,
         label: text(card, "label") || base.label,
         title: text(card, "title") || base.title,
         body: stripHtml(card.body) || base.body,
@@ -164,6 +165,7 @@ export function overlayReplicaContent(
       const card = roles.find((item) => text(item, "title") === base.title);
       if (!card) return base;
       return {
+        ...base,
         title: text(card, "title") || base.title,
         body: stripHtml(card.body) || base.body,
         href: hrefPath(card.href) || base.href,

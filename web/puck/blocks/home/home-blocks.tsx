@@ -13,7 +13,16 @@ import { ReplicaContentProvider } from "@/components/replica/ReplicaContentConte
 import { useTheme } from "@/components/replica/theme/ThemeProvider";
 import { replicaContent } from "@/content/replica";
 import { mergeReplicaContent } from "@/puck/lib/merge-content";
-import { bodyField, ctaFields, eyebrowField, headingField, linkFields, logoItemFields } from "@/puck/fields/common";
+import {
+  bodyField,
+  ctaFields,
+  eyebrowField,
+  headingField,
+  linkFields,
+  logoItemFields,
+  ROLE_ICON_OPTIONS,
+} from "@/puck/fields/common";
+import { createMediaField } from "@delmaredigital/payload-puck/fields";
 
 function homeSectionBlock(
   label: string,
@@ -107,6 +116,7 @@ export const stackGenHomeProblemBlock = homeSectionBlock(
     eyebrow: eyebrowField,
     heading: headingField,
     body: bodyField,
+    punchline: { type: "text", label: "Punchline (bold callout under heading)" },
     filmCaption: { type: "text", label: "Diagram caption" },
     learnMoreLabel: linkFields.label,
     learnMoreHref: linkFields.href,
@@ -122,6 +132,7 @@ export const stackGenHomeProblemBlock = homeSectionBlock(
     eyebrow: replicaContent.problem.eyebrow,
     heading: replicaContent.problem.heading,
     body: replicaContent.problem.body,
+    punchline: replicaContent.problem.punchline,
     filmCaption: replicaContent.problem.filmCaption,
     learnMoreLabel: replicaContent.problem.learnMore.label,
     learnMoreHref: replicaContent.problem.learnMore.href,
@@ -133,6 +144,7 @@ export const stackGenHomeProblemBlock = homeSectionBlock(
         eyebrow: String(props.eyebrow),
         heading: String(props.heading),
         body: String(props.body),
+        punchline: String(props.punchline ?? ""),
         filmCaption: String(props.filmCaption),
         learnMore: {
           label: String(props.learnMoreLabel),
@@ -153,6 +165,8 @@ export const stackGenHomeSolutionBlock = homeSectionBlock(
     heading: headingField,
     body: bodyField,
     claim: { type: "text", label: "Claim" },
+    demoLabelLeft: { type: "text", label: "Diagram label (left)" },
+    demoLabelRight: { type: "text", label: "Diagram label (right)" },
     demoCaption: { type: "text", label: "Diagram caption" },
   },
   {
@@ -161,6 +175,8 @@ export const stackGenHomeSolutionBlock = homeSectionBlock(
     heading: replicaContent.solution.heading,
     body: replicaContent.solution.body,
     claim: replicaContent.solution.claim,
+    demoLabelLeft: replicaContent.solution.demoLabelLeft,
+    demoLabelRight: replicaContent.solution.demoLabelRight,
     demoCaption: replicaContent.solution.demoCaption,
   },
   (_t, props) =>
@@ -170,6 +186,8 @@ export const stackGenHomeSolutionBlock = homeSectionBlock(
         heading: String(props.heading),
         body: String(props.body),
         claim: String(props.claim),
+        demoLabelLeft: String(props.demoLabelLeft ?? ""),
+        demoLabelRight: String(props.demoLabelRight ?? ""),
         demoCaption: String(props.demoCaption),
       },
     }),
@@ -251,6 +269,7 @@ export const stackGenHomeWhoItsForBlock = homeSectionBlock(
         title: { type: "text", label: "Title" },
         body: { type: "textarea", label: "Body" },
         href: { type: "text", label: "Link URL" },
+        image: createMediaField({ label: "Portrait image" }),
       },
     },
     roles: {
@@ -261,6 +280,11 @@ export const stackGenHomeWhoItsForBlock = homeSectionBlock(
         title: { type: "text", label: "Role" },
         body: { type: "textarea", label: "Body" },
         href: { type: "text", label: "Link URL" },
+        icon: {
+          type: "select",
+          label: "Icon",
+          options: ROLE_ICON_OPTIONS,
+        },
       },
     },
     osChips: {
@@ -276,7 +300,10 @@ export const stackGenHomeWhoItsForBlock = homeSectionBlock(
     heading: replicaContent.whoItsFor.heading,
     sub: replicaContent.whoItsFor.sub,
     osTitle: replicaContent.whoItsFor.osTitle,
-    pillars: replicaContent.whoItsFor.pillars.map((p) => ({ ...p })),
+    pillars: replicaContent.whoItsFor.pillars.map((p) => ({
+      ...p,
+      image: { id: p.title, url: p.image.url, alt: p.image.alt },
+    })),
     roles: replicaContent.whoItsFor.roles.map((r) => ({ ...r })),
     osChips: replicaContent.whoItsFor.osChips.map((label) => ({ label })),
   },
@@ -289,20 +316,32 @@ export const stackGenHomeWhoItsForBlock = homeSectionBlock(
         osTitle: String(props.osTitle),
         pillars: Array.isArray(props.pillars)
           ? props.pillars.map(
-              (item: { label?: string; title?: string; body?: string; href?: string }) => ({
+              (item: {
+                label?: string;
+                title?: string;
+                body?: string;
+                href?: string;
+                image?: { url?: string; alt?: string } | null;
+              }) => ({
                 label: String(item.label ?? ""),
                 title: String(item.title ?? ""),
                 body: String(item.body ?? ""),
                 href: String(item.href ?? ""),
+                image: item.image?.url
+                  ? { url: item.image.url, alt: String(item.image.alt ?? "") }
+                  : undefined,
               }),
             )
           : undefined,
         roles: Array.isArray(props.roles)
-          ? props.roles.map((item: { title?: string; body?: string; href?: string }) => ({
-              title: String(item.title ?? ""),
-              body: String(item.body ?? ""),
-              href: String(item.href ?? ""),
-            }))
+          ? props.roles.map(
+              (item: { title?: string; body?: string; href?: string; icon?: string }) => ({
+                title: String(item.title ?? ""),
+                body: String(item.body ?? ""),
+                href: String(item.href ?? ""),
+                icon: item.icon || undefined,
+              }),
+            )
           : undefined,
         osChips: Array.isArray(props.osChips)
           ? props.osChips.map((item: { label?: string }) => String(item.label ?? ""))

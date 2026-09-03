@@ -10,6 +10,55 @@ export const replicaContent = {
       { label: "Docs", href: "/docs" },
     ],
     cta: { label: "Schedule a demo", href: "/schedule-demo" },
+    /** Products mega-menu panel — Pencil BCszz catalog (was content/product-mega-menu.ts only). */
+    megaMenu: {
+      columns: [
+        {
+          phase: "Build",
+          title: "Aiden for InfraOps",
+          description: "Policy-checked change from the IDE. Before it becomes an alert.",
+          slug: "aiden-for-infraops",
+          capabilities: [
+            "Intent to governed IaC in the IDE",
+            "Policy checked before production",
+            "Audit trail with the change",
+          ],
+        },
+        {
+          phase: "Operate",
+          title: "Aiden for DevOps",
+          description: "Delivery from the IDP that on-call can trust.",
+          slug: "aiden-for-devops",
+          capabilities: [
+            "Developers self-serve from the IDP",
+            "Policies applied by design",
+            "ServiceNow & Jira ready",
+          ],
+        },
+        {
+          phase: "Observe",
+          title: "Aiden for Observability",
+          description: "Investigation on Grafana. Filter false positives.",
+          slug: "aiden-for-observability",
+          capabilities: [
+            "Investigate on your existing stack",
+            "Shared context across tools",
+            "Feeds Detect → Remediate",
+          ],
+        },
+        {
+          phase: "Remediate",
+          title: "Aiden for SRE",
+          description: "Detect the real incident. Let agents act. You keep the call.",
+          slug: "aiden-for-sre",
+          capabilities: [
+            "Detect → Triage → Diagnose → Remediate",
+            "RCA with shared context",
+            "Human-approved remediation",
+          ],
+        },
+      ],
+    },
   },
   hero: {
     heading: "Take control of production.",
@@ -85,24 +134,40 @@ export const replicaContent = {
         title: "Aiden for InfraOps",
         body: "Policy-checked change from the IDE. Before it becomes an alert.",
         href: "/product/aiden-for-infraops",
+        image: {
+          url: "/media/aiden-infra-security-audit/product-ui-skills-canvas.jpg",
+          alt: "Aiden for InfraOps skills canvas",
+        },
       },
       {
         label: "Operate",
         title: "Aiden for DevOps",
         body: "Delivery from the IDP that on-call can trust.",
         href: "/product/aiden-for-devops",
+        image: {
+          url: "/media/aiden-home-change-surface/hero-app-only-1920.png",
+          alt: "Aiden for DevOps investigation surface",
+        },
       },
       {
         label: "Observe",
         title: "Aiden for Observability",
         body: "Investigation on Grafana and the stack you already run. Filter false positives.",
         href: "/product/aiden-for-observability",
+        image: {
+          url: "/media/aiden-observability-sre-investigator/ui-45s.jpg",
+          alt: "Aiden for Observability investigator",
+        },
       },
       {
         label: "Remediate",
         title: "Aiden for SRE",
         body: "Detect the real incident. Let agents act. You keep the call.",
         href: "/product/aiden-for-sre",
+        image: {
+          url: "/media/aiden-observability-sre-investigator/skills-investigator-1920.png",
+          alt: "Aiden for SRE investigator skills",
+        },
       },
     ],
     roles: [
@@ -110,16 +175,19 @@ export const replicaContent = {
         title: "SRE",
         body: "Detect the real incident. Let agents act. You keep the call.",
         href: "/product/aiden-for-sre",
+        icon: "heartbeat",
       },
       {
         title: "Developer",
         body: "Ship change on-call can see. No surprise deploys.",
         href: "/product/aiden-for-infraops",
+        icon: "terminal-window",
       },
       {
         title: "DevOps",
         body: "Keep control of how software ships. On-call stays in the loop.",
         href: "/product/aiden-for-devops",
+        icon: "arrows-clockwise",
       },
     ],
     osTitle: "Aiden OS",

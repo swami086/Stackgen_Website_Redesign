@@ -16,8 +16,11 @@ import Link from "next/link";
 import {
   productMegaMenuContent,
   productMegaMenuExploreHref,
+  type ProductMegaMenuColumn,
 } from "@/content/product-mega-menu";
 import { cn } from "@/lib/cn";
+
+export type { ProductMegaMenuColumn };
 
 /** Grace period so the pointer can cross the gap between trigger and fixed panel. */
 const CLOSE_DELAY_MS = 200;
@@ -37,6 +40,8 @@ type ProductMegaMenuProps = {
   /** Notify parent (e.g. floating nav) when the catalog opens/closes. */
   onOpenChange?: (open: boolean) => void;
   className?: string;
+  /** Puck-editable override — defaults to the static catalog. */
+  columns?: readonly ProductMegaMenuColumn[];
 };
 
 export function ProductMegaMenu({
@@ -44,6 +49,7 @@ export function ProductMegaMenu({
   forceOpen = false,
   onOpenChange,
   className,
+  columns = productMegaMenuContent.columns,
 }: ProductMegaMenuProps) {
   const panelId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
@@ -174,7 +180,7 @@ export function ProductMegaMenu({
             >
               <div data-pencil-id="r8gi4e" className="flex flex-col gap-5">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                  {productMegaMenuContent.columns.map((column) => (
+                  {columns.map((column) => (
                     <article
                       key={column.slug}
                       role="none"

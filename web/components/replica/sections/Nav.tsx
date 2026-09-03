@@ -29,7 +29,10 @@ import { ReplicaLogo } from "@/components/replica/shared/ReplicaLogo";
 import { ReplicaPrimaryPill } from "@/components/replica/shared/ReplicaPrimaryPill";
 import { ThemeToggle } from "@/components/replica/theme/ThemeToggle";
 import { REPLICA_FRAMES } from "@/lib/replica-frames";
-import { ProductMegaMenu } from "@/components/replica/nav/ProductMegaMenu";
+import {
+  ProductMegaMenu,
+  type ProductMegaMenuColumn,
+} from "@/components/replica/nav/ProductMegaMenu";
 import { cn } from "@/lib/cn";
 import { DUR, EASE_CSS } from "@/lib/motion-tokens";
 import {
@@ -58,7 +61,7 @@ function isNavLinkActive(pathname: string | null, href: string) {
 }
 
 export function ReplicaNav({ theme, className }: ReplicaNavProps) {
-  const { links, cta } = useReplicaContent().nav;
+  const { links, cta, megaMenu } = useReplicaContent().nav;
   const pathname = usePathname();
   /** clear = over hero media; regular = content scrolled under (Apple variants). */
   const [liquidVariant, setLiquidVariant] = useState<"clear" | "regular">(
@@ -231,6 +234,11 @@ export function ReplicaNav({ theme, className }: ReplicaNavProps) {
                 <ProductMegaMenu
                   key={item.label}
                   onOpenChange={onMegaOpenChange}
+                  columns={
+                    megaMenu?.columns as unknown as
+                      | readonly ProductMegaMenuColumn[]
+                      | undefined
+                  }
                 >
                   <button type="button" className={NAV_LINK_CLASS}>
                     {item.label}

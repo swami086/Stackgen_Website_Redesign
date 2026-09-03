@@ -1,35 +1,33 @@
-# Task 6 Report
+# Task 6 report: Live Pencil export helper
 
-## Status
-Complete. Operational Context Graph now uses lighter contrast on the light theme and softer wave timing there, while reduced motion settles to the assembled final state with no beam loop.
+**Status:** DONE
 
-## Commit
-`e1bc101` - `fix: refine OCG contrast and wave timing`
+## Deliverables
 
-## Tests
-- `pnpm exec vitest run __tests__/diagram-ocg-v2p0l.test.tsx`
-- `ReadLints` on `web/components/replica/diagrams/OperationalContextGraph.tsx` and `web/__tests__/diagram-ocg-v2p0l.test.tsx`
+| File | Action |
+|------|--------|
+| `web/scripts/export-pencil-home.md` | Created — operator steps, `pick` visitor snippet, `PencilLike` shape, seed/verify commands |
+| `web/puck/fixtures/home-zXASg-full.json` | Created — live MCP dump of `zXASg` (`resolveInstances: true`, depth 99) |
+| `web/__tests__/pen-home-full-fixture-smoke.test.ts` | Created — fixture size smoke + optional `mapPencilTree` assertion |
+
+## MCP export
+
+- Used Pencil MCP `execute` on `NextJS.pen` with `Get("zXASg", { depth: 99, resolveInstances: true })` and recursive `pick` serializer.
+- Fixture: **62,243 bytes**, root **`children.length === 9`** (Nav, Hero, Logos, Problem, Solution, Assemblies, Shell OCG, Who it's for, Footer).
+
+## Test summary
+
+```
+pnpm vitest run __tests__/pen-home-full-fixture-smoke.test.ts
+```
+
+| Test | Result |
+|------|--------|
+| root has many section children (`children.length > 5`) | PASS |
+| mapPencilTree yields a wide section tree | PASS |
+
+**2/2 passed**
 
 ## Concerns
-None noted.
 
----
-
-## Task 6 Review Fix (2026-08-29)
-
-### Status
-Fixed. All three `FlowLabel` call sites now pass `theme={theme}` so spine segments and label contrast follow light/dark styling. Removed four no-op `isLight ? … : …` ternaries where both branches were identical.
-
-### Commit
-`5c69e88` - `fix: pass theme to OCG FlowLabel call sites`
-
-### Tests
-```
-pnpm exec vitest run __tests__/diagram-ocg-v2p0l.test.tsx
-Test Files  1 passed (1)
-Tests       7 passed (7)
-Duration    2.82s
-```
-
-### Concerns
-None.
+None. Full Home fixture produced via live Pencil MCP; smoke tests green.

@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { Data } from "@puckeditor/core";
 import { PuckSitePage } from "@/components/puck/PuckSitePage";
+import { isNextProductionBuild } from "@/lib/next-build-phase";
 import { getPublishedPageBySlug } from "@/lib/puck-pages";
 import { isProductSlug } from "@/lib/products";
 
-export const revalidate = 300;
+/** Payload Local API — no DB at Docker build time. */
+export const dynamic = "force-dynamic";
 
 /** Reserved single-segment routes handled elsewhere. */
 const RESERVED = new Set([
@@ -44,6 +46,13 @@ export default async function MarketingPage({ params }: MarketingPageProps) {
 
   const page = await getPublishedPageBySlug(slug);
   if (!page?.puckData || page.isHomepage) {
+    if (isNextProductionBuild()) {
+      return (
+        <main className="flex min-h-[40vh] items-center justify-center p-8 text-sm text-neutral-500">
+          Content loads at runtime.
+        </main>
+      );
+    }
     notFound();
   }
 

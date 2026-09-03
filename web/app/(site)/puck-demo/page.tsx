@@ -1,31 +1,17 @@
 import { PuckSitePage } from "@/components/puck/PuckSitePage";
 import type { Data } from "@puckeditor/core";
-import config from "@payload-config";
-import { getPayload } from "payload";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { isNextProductionBuild } from "@/lib/next-build-phase";
+import { getPublishedPageBySlug } from "@/lib/puck-pages";
 
-export const revalidate = 60;
+/** Payload Local API — no DB at Docker build time. */
+export const dynamic = "force-dynamic";
 
 const DEMO_SLUG = "puck-demo";
 
-async function getPuckDemoPage() {
-  const payload = await getPayload({ config });
-  const { docs } = await payload.find({
-    collection: "pages",
-    where: {
-      and: [
-        { slug: { equals: DEMO_SLUG } },
-        { _status: { equals: "published" } },
-      ],
-    },
-    limit: 1,
-  });
-  return docs[0] ?? null;
-}
-
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await getPuckDemoPage();
+  const page = await getPublishedPageBySlug(DEMO_SLUG);
   if (!page) return { title: "Puck Demo" };
   const meta = page.meta as { title?: string; description?: string } | undefined;
   return {
@@ -35,8 +21,17 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function PuckDemoPage() {
-  const page = await getPuckDemoPage();
-  if (!page?.puckData) notFound();
+  const page = await getPublishedPageBySlug(DEMO_SLUG);
+  if (!page?.puckData) {
+    if (isNextProductionBuild()) {
+      return (
+        <main className="flex min-h-[40vh] items-center justify-center p-8 text-sm text-neutral-500">
+          Content loads at runtime.
+        </main>
+      );
+    }
+    notFound();
+  }
 
   return <PuckSitePage data={page.puckData as Data} />;
 }

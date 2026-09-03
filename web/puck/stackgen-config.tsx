@@ -26,27 +26,19 @@ const stackGenComponents = {
 
 const stackGenCategories = {
   chrome: {
-    title: "Site chrome",
-    components: ["StackGenNav", "StackGenFooter"],
+    title: "Chrome",
+    components: Object.keys(chromeBlocks),
   },
   home: {
-    title: "Home sections",
-    components: [
-      "StackGenHomeHero",
-      "StackGenHomeLogos",
-      "StackGenHomeProblem",
-      "StackGenHomeSolution",
-      "StackGenHomeAssemblies",
-      "StackGenHomeShell",
-      "StackGenHomeWhoItsFor",
-    ],
+    title: "Home",
+    components: Object.keys(homeBlocks),
   },
   product: {
-    title: "Product sections",
+    title: "Product",
     components: Object.keys(productBlocks),
   },
   blog: {
-    title: "Blog sections",
+    title: "Blog",
     components: Object.keys(blogBlocks),
   },
 };

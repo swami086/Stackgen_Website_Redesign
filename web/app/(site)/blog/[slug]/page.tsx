@@ -2,19 +2,16 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { Data } from "@puckeditor/core";
 import { PuckSitePage } from "@/components/puck/PuckSitePage";
-import { getPublishedPost, getPublishedPosts } from "@/lib/cms";
+import { getPublishedPost } from "@/lib/cms";
+import { isNextProductionBuild } from "@/lib/next-build-phase";
 import { getPublishedPageBySlug } from "@/lib/puck-pages";
 
-export const revalidate = 300;
+/** Payload Local API — no DB at Docker build time. */
+export const dynamic = "force-dynamic";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
 };
-
-export async function generateStaticParams() {
-  const posts = await getPublishedPosts();
-  return posts.map((post) => ({ slug: post.slug }));
-}
 
 export async function generateMetadata({
   params,
@@ -34,9 +31,27 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     getPublishedPost(slug),
     getPublishedPageBySlug(slug),
   ]);
-  if (!post) notFound();
+  if (!post) {
+    if (isNextProductionBuild()) {
+      return (
+        <main className="flex min-h-[40vh] items-center justify-center p-8 text-sm text-neutral-500">
+          Content loads at runtime.
+        </main>
+      );
+    }
+    notFound();
+  }
 
-  if (!puckPage?.puckData) notFound();
+  if (!puckPage?.puckData) {
+    if (isNextProductionBuild()) {
+      return (
+        <main className="flex min-h-[40vh] items-center justify-center p-8 text-sm text-neutral-500">
+          Content loads at runtime.
+        </main>
+      );
+    }
+    notFound();
+  }
 
   return <PuckSitePage data={puckPage.puckData as Data} />;
 }

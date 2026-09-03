@@ -4,7 +4,11 @@ import type { Data } from "@puckeditor/core";
 import { PuckSitePage } from "@/components/puck/PuckSitePage";
 import { getProduct, isProductSlug } from "@/lib/products";
 import { getOverlayProductContent } from "@/lib/cms";
+import { isNextProductionBuild } from "@/lib/next-build-phase";
 import { getPublishedPageBySlug } from "@/lib/puck-pages";
+
+/** Payload Local API — no DB at Docker build time. */
+export const dynamic = "force-dynamic";
 
 type ProductRoutePageProps = {
   params: Promise<{ slug: string }>;
@@ -32,7 +36,16 @@ export default async function ProductRoutePage({ params }: ProductRoutePageProps
   }
 
   const puckPage = await getPublishedPageBySlug(slug);
-  if (!puckPage?.puckData) notFound();
+  if (!puckPage?.puckData) {
+    if (isNextProductionBuild()) {
+      return (
+        <main className="flex min-h-[40vh] items-center justify-center p-8 text-sm text-neutral-500">
+          Content loads at runtime.
+        </main>
+      );
+    }
+    notFound();
+  }
 
   return <PuckSitePage data={puckPage.puckData as Data} />;
 }

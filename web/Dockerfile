@@ -11,7 +11,8 @@ FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
-# Build-time env so Next can compile Payload routes (real secrets at runtime).
+# Placeholder only — site pages are force-dynamic so next build must not
+# require a live DB (and must not hit Payload's interactive "dev push" prompt).
 ENV PAYLOAD_SECRET=build-time-placeholder
 ENV DATABASE_URL=postgresql://postgres@127.0.0.1:5432/payload
 RUN pnpm build \

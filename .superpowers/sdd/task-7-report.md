@@ -1,9 +1,28 @@
-## Task 7 Report
+# Task 7 Report — Preview route + feature flag
 
-Status: completed.
+**Status:** DONE  
+**Date:** 2026-09-02  
+**Implementer:** agent b089169c (+ controller verification)
 
-Changes: Integrations keeps the duplicated marquee track, tighter edge fades, a solid deck surface, and a deterministic reduced-motion static row. InnerOuterLoop now uses `DUR`/`STAGGER`/`AMBIENT` tokens for timing and sharpens light-theme label and border contrast.
+## Deliverables
 
-Tests: `pnpm exec vitest run __tests__/diagram-integrations.test.tsx __tests__/diagram-inner-outer-loop.test.tsx`; `ReadLints` on the three touched files.
+| File | Status |
+|------|--------|
+| `web/app/(site)/puck-layers-preview/page.tsx` | Loads slug `puck-layers-preview` via `getPublishedPageBySlug`, mirrors puck-demo |
+| `web/app/(site)/page.tsx` | `PUCK_LAYER_TREE=1` prefers preview slug then homepage; default `/` unchanged |
+| `web/app/(site)/[slug]/page.tsx` | `puck-layers-preview` added to `RESERVED` |
 
-Concern: vitest still prints the expected jsdom canvas `getContext()` warning, but the focused suite passes.
+## Verify
+
+- `:3010/puck-layers-preview` → **200** with PenPage tree (`Outcomes, not agents.`, OCG diagram slot, `data-pen-page`)
+- `:3000/puck-layers-preview` → **200**
+- Default `/` unchanged without env flag
+
+## Concerns
+
+1. Docker `:3000` image may lag until rebuild for brand-new routes (dev `:3010` is source of truth while iterating).
+2. Do **not** `--force` homepage until Task 10 cutover.
+
+## Commits
+
+None (user rule).

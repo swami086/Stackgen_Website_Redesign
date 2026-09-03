@@ -2,7 +2,8 @@ import Link from "next/link";
 import { BlogChrome } from "@/components/replica/BlogChrome";
 import { getPublishedPosts } from "@/lib/cms";
 
-export const revalidate = 300;
+/** Payload Local API — no DB at Docker build time. */
+export const dynamic = "force-dynamic";
 
 export default async function BlogIndexPage() {
   const posts = await getPublishedPosts();

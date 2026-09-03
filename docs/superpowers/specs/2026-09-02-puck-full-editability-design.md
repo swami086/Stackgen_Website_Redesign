@@ -1,6 +1,6 @@
 # Puck full editability — design spec
 
-**Status:** Approved — implemented 2026-09-02  
+**Status:** Superseded for structure by [Puck ← Pencil layer tree](./2026-09-02-puck-pencil-layer-tree-design.md) (Approach 2 / Task 10 cutover). Section-block field coverage remains useful for `legacy` StackGen* blocks until those pages are fully on `PenPage`.  
 **Date:** 2026-09-02  
 **Builds on:** [Puck site-wide rollout](./2026-09-02-puck-site-wide-design.md)  
 **Torbit index:** `Stackgen_Website_Redesign` @ main — 1,356 files, 3,239 definitions

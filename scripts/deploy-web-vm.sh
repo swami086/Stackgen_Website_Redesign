@@ -44,6 +44,13 @@ IP="$(gcloud compute instances describe "$VM_NAME" --zone="$ZONE" --project="$PR
 PUBLIC_URL="http://${IP}:3000"
 echo "==> deploy to $VM_NAME @ $IP ($PUBLIC_URL)"
 
+# Keep startup-script metadata in sync so a VM stop/start does not re-pin an
+# older web-image (that regressed login middleware after the 2026-09-03 resize).
+gcloud compute instances add-metadata "$VM_NAME" \
+  --zone="$ZONE" --project="$PROJECT" \
+  --metadata="web-image=${IMAGE}" \
+  --quiet
+
 # Remote deploy — no VM stop/start, no on-VM build
 gcloud compute ssh "$VM_NAME" --zone="$ZONE" --project="$PROJECT" --command="
 set -euo pipefail

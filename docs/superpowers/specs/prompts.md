@@ -17,3 +17,15 @@ refine the webpage using /high-end-visual-design and /impeccable and use 21st mc
 this looks shabby this was the Node ID: F4Jlp reference image ( use pencil mcp ) .. recreate the diagram using gemini 3.1 pro and fix it.. also this diagram Node ID: V2P0L isnt there ar all in the webpage .. fix all these things using /impeccable ... use torbit mcp to first index and then use it for understanding codebase dependencies and structural navigation
 
 Throughly evaluate https://sourcegraph.com/ using /use-tinyfish I like how they have introduced the Problem first, then the solution and then introduced the product, I want to incorporate this flow .. gather perspectives from multiple sources including mobbins mcp where competitors have followed this pattern.. Stackgen has multiple products and so we need to smartly introduce each of these products for the correct problem statement.. gather context of the product from /Users/swami/Documents/Stackgen_Website_Redesign/AIOS - Product Features.md and /Users/swami/Documents/Stackgen_Website_Redesign/StackGen-ADF-PRFAQ-Draft.md .. Our core target persona is the SRE engineer today.... do a deep analysis using skills from cursor's global skills catalog ( use multiple skills as needed ) gather the skills first before commencing the task .. if any other task requires a different skills ensure the LLM always searches and utilises the skill.. Lets draft the content in an md file.. guide the entire process using /using-superpowers and give me a few options on how we can communicate our content.. for understanding my current UX code and content use torbit mcp ( index before use ).. prompt me for inputs where needed
+
+gather the correct skills for this from the cursor global skills catalog ( mandatory ) and be guided by /using-superpowers and prompt me for inputs where needed.. always use torbit mcp (index before use ) for navigating any codebase changes. gather context using openmemory mcp 
+
+
+when you write the Implementation plan write it for maximum parallel implementation using subagents on composer 2.5
+
+
+
+alert reduction; RCA with confidence & blast radius;
+ 
+Dharani Sankar Vijayakumar (7 Sep 2026, 9:38 AM)
+Remediation with learning for runbook updates

@@ -35,8 +35,8 @@
   // SHOT BUILD: mount layers into bg / mid / fg; add tweens at shot-relative times from `timing`.
   mountRibbons(bg, { seed: 104, modes: [
     { t: 0, mode: "dormant" },
-    { t: 1.2, mode: "converge", target: { x: 1500, y: 540 } },
-    { t: 3.0, mode: "storm" },
+    { t: 0.7, mode: "converge", target: { x: 1500, y: 540 } },
+    { t: 1.6, mode: "storm" },
   ] }).bind(tl, timing.duration);
 
   applyCamera(tl, cam, roots, timing.duration);

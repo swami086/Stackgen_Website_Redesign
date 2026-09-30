@@ -37,11 +37,11 @@ export function mountRibbons(host, { seed, count = 28, modes, split = 0.7 }) {
     geo.setAttribute("aU", new THREE.BufferAttribute(aU, 1));
     geo.setAttribute("aSide", new THREE.BufferAttribute(aSide, 1));
     const index = [];
-    for (let i = 0; i < SAMPLES - 1; i++) { const a = 2 * i; index.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
+    for (let i = 0; i < SAMPLES - 1; i++) { const a = 2 * i; index.push(a, a + 2, a + 1, a + 1, a + 2, a + 3); }
     geo.setIndex(index);
     const mat = new THREE.ShaderMaterial({
       vertexShader: VERT, fragmentShader: FRAG, transparent: true, depthTest: false, depthWrite: false,
-      side: THREE.DoubleSide,
+      side: THREE.FrontSide,
       blending: THREE.AdditiveBlending,
       uniforms: { uColor: { value: idx / count < split ? violet : cyan }, uOpacity: { value: s.alpha }, uFlow: { value: 0 } },
     });

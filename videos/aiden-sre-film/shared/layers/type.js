@@ -180,13 +180,7 @@ export function mountType(host) {
     const el = document.createElement("div");
     el.className = "sg-counter";
     const y = spec.y != null ? spec.y : 80;
-    if (spec.x == null) {
-      el.style.right = "120px";
-      el.style.top = y + "px";
-      el.style.textAlign = "right";
-    } else {
-      place(el, { x: spec.x, y }, { x: 1560, y: 80 });
-    }
+    place(el, { x: spec.x, y }, { x: 1560, y: 80 });
     const fmt = (n) => Math.round(n).toLocaleString("en-US");
     el.textContent = fmt(spec.from);
     host.appendChild(el);

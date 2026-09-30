@@ -3,15 +3,26 @@
   "viewport": { "w": 1920, "h": 1080, "dpr": 2 },
   "image": "P07.png",
   "boxes": {
-    "panel": { "x": 320, "y": 0, "w": 1280, "h": 1080, "label": "RCA hypotheses panel" },
-    "hyp-1": { "x": 438, "y": 540, "w": 262, "h": 19, "label": "OOM or memory pressure not confirmed" },
-    "hyp-2": { "x": 438, "y": 590, "w": 281, "h": 19, "label": "Image pull or startup failure not supported" },
-    "hyp-3": { "x": 438, "y": 639, "w": 224, "h": 19, "label": "Pure telemetry loss not supported" },
-    "hyp-4": { "x": 438, "y": 753, "w": 427, "h": 19, "label": "Roll back worker-service" },
-    "hyp-5": { "x": 438, "y": 802, "w": 402, "h": 19, "label": "Inspect generate_invoice tenant_id" },
-    "hyp-6": { "x": 438, "y": 852, "w": 163, "h": 19, "label": "Add defensive validation" },
-    "hyp-1-score": { "x": 825, "y": 409, "w": 34, "h": 21, "label": "0.78" },
-    "hyp-1-bar": { "x": 808, "y": 366, "w": 183, "h": 84, "label": "Confidence" }
+    "panel": { "x": 320, "y": 0, "w": 1280, "h": 1080, "label": "Investigation message (ruled out + actions)" },
+    "hyp-1": { "x": 438, "y": 542, "w": 262, "h": 19, "label": "OOM or memory pressure not confirmed" },
+    "hyp-2": { "x": 438, "y": 591, "w": 281, "h": 19, "label": "Image pull or startup failure not supported" },
+    "hyp-3": { "x": 438, "y": 641, "w": 224, "h": 19, "label": "Pure telemetry loss not supported" },
+    "hyp-4": { "x": 438, "y": 754, "w": 427, "h": 19, "label": "Roll back worker-service from latest_79ece31 to latest_b1129be" },
+    "hyp-5": { "x": 438, "y": 804, "w": 402, "h": 19, "label": "Inspect generate_invoice handling for tenant_id assumptions" },
+    "hyp-6": { "x": 438, "y": 853, "w": 163, "h": 19, "label": "Add defensive validation" }
   },
-  "missing": ["hyp-2-score", "hyp-2-bar", "hyp-3-score", "hyp-3-bar", "hyp-4-score", "hyp-4-bar", "hyp-5-score", "hyp-5-bar", "hyp-6-score", "hyp-6-bar"]
+  "missing": [
+    "hyp-1-score",
+    "hyp-1-bar",
+    "hyp-2-score",
+    "hyp-2-bar",
+    "hyp-3-score",
+    "hyp-3-bar",
+    "hyp-4-score",
+    "hyp-4-bar",
+    "hyp-5-score",
+    "hyp-5-bar",
+    "hyp-6-score",
+    "hyp-6-bar"
+  ]
 }

@@ -3,7 +3,7 @@
   "viewport": { "w": 1920, "h": 1080, "dpr": 2 },
   "image": "P03.png",
   "boxes": {
-    "panel": { "x": 324, "y": 24, "w": 1572, "h": 973, "label": "Alerts correlated view" },
+    "panel": { "x": 324, "y": 24, "w": 1572, "h": 973, "label": "Alerts queue" },
     "list": { "x": 324, "y": 308, "w": 1572, "h": 641, "label": "Alerts table" },
     "row-1": { "x": 324, "y": 348, "w": 1572, "h": 89, "label": "Auth Validation (downstream)" },
     "row-2": { "x": 324, "y": 437, "w": 1572, "h": 89, "label": "Pod Crash Loop" },
@@ -11,9 +11,15 @@
     "row-4": { "x": 324, "y": 615, "w": 1572, "h": 89, "label": "Pod Crash Loop" },
     "row-5": { "x": 324, "y": 704, "w": 1572, "h": 89, "label": "Pod Crash Loop" },
     "row-6": { "x": 324, "y": 793, "w": 1572, "h": 67, "label": "System Load" },
-    "row-7": { "x": 324, "y": 861, "w": 1572, "h": 88, "label": "Kafka Lag RCA" },
-    "group-1-header": { "x": 324, "y": 348, "w": 1572, "h": 89, "label": "Downstream linked group" },
-    "col-classification": { "x": 324, "y": 132, "w": 1572, "h": 104, "label": "Triage classification chips" }
+    "row-7": { "x": 324, "y": 861, "w": 1572, "h": 88, "label": "Kafka Lag RCA" }
   },
-  "missing": ["row-8", "row-9", "row-10", "row-11", "row-12"]
+  "missing": [
+    "row-8",
+    "row-9",
+    "row-10",
+    "row-11",
+    "row-12",
+    "group-1-header",
+    "col-classification"
+  ]
 }

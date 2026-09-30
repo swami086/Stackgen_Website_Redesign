@@ -1,0 +1,218 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .sg-eyebrow .sg-mask { position: static; background: none; display: inline-block; overflow: hidden; }
+  .qtile {
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    box-sizing: border-box;
+    background: var(--sg-panel);
+    border: 2px solid var(--sg-hairline);
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    z-index: 2;
+  }
+  .qtile.is-dim { opacity: 0.3; }
+  .qname, .qsub, .slab-label, .pill {
+    font-family: "Geist Mono", monospace;
+    border-radius: 0;
+  }
+  .qname { font-size: 18px; line-height: 1.2; color: var(--sg-cream); }
+  .qsub { font-size: 15px; line-height: 1.2; color: var(--sg-mute); }
+  .slab {
+    position: absolute;
+    width: 1000px;
+    height: 80px;
+    box-sizing: border-box;
+    background: var(--sg-panel);
+    border: 1px solid var(--sg-hairline);
+    border-radius: 0;
+    z-index: 3;
+  }
+  .slab-label {
+    position: absolute;
+    left: 24px;
+    top: 30px;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.06em;
+    color: var(--sg-cream);
+  }
+  .pill {
+    position: absolute;
+    top: 24px;
+    height: 32px;
+    box-sizing: border-box;
+    border: 1px solid var(--sg-hairline);
+    color: var(--sg-mute);
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center;
+  }
+  .wires {
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .wires path { fill: none; stroke: var(--sg-cyan); stroke-width: 1; }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S25" data-width="1920" data-height="1080">
+  <div id="S25-bg" class="pass pass-bg"></div>
+  <div id="S25-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S25-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { selectPass, shotData, cueT } from "./_shared/layers/shot.js";
+  import { mountRibbons } from "./_shared/layers/ribbons.js";
+  import { mountType } from "./_shared/layers/type.js";
+  import { drawPath } from "./_shared/layers/ui.js";
+  import { EASE } from "./_shared/tokens/motion.js";
+
+  const ID = "S25";
+  const DATA_ID = "S25";
+  const TILE = 420;
+  const GAP = 16;
+  const STEP = TILE + GAP;
+  const LEFT = 532;
+  const TOP = 16;
+  const SLAB_X = 460;
+  const SLAB_Y = 888;
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S25-bg");
+  const mid = document.querySelector("#S25-mid .cam");
+  const fg = document.querySelector("#S25-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+
+  mountRibbons(bg, {
+    seed: 125,
+    count: 16,
+    modes: [{ t: 0, mode: "rail", opacity: 0.5 }],
+  }).bind(tl, D);
+  bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
+
+  const quarters = [
+    { name: "BUILD", col: 0, row: 0, border: "var(--sg-violet)", dim: true },
+    { name: "OPERATE", col: 1, row: 0, border: "var(--sg-amber)", dim: true },
+    { name: "OBSERVE", col: 0, row: 1, border: "var(--sg-coral)", dim: true },
+    { name: "REMEDIATE", col: 1, row: 1, border: "var(--sg-cyan)", dim: false, sub: "Aiden for SRE" },
+  ];
+  const tiles = quarters.map((q) => {
+    const el = document.createElement("div");
+    el.className = q.dim ? "qtile is-dim" : "qtile";
+    el.style.left = (LEFT + q.col * STEP) + "px";
+    el.style.top = (TOP + q.row * STEP) + "px";
+    el.style.borderColor = q.border;
+    const name = document.createElement("div");
+    name.className = "qname";
+    name.textContent = q.name;
+    el.appendChild(name);
+    if (q.sub) {
+      const sub = document.createElement("div");
+      sub.className = "qsub";
+      sub.textContent = q.sub;
+      el.appendChild(sub);
+    }
+    mid.appendChild(el);
+    return el;
+  });
+
+  const slab = document.createElement("div");
+  slab.className = "slab";
+  slab.dataset.key = "world-model";
+  slab.style.left = SLAB_X + "px";
+  slab.style.top = SLAB_Y + "px";
+  slab.setAttribute("data-layout-allow-overflow", "");
+  const slabLabel = document.createElement("div");
+  slabLabel.className = "slab-label";
+  slabLabel.textContent = "AIDEN WORLD MODEL";
+  slab.appendChild(slabLabel);
+  const chipSpec = [
+    { text: "deployed", left: 250, w: 150 },
+    { text: "changed", left: 420, w: 140 },
+    { text: "broke", left: 580, w: 120 },
+    { text: "fixed", left: 720, w: 120 },
+  ];
+  const chips = chipSpec.map((spec) => {
+    const el = document.createElement("div");
+    el.className = "pill";
+    el.textContent = spec.text;
+    el.style.left = spec.left + "px";
+    el.style.width = spec.w + "px";
+    slab.appendChild(el);
+    return el;
+  });
+  mid.appendChild(slab);
+  tl.fromTo(slab, { x: -1200 }, { x: 0, duration: 0.7, ease: EASE.enter }, 0.2);
+
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("class", "wires");
+  svg.setAttribute("viewBox", "0 0 1920 1080");
+  svg.setAttribute("width", "1920");
+  svg.setAttribute("height", "1080");
+  mid.appendChild(svg);
+  function wireEnds(q) {
+    const x = LEFT + q.col * STEP;
+    const y = TOP + q.row * STEP;
+    if (q.row === 0 && q.col === 0) return { x1: x, y1: y + TILE, x2: x - 14, y2: SLAB_Y };
+    if (q.row === 0) {
+      const right = x + TILE;
+      return { x1: right, y1: y + TILE, x2: right + 14, y2: SLAB_Y };
+    }
+    const cx = x + TILE / 2;
+    return { x1: cx, y1: y + TILE, x2: cx, y2: SLAB_Y };
+  }
+  quarters.forEach((q, i) => {
+    const ends = wireEnds(q);
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "M " + ends.x1 + " " + ends.y1 + " L " + ends.x2 + " " + ends.y2);
+    svg.appendChild(path);
+    drawPath(tl, path, 0.9 + i * 0.08, 0.3);
+  });
+
+  chips.forEach((el) => {
+    tl.to(el, {
+      color: "var(--sg-cyan)",
+      borderColor: "var(--sg-cyan)",
+      duration: 0.18,
+      ease: EASE.snap,
+    }, cueT(timing, el.textContent));
+  });
+
+  const type = mountType(fg);
+  type.fromOst(tl, timing.ost, { eyebrow: { x: 120, y: 60 } });
+
+  applyCamera(tl, cam, roots, D);
+  tl.set({}, {}, D);
+  window.__timelines[ID] = tl;
+  void pass;
+  void tiles;
+</script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .s24-kicker, .s24-line, .s24-label {
+    font-family: "Geist Mono", monospace;
+    border-radius: 0;
+  }
+  .s24-kicker {
+    font-size: 15px;
+    color: var(--sg-mute);
+    padding: 36px 40px 8px;
+  }
+  .s24-title {
+    font-family: "Geist", sans-serif;
+    font-size: 28px;
+    line-height: 1.2;
+    color: var(--sg-cream);
+    padding: 0 40px 16px;
+    border-radius: 0;
+  }
+  .s24-line {
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--sg-mute);
+    padding: 4px 40px;
+  }
+  .s24-frame {
+    position: absolute;
+    left: 750px;
+    top: 330px;
+    width: 420px;
+    height: 420px;
+    box-sizing: border-box;
+    border: 2px solid var(--sg-cyan);
+    border-radius: 0;
+    pointer-events: none;
+  }
+  .s24-label {
+    position: absolute;
+    left: 640px;
+    top: 764px;
+    width: 640px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.2;
+    color: var(--sg-cream);
+  }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S24" data-width="1920" data-height="1080">
+  <div id="S24-bg" class="pass pass-bg"></div>
+  <div id="S24-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S24-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { selectPass, shotData, cueT } from "./_shared/layers/shot.js";
+  import { mountRibbons } from "./_shared/layers/ribbons.js";
+  import { mountPlate } from "./_shared/layers/plate.js";
+  import { leak } from "./_shared/layers/ui.js";
+  import { EASE } from "./_shared/tokens/motion.js";
+
+  const ID = "S24";
+  const DATA_ID = "S24";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S24-bg");
+  const mid = document.querySelector("#S24-mid .cam");
+  const fg = document.querySelector("#S24-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+  const world = cueT(timing, "world");
+
+  mountRibbons(bg, {
+    seed: 124,
+    count: 16,
+    modes: [
+      { t: 0, mode: "dormant", opacity: 0.45 },
+      { t: world - 0.4, mode: "fan", target: { x: 960, y: 540 } },
+    ],
+  }).bind(tl, D);
+  bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
+  leak(tl, bg, 0.0, { src: "_shared/assets/gen/G02-2.png" });
+
+  function mockPlate() {
+    const el = document.createElement("div");
+    el.className = "sg-plate s24-plate";
+    el.dataset.mock = "P12";
+    el.style.left = "120px";
+    el.style.top = "90px";
+    el.style.width = "1680px";
+    el.style.height = "945px";
+    const kicker = document.createElement("div");
+    kicker.className = "s24-kicker";
+    kicker.textContent = "checkout-svc";
+    const title = document.createElement("div");
+    title.className = "s24-title";
+    title.textContent = "Incident resolved";
+    el.appendChild(kicker);
+    el.appendChild(title);
+    for (const text of ["Status · Resolved", "Error rate back to baseline", "Rollback held"]) {
+      const line = document.createElement("div");
+      line.className = "s24-line";
+      line.textContent = text;
+      el.appendChild(line);
+    }
+    mid.appendChild(el);
+    return el;
+  }
+
+  let plateEl;
+  try {
+    const plate = await mountPlate(mid, { id: "P12", x: 120, y: 90, width: 1680 });
+    plateEl = plate.el;
+    plateEl.classList.add("s24-plate");
+  } catch {
+    plateEl = mockPlate();
+  }
+
+  const frame = document.createElement("div");
+  frame.className = "s24-frame";
+  mid.appendChild(frame);
+  const label = document.createElement("div");
+  label.className = "s24-label";
+  label.textContent = "REMEDIATE · Aiden for SRE";
+  mid.appendChild(label);
+
+  const t0 = world - 0.6;
+  const insetX = (1680 - 945) / 2;
+  tl.fromTo(plateEl, {
+    scale: 1, x: 0, y: 0, clipPath: "inset(0px 0px 0px 0px)",
+  }, {
+    scale: 420 / 945,
+    x: 0,
+    y: 540 - (90 + 945 / 2),
+    clipPath: "inset(0px " + insetX + "px 0px " + insetX + "px)",
+    duration: 1,
+    ease: EASE.enter,
+  }, t0);
+  tl.fromTo(frame, { opacity: 0 }, { opacity: 1, duration: 1, ease: "none" }, t0);
+  tl.fromTo(label, { opacity: 0, y: 10 }, {
+    opacity: 1, y: 0, duration: 0.45, ease: EASE.enter,
+  }, t0 + 0.55);
+
+  applyCamera(tl, cam, roots, D);
+  tl.set({}, {}, D);
+  window.__timelines[ID] = tl;
+  void fg;
+</script>
+</body>
+</html>

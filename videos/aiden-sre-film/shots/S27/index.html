@@ -1,0 +1,88 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .s27-mark {
+    position: absolute;
+    left: 0;
+    top: 412px;
+    width: 1920px;
+    text-align: center;
+    font-family: "Geist", sans-serif;
+    font-weight: 500;
+    font-size: 56px;
+    line-height: 56px;
+    color: var(--sg-cream);
+    border-radius: 0;
+  }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S27" data-width="1920" data-height="1080">
+  <div id="S27-bg" class="pass pass-bg"></div>
+  <div id="S27-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S27-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { selectPass, shotData, cueT } from "./_shared/layers/shot.js";
+  import { mountRibbons } from "./_shared/layers/ribbons.js";
+  import { mountType } from "./_shared/layers/type.js";
+  import { EASE } from "./_shared/tokens/motion.js";
+
+  const ID = "S27";
+  const DATA_ID = "S27";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S27-bg");
+  const mid = document.querySelector("#S27-mid .cam");
+  const fg = document.querySelector("#S27-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+
+  mountRibbons(bg, {
+    seed: 127,
+    count: 16,
+    modes: [
+      { t: 0, mode: "rail", opacity: 1 },
+      { t: 0.6, mode: "dormant", opacity: 0.4 },
+    ],
+  }).bind(tl, D);
+  bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
+
+  const mark = document.createElement("div");
+  mark.className = "s27-mark";
+  mark.textContent = "StackGen";
+  fg.appendChild(mark);
+  tl.fromTo(mark, { opacity: 0, y: 18 }, {
+    opacity: 1, y: 0, duration: 0.5, ease: EASE.enter,
+  }, 0.3);
+
+  const type = mountType(fg);
+  type.cta(tl, {
+    primary: "Book a demo",
+    secondary: "Try Community Edition",
+    micro: "free for up to two users",
+  }, cueT(timing, "Book a demo"), cueT(timing, "Try Community Edition"));
+
+  applyCamera(tl, cam, roots, D);
+  tl.set({}, {}, D);
+  window.__timelines[ID] = tl;
+  void pass;
+  void mid;
+</script>
+</body>
+</html>

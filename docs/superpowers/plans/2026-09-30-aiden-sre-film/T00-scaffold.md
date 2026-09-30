@@ -2,7 +2,7 @@
 
 Part of `docs/superpowers/plans/2026-09-30-aiden-sre-film.md` (read its Global Constraints, Amendments, Interfaces first).
 
-**Model:** Sonnet · **Phase:** 0 · **Skills:** `hyperframes`, `hyperframes-core`, `hyperframes-cli`, superpowers `test-driven-development`
+**Model:** Grok 4.7 · **Phase:** 0 · **Skills:** `hyperframes`, `hyperframes-core`, `hyperframes-cli`, superpowers `test-driven-development`
 
 **Files:**
 - Create: `videos/aiden-sre-film/{package.json,hyperframes.json}` (via `npx hyperframes init`), `.gitignore`

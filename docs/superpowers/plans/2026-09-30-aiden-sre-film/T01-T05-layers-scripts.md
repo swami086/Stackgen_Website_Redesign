@@ -8,7 +8,7 @@ Demo projects (`shots/D0x-*`) are for visual verification only: commit their `in
 
 ## T1 — Ribbon field (three.js slice)
 
-**Model:** Sonnet · **Skills:** `hyperframes-animation` (+ its three.js adapter file), `hyperframes-core`, `hyperframes-keyframes`
+**Model:** Grok 4.7 · **Skills:** `hyperframes-animation` (+ its three.js adapter file), `hyperframes-core`, `hyperframes-keyframes`
 
 **Files:** Create `shared/layers/ribbon-math.js`, `shared/layers/ribbons.js`, `shots/D01-ribbons/index.html`; Test `tests/js/ribbon-math.test.mjs`
 
@@ -218,7 +218,7 @@ git commit -m "feat(aiden-sre-film): seeded three.js ribbon field layer"
 
 ## T2 — Kinetic type layer
 
-**Model:** Sonnet · **Skills:** `hyperframes-keyframes`, `masked-reveal`, `staggered-word-reveal`
+**Model:** Grok 4.7 · **Skills:** `hyperframes-keyframes`, `masked-reveal`, `staggered-word-reveal`
 
 **Files:** Create `shared/layers/type.js`, `shared/layers/type.css`, `shots/D02-type/index.html`; Test `tests/js/type.test.mjs`
 
@@ -273,7 +273,7 @@ export function splitWords(text, bold) {
 
 ## T3 — UI plate, cursor and UI animation helpers
 
-**Model:** Sonnet · **Skills:** `motion-graphics`, `hyperframes-keyframes`, `ui-concept-animation` (choreography reference only)
+**Model:** Grok 4.7 · **Skills:** `motion-graphics`, `hyperframes-keyframes`, `ui-concept-animation` (choreography reference only)
 
 **Files:** Create `shared/layers/plate.js`, `shared/layers/cursor.js`, `shared/layers/ui.js`, `shared/layers/ui.css`, `shared/assets/plates/_fixture.png`, `shared/assets/plates/_fixture.snapshot.json`, `shots/D03-ui/index.html`; Test `tests/js/ui.test.mjs`
 
@@ -351,7 +351,7 @@ ffmpeg -loglevel error -y -f lavfi -i "color=c=0x211D15:s=3840x2160,drawbox=x=16
 
 ## T4 — Isometric service map (lattice)
 
-**Model:** Sonnet · **Skills:** `hyperframes-keyframes`, `motion-graphics` (picker gap)
+**Model:** Grok 4.7 · **Skills:** `hyperframes-keyframes`, `motion-graphics` (picker gap)
 
 **Files:** Create `data/graph.json`, `shared/layers/lattice.js`, `shots/D04-lattice/index.html`; Test `tests/js/lattice.test.mjs`
 
@@ -397,7 +397,7 @@ test("graph has required services, unique cells, valid edges", () => {
 
 ## T5 — Render, composite, conform and mix scripts
 
-**Model:** Sonnet · **Skills:** superpowers `test-driven-development`, `hyperframes-cli` (picker gap)
+**Model:** Grok 4.7 · **Skills:** superpowers `test-driven-development`, `hyperframes-cli` (picker gap)
 
 **Files:** Create `scripts/render-passes.sh`, `scripts/composite.sh`, `scripts/master.py`, `scripts/mix.py`; Test `tests/test_composite.py`, `tests/test_master.py`, `tests/test_mix.py`
 

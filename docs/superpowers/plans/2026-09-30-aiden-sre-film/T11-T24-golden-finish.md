@@ -6,7 +6,7 @@ Part of `docs/superpowers/plans/2026-09-30-aiden-sre-film.md` (read Global Const
 
 ## T11 — Golden shot S12 + look lock (Phase 2)
 
-**Model:** Sonnet · **Skills:** shots row of the Skills matrix
+**Model:** Grok 4.7 · **Skills:** shots row of the Skills matrix
 
 **Precondition:** T1, T2, T3, T5 merged and reviewed; `scripts/build_data.py` run (placeholder or real VO). If P07 is missing, build the hypotheses panel as a DOM mock (see "Mock rule" in `T12-T21-shots.md`).
 
@@ -50,7 +50,7 @@ ffmpeg -loglevel error -y -i renders/shots/S12.mov -vf "select='eq(n\,15)+eq(n\,
 
 ## T22 — Conform + mix masters (Phase 4)
 
-**Model:** Sonnet · **Skills:** superpowers `verification-before-completion`
+**Model:** Grok 4.7 · **Skills:** superpowers `verification-before-completion`
 
 **Files:** Modify `shots/QA.md` (§ Masters). Outputs in `renders/master/` (not committed).
 
@@ -102,7 +102,7 @@ Expected: durations equal the T7-locked timings (targets 137 ± 1 / 126 ± 1 s);
 
 ## T23 — QA review against acceptance criteria (Phase 4)
 
-**Model:** Sonnet · **Skills:** `emil-skills` → `review-animations`, `motion-graphics`, `video-to-superprompt`
+**Model:** Grok 4.7 · **Skills:** `emil-skills` → `review-animations`, `motion-graphics`, `video-to-superprompt`
 
 **Files:** Modify `shots/QA.md` (§ Acceptance)
 
@@ -125,7 +125,7 @@ Expected: all pass; every shot `true`.
 
 ## T24 — Clueso finishing: captions, chapters, aspects, cutdown (Phase 4)
 
-**Model:** Sonnet · **Skills:** `clueso-skills` → `polish-screen-demo`, then `clueso-skills` → `demo-cutdown`
+**Model:** Grok 4.7 · **Skills:** `clueso-skills` → `polish-screen-demo`, then `clueso-skills` → `demo-cutdown`
 
 **Precondition:** T23 all PASS (or failures explicitly accepted by the user).
 

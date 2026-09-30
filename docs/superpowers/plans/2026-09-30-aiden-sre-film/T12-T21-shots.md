@@ -2,7 +2,7 @@
 
 Part of `docs/superpowers/plans/2026-09-30-aiden-sre-film.md` (read Global Constraints, Amendments, Interfaces first). Precondition: Gate G2 passed (S12 approved, look constants frozen, real VO timing locked).
 
-**Model:** Sonnet for every package · **Skills:** `hyperframes-core`, `hyperframes-keyframes`, `hyperframes-animation`, `hyperframes-registry`, `motion-graphics`, `hyperframes-cli`
+**Model:** Grok 4.7 for every package · **Skills:** `hyperframes-core`, `hyperframes-keyframes`, `hyperframes-animation`, `hyperframes-registry`, `motion-graphics`, `hyperframes-cli`
 
 Use `shots/S12/index.html` (T11) as the worked example of the layer APIs; the tables below are the specification for your shots.
 

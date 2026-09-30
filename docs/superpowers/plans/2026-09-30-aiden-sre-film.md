@@ -34,7 +34,7 @@ Each subagent reads this index (Global Constraints, Amendments, Interfaces) plus
 - Cursor always travels on an arc; every click = press 0.96 for 90 ms + square hairline ripple 0→48 px fading over 0.35 s.
 - Product UI pixels come only from captured plates or DOM mocks in brand tokens. Never image-model UI.
 - Storyboard VO text is fixed. Do not rewrite copy.
-- Models: Sonnet = `claude-sonnet-5-5-high`, Haiku = `claude-4.5-haiku-thinking`. No Opus subagents.
+- Models: build/review agents = Grok 4.7 (`grok-4.7-high-fast`); mechanical asset agents = Composer 2.5 (`composer-2.5-fast`). No Opus subagents.
 - Git: every task commits only the files it lists (`git add <paths>`; never `git add -A` or `git commit -a`). The repo has unrelated uncommitted work.
 - Reticle: not applicable (no web app change). State this in reports.
 
@@ -77,18 +77,18 @@ Every subagent reads each listed `SKILL.md` (under `~/.cursor/skills/`) before s
 ## Dispatch schedule (max 10 concurrent subagents)
 
 ```
-Phase 0  T0 ───────────────────────────────── 1 agent (Sonnet)
+Phase 0  T0 ───────────────────────────────── 1 agent (Grok 4.7)
 Gate G0  orchestrator: tests green + smoke render OK; open stage page in Chrome DevTools MCP → user logs in
-Phase 1  T1 T2 T3 T4 T5 T6 T7 T8 T9 T10 ───── 10 agents (T6, T9, T10 Haiku; rest Sonnet)
+Phase 1  T1 T2 T3 T4 T5 T6 T7 T8 T9 T10 ───── 10 agents (T6, T9, T10 Composer 2.5; rest Grok 4.7)
          reviewers take slots as implementers finish
 Gate G1  build_data.py clean on real VO; plates present or MISSING-listed; all tests green
 Phase 2  T11 golden shot S12 ──────────────── 1 agent + remaining Phase-1 reviews
 Gate G2  USER approves S12 render + stills; bloom/grain frozen
-Phase 3  T12 … T21 shot packages ──────────── 10 agents (Sonnet); reviewers take freed slots
-Phase 4  T22 conform+mix → T23 QA → T24 Clueso (serial, Sonnet)
+Phase 3  T12 … T21 shot packages ──────────── 10 agents (Grok 4.7); reviewers take freed slots
+Phase 4  T22 conform+mix → T23 QA → T24 Clueso (serial, Grok 4.7)
 ```
 
-Reviews per subagent-driven-development: spec-compliance review, then quality review, each a fresh Sonnet subagent. A freed slot goes to that task's reviewer first.
+Reviews per subagent-driven-development: spec-compliance review, then quality review, each a fresh Grok 4.7 subagent. A freed slot goes to that task's reviewer first.
 
 User gates: U2 voice pick (T7), U4 music pick (T8), G2 golden-shot approval, U3 aspects + workspace confirmation (T24). The orchestrator relays these; subagents report `DONE_WITH_CONCERNS` and stop at them.
 

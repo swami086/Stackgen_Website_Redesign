@@ -6,7 +6,7 @@ Part of `docs/superpowers/plans/2026-09-30-aiden-sre-film.md` (read Global Const
 
 ## T6 — Capture UI plates P01–P15
 
-**Model:** Haiku · **Skills:** `chrome-devtools-skills` → `chrome-devtools`
+**Model:** Composer 2.5 · **Skills:** `chrome-devtools-skills` → `chrome-devtools`
 
 **Precondition (orchestrator, Gate G0):** Chrome DevTools MCP page open on `https://stage.dev.stackgen.com/app/sre/ai-sre-demo/alerts`, user has logged in manually, alerts list confirmed with `take_snapshot`. The orchestrator passes the `pageId`. This agent never types or reads credentials. If a login screen appears at any point, stop and report BLOCKED ("session expired").
 
@@ -50,7 +50,7 @@ Part of `docs/superpowers/plans/2026-09-30-aiden-sre-film.md` (read Global Const
 
 ## T7 — Voiceover + timing lock
 
-**Model:** Sonnet · **Skills:** `elevenlabs-skills` → `text-to-speech`
+**Model:** Grok 4.7 · **Skills:** `elevenlabs-skills` → `text-to-speech`
 
 **Files:** Create `shared/assets/audio/vo/L01.wav … L16.wav`, `L01.words.json … L16.words.json`, `shared/assets/audio/vo/voice.md`, `scripts/vo_words.py`; Test `tests/test_vo_words.py`; Modify (only if Step 5 needs it) `data/lines.json` `gap_before`
 
@@ -118,7 +118,7 @@ Run `.venv/bin/pytest -q tests/test_vo_words.py` → PASS.
 
 ## T8 — Sound effects + music bed
 
-**Model:** Sonnet · **Skills:** `elevenlabs-skills` → `sound-effects`; fallback `elevenlabs-skills` → `music`; Artlist MCP (`user-artlist`)
+**Model:** Grok 4.7 · **Skills:** `elevenlabs-skills` → `sound-effects`; fallback `elevenlabs-skills` → `music`; Artlist MCP (`user-artlist`)
 
 **Files:** Create `shared/assets/audio/sfx/*.wav`, `shared/assets/audio/sfx/cues.json`, `shared/assets/audio/music/bed.wav`, `shared/assets/audio/music/LICENSE.md`
 
@@ -148,7 +148,7 @@ Run `.venv/bin/pytest -q tests/test_vo_words.py` → PASS.
 
 ## T9 — Texture imagery G01–G03 (Gemini)
 
-**Model:** Haiku · **Skills:** `blog-image` (prompt structure only)
+**Model:** Composer 2.5 · **Skills:** `blog-image` (prompt structure only)
 
 **Files:** Create `shared/assets/gen/G01.png`, `G02-1.png`, `G02-2.png`, `G02-3.png`, `G03.png`, `shared/assets/gen/manifest.json`, `scripts/gen_image.py`
 
@@ -203,7 +203,7 @@ Regenerate on failure (max 3 attempts per image, then report).
 
 ## T10 — Vendor logo chips
 
-**Model:** Haiku · **Skills:** `company-logos`
+**Model:** Composer 2.5 · **Skills:** `company-logos`
 
 **Files:** Create `shared/assets/logos/{datadog,prometheus,grafana,opentelemetry,kubernetes,aws,googlecloud,azure,pagerduty,slack}.svg`, `shared/assets/logos/SOURCES.md`
 

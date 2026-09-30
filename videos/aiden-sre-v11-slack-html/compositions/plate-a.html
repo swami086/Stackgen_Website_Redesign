@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0b0c0e; }
+      #root { width: 1920px; height: 1080px; position: relative; }
+      #stage {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at 50% 30%, #16171c 0%, #0b0c0e 70%);
+        display: flex; align-items: center; justify-content: center;
+      }
+      #card {
+        width: 1760px; height: 990px; border-radius: 14px;
+        background: #151619; border: 1px solid #2a2c33; overflow: hidden;
+        display: flex; flex-direction: column;
+      }
+      #chrome {
+        height: 40px; flex-shrink: 0; display: flex; align-items: center;
+        padding: 0 14px; background: #151619; border-bottom: 1px solid #2a2c33;
+      }
+      .dots { display: flex; gap: 7px; }
+      .dot { width: 10px; height: 10px; border-radius: 50%; background: #3a3d45; }
+      #screen { flex: 1; position: relative; overflow: hidden; background: #0f1115; }
+      #world {
+        position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+        transform-origin: 0 0; will-change: transform;
+      }
+      #world img.ui {
+        position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+        object-fit: cover; object-position: left top;
+      }
+      #cursor {
+        position: absolute; left: 0; top: 0; width: 28px; height: 28px;
+        z-index: 40; pointer-events: none; opacity: 0;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.45));
+      }
+      .ripple {
+        position: absolute; width: 72px; height: 72px; border-radius: 50%;
+        border: 2px solid rgba(124, 92, 255, 0.85);
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0; pointer-events: none; z-index: 39;
+      }
+      #hover-act {
+        position: absolute; left: 560px; top: 122px; width: 300px; height: 140px;
+        border-radius: 12px; background: rgba(124, 92, 255, 0.08);
+        opacity: 0; pointer-events: none;
+      }
+      #hover-row {
+        position: absolute; left: 300px; top: 360px; width: 1200px; height: 100px;
+        border-radius: 10px; background: rgba(124, 92, 255, 0.07);
+        opacity: 0; pointer-events: none;
+      }
+      #vignette {
+        position: absolute; inset: 0; pointer-events: none; z-index: 30;
+        background: radial-gradient(ellipse at center, transparent 52%, rgba(0,0,0,0.32) 100%);
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+      plate-a — Live Alerts usage (~16s). Cursor clicks Act now → View investigation.
+      Camera punches follow the click. hyperframes-animation: cursor-click-ripple.
+    -->
+    <div id="root" data-composition-id="plate-a" data-start="0" data-duration="16" data-width="1920" data-height="1080">
+      <div id="stage">
+        <div id="card">
+          <div id="chrome"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>
+          <div id="screen" data-layout-allow-overflow>
+            <div id="world" data-layout-allow-overflow>
+              <img class="ui" src="assets/alerts.png" alt="" />
+              <div id="hover-act"></div>
+              <div id="hover-row"></div>
+              <div class="ripple" id="r1" style="left:710px;top:192px"></div>
+              <div class="ripple" id="r2" style="left:1280px;top:410px"></div>
+              <svg id="cursor" viewBox="0 0 28 28" fill="none">
+                <path d="M4 3l8.5 20.5 2.2-7.3L22 14.2 4 3z" fill="#fff" stroke="#1a1a1a" stroke-width="1.2"/>
+              </svg>
+            </div>
+            <div id="vignette"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const world = document.getElementById("world");
+      const cursor = document.getElementById("cursor");
+      const vignette = document.getElementById("vignette");
+      const hoverAct = document.getElementById("hover-act");
+      const hoverRow = document.getElementById("hover-row");
+      const r1 = document.getElementById("r1");
+      const r2 = document.getElementById("r2");
+      const W = 1920, H = 1080, PAD = 72;
+
+      function focusPose(cx, cy, s) {
+        let tx = W / 2 - s * cx;
+        let ty = H / 2 - s * cy;
+        return { x: tx, y: ty, scale: s };
+      }
+
+      gsap.set(world, { x: 0, y: 0, scale: 1, transformOrigin: "0 0" });
+      gsap.set(cursor, { x: 420, y: 280, opacity: 0, scale: 1, transformOrigin: "4px 3px" });
+      gsap.set([r1, r2], { scale: 0, opacity: 0 });
+      gsap.set([hoverAct, hoverRow, vignette], { opacity: 0 });
+
+      const tl = gsap.timeline({ paused: true });
+
+      // Enter + move to Act now
+      tl.to(cursor, { opacity: 1, duration: 0.25 }, 0.3);
+      tl.to(cursor, { x: 696, y: 178, duration: 0.85, ease: "power2.inOut" }, 0.5);
+      tl.to(hoverAct, { opacity: 1, duration: 0.25 }, 1.1);
+      // Click Act now
+      tl.to(cursor, { scale: 0.86, duration: 0.08, yoyo: true, repeat: 1, ease: "power2.in" }, 1.45);
+      tl.to(hoverAct, { scale: 0.97, duration: 0.08, yoyo: true, repeat: 1, ease: "power2.in", transformOrigin: "50% 50%" }, 1.45);
+      tl.set(r1, { opacity: 1 }, 1.5);
+      tl.to(r1, { scale: 4.2, opacity: 0, duration: 0.65, ease: "power2.out", immediateRender: false }, 1.5);
+      // Camera punch on chips
+      const p1 = focusPose(710, 192, 1.28);
+      tl.to(world, { x: p1.x, y: p1.y, scale: p1.scale, duration: 0.9, ease: "power2.inOut" }, 1.7);
+      tl.to(vignette, { opacity: 0.45, duration: 0.6 }, 1.7);
+      tl.to(world, { x: 0, y: 0, scale: 1, duration: 0.75, ease: "power2.inOut" }, 4.0);
+      tl.to(vignette, { opacity: 0, duration: 0.5 }, 4.0);
+      tl.to(hoverAct, { opacity: 0, duration: 0.3 }, 4.0);
+
+      // Move to CrashLoop row / View investigation
+      tl.to(cursor, { x: 1266, y: 396, duration: 1.0, ease: "power2.inOut" }, 4.6);
+      tl.to(hoverRow, { opacity: 1, duration: 0.25 }, 5.3);
+      tl.to(cursor, { scale: 0.86, duration: 0.08, yoyo: true, repeat: 1, ease: "power2.in" }, 5.7);
+      tl.set(r2, { opacity: 1 }, 5.75);
+      tl.to(r2, { scale: 4.0, opacity: 0, duration: 0.65, ease: "power2.out", immediateRender: false }, 5.75);
+      const p2 = focusPose(900, 420, 1.32);
+      tl.to(world, { x: p2.x, y: p2.y, scale: p2.scale, duration: 0.95, ease: "power2.inOut" }, 6.0);
+      tl.to(vignette, { opacity: 0.45, duration: 0.5 }, 6.0);
+      // Slow scroll down the list (feels like reading)
+      tl.to(world, { y: p2.y - 90, duration: 2.2, ease: "power1.inOut" }, 7.2);
+      tl.to(world, { x: 0, y: 0, scale: 1, duration: 0.85, ease: "power2.inOut" }, 12.0);
+      tl.to(vignette, { opacity: 0, duration: 0.5 }, 12.0);
+      tl.to(hoverRow, { opacity: 0, duration: 0.3 }, 12.0);
+      tl.to(cursor, { opacity: 0.35, duration: 0.4 }, 13.5);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["plate-a"] = tl;
+    </script>
+  </body>
+</html>

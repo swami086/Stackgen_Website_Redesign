@@ -1,0 +1,142 @@
+<template>
+<style>
+@font-face{font-family:"Geist Variable";font-weight:100 900;font-style:normal;font-display:block;src:url("assets/fonts/GeistVariable-Regular.woff2") format("woff2");}
+@font-face{font-family:"Geist Mono Variable";font-weight:100 900;font-style:normal;font-display:block;src:url("assets/fonts/GeistMonoVariable-Regular.woff2") format("woff2");}
+
+#root{
+  width:1920px;height:1080px;
+  position:relative;overflow:hidden;
+  container-type:size;
+  font-family:"Geist Variable",sans-serif;
+}
+
+.clip{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+}
+
+/* ── background field ── */
+#f07-bg{
+  background:#0b0c0e;
+}
+
+/* ── card border frame (centered viewport; 60px top, 100px sides, 220px bottom) ── */
+#f07-card{
+  position:absolute;
+  left:100px;top:60px;
+  width:1720px;height:800px;
+  border:1px solid #282826;
+}
+
+/* ── chip: product label, top-left of card ── */
+#f07-chip{
+  position:absolute;
+  left:128px;top:88px;
+  font-family:"Geist Mono Variable",monospace;
+  font-size:0.72cqw;font-weight:500;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:#9aa0ac;
+  border:1px solid #282826;
+  background:rgba(11,12,14,0.80);
+  padding:8px 16px;
+  white-space:nowrap;
+}
+
+/* ── stat block: 90% less alert noise, lower-left of card ── */
+#f07-stat{
+  position:absolute;
+  left:128px;top:620px;
+}
+#f07-stat-rule{
+  width:36px;height:2px;
+  background:#facc15;
+  margin-bottom:10px;
+}
+#f07-stat-value{
+  display:block;
+  font-family:"Geist Variable",sans-serif;
+  font-size:4.5cqw;font-weight:700;
+  line-height:1.2;letter-spacing:-0.02em;
+  color:#facc15;
+}
+#f07-stat-label{
+  display:block;
+  margin-top:12px;
+  font-family:"Geist Mono Variable",monospace;
+  font-size:0.72cqw;font-weight:500;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:#9aa0ac;
+}
+</style>
+
+<div data-hf-id="hf-nxpu" id="root" data-composition-id="07-observability" data-start="0" data-duration="6.9" data-width="1920" data-height="1080">
+
+  <!-- track 0: ink-black ground -->
+  <div data-hf-id="hf-aglj" id="f07-bg" class="clip" data-start="0" data-duration="6.9" data-track-index="0"></div>
+
+  <!-- track 1: footage (assembler hoists to host root at card geometry) -->
+  <!-- approved frame video hoisted by assemble-index -->
+
+  <!-- track 2: card border frame (slides in with entrance) -->
+  <div data-hf-id="hf-ucu8" class="clip" data-start="0" data-duration="6.9" data-track-index="2">
+    <div data-hf-id="hf-64r9" id="f07-card"></div>
+  </div>
+
+  <!-- track 3: chip label (follows card) -->
+  <div data-hf-id="hf-xc3t" class="clip" data-start="0" data-duration="6.9" data-track-index="3">
+    <div data-hf-id="hf-eec0" id="f07-chip">aiden for observability</div>
+  </div>
+
+  <!-- track 4: stat punch reveal — clip-gated 3.2–6.4 s -->
+  <div data-hf-id="hf-4rv0" class="clip" data-start="3.2" data-duration="3.7" data-track-index="4">
+    <div data-hf-id="hf-p16d" id="f07-stat">
+      <div data-hf-id="hf-rzw8" id="f07-stat-rule"></div>
+      <div data-hf-id="hf-aunf" id="f07-stat-value">90%</div>
+      <div data-hf-id="hf-wvn9" id="f07-stat-label">less alert noise</div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script>
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+
+/* seek-safe: hide chip before its entrance tween fires */
+tl.set("#f07-chip", { opacity: 0 }, 0);
+
+/* ── Scene 1 (0.0–0.6 s): card border slides up, chip fades in from left ── */
+tl.fromTo("#f07-card",
+  { opacity: 0, y: 14 },
+  { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+  0);
+
+tl.fromTo("#f07-chip",
+  { opacity: 0, x: -10 },
+  { opacity: 1, x: 0, duration: 0.35, ease: "power2.out" },
+  0.28);
+
+/* ── Scene 3 (3.2 s): stat punch on VO "ninety percent less alert noise" ── */
+/* rule draws left→right first */
+tl.fromTo("#f07-stat-rule",
+  { scaleX: 0 },
+  { scaleX: 1, duration: 0.22, ease: "power3.out", transformOrigin: "left center" },
+  3.2);
+
+/* value slides up simultaneously */
+tl.fromTo("#f07-stat-value",
+  { opacity: 0, y: 10 },
+  { opacity: 1, y: 0, duration: 0.38, ease: "power2.out" },
+  3.2);
+
+/* label trails 0.25 s behind */
+tl.fromTo("#f07-stat-label",
+  { opacity: 0, y: 6 },
+  { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" },
+  3.45);
+
+window.__timelines["07-observability"] = tl;
+</script>
+</template>

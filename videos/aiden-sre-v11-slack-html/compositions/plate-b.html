@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0b0c0e; }
+      #root { width: 1920px; height: 1080px; position: relative; }
+      #stage {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at 50% 30%, #16171c 0%, #0b0c0e 70%);
+        display: flex; align-items: center; justify-content: center;
+      }
+      #card {
+        width: 1760px; height: 990px; border-radius: 14px;
+        background: #151619; border: 1px solid #2a2c33; overflow: hidden;
+        display: flex; flex-direction: column;
+      }
+      #chrome {
+        height: 40px; flex-shrink: 0; display: flex; align-items: center;
+        padding: 0 14px; background: #151619; border-bottom: 1px solid #2a2c33;
+      }
+      .dots { display: flex; gap: 7px; }
+      .dot { width: 10px; height: 10px; border-radius: 50%; background: #3a3d45; }
+      #screen { flex: 1; position: relative; overflow: hidden; background: #0f1115; }
+      #world {
+        position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+        transform-origin: 0 0; will-change: transform;
+      }
+      #world video.ui {
+        position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+        object-fit: cover; object-position: left top;
+      }
+      #cursor {
+        position: absolute; left: 0; top: 0; width: 28px; height: 28px;
+        z-index: 40; pointer-events: none; opacity: 0;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.45));
+      }
+      .ripple {
+        position: absolute; left: 1500px; top: 220px; width: 72px; height: 72px;
+        border-radius: 50%; border: 2px solid rgba(124, 92, 255, 0.85);
+        transform: translate(-50%, -50%) scale(0); opacity: 0; z-index: 39; pointer-events: none;
+      }
+      #vignette {
+        position: absolute; inset: 0; pointer-events: none; z-index: 30;
+        background: radial-gradient(ellipse at center, transparent 52%, rgba(0,0,0,0.28) 100%);
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+      plate-b — Real stage walkthrough (~16s from t=48). Live product scroll/typing in capture.
+      Soft camera + cursor nudge toward Evidence. No stacked tools.
+    -->
+    <div id="root" data-composition-id="plate-b" data-start="0" data-duration="16" data-width="1920" data-height="1080">
+      <div id="stage">
+        <div id="card">
+          <div id="chrome"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>
+          <div id="screen" data-layout-allow-overflow>
+            <div id="world" data-layout-allow-overflow>
+              <video
+                id="stage-rca"
+                class="ui clip"
+                src="assets/stage-rca.mp4"
+                data-start="0"
+                data-duration="16"
+                data-media-start="48"
+                data-track-index="0"
+                muted
+                playsinline
+              ></video>
+              <div class="ripple" id="r1"></div>
+              <svg id="cursor" viewBox="0 0 28 28" fill="none">
+                <path d="M4 3l8.5 20.5 2.2-7.3L22 14.2 4 3z" fill="#fff" stroke="#1a1a1a" stroke-width="1.2"/>
+              </svg>
+            </div>
+            <div id="vignette"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const world = document.getElementById("world");
+      const cursor = document.getElementById("cursor");
+      const vignette = document.getElementById("vignette");
+      const r1 = document.getElementById("r1");
+
+      gsap.set(world, { x: 0, y: 0, scale: 1, transformOrigin: "0 0" });
+      gsap.set(cursor, { x: 520, y: 240, opacity: 0, scale: 1, transformOrigin: "4px 3px" });
+      gsap.set(r1, { scale: 0, opacity: 0 });
+      gsap.set(vignette, { opacity: 0 });
+
+      const tl = gsap.timeline({ paused: true });
+
+      // Settle with live stage motion playing underneath
+      tl.to(vignette, { opacity: 0.2, duration: 0.6 }, 0.2);
+      tl.to(cursor, { opacity: 1, duration: 0.3 }, 1.0);
+      // Drift cursor toward RCA / evidence while stage scrolls
+      tl.to(cursor, { x: 720, y: 480, duration: 2.2, ease: "power1.inOut" }, 1.4);
+      tl.to(world, { scale: 1.12, x: -80, y: -40, duration: 1.4, ease: "power2.inOut" }, 2.0);
+      tl.to(cursor, { x: 1480, y: 200, duration: 1.8, ease: "power2.inOut" }, 5.0);
+      tl.to(world, { scale: 1.22, x: -420, y: -60, duration: 1.5, ease: "power2.inOut" }, 5.2);
+      tl.to(vignette, { opacity: 0.4, duration: 0.5 }, 5.2);
+      // Click evidence item
+      tl.to(cursor, { scale: 0.86, duration: 0.08, yoyo: true, repeat: 1, ease: "power2.in" }, 7.2);
+      tl.set(r1, { opacity: 1 }, 7.25);
+      tl.to(r1, { scale: 4.0, opacity: 0, duration: 0.7, ease: "power2.out", immediateRender: false }, 7.25);
+      // Hold evidence, then ease back
+      tl.to(world, { scale: 1.08, x: -40, y: -20, duration: 1.2, ease: "power2.inOut" }, 10.5);
+      tl.to(world, { scale: 1, x: 0, y: 0, duration: 0.9, ease: "power2.inOut" }, 13.2);
+      tl.to(vignette, { opacity: 0, duration: 0.5 }, 13.2);
+      tl.to(cursor, { opacity: 0.3, duration: 0.4 }, 14.5);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["plate-b"] = tl;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,142 @@
+<template>
+<style>
+@font-face {
+  font-family: "Geist Variable";
+  src: url("assets/fonts/GeistVariable-Regular.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Geist Mono Variable";
+  src: url("assets/fonts/GeistMonoVariable-Regular.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+  container-type: size;
+  font-family: "Geist Variable", sans-serif;
+}
+
+/* Shared clip base — full-frame absolute box */
+.clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* ── Track 0: dark ground ────────────────────────────────────────── */
+#f05-infraops-bg {
+  background: #0b0c0e;
+  z-index: 0;
+}
+
+/* ── Track 2: vignette overlay (top + bottom) ────────────────────── */
+#f05-infraops-vignette {
+  background: linear-gradient(
+    180deg,
+    rgba(11, 12, 14, 0.70) 0%,
+    rgba(11, 12, 14, 0.00) 26%,
+    rgba(11, 12, 14, 0.00) 58%,
+    rgba(11, 12, 14, 0.50) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* ── Track 3: chip layer ─────────────────────────────────────────── */
+#f05-infraops-chip-layer {
+  z-index: 3;
+  will-change: transform;
+}
+
+/* Product chip — Broadside label style: mono, uppercase, cream-muted */
+#f05-infraops-chip {
+  position: absolute;
+  top: 64px;
+  left: 80px;
+  font-family: "Geist Mono Variable", monospace;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9aa0ac;
+  background: rgba(26, 26, 24, 0.88);
+  border: 1px solid #282826;
+  padding: 9px 18px;
+  line-height: 1;
+  /* No CSS transform — GSAP owns y + opacity */
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+<div data-hf-id="hf-0nrr" id="root" data-composition-id="05-infraops" data-start="0" data-duration="9.8" data-width="1920" data-height="1080">
+
+  <!-- Track 0 — Dark ink-black ground (always on, full duration) -->
+  <div data-hf-id="hf-n37y" id="f05-infraops-bg" class="clip" data-start="0" data-duration="9.8" data-track-index="0"></div>
+
+  <!-- Track 1 — Full-bleed product video (approved; hoisted to host root by assembler).
+       Source window: 7.2 s → 16.5 s; baked punch lands ~5.0 s in-frame. -->
+  <!-- approved frame video hoisted by assemble-index -->
+
+  <!-- Track 2 — Vignette (top-dark + bottom-dark gradient; chip legibility + bottom safe zone) -->
+  <div data-hf-id="hf-grx7" id="f05-infraops-vignette" class="clip" data-start="0" data-duration="9.8" data-track-index="2"></div>
+
+  <!-- Track 3 — Product chip layer -->
+  <div data-hf-id="hf-ajs8" id="f05-infraops-chip-layer" class="clip" data-start="0" data-duration="9.8" data-track-index="3">
+    <div data-hf-id="hf-blju" id="f05-infraops-chip">aiden for infraops</div>
+  </div>
+
+</div>
+
+<script>
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines["05-infraops"] = tl;
+
+  // ── Scene 1 (0.0 – 0.6 s): spring-pop-entrance ─────────────────────────
+  // The vignette and chip-layer settle from scale 0.97 → 1 (power3.out) —
+  // simulating the full-bleed "video card" registering into frame.
+  // fromTo keeps t=0 correct under seek (never CSS-hidden start).
+
+  tl.fromTo(
+    "#f05-infraops-vignette",
+    { scale: 0.97, opacity: 0, transformOrigin: "50% 50%" },
+    { scale: 1, opacity: 1, duration: 0.55, ease: "power3.out" },
+    0
+  );
+
+  tl.fromTo(
+    "#f05-infraops-chip-layer",
+    { scale: 0.97, transformOrigin: "50% 50%" },
+    { scale: 1, duration: 0.55, ease: "power3.out" },
+    0
+  );
+
+  // Chip itself: fade + small y-rise (staggered ~1 frame after the scale settle begins)
+  tl.fromTo(
+    "#f05-infraops-chip",
+    { opacity: 0, y: 8 },
+    { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" },
+    0.1
+  );
+
+  // ── Scenes 2 – 3 (0.6 – 9.3 s): footage owns the motion ───────────────
+  // The baked camera punch lands ~5.0 s in-frame on the velocity claim.
+  // No added camera move; no exit tween (root transition IS the exit).
+</script>
+</template>

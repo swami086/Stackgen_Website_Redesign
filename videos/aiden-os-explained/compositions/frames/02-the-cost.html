@@ -1,0 +1,274 @@
+<template>
+<style>
+@font-face {
+  font-family: "Geist Variable";
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+  src: url("assets/fonts/GeistVariable-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist Mono Variable";
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+  src: url("assets/fonts/GeistMonoVariable-Regular.woff2") format("woff2");
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+#root {
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+  font-family: "Geist Variable", sans-serif;
+  container-type: size;
+}
+
+.clip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Track 0 — full-bleed ground */
+#f02-the-cost-bg {
+  background: #0b0c0e;
+}
+
+/* Center content column — confined to the caption-safe region (top 896px) */
+#f02-the-cost-center {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 896px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 44px;
+}
+
+/* Mono kicker — source attribution eyebrow */
+#f02-the-cost-kicker {
+  font-family: "Geist Mono Variable", monospace;
+  color: #facc15;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Broadside rule stub — system's sole ornament */
+#f02-the-cost-rule {
+  width: 36px;
+  height: 2px;
+  background: #facc15;
+  align-self: center;
+}
+
+/* Container: fixed-width so digit changes don't shift layout */
+#f02-the-cost-counter-wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  width: 760px;
+  margin-bottom: 12px;
+}
+
+/* Hero counter — final size static; GSAP animates scale only */
+#f02-the-cost-counter {
+  font-variant-numeric: tabular-nums;
+  display: inline-block;
+  font-family: "Geist Variable", sans-serif;
+  font-size: 300px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: #facc15;
+}
+
+/* Suffix "%" — inline-block so GSAP y-tween doesn't disrupt baseline */
+#f02-the-cost-suffix {
+  font-family: "Geist Variable", sans-serif;
+  font-size: 220px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: #facc15;
+  display: inline-block;
+  margin-left: 6px;
+}
+
+/* Attribution caption — per-word reveal target */
+#f02-the-cost-caption {
+  color: #e8eaee;
+  font-size: 34px;
+  font-weight: 400;
+  max-width: 920px;
+  text-align: center;
+  line-height: 1.55;
+}
+
+/* Each word wrapped for staggered entrance */
+.f02-the-cost-word {
+  display: inline;
+}
+
+/* Secondary stat — low on frame, above caption band */
+#f02-the-cost-secondary {
+  position: absolute;
+  bottom: 240px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: "Geist Mono Variable", monospace;
+  color: #7e8591;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+<div data-hf-id="hf-xfhu" id="root" data-composition-id="02-the-cost" data-start="0" data-duration="8" data-width="1920" data-height="1080">
+
+  <!-- Track 0: full-bleed background ground -->
+  <div data-hf-id="hf-38il" class="clip" id="f02-the-cost-bg" data-start="0" data-duration="8" data-track-index="0">
+  </div>
+
+  <!-- Track 1: all visible content -->
+  <div data-hf-id="hf-8m3e" class="clip" id="f02-the-cost-content" data-start="0" data-duration="8" data-track-index="1">
+
+    <!-- Vertically centered column: kicker · rule · stat · caption -->
+    <div data-hf-id="hf-fydl" id="f02-the-cost-center">
+      <div data-hf-id="hf-kvgo" id="f02-the-cost-kicker">New Relic, 2026</div>
+      <div data-hf-id="hf-oaog" id="f02-the-cost-rule"></div>
+      <div data-hf-id="hf-5vmj" id="f02-the-cost-counter-wrap">
+        <span data-hf-id="hf-thwb" id="f02-the-cost-counter">0</span><span data-hf-id="hf-wa4z" id="f02-the-cost-suffix">%</span>
+      </div>
+      <div data-hf-id="hf-apu0" id="f02-the-cost-caption">
+        <span data-hf-id="hf-kiov" class="f02-the-cost-word">more</span>
+        <span data-hf-id="hf-1vbx" class="f02-the-cost-word">production</span>
+        <span data-hf-id="hf-6pdd" class="f02-the-cost-word">incidents</span>
+        <span data-hf-id="hf-2257" class="f02-the-cost-word">once</span>
+        <span data-hf-id="hf-zw7c" class="f02-the-cost-word">AI-generated</span>
+        <span data-hf-id="hf-zmg3" class="f02-the-cost-word">code</span>
+        <span data-hf-id="hf-7fy0" class="f02-the-cost-word">goes</span>
+        <span data-hf-id="hf-9zgs" class="f02-the-cost-word">live</span>
+      </div>
+    </div>
+
+    <!-- Secondary source stat — enters in Scene 3, positioned above caption band -->
+    <div data-hf-id="hf-ct70" id="f02-the-cost-secondary">ai prs carry ~1.7x more issues — coderabbit</div>
+
+  </div>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  window.__timelines = window.__timelines || {};
+  var tl = gsap.timeline({ paused: true });
+  window.__timelines["02-the-cost"] = tl;
+
+  // ── Scene 1 (0.0–1.9s) ─────────────────────────────────────────────────────
+  // Kicker enters, rule draws, hero counts 0→78 with dynamic scale growth.
+
+  // Kicker: fromTo → seek-safe; hero visible from t=0 (scale not opacity=0)
+  tl.fromTo(
+    "#f02-the-cost-kicker",
+    { opacity: 0, y: 16 },
+    { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+    0
+  );
+
+  // Rule stub grows from center (pure GSAP scaleX — no CSS transform conflict)
+  tl.fromTo(
+    "#f02-the-cost-rule",
+    { opacity: 0, scaleX: 0 },
+    { opacity: 1, scaleX: 1, duration: 0.38, ease: "power2.out" },
+    0.18
+  );
+
+  // counting-dynamic-scale: proxy drives text; parallel tween drives scale
+  var state = { value: 0 };
+  var counterEl = document.getElementById("f02-the-cost-counter");
+  var COUNT_DUR = 1.5;
+  var START_SCALE = 0.38; // ~114px apparent start → 300px final
+
+  // Text proxy — O(1) onUpdate, Math.round only
+  tl.to(
+    state,
+    {
+      value: 78,
+      duration: COUNT_DUR,
+      ease: "power3.out",
+      onUpdate: function () {
+        counterEl.textContent = Math.round(state.value).toLocaleString();
+      }
+    },
+    0
+  );
+
+  // Visual scale growth — same ease/duration as value tween (one beat)
+  tl.fromTo(
+    "#f02-the-cost-counter",
+    { scale: START_SCALE },
+    { scale: 1, duration: COUNT_DUR, ease: "power3.out" },
+    0
+  );
+
+  // Suffix slides in AFTER count lands — back.out bounce is correct on punctuation
+  tl.fromTo(
+    "#f02-the-cost-suffix",
+    { opacity: 0, y: 22 },
+    { opacity: 1, y: 0, duration: 0.42, ease: "back.out(1.7)" },
+    COUNT_DUR
+  );
+
+  // ── Scene 2 (1.9–4.0s) ─────────────────────────────────────────────────────
+  // Caption attribution reveals per-word (dynamic-content-sequencing pattern).
+
+  var words = document.querySelectorAll(".f02-the-cost-word");
+  var wordCount = words.length;               // 8 words
+  var sceneLen  = 4.0 - 1.9;                 // 2.1s window
+  var wordDur   = 0.32;                       // per-word tween duration
+  // Stagger distributes reveals across the window: last word starts at ~3.93s
+  var wordStagger = (sceneLen - wordDur) / (wordCount - 1); // ≈ 0.254s
+
+  tl.fromTo(
+    words,
+    { opacity: 0, y: 10 },
+    { opacity: 1, y: 0, duration: wordDur, stagger: wordStagger, ease: "power2.out" },
+    1.9
+  );
+
+  // ── Scene 3 (4.0–7.6s) ─────────────────────────────────────────────────────
+  // Secondary stat fades in low; hero holds with a deliberate slight jitter.
+
+  tl.fromTo(
+    "#f02-the-cost-secondary",
+    { opacity: 0, y: 10 },
+    { opacity: 1, y: 0, duration: 0.68, ease: "power2.out" },
+    4.0
+  );
+
+  // Subtle held jitter — deterministic explicit keyframes; no repeat/yoyo
+  // Scale deviations ≤1.2% — reads as a living hold, not a bounce
+  tl.to("#f02-the-cost-counter", { scale: 1.010, duration: 0.90, ease: "sine.inOut" }, 4.55);
+  tl.to("#f02-the-cost-counter", { scale: 1.000, duration: 0.90, ease: "sine.inOut" }, 5.45);
+  tl.to("#f02-the-cost-counter", { scale: 1.008, duration: 0.65, ease: "sine.inOut" }, 6.45);
+  tl.to("#f02-the-cost-counter", { scale: 1.000, duration: 0.50, ease: "sine.inOut" }, 7.10);
+
+})();
+</script>
+</template>

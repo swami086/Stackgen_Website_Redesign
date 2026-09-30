@@ -1,0 +1,104 @@
+[
+  {
+    "text": "Aidan",
+    "start": 0.04,
+    "end": 0.45,
+    "id": "w0"
+  },
+  {
+    "text": "for",
+    "start": 0.45,
+    "end": 0.72,
+    "id": "w1"
+  },
+  {
+    "text": "infra",
+    "start": 0.72,
+    "end": 1.15,
+    "id": "w2"
+  },
+  {
+    "text": "ops",
+    "start": 1.19,
+    "end": 1.36,
+    "id": "w3"
+  },
+  {
+    "text": "turns",
+    "start": 1.55,
+    "end": 1.91,
+    "id": "w4"
+  },
+  {
+    "text": "intent",
+    "start": 1.91,
+    "end": 2.36,
+    "id": "w5"
+  },
+  {
+    "text": "into",
+    "start": 2.47,
+    "end": 2.69,
+    "id": "w6"
+  },
+  {
+    "text": "policy",
+    "start": 2.75,
+    "end": 3.15,
+    "id": "w7"
+  },
+  {
+    "text": "checked",
+    "start": 3.15,
+    "end": 3.35,
+    "id": "w8"
+  },
+  {
+    "text": "change,",
+    "start": 3.55,
+    "end": 4.73,
+    "id": "w9"
+  },
+  {
+    "text": "10",
+    "start": 4.73,
+    "end": 5.13,
+    "id": "w10"
+  },
+  {
+    "text": "times",
+    "start": 5.13,
+    "end": 5.48,
+    "id": "w11"
+  },
+  {
+    "text": "the",
+    "start": 5.48,
+    "end": 5.56,
+    "id": "w12"
+  },
+  {
+    "text": "velocity,",
+    "start": 5.56,
+    "end": 6.69,
+    "id": "w13"
+  },
+  {
+    "text": "every",
+    "start": 6.69,
+    "end": 6.92,
+    "id": "w14"
+  },
+  {
+    "text": "deploy",
+    "start": 6.96,
+    "end": 7.37,
+    "id": "w15"
+  },
+  {
+    "text": "checked.",
+    "start": 7.43,
+    "end": 8,
+    "id": "w16"
+  }
+]

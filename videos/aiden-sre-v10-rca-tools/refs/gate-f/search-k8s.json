@@ -1,0 +1,105 @@
+What is Kubernetes CrashLoopBackOff? And how to fix it
+  URL: https://www.sysdig.com/blog/debug-kubernetes-crashloopbackoff
+  # What is Kubernetes CrashLoopBackOff? And how to fix it
+## How to debug, troubleshoot and fix a CrashLoopBackOff state
+### 1. Check the pod description – kubectl describe pod
+```javascript
+$ kubectl describe pod the-pod-name
+Name:         the-pod-name
+Namespace:    default
+Priority:     0
+…
+State:          Waiting
+Reason:       CrashLoopBackOff
+Last State:     Terminated
+Reason:       Error
+…
+Warning  BackOff                1m (x5 over 1m)   kubelet, ip-10-0-9-132.us-east-2.compute.internal  Back-off restarting failed container
+…
+```
+
+## How to detect CrashLoopBackOff in Prometheus
+```javascript
+kube_pod_container_status_waiting_reason{reason="CrashLoopBackOff"} == 1
+```
+
+```javascript
+rate(kube_pod_container_status_restarts_total[5m]) > 0
+```
+
+What does it mean a POD status CrashLoopBackOff ... - Stack Overflow
+  URL: https://stackoverflow.com/questions/77193878/what-does-it-mean-a-pod-status-crashloopbackoff-and-imagepullbackoff
+  CrashLoopBackOff means that Kubernetes was able to successfully pull the image and start your container, but then the container process exited ...My kubernetes pods keep crashing with "CrashLoopBackOff" but I can't ...Kubernetes' pods' status is CrashLoopBackOff but no logs are ...More results from stackoverflow.com
+
+Understanding Kubernetes CrashLoopBackOff & How to Fix It
+  URL: https://www.groundcover.com/kubernetes-troubleshooting/crashloopbackoff
+  # CrashLoopBackOff
+## How to troubleshoot and fix CrashLoopBackOff errors
+### Check Pod description with kubectl describe pod
+```
+Start Time:   Mon, 06 Feb 2023 13:24:51 +0200
+```
+
+```
+IP:          172.31.28.25
+```
+
+```
+  IP:        172.31.28.25
+```
+
+```
+    Container ID:   docker://1f34cd7a1a44473c0521d53fc082eb7171edf666925048e0051ac5654d7a2fd1
+```
+
+```
+    Image:       125608480246.dkr.ecr.eu-west-3.amazonaws.com/checkoutservice:9ed644f@sha256:a9d3f3bf80b3c31291595733025b8a6e0a87796b410d7baacc5bd9eee95dd180
+```
+
+```
+    Image ID:    docker-pullable://125608480246.dkr.ecr.eu-west-3.amazonaws.com/checkoutservice@sha256:a9d3f3bf80b3c31291595733025b8a6e0a87796b410d7baacc5bd9eee95dd180
+```
+
+```
+      Started:   Mon, 06 Feb 2023 14:05:35 +0200
+```
+
+```
+      Finished:     Mon, 06 Feb 2023 14:06:03 +0200
+```
+
+```
+    Restart Count:  16
+```
+
+### Dig through container and Pod logs with kubectl logs
+```
+{"message":"[PlaceOrder] user_id=\"d7f14948-0863-4ae9-a26e-92eeb1fbb7ae\" user_currency=\"USD\"","severity":"info","timestamp":"2023-02-06T12:13:36.450163905Z"}
+```
+
+kong stuck in CrashLoopBackOff · Issue #10005 · kubernetes-retired ...
+  URL: https://github.com/kubernetes-retired/dashboard/issues/10005
+  deployment.apps/kubernetes-dashboard-kong does not start and the pod is stuck in CrashLoopBackOff. There are no logs available via kubectl ...
+  Category: github
+
+Debug a Pod in CrashLoopBackOff on Kubernetes: Causes and Solutions
+  URL: https://institute.sfeir.com/en/kubernetes-training/debug-pod-crashloopbackoff-kubernetes-causes-solutions/
+  ## Key Takeaways
+**TL;DR**: CrashLoopBackOff means the container starts, crashes, and Kubernetes tries to restart it with exponential backoff.
+
+## What Exactly is CrashLoopBackOff?
+```
+# Identify pods in CrashLoopBackOff
+kubectl get pods -A | grep CrashLoopBackOff
+
+# Example output
+NAMESPACE   NAME                      READY   STATUS             RESTARTS   AGE
+production  checkout-7d4b5c6f9-x2k4n  0/1     CrashLoopBackOff   15         12m
+```
+
+## Main Causes and Solutions for Debug Pod CrashLoopBackOff Kubernetes
+### Cause 1: Application Error at Startup
+```
+Exit Code: 1
+Reason: Error
+```

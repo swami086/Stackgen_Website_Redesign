@@ -1,0 +1,56 @@
+{
+  "provider": "auto",
+  "speed": 1,
+  "lines": [
+    {
+      "id": "01",
+      "text": "AI writes more code than your team can review. Agents and IDEs ship all day. And alerts struggle to keep up."
+    },
+    {
+      "id": "02",
+      "text": "Speed without a governed loop is how agent-driven change becomes the next incident on your watch."
+    },
+    {
+      "id": "03",
+      "text": "Meet Aiden OS. The Agentic OS for DevOps. Build, govern, observe, and remediate production, with guardrails baked in."
+    },
+    {
+      "id": "04",
+      "text": "Four persona agents. One shared memory. InfraOps, DevOps, Observability, and SRE."
+    },
+    {
+      "id": "05",
+      "text": "Aiden for InfraOps turns intent into policy-checked change. Ten times the velocity. Every deploy checked."
+    },
+    {
+      "id": "06",
+      "text": "Aiden for DevOps triages the ticket queue. Every execution reviewed before it runs."
+    },
+    {
+      "id": "07",
+      "text": "Aiden for Observability correlates the signal. Ninety percent less alert noise."
+    },
+    {
+      "id": "08",
+      "text": "And Aiden for SRE finds root cause and remediates inside policy. Fifty percent lower MTTR. You keep the call."
+    },
+    {
+      "id": "09",
+      "text": "All four share one Operational Context Graph. What one domain learns, every domain acts on."
+    },
+    {
+      "id": "10",
+      "text": "Every action inside policy. Bounded autonomy that scales at the pace of your confidence."
+    },
+    {
+      "id": "11",
+      "text": "Aiden OS. Outcomes, not agents. Schedule a demo at stackgen.com."
+    }
+  ],
+  "bgm": {
+    "mode": "retrieve",
+    "query": "dark minimal tech underscore, slow pulse, restrained",
+    "blob": "Outcomes, not agents. Aiden OS runs production.",
+    "arc": "PAS + feature-benefit progression — Hook → Pain → Agitate → Product intro → Four persona beats → Mechanism → Governance → CTA"
+  }
+}

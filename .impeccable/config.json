@@ -1,16 +1,102 @@
 {
   "detector": {
     "ignoreRules": [],
-    "ignoreFiles": [],
+    "ignoreFiles": [
+      "videos/aiden-sre-v9-rca-pso/compositions/**"
+    ],
     "ignoreValues": [
       {
-        "rule": "broken-image",
+        "rule": "marketing-buzzword",
+        "value": "empower",
+        "createdAt": "2026-09-25T04:46:53.182Z",
+        "reason": "Product end-card verb locked in Gate A SCRIPT paste for Aiden SRE demos"
+      },
+      {
+        "rule": "marketing-buzzword",
+        "value": "empower your engineers.",
+        "createdAt": "2026-09-25T08:20:29.099Z",
+        "reason": "Locked Gate A end-card CTA from approved V10 SCRIPT (matches V9 Gate A+B pass)"
+      },
+      {
+        "rule": "cramped-padding",
         "value": "*",
         "files": [
-          "web/components/sections/home/__tests__/Logos.test.tsx"
+          "videos/aiden-sre-v10-rca-tools/compositions/plate-c.html"
         ],
-        "createdAt": "2026-08-21T02:44:06.758Z",
-        "reason": "agent: vitest next/image mock omits src by design"
+        "createdAt": "2026-09-25T08:21:38.866Z",
+        "reason": "HyperFrames demo plate: yellow HL rings + inset chrome match V9 camera pattern, not product UI padding"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "videos/aiden-sre-v10-rca-tools/compositions/plate-d.html"
+        ],
+        "createdAt": "2026-09-25T08:21:38.905Z",
+        "reason": "HyperFrames demo plate: yellow HL rings + Slack PiP match V9 camera pattern"
+      },
+      {
+        "rule": "marketing-buzzword",
+        "value": "*",
+        "files": [
+          "videos/aiden-sre-v10-rca-tools/compositions/plate-d.html"
+        ],
+        "createdAt": "2026-09-25T08:21:38.945Z",
+        "reason": "Locked Gate A SCRIPT end-card CTA (Empower your engineers) for Aiden SRE demos"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "videos/aiden-sre-v11-slack-html/compositions/plate-d.html"
+        ],
+        "createdAt": "2026-09-25T09:30:04.909Z",
+        "reason": "HyperFrames Slack fidelity plate: authentic Slack chrome padding matches product UI, not marketing page"
+      },
+      {
+        "rule": "overused-font",
+        "value": "lato",
+        "files": [
+          "videos/aiden-sre-v11-slack-html/compositions/plate-d.html"
+        ],
+        "createdAt": "2026-09-25T09:30:04.946Z",
+        "reason": "Slack product chrome uses Lato-like stack for authenticity"
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "videos/aiden-sre-v11-slack-html/compositions/plate-d.html"
+        ],
+        "createdAt": "2026-09-25T09:30:04.981Z",
+        "reason": "Slack UI type scale is intentionally dense for product fidelity"
+      },
+      {
+        "rule": "ai-color-palette",
+        "value": "*",
+        "files": [
+          "videos/aof-remediation-card/index.html"
+        ],
+        "createdAt": "2026-09-30T03:58:55.410Z",
+        "reason": "Live Aiden SRE primary button is rgb(158, 51, 234), sampled from New Conversation on stage.dev.stackgen.com. Card uses that product color, not a generated gradient."
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "videos/aof-homepage/index.html"
+        ],
+        "createdAt": "2026-09-30T05:10:14.204Z",
+        "reason": "Task 2 brief requires background #f7f3ee verbatim on the homepage film host"
+      },
+      {
+        "rule": "shape-assembled-illustration",
+        "value": "*",
+        "files": [
+          ".worktrees/aof-homepage-launch/videos/aof-homepage/compositions/factory.html"
+        ],
+        "createdAt": "2026-09-30T09:13:39.798Z",
+        "reason": "Plan 2026-09-30-aof-jigsaw-picture.md Task 1: ports the already-approved isometric jigsaw artwork from assets/jigsaw-v1.html (Drive-approved '260909 - Factory Jigsaw Animation v1.0.html') verbatim, per explicit task instruction not to substitute a different picture. Deliberate hand-authored illustration (parametric corner tabs, isometric projection, gradients), not placeholder clip art."
       }
     ]
   }

@@ -1,0 +1,225 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist Variable";
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: block;
+    src: url("assets/fonts/GeistVariable-Regular.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Geist Mono Variable";
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: block;
+    src: url("assets/fonts/GeistMonoVariable-Regular.woff2") format("woff2");
+  }
+
+  #root {
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+    overflow: hidden;
+    container-type: size;
+    font-family: "Geist Variable", sans-serif;
+  }
+
+  /* ── shared clip shell ── */
+  .clip {
+    position: absolute;
+    overflow: hidden;
+  }
+
+  /* ── Track 0: ink-black full-bleed ground ── */
+  #f06-devops-bg {
+    inset: 0;
+    background: #0b0c0e;
+  }
+
+  /* ── Track 2: hairline border around video area ── */
+  #f06-devops-frame {
+    top: 60px;
+    left: 100px;
+    width: 1720px;
+    height: 800px;
+    border: 1px solid #282826;
+    pointer-events: none;
+  }
+
+  /* ── Track 3: product chip — top-left ── */
+  #f06-devops-chip {
+    top: 88px;
+    left: 128px;
+    font-family: "Geist Mono Variable", monospace;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #9aa0ac;
+    background: rgba(11, 12, 14, 0.88);
+    border: 1px solid #282826;
+    padding: 8px 16px;
+    white-space: nowrap;
+  }
+
+  /* ── Track 4: review strip — appears on punch at 3.5s ──
+       top: 812px → bottom edge ≈ 844px — well above 896px keep-out ── */
+  #f06-devops-review-strip {
+    top: 812px;
+    left: 128px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  /* scaleX animated by GSAP; transformOrigin set via script */
+  #f06-devops-review-rule {
+    width: 36px;
+    height: 2px;
+    background: #facc15;
+  }
+
+  #f06-devops-review-label {
+    font-family: "Geist Mono Variable", monospace;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #facc15;
+    white-space: nowrap;
+  }
+
+  /* ── Track 5: catalogue number — top-right, low opacity ── */
+  #f06-devops-num {
+    top: 88px;
+    right: 128px;
+    font-family: "Geist Mono Variable", monospace;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #7e8591;
+    white-space: nowrap;
+  }
+</style>
+
+<div data-hf-id="hf-qzmk" id="root" data-composition-id="06-devops" data-start="0" data-duration="7.5" data-width="1920" data-height="1080">
+
+  <!-- Track 0: ink-black full-bleed ground -->
+  <div data-hf-id="hf-8z93" id="f06-devops-bg" class="clip" data-start="0" data-duration="7.5" data-track-index="0">
+  </div>
+
+  <!-- Track 1: approved video — geometry translates to host root by assembler
+       source window 1.0s → 8.0s (data-media-start=1.0); baked punch at source 4.5s = ~3.5s in-frame -->
+  <!-- approved frame video hoisted by assemble-index -->
+
+  <!-- Track 2: hairline border frame — scale-settles in with the video -->
+  <div data-hf-id="hf-mxjj" id="f06-devops-frame" class="clip" data-start="0" data-duration="7.5" data-track-index="2">
+  </div>
+
+  <!-- Track 3: product chip — "aiden for devops" — Scene 1 drop-in -->
+  <div data-hf-id="hf-v0de" id="f06-devops-chip" class="clip" data-start="0" data-duration="7.5" data-track-index="3">
+    aiden for devops
+  </div>
+
+  <!-- Track 4: review strip — enters on the baked punch at 3.5s (Scene 3) -->
+  <div data-hf-id="hf-tcs6" id="f06-devops-review-strip" class="clip" data-start="3.5" data-duration="4" data-track-index="4">
+    <div data-hf-id="hf-5p7n" id="f06-devops-review-rule"></div>
+    <div data-hf-id="hf-hyc8" id="f06-devops-review-label">reviewed</div>
+  </div>
+
+  <!-- Track 5: catalogue number — top-right chrome mark -->
+  <div data-hf-id="hf-m8h9" id="f06-devops-num" class="clip" data-start="0" data-duration="7.5" data-track-index="5">
+    06
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script>
+  window.__timelines = window.__timelines || {};
+
+  const tl = gsap.timeline({ paused: true });
+
+  // ── Scene 1 (0.0 – 0.6s): frame border + chip + num enter ───────────────
+
+  // Frame border: scale-settle from slight undershoot → full, opacity 0→1
+  tl.fromTo(
+    "#f06-devops-frame",
+    { opacity: 0, scale: 0.974, transformOrigin: "center center" },
+    { opacity: 1, scale: 1,     duration: 0.5, ease: "power2.out" },
+    0
+  );
+
+  // Chip: drop in from slightly above
+  tl.fromTo(
+    "#f06-devops-chip",
+    { opacity: 0, y: -10 },
+    { opacity: 1, y: 0, duration: 0.38, ease: "power2.out" },
+    0.12
+  );
+
+  // Catalogue number: fade in quietly
+  tl.fromTo(
+    "#f06-devops-num",
+    { opacity: 0 },
+    { opacity: 1, duration: 0.4, ease: "none" },
+    0.22
+  );
+
+  // ── Scene 2 (0.6 – 3.5s): footage plays — barely-perceptible micro-drift ─
+
+  // Very slight scale breathe on the frame border while footage runs
+  tl.to(
+    "#f06-devops-frame",
+    { scale: 1.004, transformOrigin: "center center", duration: 2.9, ease: "sine.inOut" },
+    0.6
+  );
+
+  // ── Scene 3 (3.5 – 7.0s): baked punch lands — review strip reveals ───────
+
+  // Review strip: slide in from left
+  tl.fromTo(
+    "#f06-devops-review-strip",
+    { opacity: 0, x: -16 },
+    { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" },
+    3.5
+  );
+
+  // Review rule bar: grow from left edge (scaleX 0→1)
+  tl.fromTo(
+    "#f06-devops-review-rule",
+    { scaleX: 0, transformOrigin: "left center" },
+    { scaleX: 1, duration: 0.26, ease: "power2.out" },
+    3.5
+  );
+
+  // Chip: brief fire-orange flash on the punch beat, then settle
+  tl.to(
+    "#f06-devops-chip",
+    { color: "#facc15", borderColor: "#facc15", duration: 0.16, ease: "power2.out" },
+    3.5
+  );
+  tl.to(
+    "#f06-devops-chip",
+    { color: "#9aa0ac", borderColor: "#282826", duration: 0.72, ease: "power1.in" },
+    3.7
+  );
+
+  // Frame border: brief accent flash on punch, then fade back
+  tl.to(
+    "#f06-devops-frame",
+    { borderColor: "rgba(250,204,21,0.5)", duration: 0.16, ease: "power2.out" },
+    3.5
+  );
+  tl.to(
+    "#f06-devops-frame",
+    { borderColor: "#282826", duration: 0.88, ease: "power1.in" },
+    3.7
+  );
+
+  // Held playout (3.76 – 7.0s): composition settles; no exits (assembler owns transition)
+
+  window.__timelines["06-devops"] = tl;
+</script>
+</template>

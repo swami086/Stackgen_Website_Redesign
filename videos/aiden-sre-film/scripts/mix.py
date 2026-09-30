@@ -29,7 +29,7 @@ def build_cmd(mode):
     else:
         fg.append(f"anullsrc=r=48000:cl=stereo,atrim=0:{dur}[sfxbus]")
     fg.append("[sfxbus]asplit=2[sfx][sfxstem]")
-    cmd += ["-stream_loop", "-1", "-i", str(A / "music/bed.wav")]
+    cmd += ["-stream_loop", "-1", "-i", str(A / "music/eleven-bed.wav")]
     fg.append(f"[{n}:a]{ST},atrim=0:{dur},loudnorm=I=-22:TP=-2,afade=t=out:st={max(dur - 3, 0)}:d=3[mus]")
     fg.append("[mus][vokey]sidechaincompress=threshold=0.03:ratio=6:attack=120:release=400[musduck]")
     fg.append("[musduck]asplit=2[mus][musstem]")

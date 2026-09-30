@@ -1,0 +1,269 @@
+<template>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@font-face {
+  font-family: "Geist Variable";
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+  src: url("assets/fonts/GeistVariable-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist Mono Variable";
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+  src: url("assets/fonts/GeistMonoVariable-Regular.woff2") format("woff2");
+}
+
+/* ─── Composition root ─────────────────────────────────────────── */
+#root {
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+  container-type: size;
+  font-family: "Geist Variable", sans-serif;
+}
+
+/* Shared clip geometry — full-frame box */
+.clip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── Background ──────────────────────────────────────────────── */
+#f04-four-personas-bg {
+  background: #0b0c0e;
+}
+
+/* ─── Title area ──────────────────────────────────────────────── */
+#f04-four-personas-title {
+  position: absolute;
+  top: 148px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-family: "Geist Variable", sans-serif;
+  font-size: 3.3cqw;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
+#f04-four-personas-clause1 {
+  color: #e8eaee;
+}
+
+#f04-four-personas-clause2 {
+  color: #facc15;
+}
+
+/* ─── Connector rail ──────────────────────────────────────────── */
+/* Sits at the top edge of the card row — "shared memory" hairline */
+#f04-four-personas-connector {
+  position: absolute;
+  top: 340px;
+  left: 106px;
+  right: 106px;
+  height: 1px;
+  background: rgba(250, 204, 21, 0.5);
+}
+
+/* ─── Cards row ───────────────────────────────────────────────── */
+#f04-four-personas-row {
+  position: absolute;
+  top: 340px;
+  left: 106px;
+  right: 106px;
+  display: flex;
+  gap: 24px;
+}
+
+.f04-four-personas-card {
+  flex: 1;
+  border: 1px solid #282826;
+  background: #1a1a18;
+  padding: 2.6cqw 1.8cqw;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3cqw;
+  height: 490px;
+}
+
+/* Kicker: fire-orange mono label */
+.f04-four-personas-num {
+  font-family: "Geist Mono Variable", monospace;
+  font-size: 0.72cqw;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #facc15;
+  transform-origin: 50% 50%;
+}
+
+/* Product name: cream, lowercase display */
+.f04-four-personas-product {
+  font-family: "Geist Variable", sans-serif;
+  font-size: 2.4cqw;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: #e8eaee;
+  transform-origin: 50% 50%;
+}
+
+/* Job line: muted cream, body weight */
+.f04-four-personas-job {
+  font-family: "Geist Variable", sans-serif;
+  font-size: 1.1cqw;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #9aa0ac;
+  transform-origin: 50% 50%;
+}
+</style>
+
+<div data-hf-id="hf-cpu6" id="root" data-composition-id="04-four-personas" data-start="0" data-duration="9.3" data-width="1920" data-height="1080">
+
+  <!-- Track 0 — ink-black ground (full duration) -->
+  <div data-hf-id="hf-s3e3" id="f04-four-personas-bg" class="clip" data-start="0" data-duration="9.3" data-track-index="0"></div>
+
+  <!-- Track 1 — title (full duration, two clauses reveal sequentially) -->
+  <div data-hf-id="hf-vdqu" id="f04-four-personas-title-clip" class="clip" data-start="0" data-duration="9.3" data-track-index="1">
+    <div data-hf-id="hf-yqs1" id="f04-four-personas-title">
+      <span data-hf-id="hf-m80i" id="f04-four-personas-clause1">four persona agents.</span><span data-hf-id="hf-8qib" id="f04-four-personas-clause2"> one shared memory.</span>
+    </div>
+  </div>
+
+  <!-- Track 2 — connector rail (starts at 1.8s, draws on scene 2) -->
+  <div data-hf-id="hf-5ena" id="f04-four-personas-connector-clip" class="clip" data-start="1.8" data-duration="7.5" data-track-index="2">
+    <div data-hf-id="hf-vr2y" id="f04-four-personas-connector"></div>
+  </div>
+
+  <!-- Track 3 — card row (full duration; shells appear scene 1, content scene 3) -->
+  <div data-hf-id="hf-uyil" id="f04-four-personas-cards-clip" class="clip" data-start="0" data-duration="9.3" data-track-index="3">
+    <div data-hf-id="hf-aidf" id="f04-four-personas-row">
+
+      <!-- Card 1: InfraOps — populates @3.6s -->
+      <div data-hf-id="hf-6sgw" id="f04-four-personas-card-1" class="f04-four-personas-card">
+        <div data-hf-id="hf-jq8r" id="f04-four-personas-num-1" class="f04-four-personas-num">01</div>
+        <div data-hf-id="hf-vewa" id="f04-four-personas-product-1" class="f04-four-personas-product">aiden for infraops</div>
+        <div data-hf-id="hf-9hjr" id="f04-four-personas-job-1" class="f04-four-personas-job">intent to policy-checked change</div>
+      </div>
+
+      <!-- Card 2: DevOps — populates @4.4s -->
+      <div data-hf-id="hf-fgcr" id="f04-four-personas-card-2" class="f04-four-personas-card">
+        <div data-hf-id="hf-9xox" id="f04-four-personas-num-2" class="f04-four-personas-num">02</div>
+        <div data-hf-id="hf-xiky" id="f04-four-personas-product-2" class="f04-four-personas-product">aiden for devops</div>
+        <div data-hf-id="hf-7bvt" id="f04-four-personas-job-2" class="f04-four-personas-job">triage the ticket queue</div>
+      </div>
+
+      <!-- Card 3: Observability — populates @5.2s -->
+      <div data-hf-id="hf-bi8q" id="f04-four-personas-card-3" class="f04-four-personas-card">
+        <div data-hf-id="hf-0e1r" id="f04-four-personas-num-3" class="f04-four-personas-num">03</div>
+        <div data-hf-id="hf-qyu3" id="f04-four-personas-product-3" class="f04-four-personas-product">aiden for observability</div>
+        <div data-hf-id="hf-dynq" id="f04-four-personas-job-3" class="f04-four-personas-job">correlate the signal</div>
+      </div>
+
+      <!-- Card 4: SRE — populates @7.1s -->
+      <div data-hf-id="hf-sqj1" id="f04-four-personas-card-4" class="f04-four-personas-card">
+        <div data-hf-id="hf-833l" id="f04-four-personas-num-4" class="f04-four-personas-num">04</div>
+        <div data-hf-id="hf-dcaj" id="f04-four-personas-product-4" class="f04-four-personas-product">aiden for sre</div>
+        <div data-hf-id="hf-yl2g" id="f04-four-personas-job-4" class="f04-four-personas-job">root cause, remediated</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  window.__timelines = window.__timelines || {};
+
+  var tl = gsap.timeline({ paused: true });
+  window.__timelines["04-four-personas"] = tl;
+
+  // ── Scene 1 (0.0–1.8s) ─────────────────────────────────────────
+  // Clause 1: "four persona agents." slides + fades in
+  tl.fromTo(
+    "#f04-four-personas-clause1",
+    { opacity: 0, y: -12 },
+    { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
+    0.15
+  );
+
+  // Four card shells spring in as empty bordered boxes (content hidden via fromTo)
+  [1, 2, 3, 4].forEach(function (n, i) {
+    tl.fromTo(
+      "#f04-four-personas-card-" + n,
+      { opacity: 0, y: 36 },
+      { opacity: 1, y: 0, duration: 0.65, ease: "power3.out" },
+      0.28 + i * 0.1
+    );
+  });
+
+  // ── Scene 2 (1.8–3.6s) ─────────────────────────────────────────
+  // Clause 2: " one shared memory." fades in (fire-orange)
+  tl.fromTo(
+    "#f04-four-personas-clause2",
+    { opacity: 0 },
+    { opacity: 1, duration: 0.42, ease: "power3.out" },
+    1.8
+  );
+
+  // Connector rail draws left → right across card tops
+  tl.fromTo(
+    "#f04-four-personas-connector",
+    { scaleX: 0, transformOrigin: "left center" },
+    { scaleX: 1, duration: 0.92, ease: "power2.out" },
+    2.08
+  );
+
+  // ── Scene 3 (3.6–8.8s): cards populate on spoken names ─────────
+  // InfraOps @3.6 · DevOps @4.4 · Observability @5.2 · SRE @7.1
+  var cues = [
+    { id: "1", t: 3.6  },
+    { id: "2", t: 4.4  },
+    { id: "3", t: 5.2  },
+    { id: "4", t: 7.1  }
+  ];
+
+  cues.forEach(function (cue) {
+    var id = cue.id;
+    var t  = cue.t;
+
+    // Kicker number snaps first
+    tl.fromTo(
+      "#f04-four-personas-num-" + id,
+      { scale: 0, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.42, ease: "power3.out" },
+      t
+    );
+
+    // Product name springs in with a small y rise
+    tl.fromTo(
+      "#f04-four-personas-product-" + id,
+      { scale: 0, opacity: 0, y: 10 },
+      { scale: 1, opacity: 1, y: 0, duration: 0.52, ease: "power3.out" },
+      t + 0.05
+    );
+
+    // Job line settles last
+    tl.fromTo(
+      "#f04-four-personas-job-" + id,
+      { scale: 0, opacity: 0, y: 8 },
+      { scale: 1, opacity: 1, y: 0, duration: 0.46, ease: "power3.out" },
+      t + 0.11
+    );
+  });
+}());
+</script>
+</template>

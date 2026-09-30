@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      @font-face {
+        font-family: "Geist";
+        src: url("assets/fonts/Geist_Variable.woff2") format("woff2");
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: "Geist Mono";
+        src: url("assets/fonts/GeistMono_Variable.woff2") format("woff2");
+        font-weight: 100 900;
+        font-display: block;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+      }
+      body {
+        background: radial-gradient(ellipse at center, #16171c 0%, #0b0c0e 78%);
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+      }
+      /* Camera: bounded scale + tiny clamped pan on the WHOLE card. */
+      #stage {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        will-change: transform;
+      }
+      /* Showcase card: chrome bar + [screen | script rail]. StackGen dark tokens.
+         Type ramp: 12 / 16 / 24 (max:min = 2.0). */
+      #card {
+        width: 1700px;
+        border-radius: 18px;
+        overflow: hidden;
+        background: #151619;
+        border: 1px solid #2a2c33;
+      }
+      #chrome {
+        height: 64px;
+        background: #151619;
+        border-bottom: 1px solid #2a2c33;
+        display: flex;
+        align-items: center;
+        padding: 14px 22px;
+        position: relative;
+      }
+      .dots {
+        display: flex;
+        gap: 9px;
+      }
+      .dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #3a3d45;
+      }
+      #url {
+        display: none;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #1d1f24;
+        border: 1px solid #2a2c33;
+        color: #9aa0ac;
+        font: 500 16px/1 "Geist", ui-sans-serif, system-ui, sans-serif;
+        padding: 10px 24px;
+        border-radius: 999px;
+      }
+      #body {
+        display: flex;
+      }
+      /* ---- screen: complete product UI, never cropped ---- */
+      #screen {
+        position: relative;
+        width: 1360px;
+        height: 758.68px;
+        overflow: hidden;
+        background: #0b0c0e;
+      }
+      #src {
+        position: absolute;
+        width: 1511.111px;
+        height: 850px;
+        left: -75.556px;
+        top: -62.963px;
+        display: block;
+      }
+      /* ---- script rail (right side) ---- */
+      #rail {
+        width: 340px;
+        flex: none;
+        background: #101114;
+        border-left: 1px solid #2a2c33;
+        display: flex;
+        flex-direction: column;
+        padding: 22px 18px 18px 18px;
+      }
+      #stages {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      /* stepper connector hairline */
+      #stages::before {
+        content: "";
+        position: absolute;
+        left: 26px;
+        top: 24px;
+        bottom: 24px;
+        width: 1px;
+        background: #2a2c33;
+      }
+      .stage {
+        position: relative;
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 14px 12px;
+        border-radius: 10px;
+        background: transparent;
+      }
+      .st-bar {
+        position: absolute;
+        left: 0;
+        top: 12px;
+        bottom: 12px;
+        width: 3px;
+        border-radius: 2px;
+        background: #facc15;
+        opacity: 0;
+      }
+      .st-num {
+        font: 500 12px/1.3 "Geist Mono", ui-monospace, monospace;
+        color: #7e8591;
+        background: #101114;
+        padding: 3px 4px;
+        border-radius: 4px;
+        position: relative;
+      }
+      .st-text {
+        min-width: 0;
+      }
+      .st-title {
+        font: 600 24px/1.25 "Geist", ui-sans-serif, system-ui, sans-serif;
+        color: #7e8591;
+      }
+      .st-desc {
+        font: 400 16px/1.4 "Geist", ui-sans-serif, system-ui, sans-serif;
+        color: #9aa0ac;
+        margin-top: 5px;
+      }
+      .st-check {
+        margin-left: auto;
+        color: #4ade80;
+        opacity: 0;
+        font: 600 16px/1.3 "Geist", ui-sans-serif, system-ui, sans-serif;
+      }
+      /* Running event sequence under the active stage's title: captions
+         accumulate (height 0 -> auto append), previous lines dim, handoff
+         lines land yellow. Collapsed for inactive/completed stages. */
+      .st-caps {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+      }
+      .st-cap {
+        height: 0;
+        opacity: 0;
+        overflow: hidden;
+        font: 500 16px/1.45 "Geist", ui-sans-serif, system-ui, sans-serif;
+        color: #f3f4f6;
+      }
+      .st-cap:first-child {
+        margin-top: 10px;
+      }
+      .st-cap.handoff {
+        color: #fde047;
+      }
+      /* stage 1 starts active (initial state, seek(0)-safe) */
+      #st1 {
+        background: rgba(250, 204, 21, 0.08);
+      }
+      #st1 .st-bar {
+        opacity: 1;
+      }
+      #st1 .st-title {
+        color: #f3f4f6;
+      }
+      #st1 .st-num {
+        color: #fde047;
+      }
+      #st1 .st-caps {
+        max-height: 170px;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="109.1757"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="stage">
+        <div id="card">
+          <div id="chrome">
+            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div id="url" aria-hidden="true"></div>
+          </div>
+          <div id="body">
+            <div id="screen" data-layout-allow-overflow>
+              <video
+                id="src"
+                class="clip"
+                src="assets/Combined_Hero.mp4"
+                data-start="0"
+                data-duration="109.1757"
+                data-playback-rate="0.75"
+                data-track-index="0"
+                muted
+                playsinline
+              ></video>
+            </div>
+            <div id="rail">
+              <div id="stages">
+                <div class="stage" id="st1">
+                  <div class="st-bar"></div>
+                  <div class="st-num">01</div>
+                  <div class="st-text">
+                    <div class="st-title">Aiden for InfraOps</div>
+                    <div class="st-desc">Developer intent → infra deployment</div>
+                    <div class="st-caps">
+                      <div class="st-cap">Developer intent to infra deployment</div>
+                      <div class="st-cap">Choose environment to deploy</div>
+                      <div class="st-cap">Deployment in progress</div>
+                      <div class="st-cap">Post-deployment audit record → ServiceNow</div>
+                    </div>
+                  </div>
+                  <div class="st-check">✓</div>
+                </div>
+                <div class="stage" id="st2">
+                  <div class="st-bar"></div>
+                  <div class="st-num">02</div>
+                  <div class="st-text">
+                    <div class="st-title">Aiden for DevOps</div>
+                    <div class="st-desc">ServiceNow requests → Observability data pipelines</div>
+                    <div class="st-caps">
+                      <div class="st-cap handoff">Handoff → Aiden for DevOps</div>
+                      <div class="st-cap">Central processing of ServiceNow requests</div>
+                      <div class="st-cap">Provision just-in-time Observability data pipelines</div>
+                    </div>
+                  </div>
+                  <div class="st-check">✓</div>
+                </div>
+                <div class="stage" id="st3">
+                  <div class="st-bar"></div>
+                  <div class="st-num">03</div>
+                  <div class="st-text">
+                    <div class="st-title">Aiden for Observability</div>
+                    <div class="st-desc">Loki · Prometheus · Jaeger · Grafana</div>
+                    <div class="st-caps">
+                      <div class="st-cap handoff">Handoff → Aiden for Observability</div>
+                      <div class="st-cap">Natural language query on the dashboard</div>
+                      <div class="st-cap">Managed Loki · Prometheus · Jaeger · Grafana</div>
+                    </div>
+                  </div>
+                  <div class="st-check">✓</div>
+                </div>
+                <div class="stage" id="st4">
+                  <div class="st-bar"></div>
+                  <div class="st-num">04</div>
+                  <div class="st-text">
+                    <div class="st-title">Aiden for SRE</div>
+                    <div class="st-desc">Autonomous RCA → runbooks</div>
+                    <div class="st-caps">
+                      <div class="st-cap handoff">Handoff → Aiden for SRE</div>
+                      <div class="st-cap">Autonomous RCA with organizational knowledge</div>
+                      <div class="st-cap">Root cause identified</div>
+                      <div class="st-cap">Remediation</div>
+                      <div class="st-cap">Learnings &amp; memory → runbooks</div>
+                    </div>
+                  </div>
+                  <div class="st-check">✓</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const stageEl = document.getElementById("stage");
+      const cam = { s: 1, x: 0, y: 0 };
+      function applyCamera() {
+        stageEl.style.transform =
+          "translate(" + cam.x + "%, " + cam.y + "%) scale(" + cam.s + ")";
+      }
+      applyCamera();
+
+      // Source plays at 0.75x (data-playback-rate): a source moment at time t
+      // appears on the composition timeline at t / RATE. All schedules below
+      // are authored in SOURCE time and converted with T().
+      const RATE = 0.75;
+      const T = (t) => t / RATE;
+
+      const CARD_W = 1700;
+      const CARD_H = 822.68;
+      const PUNCH = 0.35;
+      const HOLD = 1.3;
+      const RELEASE = 0.6;
+
+      function clampPan(v, s, axis) {
+        const frame = axis === "x" ? 1920 : 1080;
+        const card = axis === "x" ? CARD_W : CARD_H;
+        const m = ((Math.max(0, (frame - card * s) / 2) / frame) * 100) - 0.15;
+        return Math.max(-m, Math.min(m, v));
+      }
+      function beatPose(b) {
+        return {
+          s: b.s,
+          x: clampPan((50 - b.ax) * 0.15, b.s, "x"),
+          y: clampPan((50 - b.ay) * 0.15, b.s, "y"),
+        };
+      }
+
+      // Camera beats — logical zooms on what is happening on screen (source
+      // time). Screen sits on the LEFT of the card now, so x-anchors are
+      // shifted ~20 points left of the previous left-rail layout.
+      const SCRIPT = [
+        { t: 10.0, s: 1.06, ax: 27, ay: 45 }, // choose environment
+        { t: 20.8, s: 1.06, ax: 27, ay: 45 }, // deploy complete + ServiceNow audit
+        { t: 25.3, s: 1.08, ax: 30, ay: 42 }, // incident detected (DevOps entry)
+        { t: 38.6, s: 1.06, ax: 28, ay: 46 }, // proposed change (pipeline provision)
+        { t: 43.9, s: 1.06, ax: 28, ay: 48 }, // approval gate
+        { t: 52.4, s: 1.08, ax: 27, ay: 45 }, // correlation complete
+        { t: 68.5, s: 1.08, ax: 27, ay: 45 }, // root cause identified
+        { t: 74.6, s: 1.06, ax: 27, ay: 46 }, // remediation
+      ];
+
+      // Running event sequence per stage (source time; h = handoff line,
+      // lands yellow then dims like the rest when the next line arrives).
+      const CAPTIONS = [
+        { t: 0.5, st: 1 },
+        { t: 9.6, st: 1 },
+        { t: 14.6, st: 1 },
+        { t: 20.0, st: 1 },
+        { t: 24.3, st: 2, h: true },
+        { t: 27.0, st: 2 },
+        { t: 38.0, st: 2 },
+        { t: 46.3, st: 3, h: true },
+        { t: 49.0, st: 3 },
+        { t: 52.2, st: 3 },
+        { t: 58.3, st: 4, h: true },
+        { t: 61.0, st: 4 },
+        { t: 68.2, st: 4 },
+        { t: 74.2, st: 4 },
+        { t: 77.6, st: 4 },
+      ];
+
+      // Stage rail handoffs (source time).
+      const HANDOFFS = [
+        { t: 24.3, from: "st1", to: "st2" },
+        { t: 46.3, from: "st2", to: "st3" },
+        { t: 58.3, from: "st3", to: "st4" },
+      ];
+
+      const tl = gsap.timeline({ paused: true });
+
+      // camera
+      let tcur = 0;
+      for (const b of SCRIPT) {
+        const tgt = beatPose(b);
+        const cruise = { s: 1 + (tgt.s - 1) * 0.35, x: tgt.x * 0.4, y: tgt.y * 0.4 };
+        const tPunchStart = T(b.t) - PUNCH;
+        if (tPunchStart > tcur + 0.05) {
+          tl.to(cam, { s: cruise.s, x: cruise.x, y: cruise.y, duration: tPunchStart - tcur, ease: "none", onUpdate: applyCamera }, tcur);
+        }
+        tl.to(cam, { s: tgt.s, x: tgt.x, y: tgt.y, duration: PUNCH, ease: "power3.out", onUpdate: applyCamera }, tPunchStart);
+        tl.to(cam, { s: 1, x: 0, y: 0, duration: RELEASE, ease: "power2.inOut", onUpdate: applyCamera }, T(b.t) + HOLD);
+        tcur = T(b.t) + HOLD + RELEASE;
+      }
+
+      // captions — running sequence: each line appends (height 0 -> auto),
+      // previous line in the same stage dims to secondary.
+      const caps = document.querySelectorAll(".st-cap");
+      CAPTIONS.forEach((c, i) => {
+        const el = caps[i];
+        tl.to(el, { height: "auto", opacity: 1, duration: 0.4, ease: "power1.out" }, T(c.t));
+        const prev = caps[i - 1];
+        if (prev && CAPTIONS[i - 1].st === c.st) {
+          tl.to(prev, { color: "#7e8591", duration: 0.3 }, T(c.t));
+        }
+      });
+
+      // stage handoffs — active stage highlighted yellow; completed stage's
+      // event list collapses, next stage's list expands.
+      for (const h of HANDOFFS) {
+        const from = document.getElementById(h.from);
+        const to = document.getElementById(h.to);
+        tl.to(from.querySelector(".st-bar"), { opacity: 0, duration: 0.4 }, T(h.t));
+        tl.to(from.querySelector(".st-title"), { color: "#9aa0ac", duration: 0.4 }, T(h.t));
+        tl.to(from.querySelector(".st-num"), { color: "#7e8591", duration: 0.4 }, T(h.t));
+        tl.to(from, { backgroundColor: "rgba(250,204,21,0)", duration: 0.4 }, T(h.t));
+        tl.to(from.querySelector(".st-caps"), { maxHeight: 0, opacity: 0, duration: 0.4 }, T(h.t));
+        tl.to(from.querySelector(".st-check"), { opacity: 1, duration: 0.4 }, T(h.t) + 0.1);
+        tl.to(to.querySelector(".st-bar"), { opacity: 1, duration: 0.4 }, T(h.t));
+        tl.to(to.querySelector(".st-title"), { color: "#f3f4f6", duration: 0.4 }, T(h.t));
+        tl.to(to.querySelector(".st-num"), { color: "#fde047", duration: 0.4 }, T(h.t));
+        tl.to(to, { backgroundColor: "rgba(250,204,21,0.08)", duration: 0.4 }, T(h.t));
+        tl.to(to.querySelector(".st-caps"), { maxHeight: 170, opacity: 1, duration: 0.4 }, T(h.t));
+      }
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

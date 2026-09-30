@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/jira-mock.css" />
+  </head>
+  <body>
+    <!--
+      V3 v6.3 plate — picture only (no VO / no BGM / no caption pills).
+      Camera: regional focus-zoom on #world only (transform-origin top-left).
+      Safe pose: scale capped so target fits with PAD; translate clamped so
+      left-aligned Jira text is never cropped (fixes “enkins is broken”).
+      Clueso owns Chris VO + Soft BGM. Script: SCRIPT.md v6.3.
+    -->
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="36.5"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="stage">
+        <div id="card">
+          <div id="chrome">
+            <div class="dots">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+          </div>
+          <div id="screen" data-layout-allow-overflow>
+            <div id="world" data-layout-allow-overflow>
+              <!-- 0–12s list · 5–12s zoom Jenkins row -->
+              <div class="scene on" id="scene-list">
+                <div class="j-app">
+                  <div class="j-top">
+                    <div class="j-logo">
+                      <svg
+                        class="j-logo-mark"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill="#2684FF"
+                          d="M11.571 11.513H0a5.218 5.218 0 0 0 5.232 5.215h2.13v2.057A5.215 5.215 0 0 0 12.575 24V12.518a1.005 1.005 0 0 0-1.005-1.005zm5.723-5.756H5.736a5.215 5.215 0 0 0 5.215 5.214h2.129v2.058a5.218 5.218 0 0 0 5.215 5.214V6.758a1.001 1.001 0 0 0-1.001-1.001zM23.013 0H11.455a5.215 5.215 0 0 0 5.215 5.215h2.129v2.057A5.215 5.215 0 0 0 24 12.483V1.005A1.001 1.001 0 0 0 23.013 0Z"
+                        />
+                      </svg>
+                      Jira
+                    </div>
+                    <div class="j-search">Search</div>
+                    <button class="j-create" type="button">+ Create</button>
+                    <div class="j-top-right">
+                      <div class="j-icon">bell<span class="j-badge">9+</span></div>
+                      <div class="j-avatar">OK</div>
+                    </div>
+                  </div>
+                  <div class="j-body">
+                    <aside class="j-side">
+                      <div class="j-side-sec">For you</div>
+                      <div class="j-side-item">Home</div>
+                      <div class="j-side-sec">Spaces</div>
+                      <div class="j-side-item active">
+                        <span class="dot-p"></span>SRE Ticket Queue
+                      </div>
+                      <div class="j-side-item">Platform Eng</div>
+                      <div class="j-side-sec">Recent</div>
+                      <div class="j-side-item">Lower Env Ops</div>
+                    </aside>
+                    <div class="j-main">
+                      <div class="j-crumbs">Spaces / <b>SRE Ticket Queue</b></div>
+                      <div class="j-proj">
+                        <div class="j-proj-icon">FD</div>
+                        <h1>SRE Ticket Queue</h1>
+                      </div>
+                      <div class="j-tabs">
+                        <div class="j-tab">Summary</div>
+                        <div class="j-tab on">List</div>
+                        <div class="j-tab">Board</div>
+                        <div class="j-tab">Calendar</div>
+                        <div class="j-tab">Timeline</div>
+                      </div>
+                      <div class="j-toolbar">
+                        <div class="j-ask">Ask AI</div>
+                        <div class="j-search-work">Search work</div>
+                        <div class="j-avs" data-layout-allow-occlusion>
+                          <div class="j-avatar">OK</div>
+                          <div class="j-avatar o">AR</div>
+                          <div class="j-avatar t">NS</div>
+                        </div>
+                        <div class="j-chip">Filter</div>
+                        <div class="j-chip">Group</div>
+                      </div>
+                      <div class="j-table-wrap">
+                        <table class="j-table">
+                          <thead>
+                            <tr>
+                              <th style="width: 36px"></th>
+                              <th>Work</th>
+                              <th>Assignee</th>
+                              <th>Priority</th>
+                              <th>Status</th>
+                              <th>Reporter</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="hi" id="row-jenkins">
+                              <td></td>
+                              <td>
+                                <div class="work">
+                                  <span class="bug-ico"></span>
+                                  <span class="key">FD-1041</span>
+                                  <span class="title">Jenkins is broken</span>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm g">?</span>Unassigned
+                                </div>
+                              </td>
+                              <td>
+                                <div class="pri"><span class="phs">HH</span> Highest</div>
+                              </td>
+                              <td><span class="status todo">TO DO</span></td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm o">DV</span>dev.contractor
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td>
+                                <div class="work">
+                                  <span class="task-ico"></span>
+                                  <span class="key">FD-1038</span>
+                                  <span class="title">Restart worker-service-7b94 pod</span>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm">OK</span>On-call
+                                </div>
+                              </td>
+                              <td>
+                                <div class="pri"><span class="ph">H</span> High</div>
+                              </td>
+                              <td><span class="status todo">TO DO</span></td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm t">PL</span>platform
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td>
+                                <div class="work">
+                                  <span class="task-ico"></span>
+                                  <span class="key">FD-1035</span>
+                                  <span class="title">TLS cert expiring — api.internal in 6 days</span>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm o">AR</span>Arun
+                                </div>
+                              </td>
+                              <td>
+                                <div class="pri"><span class="ph">H</span> High</div>
+                              </td>
+                              <td><span class="status todo">TO DO</span></td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm">SE</span>security
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td>
+                                <div class="work">
+                                  <span class="task-ico"></span>
+                                  <span class="key">FD-1029</span>
+                                  <span class="title">Grant staging deploy access for team-payments</span>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm g">?</span>Unassigned
+                                </div>
+                              </td>
+                              <td>
+                                <div class="pri"><span class="pm">M</span> Medium</div>
+                              </td>
+                              <td><span class="status todo">TO DO</span></td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm o">DV</span>dev.lead
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td>
+                                <div class="work">
+                                  <span class="task-ico"></span>
+                                  <span class="key">FD-1022</span>
+                                  <span class="title">Disk cleanup on shared-env-3</span>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm t">NS</span>Nigel
+                                </div>
+                              </td>
+                              <td>
+                                <div class="pri"><span class="pm">M</span> Medium</div>
+                              </td>
+                              <td><span class="status prog">IN PROGRESS</span></td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm">MO</span>monitor
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td>
+                                <div class="work">
+                                  <span class="bug-ico"></span>
+                                  <span class="key">FD-1017</span>
+                                  <span class="title">Build failed — no logs attached</span>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm g">?</span>Unassigned
+                                </div>
+                              </td>
+                              <td>
+                                <div class="pri"><span class="pm">M</span> Medium</div>
+                              </td>
+                              <td><span class="status todo">TO DO</span></td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm o">DV</span>dev.contractor
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td>
+                                <div class="work">
+                                  <span class="task-ico"></span>
+                                  <span class="key">FD-1011</span>
+                                  <span class="title">Firewall closed to lower-env registry</span>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm">OK</span>On-call
+                                </div>
+                              </td>
+                              <td>
+                                <div class="pri"><span class="ph">H</span> High</div>
+                              </td>
+                              <td><span class="status todo">TO DO</span></td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm t">NE</span>network
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 12–25s sparse issue -->
+              <div class="scene" id="scene-issue">
+                <div class="j-app">
+                  <div class="j-top">
+                    <div class="j-logo">
+                      <svg
+                        class="j-logo-mark"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill="#2684FF"
+                          d="M11.571 11.513H0a5.218 5.218 0 0 0 5.232 5.215h2.13v2.057A5.215 5.215 0 0 0 12.575 24V12.518a1.005 1.005 0 0 0-1.005-1.005zm5.723-5.756H5.736a5.215 5.215 0 0 0 5.215 5.214h2.129v2.058a5.218 5.218 0 0 0 5.215 5.214V6.758a1.001 1.001 0 0 0-1.001-1.001zM23.013 0H11.455a5.215 5.215 0 0 0 5.215 5.215h2.129v2.057A5.215 5.215 0 0 0 24 12.483V1.005A1.001 1.001 0 0 0 23.013 0Z"
+                        />
+                      </svg>
+                      Jira
+                    </div>
+                    <div class="j-search">Search</div>
+                    <button class="j-create" type="button">+ Create</button>
+                    <div class="j-top-right"><div class="j-avatar">OK</div></div>
+                  </div>
+                  <div class="j-body">
+                    <aside class="j-side">
+                      <div class="j-side-sec">Spaces</div>
+                      <div class="j-side-item active">
+                        <span class="dot-p"></span>SRE Ticket Queue
+                      </div>
+                    </aside>
+                    <div class="j-issue" style="flex: 1">
+                      <div class="j-issue-main">
+                        <div class="j-crumbs" style="padding-left: 0">
+                          Spaces / SRE Ticket Queue / List
+                        </div>
+                        <div class="j-issue-key"><span class="bug-ico"></span> FD-1041</div>
+                        <div class="j-issue-title">Jenkins is broken</div>
+                        <div class="j-label">Description</div>
+                        <div class="j-desc" id="empty-desc" data-layout-allow-occlusion>
+                          Add a description…
+                        </div>
+                        <div class="j-label">Activity</div>
+                        <div class="j-activity">
+                          <div class="j-act-tabs">
+                            <span class="on">Comments</span><span>History</span><span>Work log</span>
+                          </div>
+                          <div class="j-comment">
+                            <span class="j-avatar sm o">DV</span>Add a comment…
+                          </div>
+                        </div>
+                      </div>
+                      <div class="j-issue-side">
+                        <div class="j-status-dd">TO DO</div>
+                        <div class="j-meta-row">
+                          <span class="k">Assignee</span><span class="v">Unassigned</span>
+                        </div>
+                        <div class="j-meta-row">
+                          <span class="k">Priority</span>
+                          <span class="v"
+                            ><span class="pri"><span class="phs">HH</span> Highest</span></span
+                          >
+                        </div>
+                        <div class="j-meta-row">
+                          <span class="k">Labels</span><span class="v">front-door, ci</span>
+                        </div>
+                        <div class="j-meta-row">
+                          <span class="k">Reporter</span><span class="v">dev.contractor</span>
+                        </div>
+                        <div class="j-meta-row">
+                          <span class="k">Created</span><span class="v">12 minutes ago</span>
+                        </div>
+                        <div class="j-label" style="margin-top: 20px">Development</div>
+                        <div class="j-meta-row" id="builds-none">
+                          <span class="k">Builds</span>
+                          <span class="v" style="color: var(--jira-n100)">None linked</span>
+                        </div>
+                        <div class="j-meta-row">
+                          <span class="k">Branch</span>
+                          <span class="v" style="color: var(--jira-n100)">None</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Reveal: brief Aiden chrome (stage as product presence) -->
+              <div class="scene" id="scene-aiden">
+                <video
+                  id="aiden-rca"
+                  class="clip"
+                  src="assets/stage-chat-1920x1080.mp4"
+                  data-start="26"
+                  data-duration="6"
+                  data-media-start="88"
+                  data-track-index="0"
+                  muted
+                  playsinline
+                ></video>
+                <div class="aiden-call" id="aiden-call" data-layout-allow-overlap>
+                  <div class="k">Aiden · front door</div>
+                  <div class="t">Takes the ticket · finds the evidence</div>
+                </div>
+              </div>
+
+              <!-- Breadth — same Jira queue, after Aiden cleared repeat work -->
+              <div class="scene" id="scene-montage">
+                <div class="j-app">
+                  <div class="j-top">
+                    <div class="j-logo">
+                      <svg
+                        class="j-logo-mark"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill="#2684FF"
+                          d="M11.571 11.513H0a5.218 5.218 0 0 0 5.232 5.215h2.13v2.057A5.215 5.215 0 0 0 12.575 24V12.518a1.005 1.005 0 0 0-1.005-1.005zm5.723-5.756H5.736a5.215 5.215 0 0 0 5.215 5.214h2.129v2.058a5.218 5.218 0 0 0 5.215 5.214V6.758a1.001 1.001 0 0 0-1.001-1.001zM23.013 0H11.455a5.215 5.215 0 0 0 5.215 5.215h2.129v2.057A5.215 5.215 0 0 0 24 12.483V1.005A1.001 1.001 0 0 0 23.013 0Z"
+                        />
+                      </svg>
+                      Jira
+                    </div>
+                    <div class="j-search">Search</div>
+                    <button class="j-create" type="button">+ Create</button>
+                    <div class="j-top-right">
+                      <div class="j-icon">bell<span class="j-badge">3</span></div>
+                      <div class="j-avatar">OK</div>
+                    </div>
+                  </div>
+                  <div class="j-body">
+                    <aside class="j-side">
+                      <div class="j-side-sec">For you</div>
+                      <div class="j-side-item">Home</div>
+                      <div class="j-side-sec">Spaces</div>
+                      <div class="j-side-item active">
+                        <span class="dot-p"></span>SRE Ticket Queue
+                      </div>
+                      <div class="j-side-item">Platform Eng</div>
+                      <div class="j-side-sec">Recent</div>
+                      <div class="j-side-item">Lower Env Ops</div>
+                    </aside>
+                    <div class="j-main">
+                      <div class="j-crumbs">Spaces / <b>SRE Ticket Queue</b></div>
+                      <div class="j-proj">
+                        <div class="j-proj-icon">FD</div>
+                        <h1>SRE Ticket Queue</h1>
+                      </div>
+                      <div class="j-tabs">
+                        <div class="j-tab">Summary</div>
+                        <div class="j-tab on">List</div>
+                        <div class="j-tab">Board</div>
+                        <div class="j-tab">Calendar</div>
+                        <div class="j-tab">Timeline</div>
+                      </div>
+                      <div class="j-toolbar">
+                        <div class="j-ask">Ask AI</div>
+                        <div class="j-chip on" id="filter-aiden">Assignee: Aiden</div>
+                        <div class="j-chip">Updated: today</div>
+                        <div class="j-avs" data-layout-allow-occlusion>
+                          <div class="j-avatar aiden">AI</div>
+                          <div class="j-avatar">OK</div>
+                        </div>
+                      </div>
+                      <div class="j-insight" id="aiden-insight">
+                        <span class="j-insight-mark">Aiden</span>
+                        Updated 4 issues in the last hour · context attached · ready for review
+                      </div>
+                      <div class="j-table-wrap">
+                        <table class="j-table">
+                          <thead>
+                            <tr>
+                              <th style="width: 36px"></th>
+                              <th>Work</th>
+                              <th>Assignee</th>
+                              <th>Priority</th>
+                              <th>Status</th>
+                              <th>Updated</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr id="row-m1">
+                              <td></td>
+                              <td>
+                                <div class="work">
+                                  <span class="bug-ico"></span>
+                                  <span class="key">FD-1041</span>
+                                  <span class="title">Jenkins is broken</span>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm aiden">AI</span>Aiden
+                                </div>
+                              </td>
+                              <td>
+                                <div class="pri"><span class="phs">HH</span> Highest</div>
+                              </td>
+                              <td><span class="status done">DONE</span></td>
+                              <td class="muted">2m ago</td>
+                            </tr>
+                            <tr id="row-m2">
+                              <td></td>
+                              <td>
+                                <div class="work">
+                                  <span class="task-ico"></span>
+                                  <span class="key">FD-1018</span>
+                                  <span class="title">Build failed — missing change context</span>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm aiden">AI</span>Aiden
+                                </div>
+                              </td>
+                              <td>
+                                <div class="pri"><span class="pm">M</span> Medium</div>
+                              </td>
+                              <td><span class="status done">DONE</span></td>
+                              <td class="muted">11m ago</td>
+                            </tr>
+                            <tr id="row-m3">
+                              <td></td>
+                              <td>
+                                <div class="work">
+                                  <span class="task-ico"></span>
+                                  <span class="key">FD-1017</span>
+                                  <span class="title">Build failed — no logs attached</span>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm aiden">AI</span>Aiden
+                                </div>
+                              </td>
+                              <td>
+                                <div class="pri"><span class="pm">M</span> Medium</div>
+                              </td>
+                              <td><span class="status done">DONE</span></td>
+                              <td class="muted">28m ago</td>
+                            </tr>
+                            <tr id="row-m4">
+                              <td></td>
+                              <td>
+                                <div class="work">
+                                  <span class="task-ico"></span>
+                                  <span class="key">FD-1029</span>
+                                  <span class="title">Staging deploy access — evidence packed</span>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm">OK</span>On-call
+                                </div>
+                              </td>
+                              <td>
+                                <div class="pri"><span class="pm">M</span> Medium</div>
+                              </td>
+                              <td><span class="status todo">AWAITING APPROVAL</span></td>
+                              <td class="muted">41m ago</td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td>
+                                <div class="work">
+                                  <span class="task-ico"></span>
+                                  <span class="key">FD-1022</span>
+                                  <span class="title">Disk cleanup on shared-env-3</span>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="person">
+                                  <span class="j-avatar sm t">NS</span>Nigel
+                                </div>
+                              </td>
+                              <td>
+                                <div class="pri"><span class="pm">M</span> Medium</div>
+                              </td>
+                              <td><span class="status prog">IN PROGRESS</span></td>
+                              <td class="muted">1h ago</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hero done ticket — CI enrich evidence -->
+              <div class="scene" id="scene-done">
+                <div class="j-app">
+                  <div class="j-top">
+                    <div class="j-logo">
+                      <svg
+                        class="j-logo-mark"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill="#2684FF"
+                          d="M11.571 11.513H0a5.218 5.218 0 0 0 5.232 5.215h2.13v2.057A5.215 5.215 0 0 0 12.575 24V12.518a1.005 1.005 0 0 0-1.005-1.005zm5.723-5.756H5.736a5.215 5.215 0 0 0 5.215 5.214h2.129v2.058a5.218 5.218 0 0 0 5.215 5.214V6.758a1.001 1.001 0 0 0-1.001-1.001zM23.013 0H11.455a5.215 5.215 0 0 0 5.215 5.215h2.129v2.057A5.215 5.215 0 0 0 24 12.483V1.005A1.001 1.001 0 0 0 23.013 0Z"
+                        />
+                      </svg>
+                      Jira
+                    </div>
+                    <div class="j-search">Search</div>
+                    <button class="j-create" type="button">+ Create</button>
+                    <div class="j-top-right"><div class="j-avatar">OK</div></div>
+                  </div>
+                  <div class="j-body">
+                    <aside class="j-side">
+                      <div class="j-side-item active">
+                        <span class="dot-p"></span>SRE Ticket Queue
+                      </div>
+                    </aside>
+                    <div class="j-issue" style="flex: 1">
+                      <div class="j-issue-main">
+                        <div class="j-issue-key"><span class="bug-ico"></span> FD-1041</div>
+                        <div class="j-issue-title">Jenkins is broken</div>
+                        <div class="j-label">Description</div>
+                        <div class="j-desc filled" id="done-desc" data-layout-allow-occlusion>
+                          Aiden enriched this ticket: pipeline <b>payments/deploy #4821</b>, failing
+                          stage <b>integration-test</b>, commit <b>a3f91c2</b>. Build logs attached.
+                          Comment posted to reporter with required fields. Status → Done.
+                        </div>
+                        <div class="j-label">Activity</div>
+                        <div class="j-activity" id="done-hist">
+                          <div class="j-act-tabs"><span class="on">History</span></div>
+                          <div style="font-size: 13px; line-height: 1.6; padding: 8px 0">
+                            <div><b>Aiden</b> · Status changed to Done</div>
+                            <div style="color: var(--jira-n200)">
+                              Evidence panel published · audit FD-1041-run-19
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="j-issue-side">
+                        <div class="j-status-dd done">DONE</div>
+                        <div class="j-meta-row">
+                          <span class="k">Assignee</span><span class="v">Aiden</span>
+                        </div>
+                        <div class="j-meta-row">
+                          <span class="k">Resolution</span><span class="v">Done</span>
+                        </div>
+                        <div class="j-meta-row">
+                          <span class="k">Labels</span><span class="v">front-door, ci, aiden</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="vignette"></div>
+            <div id="caption" aria-hidden="true" data-layout-allow-occlusion data-layout-allow-overlap>
+              <div class="cap-kicker" id="cap-kicker"></div>
+              <div class="cap-line" id="cap-line"></div>
+            </div>
+            <div id="end-card" data-layout-allow-occlusion aria-hidden="true">
+              <div class="end-title">Aiden clears the queue</div>
+              <div class="end-sub">You keep the call · Try Aiden for SRE today</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      #caption {
+        display: none !important;
+      }
+      #end-card {
+        position: absolute;
+        inset: 0;
+        z-index: 9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(8, 12, 24, 0.82);
+        opacity: 0;
+        pointer-events: none;
+      }
+      #end-card .end-title {
+        font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+        font-size: 48px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        color: #fff;
+      }
+      #end-card .end-sub {
+        margin-top: 12px;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+    </style>
+    <script>
+      const world = document.getElementById("world");
+      const vignette = document.getElementById("vignette");
+      const caption = document.getElementById("caption");
+      const endCard = document.getElementById("end-card");
+      const scenes = {
+        list: document.getElementById("scene-list"),
+        issue: document.getElementById("scene-issue"),
+        aiden: document.getElementById("scene-aiden"),
+        montage: document.getElementById("scene-montage"),
+        done: document.getElementById("scene-done"),
+      };
+
+      /* Regional focus-zoom + SAFE inset.
+         Prefer centering, but never crop the target:
+         1) Cap scale so el fits in viewport with PAD
+         2) Clamp Tx/Ty so el edges stay ≥ PAD after transform
+         Scale budget: ~1.22–1.38 region · ≤1.42 control. */
+      const W = 1920;
+      const H = 1080;
+      const PAD = 72;
+      const IN = 1.05;
+      const OUT = 0.95;
+
+      function showScene(id) {
+        for (const k of Object.keys(scenes)) {
+          scenes[k].classList.toggle("on", k === id);
+        }
+      }
+      function clearFocus() {
+        document
+          .querySelectorAll(".focus-row, .focus-block")
+          .forEach((el) => el.classList.remove("focus-row", "focus-block"));
+      }
+      function focusEl(sel, cls) {
+        clearFocus();
+        const el = document.querySelector(sel);
+        if (el) el.classList.add(cls || "focus-block");
+      }
+
+      function measureTarget(sel, sceneId) {
+        showScene(sceneId);
+        const el = document.querySelector(sel);
+        void world.offsetWidth;
+        const wr = world.getBoundingClientRect();
+        const er = el.getBoundingClientRect();
+        return {
+          tx: er.left - wr.left + er.width / 2,
+          ty: er.top - wr.top + er.height / 2,
+          w: er.width,
+          h: er.height,
+        };
+      }
+      function focusPoseSafe(m, desiredS) {
+        const maxByW = (W - 2 * PAD) / Math.max(m.w, 1);
+        const maxByH = (H - 2 * PAD) / Math.max(m.h, 1);
+        const s = Math.max(1.08, Math.min(desiredS, maxByW, maxByH));
+        const left = m.tx - m.w / 2;
+        const right = m.tx + m.w / 2;
+        const top = m.ty - m.h / 2;
+        const bottom = m.ty + m.h / 2;
+        let x = W / 2 - m.tx * s;
+        let y = H / 2 - m.ty * s;
+        const minX = PAD - s * left;
+        const maxX = W - PAD - s * right;
+        const minY = PAD - s * top;
+        const maxY = H - PAD - s * bottom;
+        if (minX <= maxX) x = Math.min(maxX, Math.max(minX, x));
+        else x = (minX + maxX) / 2;
+        if (minY <= maxY) y = Math.min(maxY, Math.max(minY, y));
+        else y = (minY + maxY) / 2;
+        return { s: s, x: x, y: y };
+      }
+      function applyCam(p) {
+        world.style.transform =
+          "translate(" + p.x + "px," + p.y + "px) scale(" + p.s + ")";
+      }
+
+      applyCam({ s: 1, x: 0, y: 0 });
+      const cam = { s: 1, x: 0, y: 0 };
+      function sync() {
+        applyCam(cam);
+      }
+
+      const T = {
+        row: measureTarget("#row-jenkins", "list"),
+        empty: measureTarget("#empty-desc", "issue"),
+        builds: measureTarget("#builds-none", "issue"),
+        done: measureTarget("#done-desc", "done"),
+        m1: measureTarget("#row-m1", "montage"),
+        m2: measureTarget("#row-m2", "montage"),
+        m3: measureTarget("#row-m3", "montage"),
+        insight: measureTarget("#aiden-insight", "montage"),
+      };
+      showScene("list");
+
+      const tl = gsap.timeline({ paused: true });
+      // No plate caption pills — VO lives in Clueso only.
+      tl.set(caption, { opacity: 0, display: "none", immediateRender: true }, 0);
+      tl.set(vignette, { opacity: 0, immediateRender: true }, 0);
+      tl.set(cam, { s: 1, x: 0, y: 0, onUpdate: sync, immediateRender: true }, 0);
+      tl.set(endCard, { opacity: 0, immediateRender: true }, 0);
+
+      function zoomCycle(pose, tIn, holdDur, outDur) {
+        tl.to(
+          cam,
+          {
+            s: pose.s,
+            x: pose.x,
+            y: pose.y,
+            duration: IN,
+            ease: "power2.inOut",
+            onUpdate: sync,
+          },
+          tIn,
+        );
+        tl.to(
+          vignette,
+          { opacity: 0.85, duration: IN * 0.85, ease: "power2.out" },
+          tIn,
+        );
+        const tHoldEnd = tIn + IN + holdDur;
+        tl.to(
+          cam,
+          {
+            s: 1,
+            x: 0,
+            y: 0,
+            duration: outDur,
+            ease: "power2.inOut",
+            onUpdate: sync,
+          },
+          tHoldEnd,
+        );
+        tl.to(
+          vignette,
+          { opacity: 0, duration: outDur * 0.9, ease: "power2.in" },
+          tHoldEnd,
+        );
+        return tHoldEnd + outDur;
+      }
+
+      // --- Beat 1 Hook 0–9.2 ---
+      showScene("list");
+      tl.call(() => focusEl("#row-jenkins", "focus-row"), null, 2.2);
+      zoomCycle(focusPoseSafe(T.row, 1.32), 2.2, 1.6, OUT);
+      tl.call(clearFocus, null, 8.9);
+
+      // --- Beat 2 Pain 9.2–16.5 ---
+      tl.call(() => {
+        showScene("list");
+        clearFocus();
+        focusEl("#row-jenkins", "focus-row");
+      }, null, 9.2);
+      zoomCycle(focusPoseSafe(T.row, 1.28), 10.0, 1.5, OUT);
+      tl.call(clearFocus, null, 16.2);
+
+      // --- Beat 3 Bad ticket 16.5–22.3 ---
+      tl.call(() => {
+        showScene("issue");
+        clearFocus();
+      }, null, 16.5);
+      tl.call(() => focusEl("#empty-desc"), null, 17.2);
+      zoomCycle(focusPoseSafe(T.empty, 1.38), 17.2, 1.35, 0.7);
+      tl.call(() => focusEl("#builds-none"), null, 20.5);
+      const pBuilds = focusPoseSafe(T.builds, 1.32);
+      tl.to(
+        cam,
+        {
+          s: pBuilds.s,
+          x: pBuilds.x,
+          y: pBuilds.y,
+          duration: 0.7,
+          ease: "power2.inOut",
+          onUpdate: sync,
+        },
+        20.5,
+      );
+      tl.to(vignette, { opacity: 0.85, duration: 0.55, ease: "power2.out" }, 20.5);
+      tl.to(
+        cam,
+        { s: 1, x: 0, y: 0, duration: OUT, ease: "power2.inOut", onUpdate: sync },
+        21.5,
+      );
+      tl.to(vignette, { opacity: 0, duration: OUT * 0.9, ease: "power2.in" }, 21.5);
+      tl.call(clearFocus, null, 22.2);
+
+      // --- Beat 6 Write-back 22.3–26.1 ---
+      tl.call(() => {
+        showScene("done");
+        clearFocus();
+      }, null, 22.3);
+      tl.call(() => focusEl("#done-desc"), null, 22.8);
+      zoomCycle(focusPoseSafe(T.done, 1.3), 22.8, 1.2, OUT);
+      tl.call(clearFocus, null, 26.0);
+
+      // --- Beat 7 Breadth 26.1–31.5 ---
+      tl.call(() => {
+        showScene("montage");
+        clearFocus();
+      }, null, 26.1);
+      tl.set(cam, { s: 1, x: 0, y: 0, onUpdate: sync }, 26.1);
+      tl.call(() => focusEl("#aiden-insight"), null, 26.4);
+      zoomCycle(focusPoseSafe(T.insight, 1.22), 26.4, 0.85, 0.55);
+      tl.call(() => focusEl("#row-m1", "focus-row"), null, 28.0);
+      const pM1 = focusPoseSafe(T.m1, 1.28);
+      tl.to(
+        cam,
+        {
+          s: pM1.s,
+          x: pM1.x,
+          y: pM1.y,
+          duration: 0.7,
+          ease: "power2.inOut",
+          onUpdate: sync,
+        },
+        28.0,
+      );
+      tl.to(vignette, { opacity: 0.85, duration: 0.55, ease: "power2.out" }, 28.0);
+      tl.call(() => focusEl("#row-m2", "focus-row"), null, 29.2);
+      const pM2 = focusPoseSafe(T.m2, 1.28);
+      tl.to(
+        cam,
+        {
+          s: pM2.s,
+          x: pM2.x,
+          y: pM2.y,
+          duration: 0.55,
+          ease: "power2.inOut",
+          onUpdate: sync,
+        },
+        29.2,
+      );
+      tl.call(() => focusEl("#row-m3", "focus-row"), null, 30.2);
+      const pM3 = focusPoseSafe(T.m3, 1.28);
+      tl.to(
+        cam,
+        {
+          s: pM3.s,
+          x: pM3.x,
+          y: pM3.y,
+          duration: 0.55,
+          ease: "power2.inOut",
+          onUpdate: sync,
+        },
+        30.2,
+      );
+      tl.to(
+        cam,
+        { s: 1, x: 0, y: 0, duration: 0.7, ease: "power2.inOut", onUpdate: sync },
+        30.85,
+      );
+      tl.to(vignette, { opacity: 0, duration: 0.6, ease: "power2.in" }, 30.85);
+      tl.call(clearFocus, null, 31.4);
+
+      // --- Beat 8 Close 31.5–36.5 ---
+      tl.call(() => {
+        showScene("done");
+        clearFocus();
+      }, null, 31.5);
+      tl.set(cam, { s: 1, x: 0, y: 0, onUpdate: sync }, 31.5);
+      tl.fromTo(
+        endCard,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.7, ease: "power2.out", immediateRender: false },
+        32.4,
+      );
+      tl.to({}, { duration: 3.4 }, 33.1);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

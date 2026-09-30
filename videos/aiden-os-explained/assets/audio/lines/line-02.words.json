@@ -1,0 +1,98 @@
+[
+  {
+    "text": "speed",
+    "start": 0.04,
+    "end": 0.37,
+    "id": "w0"
+  },
+  {
+    "text": "without",
+    "start": 0.37,
+    "end": 0.89,
+    "id": "w1"
+  },
+  {
+    "text": "a",
+    "start": 0.89,
+    "end": 0.96,
+    "id": "w2"
+  },
+  {
+    "text": "governed",
+    "start": 0.96,
+    "end": 1.34,
+    "id": "w3"
+  },
+  {
+    "text": "loop",
+    "start": 1.34,
+    "end": 1.91,
+    "id": "w4"
+  },
+  {
+    "text": "is",
+    "start": 1.91,
+    "end": 2.05,
+    "id": "w5"
+  },
+  {
+    "text": "how",
+    "start": 2.05,
+    "end": 2.25,
+    "id": "w6"
+  },
+  {
+    "text": "agent-driven",
+    "start": 2.36,
+    "end": 3.36,
+    "id": "w7"
+  },
+  {
+    "text": "change",
+    "start": 3.36,
+    "end": 3.61,
+    "id": "w8"
+  },
+  {
+    "text": "becomes",
+    "start": 3.97,
+    "end": 4.32,
+    "id": "w9"
+  },
+  {
+    "text": "the",
+    "start": 4.32,
+    "end": 4.4,
+    "id": "w10"
+  },
+  {
+    "text": "next",
+    "start": 4.4,
+    "end": 4.65,
+    "id": "w11"
+  },
+  {
+    "text": "incident",
+    "start": 4.76,
+    "end": 5.21,
+    "id": "w12"
+  },
+  {
+    "text": "on",
+    "start": 5.52,
+    "end": 5.6,
+    "id": "w13"
+  },
+  {
+    "text": "your",
+    "start": 5.6,
+    "end": 5.84,
+    "id": "w14"
+  },
+  {
+    "text": "watch.",
+    "start": 5.84,
+    "end": 6.56,
+    "id": "w15"
+  }
+]

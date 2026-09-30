@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/TextPlugin.min.js"></script>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0b0c0e; }
+      #root { width: 1920px; height: 1080px; position: relative; }
+      #stage {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at 50% 30%, #16171c 0%, #0b0c0e 70%);
+        display: flex; align-items: center; justify-content: center;
+      }
+      #card {
+        width: 1760px; height: 990px; border-radius: 14px;
+        background: #151619; border: 1px solid #2a2c33; overflow: hidden;
+        display: flex; flex-direction: column;
+      }
+      #chrome {
+        height: 40px; flex-shrink: 0; display: flex; align-items: center;
+        padding: 0 14px; background: #151619; border-bottom: 1px solid #2a2c33;
+      }
+      .dots { display: flex; gap: 7px; }
+      .dot { width: 10px; height: 10px; border-radius: 50%; background: #3a3d45; }
+      #screen { flex: 1; position: relative; overflow: hidden; background: #0f1115; }
+      #world {
+        position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+        transform-origin: 0 0; will-change: transform;
+      }
+      #world img.ui {
+        position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+        object-fit: cover; object-position: left top;
+      }
+      #bed-dim {
+        position: absolute; inset: 0; z-index: 4;
+        background: rgba(8, 9, 12, 0.55); opacity: 0; pointer-events: none;
+      }
+      #tool-layer {
+        position: absolute; inset: 0; z-index: 5;
+        display: flex; align-items: center; justify-content: center;
+        pointer-events: none;
+      }
+      .tool-panel {
+        position: absolute; width: 1680px; height: 945px;
+        border-radius: 10px; overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 28px 90px rgba(0,0,0,0.65);
+        opacity: 0; will-change: transform, opacity;
+      }
+      .tool-panel .shot {
+        position: absolute; left: 0; top: 0; width: 100%; height: 120%;
+        object-fit: cover; object-position: left top; will-change: transform;
+      }
+      /* Matches Datadog Log Explorer search field — not a purple fake bar */
+      #typebar {
+        position: absolute; left: 220px; top: 72px; z-index: 8;
+        min-width: 640px; max-width: 1100px;
+        font: 500 14px/1.35 ui-sans-serif, system-ui, -apple-system, sans-serif;
+        color: #e8eaf0; background: #1a1d27;
+        border: 1px solid #632ca6;
+        box-shadow: 0 0 0 1px rgba(99, 44, 166, 0.35);
+        border-radius: 4px; padding: 10px 14px;
+        opacity: 0; pointer-events: none;
+      }
+      #typebar .caret {
+        display: inline-block; width: 2px; height: 1em; margin-left: 2px;
+        background: #c4b5fd; vertical-align: text-bottom;
+      }
+      #cursor {
+        position: absolute; left: 0; top: 0; width: 28px; height: 28px;
+        z-index: 40; pointer-events: none; opacity: 0;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.45));
+      }
+      .ripple {
+        position: absolute; width: 72px; height: 72px; border-radius: 50%;
+        border: 2px solid rgba(124, 92, 255, 0.85);
+        transform: translate(-50%, -50%) scale(0); opacity: 0; z-index: 39; pointer-events: none;
+      }
+      #vignette {
+        position: absolute; inset: 0; pointer-events: none; z-index: 30;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.35) 100%);
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+      plate-c — Live multi-tool (~26s). One tool at a time.
+      Datadog: type query + scroll logs. GitHub: cursor click. K8s: scroll pods.
+      hyperframes-animation: cursor-click-ripple + TextPlugin typewriter.
+    -->
+    <div id="root" data-composition-id="plate-c" data-start="0" data-duration="26" data-width="1920" data-height="1080">
+      <div id="stage">
+        <div id="card">
+          <div id="chrome"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>
+          <div id="screen" data-layout-allow-overflow>
+            <div id="world" data-layout-allow-overflow>
+              <img class="ui" src="assets/investigation.png" alt="" />
+              <div id="bed-dim"></div>
+              <div id="tool-layer" data-layout-allow-overflow>
+                <div class="tool-panel" id="panel-dd">
+                  <img class="shot" id="shot-dd" src="assets/tool-datadog.png" alt="" />
+                </div>
+                <div class="tool-panel" id="panel-gh">
+                  <img class="shot" id="shot-gh" src="assets/tool-github.png" alt="" />
+                </div>
+                <div class="tool-panel" id="panel-k8s">
+                  <img class="shot" id="shot-k8s" src="assets/tool-k8s.png" alt="" />
+                </div>
+                <div id="typebar"><span id="typed"></span><span class="caret" id="caret"></span></div>
+              </div>
+              <div class="ripple" id="r1" style="left:960px;top:120px"></div>
+              <div class="ripple" id="r2" style="left:520px;top:200px"></div>
+              <svg id="cursor" viewBox="0 0 28 28" fill="none">
+                <path d="M4 3l8.5 20.5 2.2-7.3L22 14.2 4 3z" fill="#fff" stroke="#1a1a1a" stroke-width="1.2"/>
+              </svg>
+            </div>
+            <div id="vignette"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      gsap.registerPlugin(TextPlugin);
+      const world = document.getElementById("world");
+      const vignette = document.getElementById("vignette");
+      const bedDim = document.getElementById("bed-dim");
+      const cursor = document.getElementById("cursor");
+      const typed = document.getElementById("typed");
+      const typebar = document.getElementById("typebar");
+      const caret = document.getElementById("caret");
+      const panels = {
+        dd: document.getElementById("panel-dd"),
+        gh: document.getElementById("panel-gh"),
+        k8s: document.getElementById("panel-k8s"),
+      };
+      const shots = {
+        dd: document.getElementById("shot-dd"),
+        gh: document.getElementById("shot-gh"),
+        k8s: document.getElementById("shot-k8s"),
+      };
+      const r1 = document.getElementById("r1");
+      const r2 = document.getElementById("r2");
+      const QUERY = "show me worker-service error logs for generate_invoice";
+
+      function hideAll() {
+        Object.values(panels).forEach((p) => {
+          gsap.killTweensOf(p);
+          gsap.set(p, { opacity: 0, scale: 0.96 });
+        });
+        Object.values(shots).forEach((s) => gsap.set(s, { y: 0 }));
+      }
+      function enter(key) {
+        hideAll();
+        gsap.fromTo(panels[key], { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" });
+      }
+      function exit(key) {
+        gsap.to(panels[key], { opacity: 0, scale: 0.98, duration: 0.35, ease: "power2.in" });
+      }
+
+      gsap.set(world, { x: 0, y: 0, scale: 1, transformOrigin: "0 0" });
+      gsap.set([vignette, bedDim, typebar], { opacity: 0 });
+      gsap.set(cursor, { x: 640, y: 360, opacity: 0, scale: 1, transformOrigin: "4px 3px" });
+      gsap.set([r1, r2], { scale: 0, opacity: 0 });
+      gsap.set(typed, { text: "" });
+      hideAll();
+
+      // caret blink via discrete seeks (no infinite repeat)
+      const tl = gsap.timeline({ paused: true });
+      for (let t = 0; t < 26; t += 0.45) {
+        tl.set(caret, { opacity: t % 0.9 < 0.45 ? 1 : 0 }, t);
+      }
+
+      tl.to(vignette, { opacity: 0.2, duration: 0.6 }, 0.2);
+
+      // --- Datadog ---
+      tl.to(bedDim, { opacity: 1, duration: 0.35 }, 2.2);
+      tl.call(() => enter("dd"), null, 2.2);
+      tl.to(cursor, { opacity: 1, duration: 0.25 }, 2.4);
+      tl.to(cursor, { x: 420, y: 110, duration: 0.7, ease: "power2.inOut" }, 2.5);
+      tl.to(typebar, { opacity: 1, duration: 0.25 }, 3.0);
+      tl.to(cursor, { scale: 0.86, duration: 0.07, yoyo: true, repeat: 1 }, 3.15);
+      tl.set(r1, { opacity: 1, left: 420, top: 110 }, 3.2);
+      tl.to(r1, { scale: 3.5, opacity: 0, duration: 0.55, ease: "power2.out", immediateRender: false }, 3.2);
+      tl.to(typed, { text: { value: QUERY }, duration: QUERY.length / 18, ease: "none" }, 3.4);
+      // Scroll logs after typed
+      tl.to(shots.dd, { y: -160, duration: 2.0, ease: "power1.inOut" }, 6.2);
+      tl.to(cursor, { x: 720, y: 520, duration: 1.0, ease: "power1.inOut" }, 6.4);
+      tl.to(typebar, { opacity: 0, duration: 0.3 }, 8.4);
+      tl.call(() => exit("dd"), null, 8.8);
+
+      // --- GitHub ---
+      tl.call(() => enter("gh"), null, 9.2);
+      tl.to(cursor, { x: 480, y: 180, duration: 0.8, ease: "power2.inOut" }, 9.4);
+      tl.to(cursor, { scale: 0.86, duration: 0.08, yoyo: true, repeat: 1 }, 10.3);
+      tl.set(r2, { opacity: 1, left: 480, top: 180 }, 10.35);
+      tl.to(r2, { scale: 3.8, opacity: 0, duration: 0.6, ease: "power2.out", immediateRender: false }, 10.35);
+      tl.to(shots.gh, { y: -80, duration: 1.6, ease: "power1.inOut" }, 11.0);
+      tl.to(cursor, { x: 640, y: 420, duration: 1.0, ease: "power1.inOut" }, 11.2);
+      tl.call(() => exit("gh"), null, 15.0);
+
+      // --- Kubernetes ---
+      tl.call(() => enter("k8s"), null, 15.4);
+      tl.to(cursor, { x: 560, y: 300, duration: 0.75, ease: "power2.inOut" }, 15.6);
+      tl.to(shots.k8s, { y: -200, duration: 2.4, ease: "power1.inOut" }, 16.4);
+      tl.to(cursor, { x: 700, y: 560, duration: 1.2, ease: "power1.inOut" }, 17.0);
+      tl.to(cursor, { scale: 0.86, duration: 0.08, yoyo: true, repeat: 1 }, 19.0);
+      tl.call(() => exit("k8s"), null, 22.4);
+
+      tl.call(hideAll, null, 22.8);
+      tl.to(bedDim, { opacity: 0, duration: 0.45 }, 22.8);
+      tl.to(vignette, { opacity: 0, duration: 0.5 }, 22.8);
+      tl.to(cursor, { opacity: 0, duration: 0.35 }, 23.2);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["plate-c"] = tl;
+    </script>
+  </body>
+</html>

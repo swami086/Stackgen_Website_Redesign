@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+      }
+      @font-face {
+        font-family: "Geist";
+        src: url("assets/fonts/Geist_Variable.woff2") format("woff2");
+        font-weight: 100 900;
+        font-display: block;
+      }
+      body {
+        background: radial-gradient(ellipse at center, #16171c 0%, #0b0c0e 78%);
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+      }
+      #stage {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        will-change: transform;
+      }
+      #card {
+        width: 1640px;
+        border-radius: 18px;
+        overflow: hidden;
+        background: #151619;
+        border: 1px solid #2a2c33;
+      }
+      #chrome {
+        height: 64px;
+        background: #151619;
+        border-bottom: 1px solid #2a2c33;
+        display: flex;
+        align-items: center;
+        padding: 14px 22px;
+        position: relative;
+      }
+      .dots {
+        display: flex;
+        gap: 9px;
+      }
+      .dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #3a3d45;
+      }
+      #url {
+        display: none;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #1d1f24;
+        border: 1px solid #2a2c33;
+        color: #9aa0ac;
+        font: 500 15px/1 "Geist", ui-sans-serif, system-ui, sans-serif;
+        padding: 10px 24px;
+        border-radius: 999px;
+      }
+      #screen {
+        position: relative;
+        width: 1640px;
+        height: 901.62px;
+        overflow: hidden;
+        background: #0b0c0e;
+      }
+      #src {
+        position: absolute;
+        width: 1822.222px;
+        height: 1025px;
+        left: -91.111px;
+        top: -75.926px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="12.4124"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="stage">
+        <div id="card">
+          <div id="chrome">
+            <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+            <div id="url" aria-hidden="true"></div>
+          </div>
+          <div id="screen" data-layout-allow-overflow>
+            <video
+              id="src"
+              class="clip"
+              src="assets/Aiden_SRE.mp4"
+              data-start="0"
+              data-duration="12.4124"
+              data-track-index="0"
+              muted
+              playsinline
+            ></video>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const stageEl = document.getElementById("stage");
+      const cam = { s: 1, x: 0, y: 0 };
+      function applyCamera() {
+        stageEl.style.transform =
+          "translate(" + cam.x + "%, " + cam.y + "%) scale(" + cam.s + ")";
+      }
+      applyCamera();
+
+      const CARD_W = 1640;
+      const CARD_H = 965.62;
+      const PUNCH_S = 1.08;
+      const PUNCH = 0.35;
+      const HOLD = 1.1;
+      const RELEASE = 0.6;
+
+      function clampPan(v, s, axis) {
+        const frame = axis === "x" ? 1920 : 1080;
+        const card = axis === "x" ? CARD_W : CARD_H;
+        const m = ((Math.max(0, (frame - card * s) / 2) / frame) * 100) - 0.15;
+        return Math.max(-m, Math.min(m, v));
+      }
+      function beatPose(b) {
+        return {
+          s: b.s,
+          x: clampPan((50 - b.ax) * 0.15, b.s, "x"),
+          y: clampPan((50 - b.ay) * 0.15, b.s, "y"),
+        };
+      }
+
+      const SCRIPT = [
+        { t: 4.2, s: PUNCH_S, ax: 36, ay: 40 },
+        { t: 7.8, s: PUNCH_S, ax: 35, ay: 45 },
+      ];
+
+      const tl = gsap.timeline({ paused: true });
+      let tcur = 0;
+      for (const b of SCRIPT) {
+        const tgt = beatPose(b);
+        const cruise = { s: 1 + (tgt.s - 1) * 0.35, x: tgt.x * 0.4, y: tgt.y * 0.4 };
+        const tPunchStart = b.t - PUNCH;
+        if (tPunchStart > tcur + 0.05) {
+          tl.to(cam, { s: cruise.s, x: cruise.x, y: cruise.y, duration: tPunchStart - tcur, ease: "none", onUpdate: applyCamera }, tcur);
+        }
+        tl.to(cam, { s: tgt.s, x: tgt.x, y: tgt.y, duration: PUNCH, ease: "power3.out", onUpdate: applyCamera }, tPunchStart);
+        tl.to(cam, { s: 1, x: 0, y: 0, duration: RELEASE, ease: "power2.inOut", onUpdate: applyCamera }, b.t + HOLD);
+        tcur = b.t + HOLD + RELEASE;
+      }
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

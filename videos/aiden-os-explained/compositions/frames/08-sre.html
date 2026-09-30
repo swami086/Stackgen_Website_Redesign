@@ -1,0 +1,243 @@
+<template>
+<style>
+@font-face {
+  font-family: "Geist Variable";
+  src: url("assets/fonts/GeistVariable-Regular.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Geist Mono Variable";
+  src: url("assets/fonts/GeistMonoVariable-Regular.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+#root {
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+  font-family: "Geist Variable", sans-serif;
+}
+
+/* Full-frame clip track — assembler injects inset:0; this mirrors it */
+.clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* ── Track 0 · Background ─────────────────────────────────────────────── */
+#f08-sre-bg-track {
+  background: #0b0c0e;
+}
+
+/* ── Track 1 · Video card chrome ──────────────────────────────────────── */
+#f08-sre-card-el {
+  position: absolute;
+  top: 60px;
+  left: 100px;
+  width: 1720px;
+  height: 800px;
+  border: 1px solid #282826;
+}
+
+/* ── Track 3 · Chip "aiden for sre" ──────────────────────────────────── */
+#f08-sre-chip-el {
+  position: absolute;
+  top: 88px;
+  left: 128px;
+  font-family: "Geist Mono Variable", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9aa0ac;
+  background: rgba(11, 12, 14, 0.90);
+  border: 1px solid #282826;
+  padding: 7px 14px;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* ── Track 4 · Orange accent rule stub ───────────────────────────────── */
+#f08-sre-rule-el {
+  position: absolute;
+  top: 138px;
+  left: 128px;
+  width: 36px;
+  height: 2px;
+  background: #facc15;
+}
+
+/* ── Track 5 · Punch 1 callout — "root cause / checkout-api" ─────────── */
+#f08-sre-punch1-el {
+  position: absolute;
+  top: 662px;
+  left: 120px;
+  width: 380px;
+  background: rgba(11, 12, 14, 0.92);
+  border-top: 2px solid #facc15;
+  padding: 14px 18px 18px;
+}
+
+#f08-sre-punch1-kicker {
+  display: block;
+  font-family: "Geist Mono Variable", monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #facc15;
+  margin-bottom: 6px;
+}
+
+#f08-sre-punch1-value {
+  display: block;
+  font-family: "Geist Variable", sans-serif;
+  font-size: 54px;
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: #e8eaee;
+  text-transform: lowercase;
+}
+
+/* ── Track 6 · MTTR stat card — "50% lower mttr" ─────────────────────── */
+#f08-sre-mttr-el {
+  position: absolute;
+  top: 652px;
+  left: 1458px;
+  width: 322px;
+  background: rgba(11, 12, 14, 0.92);
+  border-top: 1px solid #282826;
+  padding: 14px 22px 22px;
+}
+
+#f08-sre-mttr-value {
+  display: block;
+  font-family: "Geist Variable", sans-serif;
+  font-size: 106px;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  color: #facc15;
+}
+
+#f08-sre-mttr-label {
+  display: block;
+  font-family: "Geist Mono Variable", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9aa0ac;
+  margin-top: 14px;
+}
+</style>
+
+<div data-hf-id="hf-j8br" id="root" data-composition-id="08-sre" data-start="0" data-duration="11.5" data-width="1920" data-height="1080">
+
+  <!-- Track 0 · Full-bleed background ground -->
+  <div data-hf-id="hf-lkzg" class="clip" id="f08-sre-bg-track" data-start="0" data-duration="11.5" data-track-index="0"></div>
+
+  <!-- Track 1 · Video card border chrome (visual wrapper; shows in local preview) -->
+  <div data-hf-id="hf-uwai" class="clip" id="f08-sre-card-track" data-start="0" data-duration="11.5" data-track-index="1">
+    <div data-hf-id="hf-gh2l" id="f08-sre-card-el"></div>
+  </div>
+
+  <!-- Track 2 · SRE footage (approved video — assembler hoists to host root) -->
+  <!-- approved frame video hoisted by assemble-index -->
+
+  <!-- Track 3 · Chip "aiden for sre" — enters with card in Scene 1 -->
+  <div data-hf-id="hf-smec" class="clip" id="f08-sre-chip-track" data-start="0" data-duration="11.5" data-track-index="3">
+    <div data-hf-id="hf-e1mx" id="f08-sre-chip-el">aiden for sre</div>
+  </div>
+
+  <!-- Track 4 · Fire-orange rule stub — Broadside system ornament -->
+  <div data-hf-id="hf-tsh7" class="clip" id="f08-sre-rule-track" data-start="0" data-duration="11.5" data-track-index="4">
+    <div data-hf-id="hf-as69" id="f08-sre-rule-el"></div>
+  </div>
+
+  <!-- Track 5 · Punch 1 callout — root cause / checkout-api (~2.7 s, fades at 5.75 s) -->
+  <div data-hf-id="hf-a3yw" class="clip" id="f08-sre-punch1-track" data-start="2.7" data-duration="3.4" data-track-index="5">
+    <div data-hf-id="hf-rpj4" id="f08-sre-punch1-el">
+      <span data-hf-id="hf-19bq" id="f08-sre-punch1-kicker">root cause</span>
+      <span data-hf-id="hf-a2ro" id="f08-sre-punch1-value">checkout-api</span>
+    </div>
+  </div>
+
+  <!-- Track 6 · MTTR stat card — 50% lower mttr (~5.7 s through end) -->
+  <div data-hf-id="hf-76aw" class="clip" id="f08-sre-mttr-track" data-start="5.7" data-duration="5.8" data-track-index="6">
+    <div data-hf-id="hf-ofbs" id="f08-sre-mttr-el">
+      <span data-hf-id="hf-22yb" id="f08-sre-mttr-value">50%</span>
+      <span data-hf-id="hf-dc1o" id="f08-sre-mttr-label">lower mttr</span>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script>
+window.__timelines = window.__timelines || {};
+
+const tl = gsap.timeline({ paused: true });
+window.__timelines["08-sre"] = tl;
+
+// ── Scene 1 (0.0 – 0.6 s) ──────────────────────────────────────────────
+// Video card border slides up from 28 px below, chip drops in from above,
+// orange rule stub scales out left-to-right — all on the voiceover open.
+
+tl.fromTo("#f08-sre-card-el",
+  { y: 28, opacity: 0 },
+  { y: 0, opacity: 1, duration: 0.55, ease: "power2.out" },
+  0
+);
+
+tl.fromTo("#f08-sre-chip-el",
+  { y: -10, opacity: 0 },
+  { y: 0, opacity: 1, duration: 0.35, ease: "power2.out" },
+  0.2
+);
+
+tl.fromTo("#f08-sre-rule-el",
+  { scaleX: 0 },
+  { scaleX: 1, duration: 0.4, ease: "power2.out", transformOrigin: "left center" },
+  0.15
+);
+
+// ── Scene 2 (0.6 – 6.6 s) — punch 1 at VO "root cause" (~2.7 s) ────────
+// Diagnostic callout slides in from left on the "root cause" cue,
+// coinciding with the baked source punch at ~3.0 s in-frame.
+
+tl.fromTo("#f08-sre-punch1-el",
+  { x: -24, opacity: 0 },
+  { x: 0, opacity: 1, duration: 0.3, ease: "power3.out" },
+  2.7
+);
+
+// ── Scene 2→3 boundary (5.7 s) — MTTR stat on VO "fifty percent" ────────
+// Stat card rises in from below; punch 1 callout cross-fades out
+// as the MTTR number takes dominance heading into the stillness beat.
+
+tl.fromTo("#f08-sre-mttr-el",
+  { y: 16, opacity: 0 },
+  { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" },
+  5.7
+);
+
+tl.to("#f08-sre-punch1-el",
+  { opacity: 0, duration: 0.3, ease: "power2.in" },
+  5.75
+);
+
+// ── Scene 3 (6.6 – 11.1 s) ───────────────────────────────────────────────
+// Stillness — footage holds through "you keep the call".
+// No new reveals; MTTR stat persists as the frame rests on the persona beat.
+</script>
+</template>

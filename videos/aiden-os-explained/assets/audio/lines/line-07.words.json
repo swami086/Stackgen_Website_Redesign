@@ -1,0 +1,62 @@
+[
+  {
+    "text": "Aidan",
+    "start": 0.04,
+    "end": 0.36,
+    "id": "w0"
+  },
+  {
+    "text": "for",
+    "start": 0.36,
+    "end": 0.58,
+    "id": "w1"
+  },
+  {
+    "text": "observability",
+    "start": 0.58,
+    "end": 1.41,
+    "id": "w2"
+  },
+  {
+    "text": "correlates",
+    "start": 1.58,
+    "end": 2.31,
+    "id": "w3"
+  },
+  {
+    "text": "the",
+    "start": 2.34,
+    "end": 2.55,
+    "id": "w4"
+  },
+  {
+    "text": "signal,",
+    "start": 2.55,
+    "end": 3.21,
+    "id": "w5"
+  },
+  {
+    "text": "90%",
+    "start": 3.21,
+    "end": 3.82,
+    "id": "w6"
+  },
+  {
+    "text": "less",
+    "start": 3.82,
+    "end": 4.16,
+    "id": "w7"
+  },
+  {
+    "text": "alert",
+    "start": 4.2,
+    "end": 4.61,
+    "id": "w8"
+  },
+  {
+    "text": "noise.",
+    "start": 4.61,
+    "end": 5.14,
+    "id": "w9"
+  }
+]

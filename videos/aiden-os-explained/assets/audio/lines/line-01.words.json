@@ -1,0 +1,128 @@
+[
+  {
+    "text": "AI",
+    "start": 0.04,
+    "end": 0.17,
+    "id": "w0"
+  },
+  {
+    "text": "writes",
+    "start": 0.17,
+    "end": 0.62,
+    "id": "w1"
+  },
+  {
+    "text": "more",
+    "start": 0.68,
+    "end": 0.95,
+    "id": "w2"
+  },
+  {
+    "text": "code",
+    "start": 1.11,
+    "end": 1.36,
+    "id": "w3"
+  },
+  {
+    "text": "than",
+    "start": 1.36,
+    "end": 1.68,
+    "id": "w4"
+  },
+  {
+    "text": "your",
+    "start": 1.76,
+    "end": 2.04,
+    "id": "w5"
+  },
+  {
+    "text": "team",
+    "start": 2.04,
+    "end": 2.38,
+    "id": "w6"
+  },
+  {
+    "text": "can",
+    "start": 2.38,
+    "end": 2.63,
+    "id": "w7"
+  },
+  {
+    "text": "review.",
+    "start": 2.63,
+    "end": 3.2,
+    "id": "w8"
+  },
+  {
+    "text": "Agents",
+    "start": 3.24,
+    "end": 3.99,
+    "id": "w9"
+  },
+  {
+    "text": "and",
+    "start": 3.99,
+    "end": 4.38,
+    "id": "w10"
+  },
+  {
+    "text": "IDEs",
+    "start": 4.38,
+    "end": 4.88,
+    "id": "w11"
+  },
+  {
+    "text": "ship",
+    "start": 4.96,
+    "end": 5.42,
+    "id": "w12"
+  },
+  {
+    "text": "all",
+    "start": 5.42,
+    "end": 5.81,
+    "id": "w13"
+  },
+  {
+    "text": "day",
+    "start": 5.81,
+    "end": 6.01,
+    "id": "w14"
+  },
+  {
+    "text": "and",
+    "start": 6.46,
+    "end": 6.5,
+    "id": "w15"
+  },
+  {
+    "text": "alerts",
+    "start": 6.5,
+    "end": 7.04,
+    "id": "w16"
+  },
+  {
+    "text": "struggle",
+    "start": 7.04,
+    "end": 7.56,
+    "id": "w17"
+  },
+  {
+    "text": "to",
+    "start": 7.56,
+    "end": 7.67,
+    "id": "w18"
+  },
+  {
+    "text": "keep",
+    "start": 7.67,
+    "end": 7.72,
+    "id": "w19"
+  },
+  {
+    "text": "up.",
+    "start": 7.99,
+    "end": 8.2,
+    "id": "w20"
+  }
+]

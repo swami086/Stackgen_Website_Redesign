@@ -1,0 +1,20 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "geist",
+        "createdAt": "2026-09-18T22:28:50.367Z",
+        "reason": "Shipped StackGen brand font: site loads Geist via next/font (web/app/layout.tsx), v5 launch videos render Geist, brand tokens mandate it. Brand consistency is the design intent."
+      },
+      {
+        "rule": "overused-font",
+        "value": "geist mono",
+        "createdAt": "2026-09-18T22:28:50.421Z",
+        "reason": "Shipped StackGen brand mono for labels/eyebrows (site + v5 launch videos). Brand consistency is the design intent."
+      }
+    ]
+  }
+}

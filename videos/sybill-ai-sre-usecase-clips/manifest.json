@@ -1,0 +1,106 @@
+[
+  {
+    "file": "V1-autopilot-investigation-slack-rca_lastpass-2026-07-22.mp4",
+    "use_case": "V1",
+    "source_title": "Stackgen / LastPass SRE Demo & deep dive",
+    "start_sec": 1574,
+    "duration_sec": 720,
+    "conversation_dump": "010b5879-c4ab-433c-a01d-969862e57577"
+  },
+  {
+    "file": "V1-investigation-reflections_exol-deep-dive-2026-08-25.mp4",
+    "use_case": "V1",
+    "source_title": "StackGen // Exol - AI SRE - Deep Dive Demo",
+    "start_sec": 920,
+    "duration_sec": 1020,
+    "conversation_dump": "63ca8aca-6312-4e96-bc34-f2b6d4f1d7d0"
+  },
+  {
+    "file": "V5-live-demo-remote-runners_jfrog-2026-09-03.mp4",
+    "use_case": "V5",
+    "source_title": "Stackgen AI SRE Demo <> JFrog",
+    "start_sec": 1734,
+    "duration_sec": 780,
+    "conversation_dump": "e25a2746-fe91-4980-9afd-f3ab19e17067"
+  },
+  {
+    "file": "V8-product-walkthrough_dell-2026-09-14.mp4",
+    "use_case": "V8",
+    "source_title": "StackGen // Dell - AI SRE demo",
+    "start_sec": 1370,
+    "duration_sec": 1020,
+    "conversation_dump": "ac7f5395-d130-46f8-a8f0-a27a5cd864de"
+  },
+  {
+    "file": "V3-product-ui_visa-2026-04-24.mp4",
+    "use_case": "V3",
+    "source_title": "StackGen SRE Demo for Visa",
+    "start_sec": 2170,
+    "duration_sec": 840,
+    "conversation_dump": "44da730b-a04e-4126-96f4-472cd8a53532"
+  },
+  {
+    "file": "V3-frontdoor-discussion-ui_visa-2026-05-06.mp4",
+    "use_case": "V3",
+    "source_title": "SRE Demo + discussion w/ Visa Team",
+    "start_sec": 2020,
+    "duration_sec": 720,
+    "conversation_dump": "6c0cb730-62f1-40fe-b575-552cef5f8a97"
+  },
+  {
+    "file": "V6-multisource-demo_kissht-2026-03-27.mp4",
+    "use_case": "V6",
+    "source_title": "Kissht<>StackGen: AI SRE Demo",
+    "start_sec": 1061,
+    "duration_sec": 1080,
+    "conversation_dump": "0f6ac399-caec-4007-96ee-012a7b976d1a"
+  },
+  {
+    "file": "V2-investigation-rca_cvs-2026-07-10.mp4",
+    "use_case": "V2",
+    "source_title": "SRE demo to CVS",
+    "start_sec": 2165,
+    "duration_sec": 960,
+    "conversation_dump": "57b0182a-8073-45cd-af08-531d61d4fb10"
+  },
+  {
+    "file": "V1-alert-investigation_exol-first-2026-08-06.mp4",
+    "use_case": "V1",
+    "source_title": "StackGen // Exol - AI SRE demo",
+    "start_sec": 1651,
+    "duration_sec": 720,
+    "conversation_dump": "85622b5c-09b9-4fe4-a7bb-d454ad422da7"
+  },
+  {
+    "file": "V4-runbooks-policies-sre_arrakis-2026-05-12.mp4",
+    "use_case": "V4",
+    "source_title": "Arrakis<>StackGen: Demo (Aiden - Infra & SRE)",
+    "start_sec": 1011,
+    "duration_sec": 1200,
+    "conversation_dump": "7b155c98-6827-40c0-bf95-1f8b8db8723b"
+  },
+  {
+    "file": "V1-firing-alerts-rca_innovaccer-2026-06-05.mp4",
+    "use_case": "V1",
+    "source_title": "SRE demo for Innovaccer",
+    "start_sec": 556,
+    "duration_sec": 600,
+    "conversation_dump": "4d3cd8ff-7fa7-4825-acf6-72fd116ecea9"
+  },
+  {
+    "file": "V2-pagerduty-auto-investigate_chamberlain-2026-05-13.mp4",
+    "use_case": "V2",
+    "source_title": "Chamberlain / StackGen Cadence",
+    "start_sec": 594,
+    "duration_sec": 960,
+    "conversation_dump": "90f8a481-5684-4af3-8b26-974a8154b351"
+  },
+  {
+    "file": "V5-sre-noise-persona_swimlane-2026-08-06.mp4",
+    "use_case": "V5",
+    "source_title": "Stackgen / Swimlane",
+    "start_sec": 642,
+    "duration_sec": 960,
+    "conversation_dump": "708da0b3-dbb3-4c23-8883-665040867674"
+  }
+]

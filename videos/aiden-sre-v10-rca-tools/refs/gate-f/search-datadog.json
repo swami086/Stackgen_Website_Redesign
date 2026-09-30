@@ -1,0 +1,19 @@
+Log Explorer - Datadog Docs
+  URL: https://docs.datadoghq.com/logs/explorer/
+  The Log Explorer is your home base for log troubleshooting and exploration. you can search and filter, group, visualize, and export logs in the Log Explorer.
+
+Log Management - Datadog Docs
+  URL: https://docs.datadoghq.com/logs/
+  Start exploring your ingested logs in the Log Explorer. Tip: To open the Log Explorer from Datadog's global search, press Cmd / Ctrl + K and search for logs .
+
+Export Logs - Datadog Docs
+  URL: https://docs.datadoghq.com/logs/explorer/export/
+  Export your Log Explorer view to reuse it later or in different contexts. You can export up to 100,000 logs at once for individual logs, 300 for Patterns, and ...
+
+Logging Without Limits™ | Datadog
+  URL: https://www.datadoghq.com/videos/dash-keynote-logging-without-limits/
+  ... logs and start troubleshooting and investigating to the Log Explorer. ... So if you go on user interface, you gonna see it. With that you ...
+
+Live Tail - Datadog Docs
+  URL: https://docs.datadoghq.com/logs/explorer/live_tail/
+  In the Log Explorer, choose the Live Tail option in the timerange to query logs as they flow into Datadog. See Log Search Syntax for more information on queries ...

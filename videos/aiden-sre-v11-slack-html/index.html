@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/TextPlugin.min.js"></script>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0b0c0e; }
+      #root { width: 1920px; height: 1080px; position: relative; }
+      #stage {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at 50% 30%, #16171c 0%, #0b0c0e 70%);
+        display: flex; align-items: center; justify-content: center;
+      }
+      #card {
+        width: 1760px; height: 990px; border-radius: 14px;
+        background: #151619; border: 1px solid #2a2c33; overflow: hidden;
+        display: flex; flex-direction: column;
+      }
+      #chrome {
+        height: 40px; flex-shrink: 0; display: flex; align-items: center;
+        padding: 0 14px; background: #151619; border-bottom: 1px solid #2a2c33;
+      }
+      .dots { display: flex; gap: 7px; }
+      .dot { width: 10px; height: 10px; border-radius: 50%; background: #3a3d45; }
+      #screen { flex: 1; position: relative; overflow: hidden; background: #0f1115; }
+      #world {
+        position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+        transform-origin: 0 0; will-change: transform;
+      }
+      /* Authentic Slack Html→Figma paste (Gate F SoT) — not invented chrome */
+      #slack-shot {
+        position: absolute; left: 80px; top: 40px;
+        width: 1760px; height: 960px;
+        object-fit: contain; object-position: center center;
+        background: #1a1d21;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+        opacity: 0;
+      }
+      /* Cover baked message until send so type→post reads live */
+      #msg-mask {
+        position: absolute;
+        left: 620px; top: 220px; width: 1100px; height: 420px;
+        background: #1a1d21; opacity: 1; z-index: 6;
+      }
+      /* Live composer overlay aligned to Slack composer region */
+      #composer-live {
+        position: absolute;
+        left: 620px; top: 820px; width: 1100px; height: 120px;
+        z-index: 10;
+        border: 1px solid #565856; border-radius: 8px;
+        background: #222529;
+        padding: 12px 14px 40px;
+        font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        opacity: 0;
+      }
+      #typed {
+        font-size: 15px; color: #d1d2d3; line-height: 1.45;
+        min-height: 22px; white-space: pre-wrap;
+      }
+      #typed:empty::before { content: "Message #incidents"; color: #ababad; }
+      #caret {
+        display: inline-block; width: 2px; height: 1.05em;
+        background: #d1d2d3; vertical-align: text-bottom; margin-left: 1px; opacity: 0;
+      }
+      #send {
+        position: absolute; right: 12px; bottom: 10px;
+        width: 32px; height: 32px; border: none; border-radius: 8px;
+        background: #007a5a; color: #fff; font-size: 15px; opacity: 0.35;
+      }
+      /* Live Aiden message — Slack dark message density */
+      #aiden-live {
+        position: absolute;
+        left: 640px; top: 260px; width: 1040px;
+        z-index: 8; opacity: 0;
+        display: flex; gap: 12px; align-items: flex-start;
+        font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        will-change: transform, opacity;
+      }
+      .av {
+        width: 36px; height: 36px; border-radius: 4px; flex-shrink: 0;
+        background: linear-gradient(135deg, #611f69, #4a154b);
+        color: #fff; font-weight: 800; font-size: 13px;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .who { font-size: 15px; font-weight: 900; color: #d1d2d3; }
+      .who .time { font-weight: 400; color: #ababad; margin-left: 8px; font-size: 12px; }
+      .bot {
+        display: inline-block; margin-left: 6px; padding: 1px 6px;
+        border-radius: 3px; background: #1d9bd1; color: #fff;
+        font-size: 11px; font-weight: 700; vertical-align: middle;
+      }
+      .body {
+        margin-top: 4px; font-size: 15px; line-height: 1.46668; color: #d1d2d3;
+        white-space: pre-wrap;
+      }
+      .links { margin-top: 10px; font-size: 14px; color: #ababad; }
+      .links a { color: #1d9bd1; text-decoration: none; font-weight: 700; margin: 0 4px; }
+      .next { margin-top: 8px; font-size: 14px; color: #ababad; }
+      #cursor {
+        position: absolute; left: 0; top: 0; width: 28px; height: 28px;
+        z-index: 50; pointer-events: none; opacity: 0;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+      }
+      .ripple {
+        position: absolute; width: 72px; height: 72px; border-radius: 50%;
+        border: 2px solid rgba(29, 155, 209, 0.9);
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0; pointer-events: none; z-index: 49;
+      }
+      #vignette {
+        position: absolute; inset: 0; pointer-events: none; z-index: 40;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.3) 100%);
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+      plate-d v11b — HYBRID authentic Slack.
+      Chrome = Gate F Html→Figma paste (assets/slack-chrome.png), NOT invented DOM.
+      Live layer = composer TextPlugin + Aiden message spring + cursor-click-ripple.
+    -->
+    <div id="root" data-composition-id="plate-d" data-start="0" data-duration="20" data-width="1920" data-height="1080">
+      <div id="stage">
+        <div id="card">
+          <div id="chrome"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>
+          <div id="screen" data-layout-allow-overflow>
+            <div id="world" data-layout-allow-overflow>
+              <img id="slack-shot" src="assets/slack-chrome.png" alt="" />
+              <div id="msg-mask"></div>
+              <div id="aiden-live">
+                <div class="av">AI</div>
+                <div>
+                  <div class="who">Aiden <span class="bot">APP</span><span class="time">6:46 AM</span></div>
+                  <div class="body" id="aiden-body"></div>
+                  <div class="links" id="evidence">
+                    Evidence linked:
+                    <a id="chip-dd" href="#">Datadog</a> ·
+                    <a id="chip-gh" href="#">GitHub Actions</a> ·
+                    <a id="chip-k8s" href="#">Kubernetes</a>
+                  </div>
+                  <div class="next" id="next-line">Next: hold ship until tenant_id fix lands. Guardrails require human approval.</div>
+                </div>
+              </div>
+              <div id="composer-live">
+                <div id="typed"></div><span id="caret"></span>
+                <button id="send" type="button">➤</button>
+              </div>
+              <div class="ripple" id="r1"></div>
+              <div class="ripple" id="r2"></div>
+              <svg id="cursor" viewBox="0 0 28 28" fill="none">
+                <path d="M4 3l8.5 20.5 2.2-7.3L22 14.2 4 3z" fill="#fff" stroke="#1a1a1a" stroke-width="1.2"/>
+              </svg>
+            </div>
+            <div id="vignette"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      gsap.registerPlugin(TextPlugin);
+      const world = document.getElementById("world");
+      const shot = document.getElementById("slack-shot");
+      const vignette = document.getElementById("vignette");
+      const cursor = document.getElementById("cursor");
+      const composer = document.getElementById("composer-live");
+      const typed = document.getElementById("typed");
+      const caret = document.getElementById("caret");
+      const send = document.getElementById("send");
+      const mask = document.getElementById("msg-mask");
+      const aiden = document.getElementById("aiden-live");
+      const aidenBody = document.getElementById("aiden-body");
+      const nextLine = document.getElementById("next-line");
+      const evidence = document.getElementById("evidence");
+      const r1 = document.getElementById("r1");
+      const r2 = document.getElementById("r2");
+      const chipDD = document.getElementById("chip-dd");
+
+      const DRAFT = "CrashLoop on worker-service after deploy latest_79ece31 — posting for the on-call.";
+      const AIDEN = "CrashLoop on worker-service after deploy latest_79ece31.\nRoot cause: generate_invoice throws KeyError on tenant_id after image latest_79ece31.\nConfidence 0.78 · Probable deploy regression.";
+
+      const centerInWorld = (el) => {
+        const w = world.getBoundingClientRect();
+        const r = el.getBoundingClientRect();
+        return { x: r.left - w.left + r.width / 2, y: r.top - w.top + r.height / 2 };
+      };
+
+      aidenBody.textContent = AIDEN;
+      gsap.set(aiden, { opacity: 0, y: 0, scale: 1 });
+      const composerHit = centerInWorld(composer);
+      const sendHit = centerInWorld(send);
+      const ddHit = centerInWorld(chipDD);
+      aidenBody.textContent = "";
+
+      gsap.set(world, { x: 0, y: 0, scale: 1, transformOrigin: "0 0" });
+      gsap.set(shot, { opacity: 0, scale: 0.985 });
+      gsap.set(vignette, { opacity: 0 });
+      gsap.set(cursor, { x: 520, y: 380, opacity: 0, scale: 1, transformOrigin: "4px 3px" });
+      gsap.set([r1, r2], { scale: 0, opacity: 0 });
+      gsap.set(composer, { opacity: 0 });
+      gsap.set(aiden, { opacity: 0, y: 18, scale: 0.98 });
+      gsap.set(mask, { opacity: 1 });
+      gsap.set(evidence, { opacity: 0 });
+      gsap.set(nextLine, { opacity: 0 });
+      gsap.set(typed, { text: "" });
+      gsap.set(caret, { opacity: 0 });
+      gsap.set(send, { opacity: 0.35 });
+
+      const tl = gsap.timeline({ paused: true });
+      for (let t = 2.4; t < 7.2; t += 0.4) {
+        tl.set(caret, { opacity: ((t * 10) | 0) % 8 < 4 ? 1 : 0 }, t);
+      }
+
+      tl.to(shot, { opacity: 1, scale: 1, duration: 0.55, ease: "power2.out" }, 0.2);
+      tl.to(composer, { opacity: 1, duration: 0.35 }, 0.45);
+      tl.to(vignette, { opacity: 0.18, duration: 0.5 }, 0.3);
+
+      tl.to(cursor, { opacity: 1, duration: 0.25 }, 1.0);
+      tl.to(cursor, { x: composerHit.x, y: composerHit.y - 8, duration: 0.85, ease: "power2.inOut" }, 1.15);
+      tl.to(cursor, { scale: 0.86, duration: 0.08, yoyo: true, repeat: 1, ease: "power2.in" }, 2.1);
+      tl.to(composer, { borderColor: "#1d9bd1", boxShadow: "0 0 0 1px #1d9bd1", duration: 0.15 }, 2.1);
+      tl.set(r1, { left: composerHit.x, top: composerHit.y, opacity: 1 }, 2.15);
+      tl.to(r1, { scale: 3.6, opacity: 0, duration: 0.55, ease: "power2.out", immediateRender: false }, 2.15);
+      tl.set(caret, { opacity: 1 }, 2.3);
+
+      tl.to(typed, { text: { value: DRAFT }, duration: DRAFT.length / 22, ease: "none" }, 2.45);
+      tl.to(send, { opacity: 1, duration: 0.2 }, 5.7);
+
+      tl.to(cursor, { x: sendHit.x, y: sendHit.y, duration: 0.4, ease: "power2.inOut" }, 6.1);
+      tl.to(cursor, { scale: 0.86, duration: 0.08, yoyo: true, repeat: 1, ease: "power2.in" }, 6.55);
+      tl.set(typed, { text: "" }, 6.7);
+      tl.set(caret, { opacity: 0 }, 6.7);
+      tl.to(composer, { borderColor: "#565856", boxShadow: "none", opacity: 0, duration: 0.25 }, 6.75);
+      tl.to(send, { opacity: 0.35, duration: 0.15 }, 6.75);
+
+      // Keep mask — hide baked PNG message; only live HTML Aiden shows
+      tl.to(aiden, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.3)" }, 7.1);
+      tl.to(aidenBody, { text: { value: AIDEN }, duration: 1.5, ease: "none" }, 7.4);
+      tl.to(evidence, { opacity: 1, duration: 0.35 }, 9.1);
+      tl.to(nextLine, { opacity: 1, duration: 0.35 }, 9.4);
+
+      tl.to(cursor, { x: ddHit.x, y: ddHit.y, duration: 0.8, ease: "power2.inOut" }, 10.3);
+      tl.to(world, { scale: 1.16, x: -120, y: -50, duration: 0.95, ease: "power2.inOut" }, 10.5);
+      tl.to(vignette, { opacity: 0.38, duration: 0.45 }, 10.5);
+      tl.to(cursor, { scale: 0.86, duration: 0.08, yoyo: true, repeat: 1, ease: "power2.in" }, 11.9);
+      tl.to(chipDD, { color: "#c9a0ff", duration: 0.2 }, 11.95);
+      tl.set(r2, { left: ddHit.x, top: ddHit.y, opacity: 1 }, 12.0);
+      tl.to(r2, { scale: 3.8, opacity: 0, duration: 0.55, ease: "power2.out", immediateRender: false }, 12.0);
+
+      tl.to(world, { scale: 1, x: 0, y: 0, duration: 0.9, ease: "power2.inOut" }, 16.4);
+      tl.to(vignette, { opacity: 0.12, duration: 0.5 }, 16.4);
+      tl.to(cursor, { opacity: 0.35, duration: 0.4 }, 18.0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["plate-d"] = tl;
+    </script>
+  </body>
+</html>

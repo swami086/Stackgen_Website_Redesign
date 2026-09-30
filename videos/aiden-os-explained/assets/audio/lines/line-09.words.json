@@ -1,0 +1,92 @@
+[
+  {
+    "text": "All",
+    "start": 0.04,
+    "end": 0.23,
+    "id": "w0"
+  },
+  {
+    "text": "four",
+    "start": 0.33,
+    "end": 0.66,
+    "id": "w1"
+  },
+  {
+    "text": "share",
+    "start": 0.7,
+    "end": 1.15,
+    "id": "w2"
+  },
+  {
+    "text": "one",
+    "start": 1.15,
+    "end": 1.35,
+    "id": "w3"
+  },
+  {
+    "text": "operational",
+    "start": 1.44,
+    "end": 2.5,
+    "id": "w4"
+  },
+  {
+    "text": "context",
+    "start": 2.5,
+    "end": 3.1,
+    "id": "w5"
+  },
+  {
+    "text": "graph.",
+    "start": 3.68,
+    "end": 3.72,
+    "id": "w6"
+  },
+  {
+    "text": "What",
+    "start": 3.76,
+    "end": 4.09,
+    "id": "w7"
+  },
+  {
+    "text": "one",
+    "start": 4.09,
+    "end": 4.37,
+    "id": "w8"
+  },
+  {
+    "text": "domain",
+    "start": 4.37,
+    "end": 4.92,
+    "id": "w9"
+  },
+  {
+    "text": "learns,",
+    "start": 4.92,
+    "end": 5.68,
+    "id": "w10"
+  },
+  {
+    "text": "every",
+    "start": 5.68,
+    "end": 6.05,
+    "id": "w11"
+  },
+  {
+    "text": "domain",
+    "start": 6.12,
+    "end": 6.63,
+    "id": "w12"
+  },
+  {
+    "text": "acts",
+    "start": 6.63,
+    "end": 6.83,
+    "id": "w13"
+  },
+  {
+    "text": "on.",
+    "start": 7,
+    "end": 7.42,
+    "id": "w14"
+  }
+]

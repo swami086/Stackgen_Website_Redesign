@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body {
+        width: 1920px; height: 1080px; overflow: hidden;
+        background: #f4f5f8;
+        font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+        color: #33383f;
+      }
+      #root { width: 1920px; height: 1080px; position: relative; }
+      #app { position: absolute; inset: 0; display: flex; background: #f4f5f8; }
+      #rail {
+        width: 64px; flex: none; background: #fff;
+        border-right: 1px solid #e6eaee;
+        display: flex; flex-direction: column; align-items: center;
+        padding: 16px 0; gap: 8px;
+      }
+      .mark {
+        width: 28px; height: 28px; border-radius: 8px;
+        background: #9e33ea; margin-bottom: 12px;
+      }
+      .nav {
+        width: 36px; height: 36px; border-radius: 8px;
+        display: grid; place-items: center; color: #8b919a;
+      }
+      .nav.on { background: #f3e8ff; color: #9e33ea; }
+      #main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+      #top {
+        height: 56px; flex: none; background: #fff;
+        border-bottom: 1px solid #e6eaee;
+        display: flex; align-items: center; padding: 0 28px;
+        font-size: 14px; font-weight: 500;
+      }
+      #top span { color: #72777f; font-weight: 400; margin-right: 8px; }
+      #sheet { width: 1040px; margin: auto; }
+      h1 {
+        font-size: 24px; font-weight: 600; letter-spacing: -0.02em;
+        color: #1c1f24; margin: 0 0 18px;
+      }
+      .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+      .metric {
+        background: #fff; border: 1px solid #e6eaee; border-radius: 10px;
+        padding: 14px 16px 16px;
+      }
+      .k { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #6b7280; }
+      .v { margin-top: 8px; font-size: 18px; font-weight: 600; color: #1c1f24; font-variant-numeric: tabular-nums; }
+      .badge {
+        display: inline-flex; align-items: center; margin-top: 8px; height: 24px;
+        padding: 0 8px; border-radius: 6px;
+        background: #e8f6ee; color: #157a3b;
+        font-size: 14px; font-weight: 600; letter-spacing: 0; text-transform: none;
+      }
+      #cause {
+        margin-top: 12px; background: #fff;
+        border: 1px solid #e6eaee; border-radius: 10px;
+        padding: 16px 18px 18px;
+      }
+      #cause h2 { margin-top: 8px; font-size: 18px; font-weight: 600; color: #1c1f24; }
+      #cause p { margin-top: 8px; font-size: 14px; line-height: 1.5; color: #4d535a; }
+      #action {
+        margin-top: 12px; background: #fff;
+        border: 1px solid #e6eaee; border-radius: 10px;
+        padding: 16px 18px 16px;
+        transform-origin: 50% 0;
+      }
+      #action h2 { margin-top: 8px; font-size: 18px; font-weight: 600; color: #1c1f24; }
+      #action .detail { margin-top: 8px; font-size: 14px; line-height: 1.5; color: #4d535a; max-width: 640px; }
+      .foot {
+        margin-top: 18px; display: flex; align-items: center; justify-content: space-between;
+      }
+      .status { position: relative; height: 18px; font-size: 14px; color: #6b7280; }
+      .status span { position: absolute; left: 0; top: 0; white-space: nowrap; }
+      #approve {
+        position: relative; border: 0; border-radius: 8px;
+        background: #9e33ea; color: #fff;
+        font: 600 14px/1 "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+        height: 36px; min-width: 120px; padding: 0 16px;
+        transform-origin: 50% 50%;
+      }
+      #approve span {
+        position: absolute; inset: 0;
+        display: flex; align-items: center; justify-content: center; gap: 6px;
+      }
+      #cursor {
+        position: absolute; width: 18px; height: 18px; z-index: 6;
+        pointer-events: none; transform-origin: 2px 2px;
+      }
+      #ripple {
+        position: absolute; width: 36px; height: 36px; border-radius: 50%;
+        background: rgba(158, 51, 234, 0.22); z-index: 5; pointer-events: none;
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="6.5" data-width="1920" data-height="1080">
+      <div id="app" class="clip" data-start="0" data-duration="6.5" data-track-index="0">
+        <aside id="rail" aria-hidden="true">
+          <div class="mark"></div>
+          <div class="nav"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.25" stroke="currentColor" stroke-width="1.4"/><path d="M10.2 10.2 13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <div class="nav on"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2.2 14 13.2H2L8 2.2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M8 6.4v3.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <div class="nav"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.25" stroke="currentColor" stroke-width="1.4"/><path d="M8 5.2V8l2 1.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+        </aside>
+        <div id="main">
+          <header id="top"><span>Alerts</span> [Triggered] Auth Validation Latency High</header>
+          <div id="sheet">
+            <h1>Auth Validation Latency RCA</h1>
+            <div class="metrics">
+              <div class="metric"><div class="k">Verdict</div><div class="badge">Confirmed</div></div>
+              <div class="metric"><div class="k">Confidence</div><div class="v">99%</div></div>
+              <div class="metric"><div class="k">New pod p95</div><div class="v">461.8 ms</div></div>
+              <div class="metric"><div class="k">Alert threshold</div><div class="v">400 ms</div></div>
+            </div>
+            <section id="cause">
+              <div class="k">Root cause confirmed</div>
+              <h2>Auth cache regression from the new deployment</h2>
+              <p>CACHE_TTL_SECONDS went from 300 to 0, and a 450 ms sleep was added on the cache-miss path. The new pod’s p95 crossed the threshold.</p>
+            </section>
+            <section id="action">
+              <div class="k">Proposed action</div>
+              <h2>Roll back auth-service to 4d229239</h2>
+              <p class="detail">Restores the 300-second cache and removes the miss-path sleep. Prior known-good revision from this investigation.</p>
+              <div class="foot">
+                <p class="status">
+                  <span id="status-wait">Needs your approval</span>
+                  <span id="status-done">Rollback queued</span>
+                </p>
+                <button id="approve" type="button">
+                  <span id="label-wait">Approve</span>
+                  <span id="label-done">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7.2 5.4 10 11.5 3.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Approved
+                  </span>
+                </button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div id="ripple"></div>
+      <svg id="cursor" viewBox="0 0 18 18" aria-hidden="true">
+        <path fill="#1c1f24" stroke="#fff" stroke-width="1.2" d="M3 1.6 3 13.4 6.6 10.4 9.4 15.6 11.5 14.6 8.7 9.5 13.4 9.1Z"/>
+      </svg>
+    </div>
+    <script>
+      const root = document.getElementById("root");
+      const approve = document.getElementById("approve");
+      const cursor = document.getElementById("cursor");
+      const ripple = document.getElementById("ripple");
+      const action = document.getElementById("action");
+
+      const hit = () => {
+        const rootBox = root.getBoundingClientRect();
+        const btn = approve.getBoundingClientRect();
+        return {
+          x: btn.left - rootBox.left + btn.width * 0.72,
+          y: btn.top - rootBox.top + btn.height * 0.62,
+        };
+      };
+
+      const target = hit();
+      gsap.set(action, { opacity: 0, y: 8 });
+      gsap.set(["#status-done", "#label-done"], { opacity: 0 });
+      gsap.set(cursor, { x: target.x + 86, y: target.y + 48, opacity: 0, scale: 1 });
+      gsap.set(ripple, { x: target.x, y: target.y, xPercent: -50, yPercent: -50, scale: 0.4, opacity: 0 });
+
+      const tl = gsap.timeline({ paused: true });
+      tl.to(action, { opacity: 1, y: 0, duration: 0.28, ease: "power3.out" }, 0.35);
+      tl.to(cursor, { opacity: 1, duration: 0.12, ease: "power2.out" }, 1.05);
+      tl.to(cursor, { x: target.x - 2, y: target.y - 1, duration: 0.42, ease: "power3.out" }, 1.12);
+      tl.to(cursor, { scale: 0.9, duration: 0.06, ease: "power2.in" }, 1.56);
+      tl.to(approve, { scale: 0.98, duration: 0.06, ease: "power2.in" }, 1.56);
+      tl.to(cursor, { scale: 1, duration: 0.1, ease: "power2.out" }, 1.62);
+      tl.to(approve, { scale: 1, duration: 0.14, ease: "power2.out" }, 1.62);
+      tl.set(ripple, { opacity: 1 }, 1.58);
+      tl.to(ripple, { scale: 2.2, opacity: 0, xPercent: -50, yPercent: -50, duration: 0.36, ease: "power2.out", immediateRender: false }, 1.58);
+      tl.to("#label-wait", { opacity: 0, duration: 0.12, ease: "power2.out" }, 1.7);
+      tl.to("#label-done", { opacity: 1, duration: 0.16, ease: "power2.out" }, 1.76);
+      tl.to("#status-wait", { opacity: 0, duration: 0.12, ease: "power2.out" }, 1.7);
+      tl.to("#status-done", { opacity: 1, duration: 0.16, ease: "power2.out" }, 1.78);
+      tl.to({}, { duration: 0.01 }, 6.4);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

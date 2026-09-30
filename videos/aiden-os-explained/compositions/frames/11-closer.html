@@ -1,0 +1,206 @@
+<template>
+<style>
+@font-face {
+  font-family: "Geist Variable";
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+  src: url("assets/fonts/GeistVariable-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist Mono Variable";
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+  src: url("assets/fonts/GeistMonoVariable-Regular.woff2") format("woff2");
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+#root {
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+  font-family: "Geist Variable", sans-serif;
+  container-type: size;
+}
+
+/* Shared clip base — full-frame absolute layer */
+.clip {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Track 0: background ─────────────────────────────── */
+#f11-closer-bg {
+  background: #0b0c0e;
+}
+
+/* ── Track 1: content stack ──────────────────────────── */
+#f11-closer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Scene 1 — mono kicker (Broadside: fire-orange on dark) */
+#f11-closer-kicker {
+  font-family: "Geist Mono Variable", monospace;
+  color: #facc15;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  opacity: 0;
+}
+
+/* Scene 2 — claim at packet spec 120px/800 */
+#f11-closer-claim {
+  color: #e8eaee;
+  font-size: 120px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 0.22em;
+  margin-bottom: 60px;
+}
+
+/* Each word is an independently animated unit */
+.f11-closer-word {
+  display: inline-block;
+  opacity: 0;
+}
+
+/* Scene 3 — CTA pill (fire-orange, sharp corners → radius 999) */
+#f11-closer-pill {
+  background: #facc15;
+  color: #0b0c0e;
+  font-family: "Geist Variable", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  padding: 22px 52px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+  opacity: 0;
+}
+
+/* Scene 3 — URL (mono muted, beneath the pill) */
+#f11-closer-url {
+  font-family: "Geist Mono Variable", monospace;
+  color: #9aa0ac;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  opacity: 0;
+}
+
+/* ── Track 2: final-frame exit overlay ───────────────── */
+#f11-closer-exit {
+  background: #0b0c0e;
+  pointer-events: none;
+  opacity: 0;
+}
+</style>
+
+<div data-hf-id="hf-dic4" id="root" data-composition-id="11-closer" data-start="0" data-duration="7.3" data-width="1920" data-height="1080">
+
+  <!-- Track 0: full-bleed ink-black ground (never on #root) -->
+  <div data-hf-id="hf-3k6r" class="clip" id="f11-closer-bg" data-start="0" data-duration="7.3" data-track-index="0"></div>
+
+  <!-- Track 1: all scene content -->
+  <div data-hf-id="hf-uuj0" class="clip" id="f11-closer-content" data-start="0" data-duration="7.3" data-track-index="1">
+
+    <!-- Scene 1: brand kicker -->
+    <div data-hf-id="hf-l391" id="f11-closer-kicker">aiden os</div>
+
+    <!-- Scene 2: claim per-word (dynamic-content-sequencing) -->
+    <div data-hf-id="hf-mbol" id="f11-closer-claim">
+      <span data-hf-id="hf-jk7a" class="f11-closer-word" id="f11-closer-w1">outcomes,</span>
+      <span data-hf-id="hf-f2ch" class="f11-closer-word" id="f11-closer-w2">not</span>
+      <span data-hf-id="hf-qlnr" class="f11-closer-word" id="f11-closer-w3">agents.</span>
+    </div>
+
+    <!-- Scene 3: CTA pill -->
+    <div data-hf-id="hf-odaf" id="f11-closer-pill">schedule a demo</div>
+
+    <!-- Scene 3: URL mono muted -->
+    <div data-hf-id="hf-u0j7" id="f11-closer-url">stackgen.com</div>
+
+  </div>
+
+  <!-- Track 2: exit overlay — fade to canvas (final frame only) -->
+  <div data-hf-id="hf-n27g" class="clip" id="f11-closer-exit" data-start="0" data-duration="7.3" data-track-index="2"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script>
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+window.__timelines["11-closer"] = tl;
+
+const kicker = document.getElementById("f11-closer-kicker");
+const w1     = document.getElementById("f11-closer-w1");
+const w2     = document.getElementById("f11-closer-w2");
+const w3     = document.getElementById("f11-closer-w3");
+const pill   = document.getElementById("f11-closer-pill");
+const urlEl  = document.getElementById("f11-closer-url");
+const exitEl = document.getElementById("f11-closer-exit");
+
+// ── Scene 1 (0.0 – 1.8s) ────────────────────────────────────────────────────
+// "aiden os" kicker rises in; hero visible by t ≤ 0.5s (fromTo, seek-safe)
+tl.fromTo(kicker,
+  { opacity: 0, y: 10 },
+  { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+  0.0
+);
+
+// ── Scene 2 (1.8 – 3.6s) ────────────────────────────────────────────────────
+// Claim per-word stagger — each word lifts in on its voiceover cue
+tl.fromTo(w1,
+  { opacity: 0, y: 18 },
+  { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+  1.8
+);
+tl.fromTo(w2,
+  { opacity: 0, y: 18 },
+  { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+  2.26
+);
+tl.fromTo(w3,
+  { opacity: 0, y: 18 },
+  { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+  2.72
+);
+
+// ── Scene 3 (3.6 – 7.3s) ────────────────────────────────────────────────────
+// CTA pill spring-settles beneath the claim
+tl.fromTo(pill,
+  { opacity: 0, y: 32, scale: 0.9 },
+  { opacity: 1, y: 0, scale: 1, duration: 0.72, ease: "back.out(1.5)" },
+  3.6
+);
+// URL fades in once the pill has landed
+tl.fromTo(urlEl,
+  { opacity: 0, y: 8 },
+  { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+  4.38
+);
+
+// ── Final-frame exit (packet explicit: "fade to canvas at the very end") ─────
+tl.fromTo(exitEl,
+  { opacity: 0 },
+  { opacity: 1, duration: 0.8, ease: "power2.inOut" },
+  6.5
+);
+</script>
+</template>

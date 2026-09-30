@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "preferences": {
+    "destination": {
+      "value": "youtube",
+      "confirmed_in": [
+        "aiden-os-explained"
+      ],
+      "updated_at": "2026-09-15T22:11:32.065Z"
+    },
+    "aspect": {
+      "value": "1920x1080",
+      "confirmed_in": [
+        "aiden-os-explained"
+      ],
+      "updated_at": "2026-09-15T22:11:32.123Z"
+    },
+    "language": {
+      "value": "en",
+      "confirmed_in": [
+        "aiden-os-explained"
+      ],
+      "updated_at": "2026-09-15T22:11:32.183Z"
+    },
+    "flow": {
+      "value": "automation",
+      "confirmed_in": [
+        "aiden-os-explained"
+      ],
+      "updated_at": "2026-09-15T22:11:32.240Z"
+    },
+    "storyboard": {
+      "value": "yes",
+      "confirmed_in": [
+        "aiden-os-explained"
+      ],
+      "updated_at": "2026-09-15T22:11:32.301Z"
+    },
+    "voice": {
+      "value": "heygen male",
+      "confirmed_in": [
+        "aiden-os-explained"
+      ],
+      "updated_at": "2026-09-15T22:11:32.360Z"
+    },
+    "style_preset.product-launch-video": {
+      "value": "broadside",
+      "confirmed_in": [
+        "aiden-os-explained"
+      ],
+      "updated_at": "2026-09-15T22:13:47.315Z"
+    }
+  },
+  "sightings": {}
+}

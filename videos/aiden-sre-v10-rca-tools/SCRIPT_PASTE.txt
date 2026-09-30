@@ -1,0 +1,7 @@
+Alerts rarely arrive alone. One deploy breaks a worker, and a pile of alerts show up. Your engineers struggle to tell which alert is real and which ones are just noise.
+
+Context scatters across Datadog and GitHub. It also scatters across Kubernetes and Slack. That is where Aiden steps in. Your always-on agent that understands your operational environment.
+
+Aiden plugs into the tools your teams already use. It correlates CrashLoop evidence across those sources and surfaces root cause in minutes, under the security guardrails your organisation demands.
+
+Empower your engineers with the SRE agent mate they need. Try Aiden for SRE today.

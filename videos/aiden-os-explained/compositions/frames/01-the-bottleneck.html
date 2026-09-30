@@ -1,0 +1,233 @@
+<template>
+<style>
+@font-face {
+  font-family: "Geist Variable";
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+  src: url("assets/fonts/GeistVariable-Regular.woff2") format("woff2");
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+  font-family: "Geist Variable", sans-serif;
+}
+
+.clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* Full-bleed dark ground — painted on a clip layer, never on #root */
+#f01-bg {
+  background: #0b0c0e;
+}
+
+/* Text container — overflow visible so inline-block word spans
+   don't get clipped during y-entrance motion */
+#f01-content {
+  overflow: visible;
+}
+
+/* Shared text-line scaffold: absolute, full-width, centered */
+.f01-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: "Geist Variable", sans-serif;
+  white-space: nowrap;
+}
+
+/* Per-word spans — inline-block so GSAP y-transform works cleanly;
+   no CSS transform set here (GSAP owns the transform layer) */
+.f01-word {
+  display: inline-block;
+}
+
+/* Line 1: active (Scene 1) → prior (Scene 2+) via GSAP tween */
+#f01-line1 {
+  font-size: 64px;
+  font-weight: 700;
+  color: #e8eaee;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  z-index: 1;
+}
+
+/* Line 2: active (Scene 2) → prior (Scene 3) via GSAP tween */
+#f01-line2 {
+  font-size: 64px;
+  font-weight: 700;
+  color: #e8eaee;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  z-index: 2;
+}
+
+/* Line 3: escalation hero — largest, heaviest, on top */
+#f01-line3 {
+  font-size: 110px;
+  font-weight: 800;
+  color: #e8eaee;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+  z-index: 3;
+}
+</style>
+
+<div data-hf-id="hf-xn4b" id="root" data-composition-id="01-the-bottleneck" data-start="0" data-duration="10.1" data-width="1920" data-height="1080">
+  <!-- Track 0: full-bleed ink-black ground (clip layer, not #root background) -->
+  <div data-hf-id="hf-u738" id="f01-bg" class="clip" data-start="0" data-duration="10.1" data-track-index="0"></div>
+
+  <!-- Track 1: kinetic type beats — three escalating statement lines -->
+  <div data-hf-id="hf-hxkb" id="f01-content" class="clip" data-start="0" data-duration="10.1" data-track-index="1">
+    <!--
+      Line 1 — "ai writes more code than your team can review."
+      Words split for per-word stagger reveal (dynamic-content-sequencing).
+      Whitespace between inline-block spans renders as natural word spaces.
+    -->
+    <div data-hf-id="hf-sq33" id="f01-line1" class="f01-line">
+      <span data-hf-id="hf-vkz7" class="f01-word">ai</span>
+      <span data-hf-id="hf-xfm1" class="f01-word">writes</span>
+      <span data-hf-id="hf-yar0" class="f01-word">more</span>
+      <span data-hf-id="hf-6l8w" class="f01-word">code</span>
+      <span data-hf-id="hf-v6e6" class="f01-word">than</span>
+      <span data-hf-id="hf-6hb2" class="f01-word">your</span>
+      <span data-hf-id="hf-8aug" class="f01-word">team</span>
+      <span data-hf-id="hf-n895" class="f01-word">can</span>
+      <span data-hf-id="hf-hgwh" class="f01-word">review.</span>
+    </div>
+
+    <!-- Line 2 — whole-unit spring-pop entrance (scale-swap-transition) -->
+    <div data-hf-id="hf-8jl7" id="f01-line2" class="f01-line">agents and ides ship all day.</div>
+
+    <!-- Line 3 — escalation hero: bigger spring-pop payoff -->
+    <div data-hf-id="hf-axb6" id="f01-line3" class="f01-line">alerts struggle to keep up.</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script>
+(function () {
+  "use strict";
+  window.__timelines = window.__timelines || {};
+
+  /*
+   * Position math (all `top` values in px, canvas 1920×1080):
+   *
+   * Active slot center ≈ 540px (canvas vertical center).
+   * Line heights: active 64px @ lh1.05 → 67px; prior 34px @ lh1.05 → 36px;
+   *               hero 110px @ lh1.0 → 110px.
+   * Gap between stacked lines: 40px.
+   *
+   * Scene 1  — L1 only:       L1 top=508  (center 541)
+   * Scene 2  — L1 prior + L2 active:
+   *                            L1 top=432  (center 450)
+   *                            L2 top=508  (center 541)
+   * Scene 3  — L1+L2 prior + L3 hero:
+   *                            L1 top=333  (center 351)
+   *                            L2 top=409  (center 427)
+   *                            L3 top=485  (center 540)
+   *
+   * All elements stay within safe area (below y≈896). Stack bottom: 595px ✓
+   */
+
+  // ── Initial states — set before timeline so seek-to-0 renders correctly ─
+  gsap.set("#f01-line1", { top: 508 });
+  gsap.set(".f01-word",  { opacity: 0, y: 14 });
+  gsap.set("#f01-line2", { top: 508, opacity: 0 });
+  gsap.set("#f01-line3", { top: 485, opacity: 0 });
+
+  // ── Main timeline ────────────────────────────────────────────────────────
+  const tl = gsap.timeline({ paused: true });
+
+  // ── Scene 1 (0.0 – 3.2 s): per-word stagger reveal ─────────────────────
+  // "ai writes more code than your team can review."
+  // 9 words × 0.13 s stagger → last word enters at t ≈ 1.29 s; all settled by ~1.74 s.
+  tl.fromTo(
+    ".f01-word",
+    { opacity: 0, y: 14 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.45,
+      stagger: { each: 0.13 },
+      ease: "power3.out",
+    },
+    0.25   // first word visible at 0.25 s (< 0.5 s hero-visibility rule ✓)
+  );
+
+  // ── Scene 2 (3.2 s): scale-swap handoff ─────────────────────────────────
+  // Line 1 exits to prior: rises + shrinks + dims (velocity-matched outgoing)
+  // transform-based (y + scale), not top/fontSize — layout props snap to int px
+  tl.to(
+    "#f01-line1",
+    {
+      y: -76,          // top 508 → 432
+      scale: 0.531,    // fontSize 64 → 34
+      transformOrigin: "50% 0%",
+      color: "#7e8591",
+      fontWeight: 400,
+      duration: 0.45,
+      ease: "power2.inOut",
+    },
+    3.2
+  );
+
+  // Line 2 spring-pop entrance (0.15 s overlap = velocity-matched incoming)
+  // Incoming z-index (2) > outgoing z-index (1) ✓ — smooth long-tail, no overshoot
+  tl.fromTo(
+    "#f01-line2",
+    { opacity: 0, scale: 0.82 },
+    { opacity: 1, scale: 1, duration: 0.62, ease: "power3.out" },
+    3.35
+  );
+
+  // ── Scene 3 (6.4 s): escalation payoff ──────────────────────────────────
+  // Line 1 rises further (already at prior size/color from Scene 2)
+  tl.to(
+    "#f01-line1",
+    { y: -175, duration: 0.42, ease: "power2.inOut" },  // top 432 → 333
+    6.4
+  );
+
+  // Line 2 exits to prior: rises + shrinks + dims
+  tl.to(
+    "#f01-line2",
+    {
+      y: -99,          // top 508 → 409
+      scale: 0.531,    // fontSize 64 → 34
+      transformOrigin: "50% 0%",
+      color: "#7e8591",
+      fontWeight: 400,
+      duration: 0.45,
+      ease: "power2.inOut",
+    },
+    6.4
+  );
+
+  // Line 3 hero entrance — biggest arrival, smooth long-tail settle
+  // Incoming z-index (3) > all prior layers ✓  No exit tween (non-final frame) ✓
+  tl.fromTo(
+    "#f01-line3",
+    { opacity: 0, scale: 0.85 },
+    { opacity: 1, scale: 1, duration: 0.68, ease: "power3.out" },
+    6.55
+  );
+
+  // Register — orchestrator picks this up after assembly
+  window.__timelines["01-the-bottleneck"] = tl;
+})();
+</script>
+</template>

@@ -1,0 +1,250 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .s07-track { position: relative; width: 100%; border-radius: 0; }
+  .s07-row {
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    padding: 0 16px 6px;
+    background: var(--sg-panel);
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .s07-title {
+    font-family: "Geist", sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--sg-cream);
+    white-space: nowrap;
+    border-radius: 0;
+  }
+  .s07-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--sg-hairline);
+    border-radius: 0;
+  }
+  .s07-rule {
+    position: absolute;
+    left: 0;
+    width: 2px;
+    background: var(--sg-violet);
+    border-radius: 0;
+    z-index: 3;
+  }
+  .s07-head {
+    position: absolute;
+    right: 12px;
+    height: 20px;
+    box-sizing: border-box;
+    border-left: 2px solid var(--sg-violet);
+    border-radius: 0;
+    background: var(--sg-panel);
+    color: var(--sg-cream);
+    font-family: "Geist Mono", monospace;
+    font-size: 13px;
+    line-height: 20px;
+    padding: 0 8px;
+    z-index: 3;
+  }
+  .s07-count {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 220px;
+    height: 64px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    background: var(--sg-panel);
+    color: var(--sg-cream);
+    font-family: "Geist", sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1;
+    border-radius: 0;
+  }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S07" data-width="1920" data-height="1080">
+  <div id="S07-bg" class="pass pass-bg"></div>
+  <div id="S07-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S07-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { selectPass, shotData, cueT } from "./_shared/layers/shot.js";
+  const ID = "S07";
+  const DATA_ID = "S07";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const mid = document.querySelector("#S07-mid .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+  const tGroups = cueT(timing, "groups");
+  const tFilters = cueT(timing, "filters");
+  const { mountPlate } = await import("./_shared/layers/plate.js");
+  const { flipReorder, collapseRows } = await import("./_shared/layers/ui.js");
+  const { DUR, EASE } = await import("./_shared/tokens/motion.js");
+
+  const MOCK_ROWS = {
+    8: "redis-cache · Evictions rising",
+    9: "Pod Crash Loop",
+    10: "inventory-db · Slow queries",
+    11: "Pod Crash Loop",
+    12: "api-gateway · Upstream resets",
+  };
+
+  function mountMock(host, id) {
+    const x = 120, y = 90, width = 1680;
+    const s = width / 1920;
+    const el = document.createElement("div");
+    el.className = "sg-plate";
+    el.dataset.plate = id;
+    el.style.position = "absolute";
+    el.style.left = x + "px";
+    el.style.top = y + "px";
+    el.style.width = width + "px";
+    el.style.height = (width * 1080 / 1920) + "px";
+    el.style.background = "var(--sg-panel)";
+    el.style.border = "1px solid var(--sg-hairline)";
+    host.appendChild(el);
+    const raw = {
+      list: { x: 324, y: 308, w: 1572, h: 641 },
+      "header-count": { x: 324, y: 132, w: 1572, h: 104 },
+    };
+    function box(key) {
+      const b = raw[key];
+      if (!b) throw new Error("plate " + id + " missing box " + key);
+      return { x: x + b.x * s, y: y + b.y * s, w: b.w * s, h: b.h * s };
+    }
+    function place(key, className) {
+      const b = box(key);
+      const node = document.createElement("div");
+      node.className = className;
+      node.style.position = "absolute";
+      node.style.left = (b.x - x) + "px";
+      node.style.top = (b.y - y) + "px";
+      node.style.width = b.w + "px";
+      node.style.height = b.h + "px";
+      el.appendChild(node);
+      return node;
+    }
+    return {
+      el,
+      box,
+      mask(key) { return place(key, "sg-mask"); },
+      overlay(key) { return place(key, "sg-overlay"); },
+      enter() {},
+    };
+  }
+
+  async function placePlate(host, id) {
+    try {
+      return { plate: await mountPlate(host, { id, x: 120, y: 90, width: 1680 }), mocked: false };
+    } catch (err) {
+      return { plate: mountMock(host, id), mocked: true };
+    }
+  }
+
+  function rowLabel(plateApi, n) {
+    const key = "row-" + n;
+    try {
+      plateApi.box(key);
+      const snap = window.SG_DATA.plates.P01.boxes[key];
+      return snap && snap.label ? snap.label : (MOCK_ROWS[n] || ("Alert " + n));
+    } catch (err) {
+      return MOCK_ROWS[n] || ("Alert " + n);
+    }
+  }
+
+  const under = await placePlate(mid, "P03");
+  const top = await placePlate(mid, "P01");
+  const plate = top.plate;
+  plate.mask("list");
+  const list = plate.overlay("list");
+  const track = document.createElement("div");
+  track.className = "s07-track";
+  list.appendChild(track);
+
+  const ROW_COUNT = 12;
+  const listH = plate.box("list").h;
+  const ROW_H = listH / ROW_COUNT;
+  const rows = [];
+  for (let n = 1; n <= ROW_COUNT; n++) {
+    const row = document.createElement("div");
+    row.className = "s07-row";
+    row.dataset.key = "row-" + n;
+    row.style.position = "relative";
+    row.style.height = ROW_H + "px";
+    const title = document.createElement("div");
+    title.className = "s07-title";
+    title.textContent = rowLabel(plate, n);
+    const line = document.createElement("div");
+    line.className = "s07-line";
+    row.appendChild(title);
+    row.appendChild(line);
+    track.appendChild(row);
+    rows.push(row);
+  }
+
+  const visual = [0, 3, 6, 1, 4, 2, 8, 10, 5, 7, 9, 11];
+  const order = visual.map((_, i) => visual.indexOf(i));
+  flipReorder(tl, rows, order, tGroups);
+
+  const heads = [
+    { text: "Auth latency", slot: order[0], rows: 3 },
+    { text: "Crash loop", slot: order[1], rows: 2 },
+    { text: "Pod restarts", slot: order[2], rows: 3 },
+  ];
+  heads.forEach((spec) => {
+    const rule = document.createElement("div");
+    rule.className = "s07-rule";
+    rule.style.top = (spec.slot * ROW_H) + "px";
+    rule.style.height = (spec.rows * ROW_H) + "px";
+    const head = document.createElement("div");
+    head.className = "s07-head";
+    head.style.top = (spec.slot * ROW_H + (ROW_H - 20) / 2) + "px";
+    head.textContent = spec.text;
+    track.appendChild(rule);
+    track.appendChild(head);
+    gsap.set([rule, head], { opacity: 0 });
+    tl.to([rule, head], { opacity: 1, duration: DUR.ui, ease: EASE.snap }, tGroups);
+  });
+
+  collapseRows(tl, [rows[5], rows[7], rows[9], rows[11]], tFilters);
+
+  const countHost = plate.overlay("header-count");
+  const countEl = document.createElement("div");
+  countEl.className = "s07-count";
+  countEl.textContent = "1,284";
+  countHost.appendChild(countEl);
+
+  tl.to(plate.el, { opacity: 0, duration: 0.5, ease: "power2.inOut" }, D - 0.5);
+
+  applyCamera(tl, cam, roots, timing.duration);
+  tl.set({}, {}, timing.duration);
+  window.__timelines[ID] = tl;
+</script>
+</body>
+</html>

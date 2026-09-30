@@ -1,0 +1,242 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .sg-eyebrow .sg-mask {
+    position: static;
+    background: transparent;
+    display: inline-block;
+    overflow: hidden;
+  }
+  .s06-track { position: relative; width: 100%; border-radius: 0; }
+  .s06-row {
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    padding: 0 16px 6px;
+    background: var(--sg-panel);
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .s06-title {
+    font-family: "Geist", sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--sg-cream);
+    white-space: nowrap;
+    border-radius: 0;
+  }
+  .s06-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--sg-hairline);
+    border-radius: 0;
+  }
+  .s06-count {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 220px;
+    height: 64px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    background: var(--sg-panel);
+    color: var(--sg-cream);
+    font-family: "Geist", sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1;
+    border-radius: 0;
+  }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S06" data-width="1920" data-height="1080">
+  <div id="S06-bg" class="pass pass-bg"></div>
+  <div id="S06-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S06-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { selectPass, shotData } from "./_shared/layers/shot.js";
+  const ID = "S06";
+  const DATA_ID = "S06";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { meta, timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S06-bg");
+  const mid = document.querySelector("#S06-mid .cam");
+  const fg = document.querySelector("#S06-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+  const { mountRibbons } = await import("./_shared/layers/ribbons.js");
+  const { mountPlate } = await import("./_shared/layers/plate.js");
+  const { leak, countUp } = await import("./_shared/layers/ui.js");
+  const { mountType } = await import("./_shared/layers/type.js");
+  const { EASE, DUR } = await import("./_shared/tokens/motion.js");
+
+  const MOCK_ROWS = {
+    8: "redis-cache · Evictions rising",
+    9: "Pod Crash Loop",
+    10: "inventory-db · Slow queries",
+    11: "Pod Crash Loop",
+    12: "api-gateway · Upstream resets",
+  };
+
+  function mountMock(host) {
+    const x = 120, y = 90, width = 1680;
+    const s = width / 1920;
+    const el = document.createElement("div");
+    el.className = "sg-plate";
+    el.dataset.plate = "P01";
+    el.style.position = "absolute";
+    el.style.left = x + "px";
+    el.style.top = y + "px";
+    el.style.width = width + "px";
+    el.style.height = (width * 1080 / 1920) + "px";
+    el.style.background = "var(--sg-panel)";
+    el.style.border = "1px solid var(--sg-hairline)";
+    host.appendChild(el);
+    const raw = {
+      list: { x: 324, y: 308, w: 1572, h: 641 },
+      "header-count": { x: 324, y: 132, w: 1572, h: 104 },
+    };
+    function box(key) {
+      const b = raw[key];
+      if (!b) throw new Error("plate P01 missing box " + key);
+      return { x: x + b.x * s, y: y + b.y * s, w: b.w * s, h: b.h * s };
+    }
+    function place(key, className) {
+      const b = box(key);
+      const node = document.createElement("div");
+      node.className = className;
+      node.style.position = "absolute";
+      node.style.left = (b.x - x) + "px";
+      node.style.top = (b.y - y) + "px";
+      node.style.width = b.w + "px";
+      node.style.height = b.h + "px";
+      el.appendChild(node);
+      return node;
+    }
+    return {
+      el,
+      box,
+      mask(key) { return place(key, "sg-mask"); },
+      overlay(key) { return place(key, "sg-overlay"); },
+      enter(timeline, t) {
+        gsap.set(el, { x: 240, opacity: 0 });
+        timeline.to(el, { x: 0, opacity: 1, duration: DUR.enter, ease: EASE.enter }, t);
+      },
+    };
+  }
+
+  function rowLabel(plateApi, n) {
+    const key = "row-" + n;
+    try {
+      plateApi.box(key);
+      const snap = window.SG_DATA.plates.P01.boxes[key];
+      return snap && snap.label ? snap.label : (MOCK_ROWS[n] || ("Alert " + n));
+    } catch (err) {
+      return MOCK_ROWS[n] || ("Alert " + n);
+    }
+  }
+
+  mountRibbons(bg, {
+    seed: meta.seed,
+    count: 16,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.45 }],
+  }).bind(tl, D);
+  bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
+  leak(tl, bg, 0.0, { src: "_shared/assets/gen/G02-1.png" });
+
+  let plate;
+  try {
+    plate = await mountPlate(mid, { id: "P01", x: 120, y: 90, width: 1680 });
+  } catch (err) {
+    plate = mountMock(mid);
+  }
+  plate.enter(tl, 0.05, { from: "right" });
+  plate.mask("list");
+  const list = plate.overlay("list");
+  const track = document.createElement("div");
+  track.className = "s06-track";
+  list.appendChild(track);
+
+  const ROW_COUNT = 12;
+  const INTERVAL = 0.28;
+  const PUSH_START = 0.2;
+  const listH = plate.box("list").h;
+  const ROW_H = listH / ROW_COUNT;
+  const pushes = Math.floor((D - PUSH_START) / INTERVAL + 1e-9);
+  const pre = ROW_COUNT - pushes;
+
+  for (let n = 1; n <= ROW_COUNT; n++) {
+    const row = document.createElement("div");
+    row.className = "s06-row";
+    row.dataset.key = "row-" + n;
+    row.style.position = "relative";
+    row.style.height = ROW_H + "px";
+    const title = document.createElement("div");
+    title.className = "s06-title";
+    title.textContent = rowLabel(plate, n);
+    const line = document.createElement("div");
+    line.className = "s06-line";
+    row.appendChild(title);
+    row.appendChild(line);
+    track.appendChild(row);
+
+    const fromOldest = ROW_COUNT - n;
+    if (fromOldest >= pre) {
+      const tEnter = PUSH_START + (fromOldest - pre) * INTERVAL;
+      row.style.visibility = "hidden";
+      row.style.height = "0px";
+      tl.set(row, { visibility: "visible" }, tEnter);
+      tl.fromTo(row, { height: 0 }, {
+        height: ROW_H,
+        duration: 0.24,
+        ease: EASE.snap,
+        immediateRender: false,
+      }, tEnter);
+    }
+  }
+
+  tl.fromTo(track, { y: 22 }, {
+    y: 0,
+    duration: Math.max(0.2, D - PUSH_START),
+    ease: "power3.out",
+    immediateRender: true,
+  }, PUSH_START);
+
+  const countHost = plate.overlay("header-count");
+  const countEl = document.createElement("div");
+  countEl.className = "s06-count";
+  countHost.appendChild(countEl);
+  countUp(tl, countEl, 312, 1284, PUSH_START, Math.max(0.2, D - PUSH_START));
+
+  const type = mountType(fg);
+  type.fromOst(tl, timing.ost, { eyebrow: { x: 120, y: 60 } });
+
+  applyCamera(tl, cam, roots, timing.duration);
+  tl.set({}, {}, timing.duration);
+  window.__timelines[ID] = tl;
+</script>
+</body>
+</html>

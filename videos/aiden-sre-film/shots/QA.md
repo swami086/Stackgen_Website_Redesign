@@ -16,3 +16,6 @@
 - S23, plate P15, keys mocked: seen-before-row. Copy: INVESTIGATION, Seen before, checkout-svc · rollback · 14 days ago. Box x 980, y 240, width 820.
 - S23 full only, plate P14, keys mocked: budget-bar, budget-threshold. Copy: RELIABILITY, Error budget. Box x 120, y 640, width 820. Cut omits P14.
 - S23, plate P12, whole plate mocked (missing) for the end handoff. Box x 120, y 90, width 1680. DOM copy: INCIDENT, checkout-svc, Status Resolved, Action rollback. No plate keys.
+- S08, plate P03, keys mocked: row-8, row-9, row-10, row-11, row-12. Rows 1–7 are the captured plate. Mock copy: redis-cache · Evictions rising, Pod Crash Loop, inventory-db · Slow queries, Pod Crash Loop, api-gateway · Upstream resets.
+- S19, plate P11, keys mocked: approve-btn, gate-policy, audit-line-last.
+- S20, plate P12, keys mocked: status-pill, chart-error-rate.

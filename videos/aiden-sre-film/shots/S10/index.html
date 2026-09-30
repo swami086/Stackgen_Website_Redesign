@@ -1,0 +1,115 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .s10-timer {
+    position: absolute;
+    left: 1560px;
+    top: 60px;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    font-family: "Geist Mono", monospace;
+    font-size: 28px;
+    line-height: 28px;
+    color: var(--sg-cream);
+    background: var(--sg-panel);
+    border: 1px solid var(--sg-hairline);
+    border-radius: 0;
+  }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S10" data-width="1920" data-height="1080">
+  <div id="S10-bg" class="pass pass-bg"></div>
+  <div id="S10-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S10-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { cueT, selectPass, shotData } from "./_shared/layers/shot.js";
+  const ID = "S10";
+  const DATA_ID = "S10";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { meta, timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S10-bg");
+  const mid = document.querySelector("#S10-mid .cam");
+  const fg = document.querySelector("#S10-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+  const hits = cueT(timing, "hits");
+  const { mountRibbons } = await import("./_shared/layers/ribbons.js");
+  const { mountPlate } = await import("./_shared/layers/plate.js");
+  const { mountType } = await import("./_shared/layers/type.js");
+  const { mountCursor } = await import("./_shared/layers/cursor.js");
+  const { countUp, leak } = await import("./_shared/layers/ui.js");
+
+  mountRibbons(bg, {
+    seed: meta.seed,
+    count: 16,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.45 }],
+  }).bind(tl, D);
+  bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
+  leak(tl, bg, 0, { src: "_shared/assets/gen/G02-2.png" });
+
+  const plate = await mountPlate(mid, { id: "P02", x: 120, y: 90, width: 1680 });
+  const row = plate.box("row-critical-k8s");
+  const hover = plate.overlay("row-critical-k8s");
+  const crop = document.createElement("img");
+  crop.alt = "";
+  crop.src = "_shared/assets/plates/P04.png";
+  crop.setAttribute("data-layout-allow-overflow", "");
+  const plateH = 1680 * 1080 / 1920;
+  crop.style.position = "absolute";
+  crop.style.width = "1680px";
+  crop.style.height = plateH + "px";
+  crop.style.left = (120 - row.x) + "px";
+  crop.style.top = (90 - row.y) + "px";
+  hover.appendChild(crop);
+  gsap.set(hover, { opacity: 0 });
+  tl.to(hover, { opacity: 1, duration: 0.2, ease: "none" }, hits - 0.3);
+
+  const cursor = mountCursor(mid);
+  cursor.show(tl, 0.3);
+  cursor.path(tl, [
+    { t: 0.3, x: 1500, y: 900 },
+    { t: hits - 0.1, x: row.x + row.w / 2, y: row.y + row.h / 2 },
+  ]);
+  cursor.click(tl, hits);
+
+  mountType(fg).fromOst(tl, timing.ost, { eyebrow: { x: 120, y: 60 } });
+
+  const timer = document.createElement("div");
+  timer.className = "s10-timer";
+  timer.setAttribute("data-layout-allow-overflow", "");
+  timer.textContent = "00:00";
+  fg.appendChild(timer);
+  const timerStart = hits + 0.1;
+  const elapsed = D - timerStart;
+  gsap.set(timer, { opacity: 0 });
+  tl.to(timer, { opacity: 1, duration: 0.15, ease: "none" }, timerStart);
+  countUp(tl, timer, 0, elapsed, timerStart, elapsed, mmss);
+
+  applyCamera(tl, cam, roots, D);
+  tl.set({}, {}, D);
+  window.__timelines[ID] = tl;
+
+  function mmss(n) {
+    const s = Math.max(0, Math.floor(n));
+    const m = Math.floor(s / 60);
+    return String(m).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
+  }
+</script>
+</body>
+</html>

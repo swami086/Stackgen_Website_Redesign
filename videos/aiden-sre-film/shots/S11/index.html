@@ -1,0 +1,137 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .s11-timer {
+    position: absolute;
+    left: 1560px;
+    top: 60px;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    font-family: "Geist Mono", monospace;
+    font-size: 28px;
+    line-height: 28px;
+    color: var(--sg-cream);
+    background: var(--sg-panel);
+    border: 1px solid var(--sg-hairline);
+    border-radius: 0;
+  }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S11" data-width="1920" data-height="1080">
+  <div id="S11-bg" class="pass pass-bg"></div>
+  <div id="S11-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S11-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { cueT, selectPass, shotData } from "./_shared/layers/shot.js";
+  import { EASE } from "./_shared/tokens/motion.js";
+  const ID = "S11";
+  const DATA_ID = "S11";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S11-bg");
+  const mid = document.querySelector("#S11-mid .cam");
+  const fg = document.querySelector("#S11-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+  const PLATE = { x: 120, y: 90, w: 1680, h: 1680 * 1080 / 1920 };
+  const { mountRibbons } = await import("./_shared/layers/ribbons.js");
+  const { mountPlate } = await import("./_shared/layers/plate.js");
+  const { chipAlong, countUp } = await import("./_shared/layers/ui.js");
+
+  const p02 = await mountPlate(mid, { id: "P02", x: PLATE.x, y: PLATE.y, width: PLATE.w });
+  gsap.set(p02.el, { opacity: 0.35 });
+  const row = p02.box("row-critical-k8s");
+
+  const p06 = await mountPlate(mid, { id: "P06", x: PLATE.x, y: PLATE.y, width: PLATE.w });
+  const summary = p06.box("summary");
+  const pcx = PLATE.x + PLATE.w / 2;
+  const pcy = PLATE.y + PLATE.h / 2;
+  tl.fromTo(p06.el, {
+    x: (row.x + row.w / 2) - pcx,
+    y: (row.y + row.h / 2) - pcy,
+    scaleX: row.w / PLATE.w,
+    scaleY: row.h / PLATE.h,
+    transformOrigin: "50% 50%",
+  }, {
+    x: 0,
+    y: 0,
+    scaleX: 1,
+    scaleY: 1,
+    transformOrigin: "50% 50%",
+    duration: 0.5,
+    ease: EASE.enter,
+  }, 0);
+
+  const p07 = await mountPlate(mid, { id: "P07", x: PLATE.x, y: PLATE.y, width: PLATE.w });
+  gsap.set(p07.el, { opacity: 0 });
+  tl.to(p06.el, { opacity: 0, duration: 0.4, ease: "none" }, D - 0.4);
+  tl.to(p07.el, { opacity: 1, duration: 0.4, ease: "none" }, D - 0.4);
+
+  const logsT = cueT(timing, "logs");
+  mountRibbons(bg, {
+    seed: 111,
+    count: 16,
+    modes: [
+      { t: 0, mode: "dormant" },
+      {
+        t: logsT - 0.3,
+        mode: "converge",
+        target: { x: summary.x + summary.w / 2, y: summary.y + summary.h / 2 },
+      },
+    ],
+  }).bind(tl, D);
+  bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
+
+  const edgeX = summary.x + summary.w;
+  const cy = summary.y + summary.h / 2;
+  const destY = [cy - 56, cy, cy + 56];
+  const fromY = [300, 540, 780];
+  const labels = ["logs", "metrics", "events"];
+  const chipW = { logs: 88, metrics: 118, events: 104 };
+  labels.forEach((label, i) => {
+    const chip = chipAlong(tl, mid, {
+      label,
+      from: { x: -80, y: fromY[i] },
+      to: { x: edgeX - chipW[label], y: destY[i] },
+      t: cueT(timing, label),
+      dur: 0.6,
+    });
+    chip.setAttribute("data-layout-allow-overflow", "");
+  });
+
+  const s10 = window.SG_DATA.shots.S10.full;
+  const carried = s10.duration - (cueT(s10, "hits") + 0.1);
+  const timer = document.createElement("div");
+  timer.className = "s11-timer";
+  timer.setAttribute("data-layout-allow-overflow", "");
+  fg.appendChild(timer);
+  countUp(tl, timer, carried, carried + D, 0, D, mmss);
+
+  applyCamera(tl, cam, roots, D);
+  tl.set({}, {}, D);
+  window.__timelines[ID] = tl;
+
+  function mmss(n) {
+    const s = Math.max(0, Math.floor(n));
+    const m = Math.floor(s / 60);
+    return String(m).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
+  }
+</script>
+</body>
+</html>

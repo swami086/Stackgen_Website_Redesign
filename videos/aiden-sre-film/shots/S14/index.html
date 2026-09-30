@@ -81,15 +81,22 @@
   svg.setAttribute("class", "s14-arrow");
   svg.setAttribute("viewBox", "0 0 1920 1080");
   svg.setAttribute("data-layout-allow-overflow", "");
+  const under = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  under.setAttribute("fill", "none");
+  under.setAttribute("stroke", "var(--sg-ink)");
+  under.setAttribute("stroke-width", "5");
+  under.setAttribute("d", d);
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
   path.setAttribute("fill", "none");
   path.setAttribute("stroke", "var(--sg-cream)");
-  path.setAttribute("stroke-width", "1");
+  path.setAttribute("stroke-width", "3");
   path.setAttribute("d", d);
+  svg.appendChild(under);
   svg.appendChild(path);
   mid.appendChild(svg);
 
   const tPoint = cueT(timing, "Root signal · downstream effect");
+  drawPath(tl, under, tPoint - 0.4, 0.6);
   drawPath(tl, path, tPoint - 0.4, 0.6);
   ringPulse(tl, mid, root, tPoint, { color: "var(--sg-violet)", rings: 1 });
   mid.querySelectorAll(".sg-ring").forEach((el) => el.setAttribute("data-layout-allow-overflow", ""));

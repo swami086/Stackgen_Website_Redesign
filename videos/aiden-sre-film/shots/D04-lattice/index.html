@@ -1,0 +1,45 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="D04-lattice" data-width="1920" data-height="1080">
+  <div id="D04-lattice-bg" class="pass pass-bg"></div>
+  <div id="D04-lattice-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="D04-lattice-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { selectPass, shotData } from "./_shared/layers/shot.js";
+  import { mountLattice } from "./_shared/layers/lattice.js";
+  const ID = "D04-lattice";
+  const DATA_ID = "S05";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { meta, timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("D04-lattice-bg");
+  const mid = document.querySelector("#D04-lattice-mid .cam");
+  const fg = document.querySelector("#D04-lattice-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  // SHOT BUILD: mount layers into bg / mid / fg; add tweens at shot-relative times from `timing`.
+  const lattice = mountLattice(bg, { graph: window.SG_DATA.graph, seed: meta.seed });
+  lattice.drawIn(tl, 0.2, 2.6);
+  lattice.mark(tl, "checkout-svc", 2.9);
+
+  applyCamera(tl, cam, roots, timing.duration);
+  tl.set({}, {}, timing.duration);
+  window.__timelines[ID] = tl;
+</script>
+</body>
+</html>

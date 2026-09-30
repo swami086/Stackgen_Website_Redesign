@@ -1,0 +1,38 @@
+{
+  "nodes": [
+    { "id": "frontend-web", "label": "frontend-web", "gx": 1, "gy": 0 },
+    { "id": "api-gateway", "label": "api-gateway", "gx": 3, "gy": 0 },
+    { "id": "auth-svc", "label": "auth-svc", "gx": 5, "gy": 0 },
+    { "id": "search-svc", "label": "search-svc", "gx": 0, "gy": 1 },
+    { "id": "notification-svc", "label": "notification-svc", "gx": 6, "gy": 1 },
+    { "id": "cart-svc", "label": "cart-svc", "gx": 1, "gy": 2 },
+    { "id": "checkout-svc", "label": "checkout-svc", "gx": 3, "gy": 2 },
+    { "id": "redis-cache", "label": "redis-cache", "gx": 5, "gy": 2 },
+    { "id": "k8s-cluster", "label": "k8s-cluster", "gx": 0, "gy": 3 },
+    { "id": "orders-svc", "label": "orders-svc", "gx": 2, "gy": 3 },
+    { "id": "payments-api", "label": "payments-api", "gx": 4, "gy": 3 },
+    { "id": "kafka", "label": "kafka", "gx": 6, "gy": 3 },
+    { "id": "inventory-db", "label": "inventory-db", "gx": 1, "gy": 4 },
+    { "id": "postgres-main", "label": "postgres-main", "gx": 5, "gy": 4 }
+  ],
+  "edges": [
+    ["frontend-web", "api-gateway"],
+    ["frontend-web", "cart-svc"],
+    ["api-gateway", "auth-svc"],
+    ["api-gateway", "checkout-svc"],
+    ["api-gateway", "search-svc"],
+    ["auth-svc", "postgres-main"],
+    ["cart-svc", "checkout-svc"],
+    ["cart-svc", "inventory-db"],
+    ["checkout-svc", "payments-api"],
+    ["checkout-svc", "orders-svc"],
+    ["checkout-svc", "redis-cache"],
+    ["payments-api", "postgres-main"],
+    ["orders-svc", "kafka"],
+    ["orders-svc", "inventory-db"],
+    ["kafka", "notification-svc"],
+    ["search-svc", "redis-cache"],
+    ["k8s-cluster", "checkout-svc"],
+    ["redis-cache", "postgres-main"]
+  ]
+}

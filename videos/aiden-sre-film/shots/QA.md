@@ -22,3 +22,10 @@
 - S15, plate P09, keys mocked: section-1, section-2, section-3. Copy: Probable cause, Evidence, Ruled out.
 - S06, plate P01, keys mocked: row-8, row-9, row-10, row-11, row-12. Rows 1–7 are the captured plate. Mock copy: redis-cache · Evictions rising, Pod Crash Loop, inventory-db · Slow queries, Pod Crash Loop, api-gateway · Upstream resets.
 - S07, plate P01, keys mocked: row-8, row-9, row-10, row-11, row-12. Same mock copy as S06.
+
+## Masters (T22)
+- Full: renders/master/aiden-sre-full.mp4 112.133s (timing 112.115s). Cut: aiden-sre-cut.mp4 105.267s (timing 105.243s). 27 shots full, 26 cut.
+- Music bed is ElevenLabs Music, model music_v2, instrumental, 120.024s, file shared/assets/audio/music/eleven-bed.wav. Mixkit bed.wav is not in the mix.
+- Loudness after the AAC pass: full I −14.3 LUFS, true peak −1.7 dBFS. Cut I −14.4 LUFS, true peak −1.8 dBFS. VO stems I −16.4 LUFS, true peak −1.5 dBFS. WAV mixes were I −14.3 / −14.4 and true peak −1.0 before AAC.
+- Poster: renders/master/poster.png from the full master at S12 start 46.271s + 1.6s.
+- Not listened to. S23 full-only whoosh at t=1.805 still plays on the cut.

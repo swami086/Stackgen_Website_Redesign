@@ -103,12 +103,18 @@
   const destY = [cy - 56, cy, cy + 56];
   const fromY = [300, 540, 780];
   const labels = ["logs", "metrics", "events"];
-  const chipW = { logs: 88, metrics: 118, events: 104 };
+  await document.fonts.ready;
   labels.forEach((label, i) => {
+    const box = document.createElement("div");
+    box.className = "sg-chip";
+    box.textContent = label;
+    mid.appendChild(box);
+    const w = box.offsetWidth;
+    box.remove();
     const chip = chipAlong(tl, mid, {
       label,
       from: { x: -80, y: fromY[i] },
-      to: { x: edgeX - chipW[label], y: destY[i] },
+      to: { x: edgeX - w, y: destY[i] },
       t: cueT(timing, label),
       dur: 0.6,
     });

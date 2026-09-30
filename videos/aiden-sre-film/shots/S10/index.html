@@ -5,14 +5,22 @@
 <link rel="stylesheet" href="_shared/tokens/brand.css">
 <link rel="stylesheet" href="_shared/layers/layers.css">
 <link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
 <style>
   @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
   @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
   body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .sg-eyebrow .sg-mask {
+    position: static;
+    background: transparent;
+    display: inline-block;
+    overflow: hidden;
+  }
+  .sg-eyebrow { color: var(--sg-ink); }
   .s10-timer {
     position: absolute;
     left: 1560px;
-    top: 60px;
+    top: 136px;
     box-sizing: border-box;
     padding: 8px 12px;
     font-family: "Geist Mono", monospace;
@@ -88,7 +96,7 @@
   ]);
   cursor.click(tl, hits);
 
-  mountType(fg).fromOst(tl, timing.ost, { eyebrow: { x: 120, y: 60 } });
+  mountType(fg).fromOst(tl, timing.ost, { eyebrow: { x: 232, y: 136 } });
 
   const timer = document.createElement("div");
   timer.className = "s10-timer";

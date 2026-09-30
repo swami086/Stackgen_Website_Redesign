@@ -11,3 +11,4 @@
 - S16, plate P09, keys mocked: rca-summary, fix, runbook, chat.
 - S17, plate P10, keys mocked: action-row, opt-restart, opt-scale, opt-reroute, opt-rollback.
 - S18, plate P10, keys mocked: action-row, opt-restart, opt-scale, opt-reroute, opt-rollback.
+- S24, plate P12, whole plate mocked (missing). Standard box x 120, y 90, 1680×945. DOM copy: checkout-svc, Incident resolved, Status · Resolved, Error rate back to baseline, Rollback held. No plate keys.

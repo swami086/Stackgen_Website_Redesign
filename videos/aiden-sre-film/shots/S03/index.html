@@ -1,0 +1,83 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .s03-lift {
+    position: absolute; inset: 0; border-radius: 0;
+    background: radial-gradient(ellipse at 30% 50%, var(--sg-ink-raised), var(--sg-ink) 70%);
+  }
+  .s03-whip { position: absolute; inset: 0; border-radius: 0; }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S03" data-width="1920" data-height="1080">
+  <div id="S03-bg" class="pass pass-bg"></div>
+  <div id="S03-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S03-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { selectPass, shotData } from "./_shared/layers/shot.js";
+  const ID = "S03";
+  const DATA_ID = "S03";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S03-bg");
+  const fg = document.querySelector("#S03-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+  const { mountRibbons } = await import("./_shared/layers/ribbons.js");
+  const { mountType } = await import("./_shared/layers/type.js");
+  const { EASE } = await import("./_shared/tokens/motion.js");
+
+  const lift = document.createElement("div");
+  lift.className = "s03-lift";
+  bg.appendChild(lift);
+
+  mountRibbons(bg, {
+    seed: 103,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.5 }],
+  }).bind(tl, D);
+  bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
+
+  mountType(fg).fromOst(tl, timing.ost, {
+    eyebrow: { x: 120, y: 360 },
+    headline: { x: 120, y: 420 },
+  });
+  fg.querySelectorAll(".sg-headline .sg-rise").forEach((el) => {
+    el.setAttribute("data-layout-allow-overlap", "");
+  });
+  const exitEls = fg.querySelectorAll(".sg-eyebrow, .sg-headline");
+  tl.fromTo(exitEls, { x: 0, opacity: 1 }, {
+    x: -60, opacity: 0, duration: 0.35, ease: EASE.exit, immediateRender: false,
+  }, D - 0.35);
+
+  for (const el of Object.values(roots)) {
+    if (!el) continue;
+    const wrap = document.createElement("div");
+    wrap.className = "s03-whip";
+    wrap.setAttribute("data-layout-allow-overflow", "");
+    while (el.firstChild) wrap.appendChild(el.firstChild);
+    el.appendChild(wrap);
+    tl.fromTo(wrap, { x: 1800 }, { x: 0, duration: 0.3, ease: "power3.out" }, 0);
+  }
+
+  applyCamera(tl, cam, roots, timing.duration);
+  tl.set({}, {}, timing.duration);
+  window.__timelines[ID] = tl;
+</script>
+</body>
+</html>

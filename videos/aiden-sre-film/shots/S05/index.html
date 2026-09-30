@@ -1,0 +1,58 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S05" data-width="1920" data-height="1080">
+  <div id="S05-bg" class="pass pass-bg"></div>
+  <div id="S05-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S05-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { selectPass, shotData } from "./_shared/layers/shot.js";
+  const ID = "S05";
+  const DATA_ID = "S05";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S05-bg");
+  const fg = document.querySelector("#S05-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+  const { mountRibbons } = await import("./_shared/layers/ribbons.js");
+  const { mountLattice } = await import("./_shared/layers/lattice.js");
+  const { mountType } = await import("./_shared/layers/type.js");
+
+  mountRibbons(bg, {
+    seed: 105,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.3 }],
+  }).bind(tl, D);
+  bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
+
+  const lattice = mountLattice(bg, { graph: window.SG_DATA.graph, seed: 105 });
+  lattice.drawIn(tl, 0.1, D - 0.9);
+  lattice.mark(tl, "checkout-svc", D - 0.6);
+
+  mountType(fg).fromOst(tl, timing.ost, { support: { x: 120, y: 940 } });
+
+  applyCamera(tl, cam, roots, timing.duration);
+  tl.set({}, {}, timing.duration);
+  window.__timelines[ID] = tl;
+</script>
+</body>
+</html>

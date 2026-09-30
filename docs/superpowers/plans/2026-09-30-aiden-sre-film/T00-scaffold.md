@@ -293,11 +293,11 @@ def test_cut_removes_exactly_s14():
     assert cut["duration"] < full["duration"]
 
 
-def test_only_s23_changes_shot_relative_timing_between_cuts():
+def test_cut_duration_changes_are_s22_and_s23():
     full = {s["id"]: s for s in timing.build(SHOTS, LINES, WORDS, "full")["shots"]}
     cut = {s["id"]: s for s in timing.build(SHOTS, LINES, WORDS, "cut")["shots"]}
     changed = {k for k in cut if abs(cut[k]["duration"] - full[k]["duration"]) > 0.02}
-    assert changed == {"S23"}
+    assert changed == {"S22", "S23"}
 ```
 
 `tests/test_brand.py`:

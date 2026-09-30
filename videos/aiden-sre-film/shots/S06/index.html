@@ -159,6 +159,15 @@
     }
   }
 
+  function rowExtent(plateApi) {
+    try {
+      return plateApi.box("row-1").h;
+    } catch (err) {
+      const boxes = window.SG_DATA.plates.P01.boxes;
+      return plateApi.box("list").h * (boxes["row-1"].h / boxes.list.h);
+    }
+  }
+
   mountRibbons(bg, {
     seed: meta.seed,
     count: 16,
@@ -176,6 +185,7 @@
   plate.enter(tl, 0.05, { from: "right" });
   plate.mask("list");
   const list = plate.overlay("list");
+  list.style.clipPath = "inset(0)";
   const track = document.createElement("div");
   track.className = "s06-track";
   list.appendChild(track);
@@ -184,19 +194,27 @@
   const INTERVAL = 0.28;
   const PUSH_START = 0.2;
   const listH = plate.box("list").h;
-  const ROW_H = listH / ROW_COUNT;
+  const ROW_H = rowExtent(plate);
+  const travel = ROW_COUNT * ROW_H - listH;
+  if (!(travel > 0)) throw new Error("S06 list is not taller than its mask");
   const pushes = Math.floor((D - PUSH_START) / INTERVAL + 1e-9);
   const pre = ROW_COUNT - pushes;
+  track.style.height = (ROW_COUNT * ROW_H) + "px";
+  track.setAttribute("data-layout-allow-overflow", "");
 
   for (let n = 1; n <= ROW_COUNT; n++) {
     const row = document.createElement("div");
     row.className = "s06-row";
     row.dataset.key = "row-" + n;
-    row.style.position = "relative";
+    row.style.position = "absolute";
+    row.style.left = "0";
+    row.style.width = "100%";
+    row.style.top = ((n - 1) * ROW_H) + "px";
     row.style.height = ROW_H + "px";
     const title = document.createElement("div");
     title.className = "s06-title";
     title.textContent = rowLabel(plate, n);
+    title.setAttribute("data-layout-allow-overlap", "");
     const line = document.createElement("div");
     line.className = "s06-line";
     row.appendChild(title);
@@ -206,11 +224,8 @@
     const fromOldest = ROW_COUNT - n;
     if (fromOldest >= pre) {
       const tEnter = PUSH_START + (fromOldest - pre) * INTERVAL;
-      row.style.visibility = "hidden";
-      row.style.height = "0px";
-      tl.set(row, { visibility: "visible" }, tEnter);
-      tl.fromTo(row, { height: 0 }, {
-        height: ROW_H,
+      tl.fromTo(row, { y: -ROW_H }, {
+        y: 0,
         duration: 0.24,
         ease: EASE.snap,
         immediateRender: false,
@@ -218,7 +233,7 @@
     }
   }
 
-  tl.fromTo(track, { y: 22 }, {
+  tl.fromTo(track, { y: -travel }, {
     y: 0,
     duration: Math.max(0.2, D - PUSH_START),
     ease: "power3.out",

@@ -14,6 +14,8 @@
     box-sizing: border-box;
     display: flex;
     align-items: flex-end;
+    position: absolute;
+    left: 0;
     width: 100%;
     padding: 0 16px 6px;
     background: var(--sg-panel);
@@ -190,16 +192,18 @@
   const ROW_COUNT = 12;
   const listH = plate.box("list").h;
   const ROW_H = listH / ROW_COUNT;
+  track.style.height = listH + "px";
   const rows = [];
   for (let n = 1; n <= ROW_COUNT; n++) {
     const row = document.createElement("div");
     row.className = "s07-row";
     row.dataset.key = "row-" + n;
-    row.style.position = "relative";
+    row.style.top = ((n - 1) * ROW_H) + "px";
     row.style.height = ROW_H + "px";
     const title = document.createElement("div");
     title.className = "s07-title";
     title.textContent = rowLabel(plate, n);
+    title.setAttribute("data-layout-allow-overlap", "");
     const line = document.createElement("div");
     line.className = "s07-line";
     row.appendChild(title);
@@ -211,6 +215,7 @@
   const visual = [0, 3, 6, 1, 4, 2, 8, 10, 5, 7, 9, 11];
   const order = visual.map((_, i) => visual.indexOf(i));
   flipReorder(tl, rows, order, tGroups);
+  const tops = rows.map((row) => row.offsetTop);
 
   const heads = [
     { text: "Auth latency", slot: order[0], rows: 3 },
@@ -218,13 +223,15 @@
     { text: "Pod restarts", slot: order[2], rows: 3 },
   ];
   heads.forEach((spec) => {
+    const top = tops[spec.slot];
     const rule = document.createElement("div");
     rule.className = "s07-rule";
-    rule.style.top = (spec.slot * ROW_H) + "px";
-    rule.style.height = (spec.rows * ROW_H) + "px";
+    rule.style.top = top + "px";
+    rule.style.height = (tops[spec.slot + spec.rows] - top) + "px";
     const head = document.createElement("div");
     head.className = "s07-head";
-    head.style.top = (spec.slot * ROW_H + (ROW_H - 20) / 2) + "px";
+    head.setAttribute("data-layout-allow-overlap", "");
+    head.style.top = (top + ((tops[spec.slot + 1] - top) - 20) / 2) + "px";
     head.textContent = spec.text;
     track.appendChild(rule);
     track.appendChild(head);
@@ -232,7 +239,9 @@
     tl.to([rule, head], { opacity: 1, duration: DUR.ui, ease: EASE.snap }, tGroups);
   });
 
-  collapseRows(tl, [rows[5], rows[7], rows[9], rows[11]], tFilters);
+  const noise = [rows[5], rows[7], rows[9], rows[11]];
+  noise.forEach((row) => row.setAttribute("data-layout-allow-overflow", ""));
+  collapseRows(tl, noise, tFilters);
 
   const countHost = plate.overlay("header-count");
   const countEl = document.createElement("div");

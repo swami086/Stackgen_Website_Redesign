@@ -1,0 +1,200 @@
+[
+ {
+  "file": "tick.wav",
+  "shot": "S01",
+  "t": 0.3,
+  "gain_db": -16
+ },
+ {
+  "file": "tick.wav",
+  "shot": "S01",
+  "t": 1.003,
+  "gain_db": -16
+ },
+ {
+  "file": "tick.wav",
+  "shot": "S01",
+  "t": 1.523,
+  "gain_db": -16
+ },
+ {
+  "file": "tick.wav",
+  "shot": "S01",
+  "t": 1.992,
+  "gain_db": -16
+ },
+ {
+  "file": "tick.wav",
+  "shot": "S01",
+  "t": 2.43,
+  "gain_db": -16
+ },
+ {
+  "file": "tick.wav",
+  "shot": "S01",
+  "t": 2.846,
+  "gain_db": -16
+ },
+ {
+  "file": "tick.wav",
+  "shot": "S01",
+  "t": 3.246,
+  "gain_db": -16
+ },
+ {
+  "file": "tick.wav",
+  "shot": "S01",
+  "t": 3.632,
+  "gain_db": -16
+ },
+ {
+  "file": "tick.wav",
+  "shot": "S01",
+  "t": 4.008,
+  "gain_db": -16
+ },
+ {
+  "file": "tick.wav",
+  "shot": "S01",
+  "t": 4.375,
+  "gain_db": -16
+ },
+ {
+  "file": "tick.wav",
+  "shot": "S01",
+  "t": 4.733,
+  "gain_db": -16
+ },
+ {
+  "file": "tick.wav",
+  "shot": "S01",
+  "t": 5.084,
+  "gain_db": -16
+ },
+ {
+  "file": "tick-wall.wav",
+  "shot": "S02",
+  "t": 0.0,
+  "gain_db": -8
+ },
+ {
+  "file": "whoosh-long.wav",
+  "shot": "S02",
+  "t": 3.812,
+  "gain_db": -10
+ },
+ {
+  "file": "pop.wav",
+  "shot": "S05",
+  "t": 0.32,
+  "gain_db": -16
+ },
+ {
+  "file": "pop.wav",
+  "shot": "S05",
+  "t": 0.759,
+  "gain_db": -16
+ },
+ {
+  "file": "pop.wav",
+  "shot": "S05",
+  "t": 1.198,
+  "gain_db": -16
+ },
+ {
+  "file": "pop.wav",
+  "shot": "S05",
+  "t": 1.637,
+  "gain_db": -16
+ },
+ {
+  "file": "pop.wav",
+  "shot": "S05",
+  "t": 2.076,
+  "gain_db": -16
+ },
+ {
+  "file": "pop.wav",
+  "shot": "S05",
+  "t": 2.515,
+  "gain_db": -16
+ },
+ {
+  "file": "whoosh-short.wav",
+  "shot": "S06",
+  "t": 0.05,
+  "gain_db": -14
+ },
+ {
+  "file": "click.wav",
+  "shot": "S10",
+  "t": 1.805,
+  "gain_db": -14
+ },
+ {
+  "file": "whoosh-short.wav",
+  "shot": "S11",
+  "t": 0.0,
+  "gain_db": -14
+ },
+ {
+  "file": "whoosh-short.wav",
+  "shot": "S14",
+  "t": 0.0,
+  "gain_db": -14
+ },
+ {
+  "file": "whoosh-short.wav",
+  "shot": "S17",
+  "t": 0.0,
+  "gain_db": -14
+ },
+ {
+  "file": "click.wav",
+  "shot": "S19",
+  "t": 2.633,
+  "gain_db": -14
+ },
+ {
+  "file": "thunk.wav",
+  "shot": "S19",
+  "t": 2.633,
+  "gain_db": -12
+ },
+ {
+  "file": "gate.wav",
+  "shot": "S19",
+  "t": 2.883,
+  "gain_db": -14
+ },
+ {
+  "file": "keys.wav",
+  "shot": "S19",
+  "t": 5.943,
+  "gain_db": -16
+ },
+ {
+  "file": "resolve.wav",
+  "shot": "S20",
+  "t": 0.564,
+  "gain_db": -12
+ },
+ {
+  "file": "whoosh-short.wav",
+  "shot": "S23",
+  "t": 0.5,
+  "gain_db": -14
+ },
+ {
+  "file": "whoosh-short.wav",
+  "shot": "S23",
+  "t": 1.805,
+  "gain_db": -14
+ },
+ {
+  "file": "riser.wav",
+  "shot": "S24",
+  "t": 0.2,
+  "gain_db": -10
+ }
+]

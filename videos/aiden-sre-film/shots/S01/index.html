@@ -1,0 +1,186 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .alert {
+    position: absolute;
+    top: 0;
+    width: 360px;
+    height: 84px;
+    box-sizing: border-box;
+    background: var(--sg-panel);
+    border: 1px solid var(--sg-hairline);
+    border-radius: 0;
+    padding: 16px 16px 0 16px;
+  }
+  .alert.is-critical { border-left: 3px solid var(--sg-coral); }
+  .alert-svc {
+    font-family: "Geist Mono", monospace;
+    font-size: 15px;
+    line-height: 20px;
+    color: var(--sg-mute);
+    white-space: nowrap;
+  }
+  .alert-title {
+    font-family: "Geist", sans-serif;
+    font-size: 19px;
+    line-height: 24px;
+    color: var(--sg-cream);
+    margin-top: 8px;
+    white-space: nowrap;
+  }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S01" data-width="1920" data-height="1080">
+  <div id="S01-bg" class="pass pass-bg"></div>
+  <div id="S01-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S01-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { selectPass, shotData } from "./_shared/layers/shot.js";
+  const ID = "S01";
+  const DATA_ID = "S01";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { meta, timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S01-bg");
+  const mid = document.querySelector("#S01-mid .cam");
+  const fg = document.querySelector("#S01-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+  const { mountRibbons } = await import("./_shared/layers/ribbons.js");
+  const { mountType } = await import("./_shared/layers/type.js");
+  const { EASE } = await import("./_shared/tokens/motion.js");
+  void meta;
+
+  const CARD_TEXT = [
+    ["checkout-svc", "High latency p99 > 2s", false],
+    ["cart-svc", "Pod restarted (CrashLoopBackOff)", false],
+    ["k8s-node-3", "CPU > 90%", false],
+    ["payments-api", "Error rate 4.2%", true],
+    ["redis-cache", "Evictions rising", false],
+    ["orders-svc", "Queue depth > 10k", false],
+    ["auth-svc", "Token latency > 800ms", false],
+    ["inventory-db", "Slow queries", false],
+    ["frontend-web", "5xx spike", true],
+    ["kafka", "Consumer lag", false],
+    ["search-svc", "Timeout ratio 3%", false],
+    ["api-gateway", "Upstream resets", false],
+  ];
+  const SLOT = 140;
+  const PUSH = 96;
+  const MOVE = 0.35;
+  const snapEase = gsap.parseEase(EASE.snap);
+
+  function makeCard(textIndex) {
+    const row = CARD_TEXT[textIndex % 12];
+    const el = document.createElement("div");
+    el.className = row[2] ? "alert is-critical" : "alert";
+    el.setAttribute("data-layout-allow-overflow", "");
+    el.setAttribute("data-layout-allow-overlap", "");
+    const svc = document.createElement("div");
+    svc.className = "alert-svc";
+    svc.textContent = row[0];
+    svc.setAttribute("data-layout-allow-overlap", "");
+    const title = document.createElement("div");
+    title.className = "alert-title";
+    title.textContent = row[1];
+    title.setAttribute("data-layout-allow-overlap", "");
+    el.appendChild(svc);
+    el.appendChild(title);
+    return { el, critical: row[2] };
+  }
+
+  function yAt(card, t) {
+    if (!card.segments.length) return card.rest;
+    let y = card.segments[0].from;
+    for (const seg of card.segments) {
+      if (t < seg.t) return y;
+      const u = Math.min(1, (t - seg.t) / MOVE);
+      y = seg.from + (seg.to - seg.from) * snapEase(u);
+      if (u < 1) return y;
+    }
+    return y;
+  }
+
+  function pushColumn(host, x, entryTimes, preCount) {
+    const cards = [];
+    for (let k = 0; k < preCount; k++) {
+      const made = makeCard(k);
+      made.el.style.left = x + "px";
+      host.appendChild(made.el);
+      cards.push({
+        el: made.el, critical: made.critical, x,
+        rest: SLOT + (preCount - 1 - k) * PUSH,
+        segments: [], enter: -1, index: k, pre: true,
+      });
+    }
+    entryTimes.forEach((t, i) => {
+      const made = makeCard(i);
+      made.el.style.left = x + "px";
+      host.appendChild(made.el);
+      cards.push({
+        el: made.el, critical: made.critical, x,
+        rest: -100, segments: [], enter: t, index: i, pre: false,
+      });
+    });
+    entryTimes.forEach((t, i) => {
+      for (const card of cards) {
+        if (!card.pre && card.enter > t) continue;
+        if (!card.pre && card.index === i) {
+          card.segments.push({ t, from: -100, to: SLOT });
+          continue;
+        }
+        const to = card.pre
+          ? SLOT + (preCount + i - card.index) * PUSH
+          : SLOT + (i - card.index) * PUSH;
+        card.segments.push({ t, from: yAt(card, t), to });
+      }
+    });
+    return cards;
+  }
+
+  mountRibbons(bg, {
+    seed: 101,
+    count: 18,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.5 }],
+  }).bind(tl, D);
+  bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
+
+  const times = [];
+  for (let i = 0; i < 12; i++) times.push(0.3 + (D - 0.8) * Math.pow(i / 12, 0.8));
+  const cards = pushColumn(mid, 780, times, 0);
+
+  const clock = { t: 0 };
+  const place = (t) => { for (const card of cards) gsap.set(card.el, { y: yAt(card, t) }); };
+  place(0);
+  tl.to(clock, { t: D, duration: D, ease: "none", onUpdate: () => place(clock.t) }, 0);
+
+  const type = mountType(fg);
+  type.counter(tl, { from: 0, to: 1284, t: 0.3, dur: D - 0.5, x: 1120, y: 100 });
+  const counterEl = fg.querySelector(".sg-counter");
+  counterEl.setAttribute("data-layout-allow-overflow", "");
+  counterEl.setAttribute("data-layout-allow-overlap", "");
+  gsap.set(counterEl, { opacity: 0 });
+  tl.set(counterEl, { opacity: 1, immediateRender: false }, 0.3);
+
+  applyCamera(tl, cam, roots, D);
+  tl.set({}, {}, D);
+  window.__timelines[ID] = tl;
+</script>
+</body>
+</html>

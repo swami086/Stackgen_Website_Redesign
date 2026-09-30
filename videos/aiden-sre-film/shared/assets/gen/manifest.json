@@ -1,0 +1,37 @@
+[
+  {
+    "file": "G01.png",
+    "prompt": "Near-black warm ink surface #14110C, extremely subtle paper-grain and dust, soft radial lift to #1B1811 at center, no objects, no text, 16:9, photographic macro Abstract texture and atmosphere only. No user interface, no typography, no letters, no logos, no objects, no recognizable products.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-09-30",
+    "attempts": 1
+  },
+  {
+    "file": "G02-1.png",
+    "prompt": "Soft anamorphic light leak on pure black, pale violet #BA99FD and pale cyan #A0EAFC, no hard edges, no text. Light leak originates from the left edge. Abstract texture and atmosphere only. No user interface, no typography, no letters, no logos, no objects, no recognizable products.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-09-30",
+    "attempts": 1
+  },
+  {
+    "file": "G02-2.png",
+    "prompt": "Soft anamorphic light leak on pure black, pale violet #BA99FD and pale cyan #A0EAFC, no hard edges, no text. Light leak originates from the top-right corner. Abstract texture and atmosphere only. No user interface, no typography, no letters, no logos, no objects, no recognizable products.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-09-30",
+    "attempts": 1
+  },
+  {
+    "file": "G02-3.png",
+    "prompt": "Soft anamorphic light leak on pure black, pale violet #BA99FD and pale cyan #A0EAFC, no hard edges, no text. Light leak originates from the bottom edge. Abstract texture and atmosphere only. No user interface, no typography, no letters, no logos, no objects, no recognizable products.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-09-30",
+    "attempts": 2
+  },
+  {
+    "file": "G03.png",
+    "prompt": "Out-of-focus bokeh particles, pale violet and pale cyan on pure black, sparse, shallow depth of field, no text Abstract texture and atmosphere only. No user interface, no typography, no letters, no logos, no objects, no recognizable products.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-09-30",
+    "attempts": 1
+  }
+]

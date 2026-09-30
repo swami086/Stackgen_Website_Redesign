@@ -27,12 +27,20 @@
     z-index: 2;
   }
   .qtile.is-dim { opacity: 0.3; }
-  .qname, .qsub, .slab-label, .pill {
+  .qname, .qlabel, .slab-label, .pill {
     font-family: "Geist Mono", monospace;
     border-radius: 0;
   }
   .qname { font-size: 18px; line-height: 1.2; color: var(--sg-cream); }
-  .qsub { font-size: 15px; line-height: 1.2; color: var(--sg-mute); }
+  .qlabel {
+    position: absolute;
+    width: 640px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.2;
+    color: var(--sg-cream);
+    z-index: 4;
+  }
   .slab {
     position: absolute;
     width: 1000px;
@@ -95,8 +103,8 @@
   const TILE = 420;
   const GAP = 16;
   const STEP = TILE + GAP;
-  const LEFT = 532;
-  const TOP = 16;
+  const LEFT = 750;
+  const TOP = 210;
   const SLAB_X = 460;
   const SLAB_Y = 888;
   const { pass, mode } = window.__hyperframes.getVariables();
@@ -118,10 +126,10 @@
   bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
 
   const quarters = [
-    { name: "BUILD", col: 0, row: 0, border: "var(--sg-violet)", dim: true },
-    { name: "OPERATE", col: 1, row: 0, border: "var(--sg-amber)", dim: true },
-    { name: "OBSERVE", col: 0, row: 1, border: "var(--sg-coral)", dim: true },
-    { name: "REMEDIATE", col: 1, row: 1, border: "var(--sg-cyan)", dim: false, sub: "Aiden for SRE" },
+    { name: "REMEDIATE", col: 0, row: 0, border: "var(--sg-cyan)", dim: false },
+    { name: "BUILD", col: 1, row: 0, border: "var(--sg-violet)", dim: true },
+    { name: "OPERATE", col: 0, row: 1, border: "var(--sg-amber)", dim: true },
+    { name: "OBSERVE", col: 1, row: 1, border: "var(--sg-coral)", dim: true },
   ];
   const tiles = quarters.map((q) => {
     const el = document.createElement("div");
@@ -129,19 +137,22 @@
     el.style.left = (LEFT + q.col * STEP) + "px";
     el.style.top = (TOP + q.row * STEP) + "px";
     el.style.borderColor = q.border;
-    const name = document.createElement("div");
-    name.className = "qname";
-    name.textContent = q.name;
-    el.appendChild(name);
-    if (q.sub) {
-      const sub = document.createElement("div");
-      sub.className = "qsub";
-      sub.textContent = q.sub;
-      el.appendChild(sub);
+    if (q.dim) {
+      const name = document.createElement("div");
+      name.className = "qname";
+      name.textContent = q.name;
+      el.appendChild(name);
     }
     mid.appendChild(el);
     return el;
   });
+  const rem = quarters[0];
+  const label = document.createElement("div");
+  label.className = "qlabel";
+  label.textContent = "REMEDIATE · Aiden for SRE";
+  label.style.left = (LEFT + rem.col * STEP + TILE / 2 - 320) + "px";
+  label.style.top = (TOP + rem.row * STEP + TILE + 14) + "px";
+  mid.appendChild(label);
 
   const slab = document.createElement("div");
   slab.className = "slab";

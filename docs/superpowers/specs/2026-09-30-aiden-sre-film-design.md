@@ -121,6 +121,7 @@ Hard rules:
 3. Every shot has a camera move (min 2% scale change or 30 px drift). No static frames.
 4. Type enters on the VO word it names, ±120 ms (driven by word timings, §8.1).
 5. Nothing tweens `display`, `visibility` or `autoAlpha` on a `.clip` (HyperFrames lint).
+6. UI acts must feel like live product use: the cursor always travels on an arc (never teleports), every click = press (0.96 scale, 90 ms) + a square hairline ripple expanding 0 → 48 px and fading over 0.35 s, and any list taller than the viewport scrolls with eased momentum (S06, S09) rather than cutting.
 
 ---
 

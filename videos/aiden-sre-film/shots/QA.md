@@ -12,3 +12,7 @@
 - S17, plate P10, keys mocked: action-row, opt-restart, opt-scale, opt-reroute, opt-rollback.
 - S18, plate P10, keys mocked: action-row, opt-restart, opt-scale, opt-reroute, opt-rollback.
 - S24, plate P12, whole plate mocked (missing). Standard box x 120, y 90, 1680×945. DOM copy: checkout-svc, Incident resolved, Status · Resolved, Error rate back to baseline, Rollback held. No plate keys.
+- S21, plate P12, whole plate mocked (missing). Box is the FLIP source at the shot's plate rect. DOM copy: INCIDENT, checkout-svc, Status Resolved, Action rollback, Error rate baseline. No plate keys.
+- S23, plate P15, keys mocked: seen-before-row. Copy: INVESTIGATION, Seen before, checkout-svc · rollback · 14 days ago. Box x 980, y 240, width 820.
+- S23 full only, plate P14, keys mocked: budget-bar, budget-threshold. Copy: RELIABILITY, Error budget. Box x 120, y 640, width 820. Cut omits P14.
+- S23, plate P12, whole plate mocked (missing) for the end handoff. Box x 120, y 90, width 1680. DOM copy: INCIDENT, checkout-svc, Status Resolved, Action rollback. No plate keys.

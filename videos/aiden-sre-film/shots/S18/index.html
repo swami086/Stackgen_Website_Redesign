@@ -140,6 +140,10 @@
     for (const key of KEYS) plate.box(key);
     const action = plate.overlay("action-row");
     fillAction(action, true);
+    const actionText = action.firstChild;
+    actionText.style.left = "0";
+    actionText.style.top = "0";
+    actionText.style.width = "100%";
     for (const key of Object.keys(labels)) {
       const host = plate.overlay(key);
       const chip = document.createElement("div");

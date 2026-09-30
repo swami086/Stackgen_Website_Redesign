@@ -109,14 +109,14 @@
 
   function yAt(card, t) {
     if (!card.segments.length) return card.rest;
-    let y = card.segments[0].from;
-    for (const seg of card.segments) {
-      if (t < seg.t) return y;
-      const u = Math.min(1, (t - seg.t) / MOVE);
-      y = seg.from + (seg.to - seg.from) * snapEase(u);
-      if (u < 1) return y;
+    let seg = null;
+    for (const next of card.segments) {
+      if (next.t > t) break;
+      seg = next;
     }
-    return y;
+    if (!seg) return card.segments[0].from;
+    const u = Math.min(1, (t - seg.t) / MOVE);
+    return seg.from + (seg.to - seg.from) * snapEase(u);
   }
 
   function pushColumn(host, x, entryTimes, preCount) {
@@ -158,7 +158,8 @@
 
   mountRibbons(bg, {
     seed: 102,
-    modes: [{ t: 0, mode: "dormant" }, { t: 0.4, mode: "storm" }],
+    count: 16,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.45 }, { t: 0.4, mode: "storm" }],
   }).bind(tl, D);
   bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
 

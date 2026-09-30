@@ -251,9 +251,10 @@
   ]);
   cursor.click(tl, tApprove);
 
-  mountType(fg).fromOst(tl, timing.ost, { support: { x: 120, y: 960, inline: true } });
+  mountType(fg).fromOst(tl, timing.ost, { support: { x: 192, y: 960, inline: true } });
   const support = fg.querySelector(".sg-support");
   if (support) {
+    support.setAttribute("data-layout-allow-overflow", "");
     support.setAttribute("data-layout-allow-overlap", "");
     support.setAttribute("data-layout-allow-caption-zone", "");
   }

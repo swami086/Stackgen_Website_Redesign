@@ -1,0 +1,29 @@
+{
+ "shot": "S16",
+ "duration": 4.84,
+ "perspective": 2400,
+ "keys": [
+  {
+   "t": 0.0,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "rx": 0,
+   "ry": 0,
+   "rz": 0,
+   "scale": 1.0
+  },
+  {
+   "t": 4.84,
+   "x": 40,
+   "y": -10,
+   "z": 0,
+   "rx": 0,
+   "ry": 0,
+   "rz": 0,
+   "scale": 1.0
+  }
+ ],
+ "ease": "power2.inOut",
+ "blur": "normal"
+}

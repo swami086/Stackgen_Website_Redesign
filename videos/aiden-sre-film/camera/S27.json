@@ -1,0 +1,29 @@
+{
+ "shot": "S27",
+ "duration": 8.722,
+ "perspective": 2400,
+ "keys": [
+  {
+   "t": 0.0,
+   "x": 0,
+   "y": 0,
+   "z": 40,
+   "rx": 0,
+   "ry": 0,
+   "rz": 0,
+   "scale": 1.0
+  },
+  {
+   "t": 8.722,
+   "x": 0,
+   "y": -30,
+   "z": 0,
+   "rx": 0,
+   "ry": 0,
+   "rz": 0,
+   "scale": 1.0
+  }
+ ],
+ "ease": "power2.inOut",
+ "blur": "normal"
+}

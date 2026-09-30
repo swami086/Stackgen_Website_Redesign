@@ -1,0 +1,29 @@
+{
+ "shot": "S06",
+ "duration": 4.012,
+ "perspective": 2400,
+ "keys": [
+  {
+   "t": 0.0,
+   "x": 0,
+   "y": 0,
+   "z": -200,
+   "rx": 0,
+   "ry": -18,
+   "rz": 0,
+   "scale": 1.0
+  },
+  {
+   "t": 4.012,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "rx": 0,
+   "ry": -8,
+   "rz": 0,
+   "scale": 1.0
+  }
+ ],
+ "ease": "power2.inOut",
+ "blur": "normal"
+}

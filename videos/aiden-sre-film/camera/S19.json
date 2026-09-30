@@ -1,0 +1,29 @@
+{
+ "shot": "S19",
+ "duration": 6.909,
+ "perspective": 2400,
+ "keys": [
+  {
+   "t": 0.0,
+   "x": -50,
+   "y": 0,
+   "z": 0,
+   "rx": 0,
+   "ry": -4,
+   "rz": 0,
+   "scale": 1.05
+  },
+  {
+   "t": 6.909,
+   "x": -80,
+   "y": 20,
+   "z": 0,
+   "rx": 0,
+   "ry": -2,
+   "rz": 0,
+   "scale": 1.08
+  }
+ ],
+ "ease": "power2.inOut",
+ "blur": "normal"
+}

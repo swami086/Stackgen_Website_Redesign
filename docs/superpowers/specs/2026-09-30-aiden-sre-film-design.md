@@ -676,3 +676,7 @@ Runs §12 against the masters, frame-samples every shot, writes `QA.md` with pas
 ## 15. Out of scope
 
 Homepage film (`home` track); 4k master; localisation; talking-head presenter; live screen recording; Veo/generative video; any reuse of previous `videos/*` projects.
+
+## 16. Planning amendments
+
+See "Spec amendments made during planning" in docs/superpowers/plans/2026-09-30-aiden-sre-film.md. Those items supersede §4.2, §4.5, §6 (S08, S17, S18, S22), §6.1, §7.2, §8.1 and §8.2 where they differ.

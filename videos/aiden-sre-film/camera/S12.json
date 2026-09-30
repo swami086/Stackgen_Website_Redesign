@@ -1,0 +1,29 @@
+{
+ "shot": "S12",
+ "duration": 3.725,
+ "perspective": 2400,
+ "keys": [
+  {
+   "t": 0.0,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "rx": 6,
+   "ry": -10,
+   "rz": 0,
+   "scale": 1.0
+  },
+  {
+   "t": 3.725,
+   "x": -40,
+   "y": 0,
+   "z": 0,
+   "rx": 4,
+   "ry": -6,
+   "rz": 0,
+   "scale": 1.04
+  }
+ ],
+ "ease": "power2.inOut",
+ "blur": "normal"
+}

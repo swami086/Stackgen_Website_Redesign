@@ -1,0 +1,29 @@
+{
+ "shot": "S17",
+ "duration": 4.552,
+ "perspective": 2400,
+ "keys": [
+  {
+   "t": 0.0,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "rx": 0,
+   "ry": -12,
+   "rz": 0,
+   "scale": 1.0
+  },
+  {
+   "t": 4.552,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "rx": 0,
+   "ry": -4,
+   "rz": 0,
+   "scale": 1.03
+  }
+ ],
+ "ease": "power2.inOut",
+ "blur": "normal"
+}

@@ -1,0 +1,19 @@
+:root {
+  --sg-ink:          #14110C; /* stage, 78% of pixels */
+  --sg-ink-raised:   #1B1811; /* radial lift behind subject */
+  --sg-panel:        #211D15; /* UI panel fill */
+  --sg-hairline:     #3F3B39; /* 1px borders, dividers */
+  --sg-cream:        #F1EAE0; /* primary type */
+  --sg-cream-bright: #FAF7F2; /* primary button, highlights */
+  --sg-mute:         #96897C; /* secondary type, eyebrows */
+  --sg-violet:       #BA99FD; /* accent 1, hue 260 s.40 v.99 */
+  --sg-cyan:         #A0EAFC; /* accent 2, hue 192 s.37 v.99 */
+  --sg-radius:       0px;
+  --sg-font:         "Geist", sans-serif;
+  --sg-mono:         "Geist Mono", monospace;
+  --sg-coral:  #FDA39B; /* critical alerts, hue 5 */
+  --sg-amber:  #FDD89B; /* warnings, hue 38 */
+  --sg-green:  #A6F0BF; /* resolved, hue 140 */
+  --sg-glow-violet: rgba(186,153,253,.35);
+  --sg-glow-cyan:   rgba(160,234,252,.30);
+}

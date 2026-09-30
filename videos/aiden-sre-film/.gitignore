@@ -1,0 +1,6 @@
+.venv/
+node_modules/
+build/
+renders/
+shared/build/
+shots/*/_shared

@@ -1,0 +1,29 @@
+{
+ "shot": "S14",
+ "duration": 6.495,
+ "perspective": 2400,
+ "keys": [
+  {
+   "t": 0.0,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "rx": 0,
+   "ry": -6,
+   "rz": 0,
+   "scale": 1.0
+  },
+  {
+   "t": 6.495,
+   "x": 120,
+   "y": 0,
+   "z": 0,
+   "rx": 0,
+   "ry": -6,
+   "rz": 0,
+   "scale": 1.0
+  }
+ ],
+ "ease": "power2.inOut",
+ "blur": "normal"
+}

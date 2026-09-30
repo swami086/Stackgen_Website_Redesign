@@ -1,0 +1,29 @@
+{
+ "shot": "S07",
+ "duration": 5.793,
+ "perspective": 2400,
+ "keys": [
+  {
+   "t": 0.0,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "rx": 0,
+   "ry": -8,
+   "rz": 0,
+   "scale": 1.0
+  },
+  {
+   "t": 5.793,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "rx": 0,
+   "ry": -4,
+   "rz": 0,
+   "scale": 1.1
+  }
+ ],
+ "ease": "power2.inOut",
+ "blur": "heavy"
+}

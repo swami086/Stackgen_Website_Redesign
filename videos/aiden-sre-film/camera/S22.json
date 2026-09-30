@@ -1,0 +1,29 @@
+{
+ "shot": "S22",
+ "duration": 3.185,
+ "perspective": 2400,
+ "keys": [
+  {
+   "t": 0.0,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "rx": 24,
+   "ry": 0,
+   "rz": 0,
+   "scale": 1.0
+  },
+  {
+   "t": 3.185,
+   "x": 30,
+   "y": 0,
+   "z": 0,
+   "rx": 26,
+   "ry": 0,
+   "rz": 0,
+   "scale": 1.06
+  }
+ ],
+ "ease": "power2.inOut",
+ "blur": "normal"
+}

@@ -1,0 +1,374 @@
+{
+ "home": [
+  {
+   "title": "Act 1 \u2014 Why an operations factory",
+   "scene": "The jigsaw. Reuse the Factory Jigsaw Animation (9 Sept) on its cream-to-lilac background: the violet Software Factory piece and the pink Ops Factory piece, isometric, Geist labels. Re-time the loop so it plays as a story rather than a cycle: start with the software piece alone, bring the ops piece in already split into its four quarters, close the quarters, then mate the two halves. One move at a time, each move matched to the voiceover line it illustrates.",
+   "beats": [
+    {
+     "visual": "Violet SOFTWARE FACTORY piece alone, center frame. Small work-unit tokens stream off its right edge, speeding up across the beat. A thin rate line in the corner climbs.",
+     "ost": "SOFTWARE FACTORY",
+     "vo": "AI turned coding into a software factory. Code is being written faster than ever.",
+     "flags": "[ASSET EXISTS] violet piece, jigsaw v1.0",
+     "t0": 0.0,
+     "dur": 6.493103448275862,
+     "words": 14
+    },
+    {
+     "visual": "The Ops Factory arrives beside it as four separate quarters, drifting apart: BUILD, OPERATE, OBSERVE, REMEDIATE. The token stream from the software piece piles up at the gap. A small human glyph carries one token from quarter to quarter.",
+     "ost": "BUILD \u00b7 OPERATE \u00b7 OBSERVE \u00b7 REMEDIATE\nthen, center: Delivery got faster. Operations didn't.",
+     "vo": "But operations can't keep pace. Build, operate, observe and remediate still run as separate pieces, on separate tools, held together by people.",
+     "flags": "[ASSET EXISTS] split state, jigsaw v1.0. Stage 1 lead line, Tagline Master v5.5",
+     "t0": 6.493103448275862,
+     "dur": 9.803448275862069,
+     "words": 22
+    },
+    {
+     "visual": "The four quarters slide in and lock into one pink piece. Seam walls drop as they mate. Label resolves: OPS FACTORY. The token pile starts to clear.",
+     "ost": "OPERATIONS FACTORY",
+     "vo": "What's missing is an operations factory, where all four work as one.",
+     "flags": "[ASSET EXISTS] closeQuads phase",
+     "t0": 16.29655172413793,
+     "dur": 5.665517241379311,
+     "words": 12
+    },
+    {
+     "visual": "The software piece and the ops piece move together and click on the center tab. Brief lift and settle. Tokens now flow straight through both halves without stopping.",
+     "ost": "Your software factory needs an operations factory.",
+     "vo": "Join the two, and the whole software lifecycle runs at the speed AI promised.",
+     "flags": "[ASSET EXISTS] join phase. Stage 2 lead line, Tagline Master v5.5",
+     "t0": 21.96206896551724,
+     "dur": 6.493103448275862,
+     "words": 14
+    }
+   ],
+   "start": 0.0,
+   "end": 28.4551724137931
+  },
+  {
+   "title": "Transition \u2014 Four ways to start",
+   "scene": "Camera pushes into the ops piece. The four quarter seams reappear as fine lines (the piece stays whole) so each quarter can light in turn in the next act.",
+   "beats": [
+    {
+     "visual": "Push in on the joined ops piece. Quarter seams draw on as thin lines. Each quarter pulses once in the order the products will appear.",
+     "ost": "START ANYWHERE",
+     "vo": "StackGen's Aiden agents give you four ways to start building yours.",
+     "flags": "Matches homepage products headline",
+     "t0": 28.4551724137931,
+     "dur": 5.251724137931035,
+     "words": 11
+    }
+   ],
+   "start": 28.4551724137931,
+   "end": 33.706896551724135
+  },
+  {
+   "title": "Act 2 \u2014 The four products",
+   "scene": "Same structure for every product so the viewer learns the pattern once. (1) Its jigsaw quarter lights in the product accent color and the other three dim to grey, so even the pink Observability accent stands out. (2) A title card sets: pillar eyebrow, product name, the claim line from the homepage product band. Keep it to those three lines. Capability labels appear later, on the visuals they describe. (3) Two or three quick visuals, one per capability named in the voiceover, in the stylized product-graphic style already used on the homepage product sections. SRE gets real screen captures from the demo environment. Rail at the top of frame shows which of the four is playing.",
+   "beats": [
+    {
+     "visual": "REMEDIATE quarter lights cyan. Title card. Then three fast cuts from the Aiden for SRE demo flow: (a) triage dashboard, alert count dropping as noise is filtered; (b) investigation pop-up with the likely causes and their confidence scores; (c) remediation card with an Approve button. A LEARN chip loops back to the start of the rail.",
+     "ost": "REMEDIATE \u00b7 Aiden for SRE\nYour AI SRE teammate.\nOn the visuals: DISCOVER \u2192 TRIAGE \u2192 ROOT CAUSE \u2192 REMEDIATE \u2192 LEARN",
+     "vo": "Aiden for SRE is your AI SRE teammate, built to cut toil and MTTR. It learns your environment from the tools you already run, triages every alert, and finds root cause with the evidence behind it. It remediates with your approval, and carries what it learns into the next incident.",
+     "flags": "[SCREEN CAPTURE] same footage as the SRE product video. Capture from the Datadog-connected demo environment",
+     "t0": 33.706896551724135,
+     "dur": 21.389655172413793,
+     "words": 50
+    },
+    {
+     "visual": "BUILD quarter lights violet. Title card. A developer request appears in an IDE panel in plain language. It resolves into a Terraform block tagged with module names from a catalog. A policy check row ticks green. The change drops into an approval queue, then passes to a cloud icon.",
+     "ost": "BUILD \u00b7 Aiden for InfraOps\nShip infra at AI speed.\nOn the visuals: IDE \u00b7 coding agent \u00b7 ServiceNow \u2192 approved modules \u2192 policy check \u2192 approval",
+     "vo": "Aiden for InfraOps lets developers request infrastructure from their IDE, a coding agent or ServiceNow. It builds Terraform or OpenTofu from your approved modules, checks it against your policies, and queues it for approval before anything reaches your cloud.",
+     "flags": "Product page copy, 25 Sept",
+     "t0": 55.096551724137925,
+     "dur": 16.837931034482757,
+     "words": 39
+    },
+    {
+     "visual": "OPERATE quarter lights peach. Title card. A skill card is built once, then copies fan out to several team avatars. A trigger clock fires and two task cards run: cost report, cluster health check. A knowledge-hub strip (runbooks, policies) glows behind them.",
+     "ost": "OPERATE \u00b7 Aiden for DevOps\nScale impact, not tickets.\nOn the visuals: skills \u00b7 autonomous tasks \u00b7 knowledge hub",
+     "vo": "Aiden for DevOps takes repeat work off your team. Build a skill once and your whole organization can reuse it. Put routine jobs on a trigger, like a daily cost report or a cluster health check. Aiden works from your own runbooks and policies.",
+     "flags": "[FOR DECISION] title line. See open decision 2",
+     "cut": "Cut A: \"like a daily cost report or a cluster health check\"",
+     "t0": 71.93448275862067,
+     "dur": 18.906896551724138,
+     "words": 44
+    },
+    {
+     "visual": "OBSERVE quarter lights pink. Title card. An integrations grid fills in fast. A dashboard assembles itself panel by panel. A cloud boundary line draws around it (your cloud). A question bubble to Aiden returns a likely-cause card with evidence rows.",
+     "ost": "OBSERVE \u00b7 Aiden for Observability\nObservability without the upkeep.\nOn the visuals: OpenTelemetry \u00b7 300+ integrations \u00b7 your cloud",
+     "vo": "Aiden for Observability is fully managed, open-source observability on OpenTelemetry, with Aiden built in. Choose from over three hundred integrations, deploy in minutes, and run it as private SaaS or in your own cloud. When something breaks, ask Aiden, and it shows the likely cause with the evidence.",
+     "flags": "300+ integrations, deploy in minutes and private SaaS are on the product page",
+     "cut": "Cut B: \"When something breaks, ask Aiden, and it shows the likely cause with the evidence.\"",
+     "t0": 90.84137931034482,
+     "dur": 20.56206896551724,
+     "words": 48
+    }
+   ],
+   "start": 33.706896551724135,
+   "end": 111.40344827586206
+  },
+  {
+   "title": "Act 3 \u2014 Unified context",
+   "scene": "Pull back to the whole ops piece, now with each quarter labelled by product. A single glowing plate slides in underneath all four: the Aiden World Model.",
+   "beats": [
+    {
+     "visual": "Plate slides under the four quarters. Thin connector lines drop from each quarter into it. A small chip written by the SRE quarter (\"rollback fixed checkout\") travels along the plate and lights up under the InfraOps quarter.",
+     "ost": "AIDEN WORLD MODEL\nwhat's deployed \u00b7 what changed \u00b7 what broke \u00b7 what fixed it",
+     "vo": "All four agents run on unified context: the Aiden World Model. Every agent reads and writes it, so what one learns, the others already know.",
+     "flags": "[VERIFY \u2014 Raj] cross-agent read/write shown as it works today",
+     "t0": 111.40344827586206,
+     "dur": 11.044827586206896,
+     "words": 25
+    }
+   ],
+   "start": 111.40344827586206,
+   "end": 122.44827586206895
+  },
+  {
+   "title": "Act 4 \u2014 Aiden OS",
+   "scene": "A second plate slides in beneath the world model: Aiden OS, with its governance pills. One action travels down through it so governance is shown happening, not listed.",
+   "beats": [
+    {
+     "visual": "Aiden OS plate sets. Pills light left to right. An action token leaves the SRE quarter, stops at a policy gate (passes), waits at an approval gate where a human glyph taps Approve, then writes a line into an audit log strip.",
+     "ost": "AIDEN OS\nPolicy \u00b7 Approvals \u00b7 Identity \u00b7 Audit \u00b7 Cost controls \u00b7 Integrations",
+     "vo": "Aiden OS governs all of it. Every action is checked against your policies before it runs. Your team decides what needs approval, and every step is recorded.",
+     "flags": "Aiden OS pills per Definitions Companion v2.0",
+     "t0": 122.44827586206895,
+     "dur": 11.872413793103448,
+     "words": 27
+    }
+   ],
+   "start": 122.44827586206895,
+   "end": 134.3206896551724
+  },
+  {
+   "title": "Close",
+   "scene": "Camera pulls back to the full picture: software factory joined to the ops factory, four product quarters on the world model and Aiden OS plates. Everything lit.",
+   "beats": [
+    {
+     "visual": "Full assembly holds. Type sets over the lower third. End card with a single button. No URL: the viewer is already on the site.",
+     "ost": "Eyebrow: AUTONOMOUS OPERATIONS FACTORY\nStart anywhere.\nButton: Explore the products",
+     "vo": "Start anywhere, and build your operations factory from there.",
+     "flags": "No URL in this version",
+     "t0": 134.3206896551724,
+     "dur": 4.424137931034482,
+     "words": 9
+    }
+   ],
+   "start": 134.3206896551724,
+   "end": 138.7448275862069
+  }
+ ],
+ "sre": [
+  {
+   "title": "Intro",
+   "scene": "Open cold on the problem, then meet the product. Motion graphics for the first line, then cut to the Aiden for SRE alert screen. Per John's 25 Sept note, the story starts where alerts actually start: in the observability tools, surfacing in Aiden. No ticketing system in the opening.",
+   "beats": [
+    {
+     "visual": "Dark frame. Alert notifications stack up fast on a phone-sized card, faster than they can be read. A counter in the corner climbs. Most cards are grey; one or two are red.",
+     "ost": "",
+     "vo": "Your on-call team is buried in alerts, and most of them don't matter. The ones that do can take hours to untangle.",
+     "flags": "Motion graphic, no live action",
+     "pso": "Problem",
+     "t0": 0.0,
+     "dur": 9.803448275862069,
+     "words": 22
+    },
+    {
+     "visual": "Cards sweep away. Title card, then the logos of the customer's existing tools (observability stack and AWS, GCP, Azure) connect into Aiden with thin lines. A service map draws itself: services, then dependencies.",
+     "ost": "Aiden for SRE\nYour AI SRE teammate.\nThen: Discovers your services and dependencies",
+     "vo": "Meet Aiden for SRE, your AI SRE teammate. It connects to the observability tools you already run and maps your services on its own.",
+     "flags": "[VERIFY] integration logos shown on screen",
+     "pso": "Discover",
+     "t0": 9.803448275862069,
+     "dur": 10.63103448275862,
+     "words": 24
+    }
+   ],
+   "start": 0.0,
+   "end": 20.43448275862069
+  },
+  {
+   "title": "Use case 1 \u2014 Alert triage",
+   "scene": "Screen capture of the triage dashboard, framed in the AOF style. This is Arunav's opening beat (about 2:25:20 in the recording): the system is already classifying alerts before anyone opens an investigation.",
+   "beats": [
+    {
+     "visual": "Aiden triage dashboard, full frame. Alerts pouring in at the top.",
+     "ost": "ALERT TRIAGE",
+     "vo": "One failure can set off a flood of alerts.",
+     "flags": "[SCREEN CAPTURE] ref 2:25:20",
+     "pso": "Problem",
+     "t0": 20.43448275862069,
+     "dur": 4.424137931034482,
+     "words": 9
+    },
+    {
+     "visual": "Noise alerts collapse and grey out. Related alerts group together. The list below re-sorts into a short set marked critical. Callout on the classification column.",
+     "ost": "Correlated \u00b7 de-duplicated \u00b7 ranked by service impact",
+     "vo": "Aiden triages every alert as it arrives. It groups related alerts, filters the noise, and ranks the rest by impact on your services.",
+     "flags": "[SCREEN CAPTURE] ref 2:25:20\u20132:26:30",
+     "pso": "Solution",
+     "t0": 24.858620689655172,
+     "dur": 10.217241379310344,
+     "words": 23
+    },
+    {
+     "visual": "Hold on the short critical list. The alert counter from the intro drops to a small number.",
+     "ost": "Only the alerts that need you",
+     "vo": "Your engineers see only the alerts that need them, and save their energy for real incidents.",
+     "flags": "[ILLUSTRATIVE] counter values",
+     "pso": "Outcome",
+     "t0": 35.07586206896552,
+     "dur": 7.320689655172414,
+     "words": 16
+    }
+   ],
+   "start": 20.43448275862069,
+   "end": 42.396551724137936
+  },
+  {
+   "title": "Use case 2 \u2014 Root cause analysis",
+   "scene": "Arunav's \"money maker\": the investigation summary pop-up (click the middle of the alert row, not View Investigation). Hold on the confidence scores. That is where live audiences react. Then the incident-linking view, then a one-second flash of the full RCA report.",
+   "beats": [
+    {
+     "visual": "Click into a critical Kubernetes pod alert. A timer starts in the corner.",
+     "ost": "ROOT CAUSE ANALYSIS",
+     "vo": "When a real incident hits, most of the time goes into investigation.",
+     "flags": "[SCREEN CAPTURE] ref 2:26:30",
+     "pso": "Problem",
+     "t0": 42.396551724137936,
+     "dur": 5.665517241379311,
+     "words": 12
+    },
+    {
+     "visual": "Investigation pop-up opens: summary, why Aiden set this urgency, then the list of possible causes, each with a confidence score. Highlight one high score and several low ones. Callout on a low score: tested, ruled out.",
+     "ost": "Hypotheses with confidence scores\nCallout: ruled out \u00b7 4%",
+     "vo": "Aiden starts investigating the moment an alert fires. It correlates logs, metrics and events across your dependencies. Then it scores every possible cause against the evidence, and even tries to prove itself wrong.",
+     "flags": "[SCREEN CAPTURE] ref 2:27:35\u20132:29:10. [VERIFY \u2014 Navin] null-hypothesis testing, as Arunav described it. [ILLUSTRATIVE] score values",
+     "pso": "Solution",
+     "t0": 48.06206896551725,
+     "dur": 14.355172413793102,
+     "words": 33
+    },
+    {
+     "visual": "A second alert opens with a \"downstream effect\" marker. It links to the incident that caused it. Arrow from the symptom to the root signal.",
+     "ost": "Root signal \u00b7 downstream effect",
+     "vo": "When several things break at once, it points you to the one that started it.",
+     "flags": "[SCREEN CAPTURE] ref 2:30:05\u20132:31:05",
+     "pso": "Solution",
+     "cut": "Cut A: \"When several things break at once, it points you to the one that started it.\"",
+     "t0": 62.417241379310354,
+     "dur": 6.906896551724138,
+     "words": 15
+    },
+    {
+     "visual": "Flash of the full RCA report, the version you would send to leadership. The corner timer stops early.",
+     "ost": "Probable cause, with the evidence",
+     "vo": "Your team starts from a probable root cause, and MTTR comes down.",
+     "flags": "[SCREEN CAPTURE] ref 2:30:50",
+     "pso": "Outcome",
+     "t0": 69.3241379310345,
+     "dur": 5.665517241379311,
+     "words": 12
+    }
+   ],
+   "start": 42.396551724137936,
+   "end": 74.9896551724138
+  },
+  {
+   "title": "Use case 3 \u2014 Remediation",
+   "scene": "The remediation flow from the Datadog-connected demo environment. Arunav notes the click-to-fix flow is built there, not in the ObserveNow sandbox used on 12 Aug. Show one action proposed, approved and logged.",
+   "beats": [
+    {
+     "visual": "Cut back to the RCA summary. A cursor hovers, then nothing happens: a runbook link and a Slack thread asking who knows this service.",
+     "ost": "REMEDIATION",
+     "vo": "Even with the cause in hand, the fix is often manual.",
+     "flags": "Motion graphic, not a capture",
+     "pso": "Problem",
+     "t0": 74.9896551724138,
+     "dur": 5.251724137931035,
+     "words": 11
+    },
+    {
+     "visual": "Remediation card slides in: a proposed action, for example roll back checkout-svc to the previous version. Options row: restart, scale, reroute, roll back. Approve button pressed. An audit log line writes itself.",
+     "ost": "Restart \u00b7 scale \u00b7 reroute traffic \u00b7 roll back\nApproval gate \u00b7 full audit trail",
+     "vo": "Aiden runs the remediation, from restarting a service or scaling out to rerouting traffic or rolling back a deployment. Your team sets which actions need approval, and every action goes into a full audit trail.",
+     "flags": "[VERIFY \u2014 Navin] actions shown are demoable. [ILLUSTRATIVE] service names",
+     "pso": "Solution",
+     "t0": 80.24137931034484,
+     "dur": 15.182758620689656,
+     "words": 35
+    },
+    {
+     "visual": "Incident status flips to resolved. Error-rate sparkline returns to baseline.",
+     "ost": "You decide what runs",
+     "vo": "Incidents close faster, and your team stays in control of what runs.",
+     "flags": "",
+     "pso": "Outcome",
+     "t0": 95.4241379310345,
+     "dur": 5.665517241379311,
+     "words": 12
+    }
+   ],
+   "start": 74.9896551724138,
+   "end": 101.0896551724138
+  },
+  {
+   "title": "Learn",
+   "scene": "Close the loop visually: the resolved incident writes back into the service map from the intro, and the next alert opens with that context already attached.",
+   "beats": [
+    {
+     "visual": "The resolved incident shrinks into a chip and drops into the service map, which gains a small marker on the affected service. A new alert arrives on the same service; its investigation opens with a \"seen before\" reference.",
+     "ost": "Every incident makes the next one easier\nError budget tracking",
+     "vo": "And it keeps learning. Every investigation adds to what Aiden knows about your environment, so the next incident starts further ahead. Aiden watches your error budgets too, and acts before a breach.",
+     "flags": "[VERIFY \u2014 Navin] write-back is current behavior. Error budget tracking is on the product page",
+     "pso": "Learn",
+     "cut": "Cut B: \"Aiden watches your error budgets too, and acts before a breach.\"",
+     "t0": 101.0896551724138,
+     "dur": 13.941379310344827,
+     "words": 32
+    }
+   ],
+   "start": 101.0896551724138,
+   "end": 115.03103448275863
+  },
+  {
+   "title": "Platform",
+   "scene": "A short pull-back that sets Aiden for SRE on the same two layers as the homepage film, so the two videos share a visual language.",
+   "beats": [
+    {
+     "visual": "Pull back from the product UI. It becomes the REMEDIATE tile, sitting on the Aiden World Model plate (chips: deployed, changed, broke, fixed). The Aiden OS plate sets beneath it and its pills light.",
+     "ost": "AIDEN WORLD MODEL\nAIDEN OS \u00b7 policy \u00b7 approvals \u00b7 audit",
+     "vo": "Aiden for SRE runs on the Aiden World Model, the shared record of what's deployed, what changed, what broke and what fixed it. And Aiden OS holds every action to your policies.",
+     "flags": "[ASSET EXISTS] plates from the homepage film, Acts 3\u20134",
+     "pso": "Platform",
+     "t0": 115.03103448275863,
+     "dur": 13.941379310344827,
+     "words": 32
+    }
+   ],
+   "start": 115.03103448275863,
+   "end": 128.97241379310344
+  },
+  {
+   "title": "Call to action",
+   "scene": "End card on the product page. Two buttons.",
+   "beats": [
+    {
+     "visual": "End card. Two buttons, primary first.",
+     "ost": "Book a demo\nTry Community Edition \u00b7 free for up to two users",
+     "vo": "See Aiden for SRE on your own alerts. Book a demo, or try the free Community Edition.",
+     "flags": "Community Edition wording per availability language",
+     "pso": "CTA",
+     "t0": 128.97241379310344,
+     "dur": 7.73448275862069,
+     "words": 17
+    }
+   ],
+   "start": 128.97241379310344,
+   "end": 136.70689655172413
+  }
+ ],
+ "homeCut": "2:09",
+ "sreCut": "2:06"
+}

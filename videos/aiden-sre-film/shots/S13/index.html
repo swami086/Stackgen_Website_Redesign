@@ -1,0 +1,162 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .sg-plate .sg-mask { position: absolute; display: block; background: var(--sg-panel); overflow: hidden; pointer-events: none; border-radius: 0; }
+  .s13-track { position: absolute; height: 6px; background: var(--sg-ink-raised); overflow: hidden; border-radius: 0; }
+  .s13-bar { display: block; height: 6px; width: 100%; border-radius: 0; transform-origin: left center; }
+  .s13-bar.is-lead { background: var(--sg-violet); }
+  .s13-bar.is-rest { background: var(--sg-mute); }
+  .s13-score {
+    position: absolute; height: 24px; box-sizing: border-box;
+    font-family: "Geist Mono", monospace; font-size: 20px; line-height: 24px;
+    background: var(--sg-panel); color: var(--sg-mute);
+    border: 1px solid var(--sg-hairline); border-radius: 0; padding-left: 6px;
+  }
+  .s13-score.is-lead { color: var(--sg-violet); }
+  .s13-rule { position: absolute; width: 1px; background: var(--sg-violet); border-radius: 0; transform-origin: center top; }
+  .s13-hyp {
+    color: var(--sg-cream); font-family: "Geist", sans-serif; font-size: 11px;
+    line-height: 16px; white-space: nowrap; box-sizing: border-box;
+  }
+  .sg-callout {
+    background: var(--sg-panel);
+    border: 1px solid var(--sg-hairline);
+    padding: 4px 8px;
+  }
+  .shot-timer {
+    position: absolute; left: 1560px; top: 60px; min-width: 112px; height: 44px;
+    box-sizing: border-box; border: 1px solid var(--sg-hairline); background: var(--sg-panel);
+    border-radius: 0; font-family: "Geist Mono", monospace; font-size: 28px;
+    line-height: 42px; padding: 0 12px; font-variant-numeric: tabular-nums;
+  }
+  .shot-timer-cream { color: var(--sg-cream); display: block; }
+  .shot-timer-green {
+    position: absolute; inset: -1px; padding: 0 12px; line-height: 42px;
+    color: var(--sg-green); border: 1px solid var(--sg-green); background: var(--sg-panel);
+    border-radius: 0; font-variant-numeric: tabular-nums;
+  }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S13" data-width="1920" data-height="1080">
+  <div id="S13-bg" class="pass pass-bg"></div>
+  <div id="S13-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S13-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { cueT, selectPass, shotData } from "./_shared/layers/shot.js";
+  const ID = "S13";
+  const DATA_ID = "S13";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { meta, timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S13-bg");
+  const mid = document.querySelector("#S13-mid .cam");
+  const fg = document.querySelector("#S13-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+  const { mountRibbons } = await import("./_shared/layers/ribbons.js");
+  const { mountPlate } = await import("./_shared/layers/plate.js");
+  const { countUp, strike } = await import("./_shared/layers/ui.js");
+  const { mountType } = await import("./_shared/layers/type.js");
+
+  mountRibbons(bg, {
+    seed: meta.seed,
+    count: 16,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.45 }],
+  }).bind(tl, D);
+  bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
+
+  const plate = await mountPlate(mid, { id: "P07", x: 120, y: 90, width: 1680 });
+  plate.el.setAttribute("data-layout-allow-overflow", "");
+  const scale = 1680 / 1920;
+  const values = [87, 34, 22, 11, 6, 4];
+  for (let i = 0; i < 6; i++) {
+    const n = i + 1;
+    const row = plate.box("hyp-" + n);
+    const top = row.y - 90;
+    const lead = n === 1;
+    const track = document.createElement("div");
+    track.className = "s13-track";
+    track.dataset.key = "hyp-" + n + "-bar";
+    track.style.left = (1220 * scale) + "px";
+    track.style.top = (top + (row.h - 6) / 2) + "px";
+    track.style.width = (230 * scale) + "px";
+    const fill = document.createElement("div");
+    fill.className = "s13-bar " + (lead ? "is-lead" : "is-rest");
+    track.appendChild(fill);
+    plate.el.appendChild(track);
+    gsap.set(fill, { scaleX: values[i] / 100 });
+    const score = document.createElement("div");
+    score.className = "s13-score " + (lead ? "is-lead" : "is-rest");
+    score.dataset.key = "hyp-" + n + "-score";
+    score.style.left = (1464 * scale) + "px";
+    score.style.top = (top + (row.h - 24) / 2) + "px";
+    score.style.width = (72 * scale) + "px";
+    score.textContent = values[i] + "%";
+    plate.el.appendChild(score);
+  }
+  const row1 = plate.box("hyp-1");
+  const rule = document.createElement("div");
+  rule.className = "s13-rule";
+  rule.style.left = (row1.x - 120 - 10) + "px";
+  rule.style.top = (row1.y - 90) + "px";
+  rule.style.height = row1.h + "px";
+  plate.el.appendChild(rule);
+  gsap.set(rule, { scaleY: 1 });
+
+  const tRule = cueT(timing, "ruled out · 4%");
+  plate.mask("hyp-6");
+  const hyp6 = plate.overlay("hyp-6");
+  hyp6.classList.add("s13-hyp");
+  hyp6.setAttribute("data-layout-allow-occlusion", "");
+  hyp6.textContent = "Add defensive validation";
+  strike(tl, hyp6, tRule);
+
+  const box = plate.box("hyp-6");
+  mountType(fg).callout(tl, "ruled out · 4%", tRule, {
+    box,
+    leader: true,
+    x: box.x + box.w - 260,
+    y: box.y - 44,
+  });
+
+  const s10 = window.SG_DATA.shots.S10.full;
+  const hits = s10.ost.find((item) => item.text === "hits").t;
+  const elapsed = (s10.duration - (hits + 0.1))
+    + window.SG_DATA.shots.S11.full.duration
+    + window.SG_DATA.shots.S12.full.duration;
+  const timer = document.createElement("div");
+  timer.className = "shot-timer";
+  const num = document.createElement("span");
+  num.className = "shot-timer-cream";
+  timer.appendChild(num);
+  fg.appendChild(timer);
+  const mmss = (n) => {
+    const s = Math.max(0, Math.floor(n));
+    const m = Math.floor(s / 60);
+    const r = s % 60;
+    return String(m).padStart(2, "0") + ":" + String(r).padStart(2, "0");
+  };
+  countUp(tl, num, elapsed, elapsed + D, 0, D, mmss);
+
+  applyCamera(tl, cam, roots, timing.duration);
+  tl.set({}, {}, timing.duration);
+  window.__timelines[ID] = tl;
+</script>
+</body>
+</html>

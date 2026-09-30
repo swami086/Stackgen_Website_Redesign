@@ -1,0 +1,103 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .s14-arrow { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: visible; pointer-events: none; }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S14" data-width="1920" data-height="1080">
+  <div id="S14-bg" class="pass pass-bg"></div>
+  <div id="S14-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S14-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { cueT, selectPass, shotData } from "./_shared/layers/shot.js";
+  const ID = "S14";
+  const DATA_ID = "S14";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { meta, timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S14-bg");
+  const mid = document.querySelector("#S14-mid .cam");
+  const fg = document.querySelector("#S14-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+  const { mountRibbons } = await import("./_shared/layers/ribbons.js");
+  const { mountPlate } = await import("./_shared/layers/plate.js");
+  const { drawPath, ringPulse } = await import("./_shared/layers/ui.js");
+  const { mountType } = await import("./_shared/layers/type.js");
+
+  mountRibbons(bg, {
+    seed: meta.seed,
+    count: 16,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.45 }],
+  }).bind(tl, D);
+  bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
+
+  const plate = await mountPlate(mid, { id: "P08", x: 120, y: 90, width: 1680 });
+  plate.el.setAttribute("data-layout-allow-overflow", "");
+  plate.enter(tl, 0, { from: "z" });
+
+  const marker = plate.box("marker-downstream");
+  ringPulse(tl, mid, marker, 0.4, { color: "var(--sg-cyan)", rings: 1 });
+
+  const symptom = plate.box("row-symptom");
+  const root = plate.box("row-root");
+  const x1 = symptom.x + symptom.w;
+  const y1 = symptom.y + symptom.h / 2;
+  const x2 = root.x + root.w;
+  const y2 = root.y + root.h / 2;
+  const cx = (x1 + x2) / 2 - 160;
+  const cy = (y1 + y2) / 2;
+  const dx = x2 - cx;
+  const dy = y2 - cy;
+  const len = Math.hypot(dx, dy) || 1;
+  const ux = dx / len;
+  const uy = dy / len;
+  const ah = 16;
+  const bx = x2 - ux * ah;
+  const by = y2 - uy * ah;
+  const px = -uy * 7;
+  const py = ux * 7;
+  const n = (v) => Math.round(v * 100) / 100;
+  const d = "M " + n(x1) + " " + n(y1) + " Q " + n(cx) + " " + n(cy) + " " + n(x2) + " " + n(y2)
+    + " M " + n(bx + px) + " " + n(by + py) + " L " + n(x2) + " " + n(y2) + " L " + n(bx - px) + " " + n(by - py);
+
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("class", "s14-arrow");
+  svg.setAttribute("viewBox", "0 0 1920 1080");
+  svg.setAttribute("data-layout-allow-overflow", "");
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("fill", "none");
+  path.setAttribute("stroke", "var(--sg-cream)");
+  path.setAttribute("stroke-width", "1");
+  path.setAttribute("d", d);
+  svg.appendChild(path);
+  mid.appendChild(svg);
+
+  const tPoint = cueT(timing, "Root signal · downstream effect");
+  drawPath(tl, path, tPoint - 0.4, 0.6);
+  ringPulse(tl, mid, root, tPoint, { color: "var(--sg-violet)", rings: 1 });
+  mid.querySelectorAll(".sg-ring").forEach((el) => el.setAttribute("data-layout-allow-overflow", ""));
+  mountType(fg).fromOst(tl, timing.ost, { support: { x: 120, y: 960 } });
+
+  applyCamera(tl, cam, roots, timing.duration);
+  tl.set({}, {}, timing.duration);
+  window.__timelines[ID] = tl;
+</script>
+</body>
+</html>

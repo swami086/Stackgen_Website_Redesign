@@ -1,0 +1,191 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .s15-kicker {
+    position: absolute; left: 80px; top: 72px;
+    font-family: "Geist Mono", monospace; font-size: 15px; letter-spacing: 0.12em;
+    color: var(--sg-mute); border-radius: 0;
+  }
+  .s15-section { position: absolute; box-sizing: border-box; border-radius: 0; }
+  .s15-title { font-family: "Geist", sans-serif; font-size: 32px; font-weight: 500; color: var(--sg-cream); line-height: 1.15; }
+  .s15-body { margin-top: 14px; font-family: "Geist Mono", monospace; font-size: 18px; color: var(--sg-mute); line-height: 1.35; }
+  .s15-line { position: absolute; height: 1px; background: var(--sg-cream); transform-origin: left center; border-radius: 0; }
+  .shot-timer {
+    position: absolute; left: 1560px; top: 60px; min-width: 112px; height: 44px;
+    box-sizing: border-box; border: 1px solid var(--sg-hairline); background: var(--sg-panel);
+    border-radius: 0; font-family: "Geist Mono", monospace; font-size: 28px;
+    line-height: 42px; padding: 0 12px; font-variant-numeric: tabular-nums;
+  }
+  .shot-timer-cream { color: var(--sg-cream); display: block; }
+  .shot-timer-green {
+    position: absolute; inset: -1px; padding: 0 12px; line-height: 42px;
+    color: var(--sg-green); border: 1px solid var(--sg-green); background: var(--sg-panel);
+    border-radius: 0; font-variant-numeric: tabular-nums;
+  }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S15" data-width="1920" data-height="1080">
+  <div id="S15-bg" class="pass pass-bg"></div>
+  <div id="S15-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S15-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { cueT, selectPass, shotData } from "./_shared/layers/shot.js";
+  const ID = "S15";
+  const DATA_ID = "S15";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { meta, timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S15-bg");
+  const mid = document.querySelector("#S15-mid .cam");
+  const fg = document.querySelector("#S15-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+  const { mountRibbons } = await import("./_shared/layers/ribbons.js");
+  const { mountPlate } = await import("./_shared/layers/plate.js");
+  const { countUp } = await import("./_shared/layers/ui.js");
+  const { mountType } = await import("./_shared/layers/type.js");
+
+  mountRibbons(bg, {
+    seed: meta.seed,
+    count: 16,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.45 }],
+  }).bind(tl, D);
+  bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
+
+  const OX = 120;
+  const OY = 90;
+  function mockReport(host) {
+    const el = document.createElement("div");
+    el.className = "sg-plate";
+    el.dataset.mock = "P09";
+    el.style.position = "absolute";
+    el.style.left = OX + "px";
+    el.style.top = OY + "px";
+    el.style.width = "1680px";
+    el.style.height = "945px";
+    el.style.background = "var(--sg-panel)";
+    el.style.border = "1px solid var(--sg-hairline)";
+    el.style.borderRadius = "0";
+    el.style.boxSizing = "border-box";
+    const kicker = document.createElement("div");
+    kicker.className = "s15-kicker";
+    kicker.textContent = "RCA REPORT";
+    el.appendChild(kicker);
+    const copy = [
+      { key: "section-1", title: "Probable cause", body: "worker-service crash loop after deploy latest_79ece31" },
+      { key: "section-2", title: "Evidence", body: "Logs, metrics, and events agree on memory pressure" },
+      { key: "section-3", title: "Ruled out", body: "Image pull, telemetry loss, and startup failure" },
+    ];
+    const boxes = {};
+    copy.forEach((section, i) => {
+      const local = { x: 80, y: 160 + i * 210, w: 1520, h: 150 };
+      const node = document.createElement("div");
+      node.className = "s15-section";
+      node.dataset.key = section.key;
+      node.style.left = local.x + "px";
+      node.style.top = local.y + "px";
+      node.style.width = local.w + "px";
+      node.style.height = local.h + "px";
+      const title = document.createElement("div");
+      title.className = "s15-title";
+      title.textContent = section.title;
+      const body = document.createElement("div");
+      body.className = "s15-body";
+      body.textContent = section.body;
+      node.appendChild(title);
+      node.appendChild(body);
+      el.appendChild(node);
+      boxes[section.key] = { x: OX + local.x, y: OY + local.y, w: local.w, h: local.h };
+    });
+    host.appendChild(el);
+    return {
+      el,
+      box(key) {
+        const b = boxes[key];
+        if (!b) throw new Error("mock P09 missing box " + key);
+        return b;
+      },
+    };
+  }
+
+  let plate;
+  let mocked = false;
+  try {
+    plate = await mountPlate(mid, { id: "P09", x: OX, y: OY, width: 1680 });
+    plate.box("section-1");
+    plate.box("section-2");
+    plate.box("section-3");
+  } catch (err) {
+    const stale = mid.querySelector(".sg-plate");
+    if (stale) stale.remove();
+    plate = mockReport(mid);
+    mocked = true;
+  }
+  window.__S15_PLATE_MOCK = mocked;
+
+  for (let i = 1; i <= 3; i++) {
+    const box = plate.box("section-" + i);
+    const line = document.createElement("div");
+    line.className = "s15-line";
+    line.dataset.key = "section-" + i + "-rule";
+    line.style.left = (box.x - OX) + "px";
+    line.style.top = (box.y - OY + box.h - 1) + "px";
+    line.style.width = box.w + "px";
+    plate.el.appendChild(line);
+    gsap.set(line, { scaleX: 0 });
+    tl.to(line, { scaleX: 1, duration: 0.4, ease: "none" }, 0.2 + (i - 1) * 0.15);
+  }
+
+  mountType(fg).fromOst(tl, timing.ost, { support: { x: 120, y: 960 } });
+
+  const s10 = window.SG_DATA.shots.S10.full;
+  const hits = s10.ost.find((item) => item.text === "hits").t;
+  const elapsed = (s10.duration - (hits + 0.1))
+    + window.SG_DATA.shots.S11.full.duration
+    + window.SG_DATA.shots.S12.full.duration
+    + window.SG_DATA.shots.S13.full.duration;
+  const tDown = cueT(timing, "down");
+  const timer = document.createElement("div");
+  timer.className = "shot-timer";
+  const cream = document.createElement("span");
+  cream.className = "shot-timer-cream";
+  const green = document.createElement("span");
+  green.className = "shot-timer-green";
+  green.setAttribute("data-layout-allow-overlap", "");
+  timer.appendChild(cream);
+  timer.appendChild(green);
+  fg.appendChild(timer);
+  gsap.set(green, { opacity: 0 });
+  const mmss = (n) => {
+    const s = Math.max(0, Math.floor(n));
+    const m = Math.floor(s / 60);
+    const r = s % 60;
+    return String(m).padStart(2, "0") + ":" + String(r).padStart(2, "0");
+  };
+  countUp(tl, cream, elapsed, elapsed + tDown, 0, tDown, mmss);
+  countUp(tl, green, elapsed, elapsed + tDown, 0, tDown, mmss);
+  tl.to(green, { opacity: 1, duration: 0.3, ease: "none" }, tDown);
+  tl.to(cream, { opacity: 0, duration: 0.3, ease: "none" }, tDown);
+
+  applyCamera(tl, cam, roots, timing.duration);
+  tl.set({}, {}, timing.duration);
+  window.__timelines[ID] = tl;
+</script>
+</body>
+</html>

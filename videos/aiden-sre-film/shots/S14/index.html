@@ -48,7 +48,7 @@
   }).bind(tl, D);
   bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
 
-  const plate = await mountPlate(mid, { id: "P08", x: 120, y: 90, width: 1680 });
+  const plate = await mountPlate(mid, { id: "P08", x: 260, y: 108, width: 1400 });
   plate.el.setAttribute("data-layout-allow-overflow", "");
   plate.enter(tl, 0, { from: "z" });
 
@@ -100,7 +100,7 @@
   drawPath(tl, path, tPoint - 0.4, 0.6);
   ringPulse(tl, mid, root, tPoint, { color: "var(--sg-violet)", rings: 1 });
   mid.querySelectorAll(".sg-ring").forEach((el) => el.setAttribute("data-layout-allow-overflow", ""));
-  mountType(fg).fromOst(tl, timing.ost, { support: { x: 120, y: 960 } });
+  mountType(fg).fromOst(tl, timing.ost, { support: { x: 260, y: 960 } });
 
   applyCamera(tl, cam, roots, timing.duration);
   tl.set({}, {}, timing.duration);

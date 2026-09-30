@@ -75,7 +75,7 @@
   "file": "tick-wall.wav",
   "shot": "S02",
   "t": 0.0,
-  "gain_db": -8
+  "gain_db": -20
  },
  {
   "file": "whoosh-long.wav",

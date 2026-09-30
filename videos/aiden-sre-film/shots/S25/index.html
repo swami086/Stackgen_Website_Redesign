@@ -26,12 +26,13 @@
     gap: 8px;
     z-index: 2;
   }
-  .qtile.is-dim { opacity: 0.3; }
+  .qtile.is-dim { opacity: 0.85; }
   .qname, .qlabel, .slab-label, .pill {
     font-family: "Geist Mono", monospace;
     border-radius: 0;
   }
-  .qname { font-size: 18px; line-height: 1.2; color: var(--sg-cream); }
+  .qname { font-size: 28px; line-height: 1.2; color: var(--sg-cream); }
+  .qsub { font-size: 16px; line-height: 1.2; color: var(--sg-cream); }
   .qlabel {
     position: absolute;
     width: 640px;
@@ -121,7 +122,7 @@
   mountRibbons(bg, {
     seed: 125,
     count: 16,
-    modes: [{ t: 0, mode: "rail", opacity: 0.5 }],
+    modes: [{ t: 0, mode: "rail", opacity: 1 }],
   }).bind(tl, D);
   bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
 
@@ -137,23 +138,19 @@
     el.style.left = (LEFT + q.col * STEP) + "px";
     el.style.top = (TOP + q.row * STEP) + "px";
     el.style.borderColor = q.border;
-    if (q.dim) {
-      const name = document.createElement("div");
-      name.className = "qname";
-      name.textContent = q.name;
-      el.appendChild(name);
+    const name = document.createElement("div");
+    name.className = "qname";
+    name.textContent = q.name;
+    el.appendChild(name);
+    if (!q.dim) {
+      const sub = document.createElement("div");
+      sub.className = "qsub";
+      sub.textContent = "Aiden for SRE";
+      el.appendChild(sub);
     }
     mid.appendChild(el);
     return el;
   });
-  const rem = quarters[0];
-  const label = document.createElement("div");
-  label.className = "qlabel";
-  label.textContent = "REMEDIATE · Aiden for SRE";
-  label.style.left = (LEFT + rem.col * STEP + TILE / 2 - 320) + "px";
-  label.style.top = (TOP + rem.row * STEP + TILE + 14) + "px";
-  mid.appendChild(label);
-
   const slab = document.createElement("div");
   slab.className = "slab";
   slab.dataset.key = "world-model";

@@ -189,14 +189,14 @@
   mid.querySelectorAll(".sg-ring").forEach((ring) => ring.setAttribute("data-layout-allow-overflow", ""));
 
   const type = mountType(fg);
-  type.counter(tl, { from: 1284, to: 4906, t: 0, dur: D, x: 1120, y: 100 });
+  type.counter(tl, { from: 1284, to: 4906, t: 0, dur: D, x: 1120, y: 140 });
   const counterEl = fg.querySelector(".sg-counter");
   counterEl.setAttribute("data-layout-allow-overflow", "");
   counterEl.setAttribute("data-layout-allow-overlap", "");
 
   applyCamera(tl, cam, roots, D);
   const whips = [bg, mid, fg];
-  tl.fromTo(whips, { x: 0 }, { x: -1800, duration: 0.45, ease: "power3.in", immediateRender: false }, D - 0.45);
+  tl.fromTo(whips, { x: 0 }, { x: -1800, duration: 0.45, ease: "power3.out", immediateRender: false }, D - 0.45);
   tl.set({}, {}, D);
   window.__timelines[ID] = tl;
 </script>

@@ -7,7 +7,7 @@ export function ribbonSeeds(seed, count) {
   return Array.from({ length: count }, (_, i) => ({
     i, baseY: 120 + r() * 840, amp: r(), freq: 0.002 + r() * 0.004, phase: r() * Math.PI * 2,
     speed: 0.5 + r(), edgeY: r() * STAGE.h, bow: (r() - 0.5) * 360, violet: r() < 0.7,
-    width: 2 + r() * 4, alpha: 0.35 + r() * 0.55,
+    width: 10 + r() * 8, alpha: 0.82 + r() * 0.18,
   }));
 }
 

@@ -100,8 +100,7 @@
 
   const edgeX = summary.x + summary.w;
   const cy = summary.y + summary.h / 2;
-  const destY = [cy - 56, cy, cy + 56];
-  const fromY = [300, 540, 780];
+  const destY = [cy - 96, cy, cy + 96];
   const labels = ["logs", "metrics", "events"];
   await document.fonts.ready;
   labels.forEach((label, i) => {
@@ -111,10 +110,11 @@
     mid.appendChild(box);
     const w = box.offsetWidth;
     box.remove();
+    const toX = Math.min(Math.max(edgeX + 16, 192), 1728 - w);
     const chip = chipAlong(tl, mid, {
       label,
-      from: { x: -80, y: fromY[i] },
-      to: { x: edgeX - w, y: destY[i] },
+      from: { x: 192, y: destY[i] },
+      to: { x: toX, y: destY[i] },
       t: cueT(timing, label),
       dur: 0.6,
     });

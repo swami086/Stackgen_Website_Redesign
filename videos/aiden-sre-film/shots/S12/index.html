@@ -20,10 +20,21 @@
     border: 1px solid var(--sg-hairline); border-radius: 0;
     padding-left: 6px;
   }
-  .s12-score.is-lead { color: var(--sg-violet); }
+  .s12-score.is-rest,
+  .s12-score.is-lead { color: #14110C; background: #ffffff; }
   .s12-rule {
     position: absolute; width: 1px; background: var(--sg-violet);
     border-radius: 0; transform-origin: center top;
+  }
+  .s12-rail {
+    position: absolute; left: 1388px; top: 0; width: 292px; height: 100%;
+    box-sizing: border-box; background: #ffffff; color: #14110C;
+    display: flex; flex-direction: column; justify-content: center; gap: 18px;
+    padding: 24px 22px; z-index: 4;
+  }
+  .s12-rail-line {
+    font-family: "Geist", sans-serif; font-size: 22px; font-weight: 500;
+    line-height: 1.25; color: #14110C;
   }
 </style>
 <script src="_shared/vendor/gsap.min.js"></script>
@@ -95,6 +106,16 @@
     bars.push({ el: fill, to: values[i] / 100, label: score, value: values[i] });
   }
   fillBars(tl, bars, 0.15, { stagger: 0.12 });
+
+  const rail = document.createElement("div");
+  rail.className = "s12-rail";
+  ["Datadog event", "Datadog monitor", "Datadog logs", "Datadog link"].forEach((text) => {
+    const line = document.createElement("div");
+    line.className = "s12-rail-line";
+    line.textContent = text;
+    rail.appendChild(line);
+  });
+  plate.el.appendChild(rail);
 
   const row1 = plate.box("hyp-1");
   const rule = document.createElement("div");

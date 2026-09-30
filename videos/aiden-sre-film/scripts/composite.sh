@@ -6,8 +6,12 @@ S="$1"
 P="$ROOT/renders/passes/$S"
 FPS_IN=$(cat "$P.fps")
 N=$(( FPS_IN / 30 ))
-WEIGHTS=$(printf '1 %.0s' $(seq 1 "$N"))
-BLOOM_MID="${BLOOM_MID:-0.25}"; BLOOM_FG="${BLOOM_FG:-0.25}"; GRAIN="${GRAIN:-5}"
+# Equal weights double-expose moving type. Keep a trace of the previous frame.
+if (( N <= 1 )); then WEIGHTS="1"; else
+  WEIGHTS="$(printf '1 %.0s' $(seq 1 $((N - 1))))8"
+fi
+# 0.25 screened the white plates into a pink haze. 0 keeps the captured type readable. Grain stays 5.
+BLOOM_MID="${BLOOM_MID:-0}"; BLOOM_FG="${BLOOM_FG:-0}"; GRAIN="${GRAIN:-5}"
 mkdir -p "$ROOT/renders/shots"
 ffmpeg -loglevel error -y -i "$P-bg.mov" -i "$P-mid.mov" -i "$P-fg.mov" -filter_complex "
  [0:v]format=rgba64le[bg];

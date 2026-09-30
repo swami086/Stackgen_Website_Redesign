@@ -1,7 +1,7 @@
 # Aiden SRE film — QA log
 
 ## Look lock (T11)
-- BLOOM_MID = 0.25, BLOOM_FG = 0.25, GRAIN = 5
+- BLOOM_MID = 0, BLOOM_FG = 0, GRAIN = 5. The 0.25 lock screened white plates into a pink haze (S07 header measured ffc8ff against a source of ffffff). Bloom off restores the plate. Grain stays 5.
 - Reason: Of the six frame-75 variants, 0.25 is the opacity where the violet bar still reads as a glow and plate text keeps the most green (mean G 237 vs 221 at 0.50). 0.35 and 0.50 lift the ink margin from about (139, 0, 152) toward (187, 0, 210), a magenta flood, because the white P07 plate sits above the 0.78 colorlevels cutoff and feeds the screen blend. GRAIN 5 is the stronger of the two noise settings; 3 vs 5 is a small delta (mean channel-sum difference 0.72) but 5 is the one that breaks leftover bloom banding. Sheet layout: columns BLOOM_MID 0.25 / 0.35 / 0.50, rows GRAIN 3 then 5.
 - Evidence: renders/review/S12-look.png, S12-1..4.png
 
@@ -25,7 +25,7 @@
 
 ## Masters (T22)
 - Full: renders/master/aiden-sre-full.mp4 112.133s (timing 112.115s). Cut: aiden-sre-cut.mp4 105.267s (timing 105.243s). 27 shots full, 26 cut.
-- Music bed is ElevenLabs Music, model music_v2, instrumental, 120.024s, file shared/assets/audio/music/eleven-bed.wav. Mixkit bed.wav is not in the mix.
-- Loudness after the AAC pass: full I −14.3 LUFS, true peak −1.7 dBFS. Cut I −14.4 LUFS, true peak −1.8 dBFS. VO stems I −16.4 LUFS, true peak −1.5 dBFS. WAV mixes were I −14.3 / −14.4 and true peak −1.0 before AAC.
+- Music is two ElevenLabs music_v2 instrumentals, bright major light-electronic at 108 BPM. eleven-bed.wav is locked to the 16 full-film lines (score-full.json). eleven-bed-cut.wav is locked to the 14 cut lines (score-cut.json). Returned section lengths match the line gaps with 0 ms error. The mix carves 250 Hz–2.5 kHz under the voice: during L02 the mid band sits at −39.9 dB, and in the following gap it returns to −35.4 dB, while the full stem stays at −26.7 / −26.5 dB.
+- Loudness after the AAC pass: full I −14.3 LUFS, true peak −1.8 dBFS, 112.200s. Cut I −14.4 LUFS, true peak −1.8 dBFS, 105.300s.
 - Poster: renders/master/poster.png from the full master at S12 start 46.271s + 1.6s.
 - Not listened to. S23 full-only whoosh at t=1.805 still plays on the cut.

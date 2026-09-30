@@ -1,0 +1,219 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .sg-support .sg-mask {
+    position: static;
+    background: transparent;
+    display: inline-block;
+    overflow: hidden;
+  }
+  .s20-kicker, .s20-title, .s20-sub {
+    position: absolute; border-radius: 0; white-space: nowrap;
+  }
+  .s20-kicker {
+    left: 64px; top: 56px; font-family: "Geist Mono", monospace;
+    font-size: 15px; letter-spacing: 0.14em; color: var(--sg-mute);
+  }
+  .s20-title {
+    left: 64px; top: 88px; font-family: "Geist", sans-serif;
+    font-size: 40px; font-weight: 400; color: var(--sg-cream);
+  }
+  .s20-sub {
+    left: 64px; top: 148px; font-family: "Geist", sans-serif;
+    font-size: 22px; color: var(--sg-mute);
+  }
+  .s20-slot { position: absolute; box-sizing: border-box; border-radius: 0; }
+  .s20-pill {
+    box-sizing: border-box; width: 100%; height: 100%; border-radius: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Geist", sans-serif; font-size: 18px; font-weight: 500;
+    color: var(--sg-ink); transform-origin: center center;
+  }
+  .s20-chart { position: relative; width: 100%; height: 100%; border-radius: 0; overflow: hidden; }
+  .s20-chart-label {
+    position: absolute; left: 0; top: 0; border-radius: 0;
+    font-family: "Geist Mono", monospace; font-size: 15px;
+    letter-spacing: 0.12em; color: var(--sg-mute);
+  }
+  .s20-chart svg {
+    position: absolute; left: 0; top: 36px; width: 100%; height: calc(100% - 44px);
+    overflow: visible;
+  }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S20" data-width="1920" data-height="1080">
+  <div id="S20-bg" class="pass pass-bg"></div>
+  <div id="S20-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S20-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { cueT, selectPass, shotData } from "./_shared/layers/shot.js";
+  const ID = "S20";
+  const DATA_ID = "S20";
+  const SVGNS = "http://www.w3.org/2000/svg";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { meta, timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S20-bg");
+  const mid = document.querySelector("#S20-mid .cam");
+  const fg = document.querySelector("#S20-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+  const { mountRibbons } = await import("./_shared/layers/ribbons.js");
+  const { mountPlate } = await import("./_shared/layers/plate.js");
+  const { drawPath } = await import("./_shared/layers/ui.js");
+  const { mountType } = await import("./_shared/layers/type.js");
+
+  mountRibbons(bg, {
+    seed: meta.seed,
+    count: 16,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.45 }],
+  }).bind(tl, D);
+  const ribbonCanvas = bg.querySelector("canvas");
+  if (ribbonCanvas) ribbonCanvas.setAttribute("data-layout-allow-overflow", "");
+
+  const tClose = cueT(timing, "close");
+
+  function text(tag, cls, value) {
+    const node = document.createElement(tag);
+    node.className = cls;
+    node.textContent = value;
+    return node;
+  }
+
+  function fillPill(host) {
+    host.dataset.key = "status-pill";
+    const face = document.createElement("div");
+    face.className = "s20-pill";
+    const label = document.createElement("div");
+    label.textContent = "Active";
+    face.appendChild(label);
+    host.appendChild(face);
+    gsap.set(face, { backgroundColor: "#FDA39B", scaleY: 1, transformOrigin: "50% 50%" });
+    return { face, label };
+  }
+
+  function fillChart(host) {
+    host.dataset.key = "chart-error-rate";
+    const face = document.createElement("div");
+    face.className = "s20-chart";
+    host.appendChild(face);
+    face.appendChild(text("div", "s20-chart-label", "ERROR RATE"));
+    const svg = document.createElementNS(SVGNS, "svg");
+    svg.setAttribute("viewBox", "0 0 1000 320");
+    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    function path(d, stroke) {
+      const node = document.createElementNS(SVGNS, "path");
+      node.setAttribute("d", d);
+      node.setAttribute("fill", "none");
+      node.setAttribute("stroke", stroke);
+      node.setAttribute("stroke-width", "2.5");
+      svg.appendChild(node);
+      return node;
+    }
+    path("M0 276 H1000", "#3F3B39");
+    path("M0 276 L80 276 L150 36 L380 24 L600 32", "#FDA39B");
+    const recover = path("M600 32 L760 140 L920 260 L1000 276", "#A6F0BF");
+    face.appendChild(svg);
+    return recover;
+  }
+
+  function mockPanel() {
+    const panel = document.createElement("div");
+    panel.className = "sg-plate";
+    panel.dataset.plate = "P12";
+    panel.dataset.mock = "1";
+    panel.style.left = "120px";
+    panel.style.top = "90px";
+    panel.style.width = "1680px";
+    panel.style.height = "945px";
+    panel.appendChild(text("div", "s20-kicker", "INCIDENT"));
+    panel.appendChild(text("div", "s20-title", "checkout-svc"));
+    panel.appendChild(text("div", "s20-sub", "High latency p99"));
+    const pill = document.createElement("div");
+    pill.className = "s20-slot";
+    pill.style.left = "1448px";
+    pill.style.top = "88px";
+    pill.style.width = "168px";
+    pill.style.height = "44px";
+    const chart = document.createElement("div");
+    chart.className = "s20-slot";
+    chart.style.left = "64px";
+    chart.style.top = "240px";
+    chart.style.width = "1400px";
+    chart.style.height = "460px";
+    panel.appendChild(pill);
+    panel.appendChild(chart);
+    mid.appendChild(panel);
+    return { pill, chart };
+  }
+
+  let slots = null;
+  try {
+    const plate = await mountPlate(mid, { id: "P12", x: 120, y: 90, width: 1680 });
+    plate.mask("status-pill");
+    plate.mask("chart-error-rate");
+    slots = {
+      pill: plate.overlay("status-pill"),
+      chart: plate.overlay("chart-error-rate"),
+    };
+  } catch (err) {
+    const stray = mid.querySelector(".sg-plate");
+    if (stray) stray.remove();
+    slots = mockPanel();
+    slots.reason = err instanceof Error ? err.message : String(err);
+  }
+
+  const pill = fillPill(slots.pill);
+  const recover = fillChart(slots.chart);
+  const tFlip = tClose + 0.15;
+
+  tl.to(pill.face, {
+    keyframes: [
+      { scaleY: 0, duration: 0.15, ease: "power2.in" },
+      { scaleY: 1, duration: 0.15, ease: "power2.out" },
+    ],
+    ease: "none",
+  }, tClose);
+  tl.to(pill.face, { backgroundColor: "#A6F0BF", duration: 0.01, ease: "none" }, tFlip);
+
+  const paint = { p: 0 };
+  tl.to(paint, {
+    p: 1,
+    duration: D,
+    ease: "none",
+    onUpdate: () => {
+      pill.label.textContent = paint.p * D >= tFlip ? "Resolved" : "Active";
+    },
+  }, 0);
+
+  drawPath(tl, recover, tClose + 0.2, 1.4);
+
+  mountType(fg).fromOst(tl, timing.ost, { support: { x: 120, y: 960 } });
+  const support = fg.querySelector(".sg-support");
+  if (support) {
+    support.setAttribute("data-layout-allow-overlap", "");
+    support.setAttribute("data-layout-allow-caption-zone", "");
+  }
+
+  applyCamera(tl, cam, roots, D);
+  tl.set({}, {}, D);
+  window.__timelines[ID] = tl;
+</script>
+</body>
+</html>

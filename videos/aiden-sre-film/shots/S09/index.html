@@ -1,0 +1,199 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .s09-clip { position: absolute; overflow: hidden; border-radius: 0; }
+  .s09-mover { position: absolute; left: 0; top: 0; border-radius: 0; }
+  .s09-row {
+    position: absolute;
+    box-sizing: border-box;
+    left: 0;
+    background: var(--sg-ink-raised);
+    border-bottom: 1px solid var(--sg-hairline);
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .s09-rule {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--sg-coral);
+    border-radius: 0;
+  }
+  .s09-title {
+    position: absolute;
+    left: 20px;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-family: "Geist", sans-serif;
+    font-size: 19px;
+    line-height: 1;
+    color: var(--sg-cream);
+    white-space: nowrap;
+  }
+  .sg-counter {
+    font-size: 64px;
+    line-height: 1;
+    background: var(--sg-ink);
+    padding: 8px 12px;
+  }
+  .sg-support .sg-mask {
+    position: relative;
+    background: transparent;
+  }
+  .sg-support {
+    background: var(--sg-ink);
+    padding: 6px 14px;
+  }
+  .sg-support .sg-rise {
+    background: var(--sg-ink);
+    color: var(--sg-cream);
+  }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S09" data-width="1920" data-height="1080">
+  <div id="S09-bg" class="pass pass-bg"></div>
+  <div id="S09-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S09-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { selectPass, shotData } from "./_shared/layers/shot.js";
+  import { mountRibbons } from "./_shared/layers/ribbons.js";
+  import { mountPlate } from "./_shared/layers/plate.js";
+  import { mountType } from "./_shared/layers/type.js";
+
+  const ID = "S09";
+  const DATA_ID = "S09";
+  const PX = 120;
+  const PY = 90;
+  const PW = 1680;
+  const PH = 945;
+
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { meta, timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S09-bg");
+  const mid = document.querySelector("#S09-mid .cam");
+  const fg = document.querySelector("#S09-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+  const D = timing.duration;
+  document.getElementById("root").dataset.duration = String(D);
+
+  const ribbons = mountRibbons(bg, {
+    seed: meta.seed,
+    count: 16,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.45 }],
+  });
+  ribbons.bind(tl, D);
+  const canvas = bg.querySelector("canvas");
+  if (canvas) canvas.setAttribute("data-layout-allow-overflow", "");
+
+  let plateMissing = false;
+  let plate;
+  try {
+    plate = await mountPlate(mid, { id: "P02", x: PX, y: PY, width: PW });
+  } catch (err) {
+    plateMissing = true;
+  }
+
+  function scrollWindow(host, list, paint) {
+    const clip = document.createElement("div");
+    clip.className = "s09-clip";
+    clip.dataset.key = "list";
+    clip.style.left = (list.x - PX) + "px";
+    clip.style.top = (list.y - PY) + "px";
+    clip.style.width = list.w + "px";
+    clip.style.height = list.h + "px";
+    const mover = document.createElement("div");
+    mover.className = "s09-mover";
+    mover.style.width = list.w + "px";
+    mover.style.height = (list.h + 60) + "px";
+    paint(mover, list);
+    mover.setAttribute("data-layout-allow-overflow", "");
+    clip.appendChild(mover);
+    host.appendChild(clip);
+    tl.fromTo(mover, { y: 0 }, { y: -60, duration: 1.8, ease: "power2.out" }, 0.6);
+  }
+
+  if (!plateMissing) {
+    const list = plate.box("list");
+    scrollWindow(plate.el, list, (mover) => {
+      const img = plate.el.querySelector("img").cloneNode(true);
+      img.alt = "";
+      img.style.position = "absolute";
+      img.style.left = (PX - list.x) + "px";
+      img.style.top = (PY - list.y) + "px";
+      img.style.width = PW + "px";
+      img.style.height = PH + "px";
+      mover.appendChild(img);
+    });
+  } else {
+    const el = document.createElement("div");
+    el.className = "sg-plate";
+    el.dataset.mock = "P02";
+    el.style.left = PX + "px";
+    el.style.top = PY + "px";
+    el.style.width = PW + "px";
+    el.style.height = PH + "px";
+    mid.appendChild(el);
+    const list = { x: PX + 48, y: PY + 168, w: PW - 96, h: 560 };
+    const titles = [
+      ["auth-svc · Auth Validation Latency High", true],
+      ["k8s-node-3 · Pod Crash Loop", true],
+      ["payments-api · Error rate 4.2%", false],
+      ["checkout-svc · High latency p99 > 2s", false],
+      ["orders-svc · Queue depth > 10k", false],
+      ["kafka · Consumer lag", false],
+      ["api-gateway · Upstream resets", false],
+    ];
+    scrollWindow(el, list, (mover) => {
+      titles.forEach((entry, i) => {
+        const row = document.createElement("div");
+        row.className = "s09-row";
+        row.dataset.key = "row-" + (i + 1);
+        row.style.top = (i * 80) + "px";
+        row.style.width = list.w + "px";
+        row.style.height = "80px";
+        if (entry[1]) {
+          const rule = document.createElement("span");
+          rule.className = "s09-rule";
+          row.appendChild(rule);
+        }
+        const title = document.createElement("span");
+        title.className = "s09-title";
+        title.textContent = entry[0];
+        row.appendChild(title);
+        mover.appendChild(row);
+      });
+    });
+  }
+
+  const type = mountType(fg);
+  type.counter(tl, { from: 1284, to: 7, t: 0.4, dur: 1.6, x: 1560, y: 80 });
+  type.fromOst(tl, timing.ost, { support: { x: 200, y: 960 } });
+  fg.querySelectorAll(".sg-counter, .sg-support").forEach((el) => {
+    el.setAttribute("data-layout-allow-overflow", "");
+  });
+
+  applyCamera(tl, cam, roots, D);
+  tl.set({}, {}, D);
+  window.__timelines[ID] = tl;
+</script>
+</body>
+</html>

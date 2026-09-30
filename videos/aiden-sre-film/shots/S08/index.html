@@ -18,15 +18,6 @@
     border-radius: 0;
     overflow: hidden;
   }
-  .s08-rule {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 3px;
-    height: 100%;
-    background: var(--sg-coral);
-    border-radius: 0;
-  }
   .s08-title {
     position: absolute;
     left: 20px;
@@ -38,21 +29,6 @@
     font-size: 19px;
     line-height: 1;
     color: var(--sg-cream);
-    white-space: nowrap;
-  }
-  .s08-class {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    box-sizing: border-box;
-    padding-right: 12px;
-    font-family: "Geist Mono", monospace;
-    font-size: 15px;
-    line-height: 1;
-    color: var(--sg-mute);
     white-space: nowrap;
   }
   .sg-eyebrow .sg-mask,
@@ -68,6 +44,11 @@
   .sg-support .sg-rise {
     background: var(--sg-ink);
     color: var(--sg-cream);
+  }
+  .sg-callout {
+    background: var(--sg-ink);
+    color: var(--sg-cream);
+    padding: 6px 10px;
   }
 </style>
 <script src="_shared/vendor/gsap.min.js"></script>
@@ -94,20 +75,14 @@
   const PW = 1680;
   const PH = 945;
   const IMPACT = [3, 1, 7, 2, 9, 4, 5, 11, 6, 8, 10, 12];
-  const COPY = [
-    { title: "auth-svc · Auth Validation (downstream)", cls: "High" },
-    { title: "cart-svc · Pod Crash Loop", cls: "High" },
-    { title: "k8s-node-3 · Pod Crash Loop", cls: "Critical", critical: true },
-    { title: "checkout-svc · Pod Crash Loop", cls: "Medium" },
-    { title: "payments-api · Error rate 4.2%", cls: "Medium" },
-    { title: "redis-cache · System Load", cls: "Low" },
-    { title: "kafka · Kafka Lag RCA", cls: "High" },
-    { title: "orders-svc · Queue depth > 10k", cls: "Low" },
-    { title: "inventory-db · Slow queries", cls: "Medium" },
-    { title: "search-svc · Timeout ratio 3%", cls: "Info" },
-    { title: "api-gateway · Upstream resets", cls: "Low" },
-    { title: "frontend-web · 5xx spike", cls: "Info" },
-  ];
+  const CAPTURED = 7;
+  const MOCK_ROWS = {
+    8: "redis-cache · Evictions rising",
+    9: "Pod Crash Loop",
+    10: "inventory-db · Slow queries",
+    11: "Pod Crash Loop",
+    12: "api-gateway · Upstream resets",
+  };
 
   const { pass, mode } = window.__hyperframes.getVariables();
   const { meta, timing, cam } = shotData(DATA_ID, mode);
@@ -128,97 +103,51 @@
   const canvas = bg.querySelector("canvas");
   if (canvas) canvas.setAttribute("data-layout-allow-overflow", "");
 
-  function mockPanel() {
-    const el = document.createElement("div");
-    el.className = "sg-plate";
-    el.dataset.mock = "P03";
-    el.style.left = PX + "px";
-    el.style.top = PY + "px";
-    el.style.width = PW + "px";
-    el.style.height = PH + "px";
-    mid.appendChild(el);
-    const list = { x: PX + 48, y: PY + 168, w: PW - 96, h: PH - 240 };
-    return {
-      el,
-      plateMissing: true,
-      box() { throw new Error("plate P03 missing"); },
-      mask() { return el; },
-      list,
-    };
-  }
-
-  let plate;
-  let plateMissing = false;
-  try {
-    plate = await mountPlate(mid, { id: "P03", x: PX, y: PY, width: PW });
-  } catch (err) {
-    plate = mockPanel();
-    plateMissing = true;
-  }
-
-  const mocked = [];
-  function tryBox(key) {
-    if (plateMissing) {
-      mocked.push(key);
-      return null;
-    }
-    try {
-      return plate.box(key);
-    } catch (err) {
-      mocked.push(key);
-      return null;
-    }
-  }
-
-  const rowBoxes = COPY.map((_, i) => tryBox("row-" + (i + 1)));
-  const colFromPlate = tryBox("col-classification");
-  const list = plateMissing ? plate.list : plate.box("list");
-  if (!plateMissing) plate.mask("list");
-
-  const colW = 160;
-  const maxColRight = 1548;
-  const colX = colFromPlate
-    ? colFromPlate.x
-    : Math.min(list.x + list.w - colW - 16, maxColRight - colW);
-  const colBox = colFromPlate || { x: colX, y: list.y, w: colW, h: list.h };
-
-  const usePlateRows = rowBoxes.every(Boolean) && colFromPlate;
+  const plate = await mountPlate(mid, { id: "P03", x: PX, y: PY, width: PW });
+  const list = plate.box("list");
+  const source = plate.el.querySelector("img");
   const rows = [];
-  const rowH = list.h / COPY.length;
-  COPY.forEach((item, i) => {
+
+  for (let n = 1; n <= CAPTURED; n++) {
+    const mask = plate.mask("row-" + n);
+    mask.dataset.key = "row-" + n;
+  }
+
+  for (let n = 1; n <= CAPTURED; n++) {
+    const key = "row-" + n;
+    const box = plate.box(key);
+    const slot = plate.overlay(key);
+    slot.dataset.key = key;
+    slot.setAttribute("data-layout-allow-overflow", "");
+    const img = source.cloneNode(true);
+    img.alt = "";
+    img.setAttribute("data-layout-allow-overflow", "");
+    img.style.position = "absolute";
+    img.style.left = (PX - box.x) + "px";
+    img.style.top = (PY - box.y) + "px";
+    img.style.width = PW + "px";
+    img.style.height = PH + "px";
+    slot.appendChild(img);
+    rows.push(slot);
+  }
+
+  const pitch = plate.box("row-1").h;
+  Object.keys(MOCK_ROWS).forEach((num) => {
+    const n = Number(num);
     const row = document.createElement("div");
     row.className = "s08-row";
-    row.dataset.key = "row-" + (i + 1);
-    if (usePlateRows) {
-      const b = rowBoxes[i];
-      row.style.left = (b.x - PX) + "px";
-      row.style.top = (b.y - PY) + "px";
-      row.style.width = b.w + "px";
-      row.style.height = b.h + "px";
-    } else {
-      row.style.left = (list.x - PX) + "px";
-      row.style.top = (list.y - PY + i * rowH) + "px";
-      row.style.width = list.w + "px";
-      row.style.height = rowH + "px";
-    }
-    if (item.critical) {
-      const rule = document.createElement("span");
-      rule.className = "s08-rule";
-      row.appendChild(rule);
-    }
+    row.dataset.key = "row-" + n;
+    row.dataset.mock = "row-" + n;
+    row.style.left = (list.x - PX) + "px";
+    row.style.top = (PH + (n - CAPTURED - 1) * pitch) + "px";
+    row.style.width = list.w + "px";
+    row.style.height = pitch + "px";
+    row.setAttribute("data-layout-allow-overflow", "");
     const title = document.createElement("span");
     title.className = "s08-title";
-    title.textContent = item.title;
-    title.setAttribute("data-layout-allow-overlap", "");
+    title.textContent = MOCK_ROWS[n];
+    title.setAttribute("data-layout-allow-overflow", "");
     row.appendChild(title);
-    const cls = document.createElement("span");
-    cls.className = "s08-class";
-    cls.textContent = item.cls;
-    cls.setAttribute("data-layout-allow-overlap", "");
-    cls.style.width = colBox.w + "px";
-    const rowRight = usePlateRows ? rowBoxes[i].x + rowBoxes[i].w : list.x + list.w;
-    cls.style.right = (rowRight - (colBox.x + colBox.w)) + "px";
-    row.appendChild(cls);
     plate.el.appendChild(row);
     rows.push(row);
   });
@@ -226,6 +155,15 @@
   const order = new Array(IMPACT.length);
   IMPACT.forEach((rowNum, slot) => { order[rowNum - 1] = slot; });
   flipReorder(tl, rows, order, 0.3);
+
+  const colW = 160;
+  const maxColRight = 1548;
+  const colBox = {
+    x: Math.min(list.x + list.w - colW - 16, maxColRight - colW),
+    y: list.y,
+    w: colW,
+    h: list.h,
+  };
 
   const type = mountType(fg);
   const tRank = cueT(timing, "ranked by service impact");

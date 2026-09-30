@@ -211,7 +211,7 @@
   }, tRollback);
 
   const type = mountType(fg);
-  type.fromOst(tl, timing.ost, { support: { x: 120, y: 960, inline: true } });
+  type.fromOst(tl, timing.ost, { support: { x: 136, y: 960, inline: true } });
   const line = fg.querySelector(".sg-support");
   if (line) {
     const prefix = document.createDocumentFragment();
@@ -234,7 +234,6 @@
     line.setAttribute("aria-label", "Restart · scale · " + (line.getAttribute("aria-label") || ""));
     line.setAttribute("data-layout-allow-overlap", "");
     line.setAttribute("data-layout-allow-caption-zone", "");
-    line.setAttribute("data-layout-allow-overflow", "");
   }
 
   applyCamera(tl, cam, roots, D);

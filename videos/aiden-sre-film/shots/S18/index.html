@@ -139,11 +139,13 @@
     const plate = await mountPlate(mid, { id: "P10", x: 120, y: 90, width: 1680 });
     for (const key of KEYS) plate.box(key);
     const action = plate.overlay("action-row");
-    fillAction(action, false);
+    fillAction(action, true);
     for (const key of Object.keys(labels)) {
       const host = plate.overlay(key);
       const chip = document.createElement("div");
       chip.className = "s18-chip";
+      chip.style.left = "0";
+      chip.style.top = "0";
       if (key === "opt-restart" || key === "opt-scale") chip.classList.add("is-lit");
       chip.textContent = labels[key];
       host.appendChild(chip);

@@ -8,3 +8,6 @@
 ## Mocks
 - S12, plate P07, keys mocked: hyp-1-bar, hyp-1-score, hyp-2-bar, hyp-2-score, hyp-3-bar, hyp-3-score, hyp-4-bar, hyp-4-score, hyp-5-bar, hyp-5-score, hyp-6-bar, hyp-6-score.
 - P07.png is mounted. Those twelve keys are listed in missing, and mask/overlay throw on a missing key. Each bar and score is a DOM mock aligned to the existing hyp-N row (viewport y from the snapshot), sitting in the clear column at viewport x 1220 (bar, 230 px) and x 1464 (score). Track is --sg-ink-raised, fill is --sg-violet on hyp-1 and --sg-mute on the rest, labels are Geist Mono 20 px on --sg-panel. Values [ILLUSTRATIVE]: 87, 34, 22, 11, 6, 4. No image model was used.
+- S16, plate P09, keys mocked: rca-summary, fix, runbook, chat.
+- S17, plate P10, keys mocked: action-row, opt-restart, opt-scale, opt-reroute, opt-rollback.
+- S18, plate P10, keys mocked: action-row, opt-restart, opt-scale, opt-reroute, opt-rollback.

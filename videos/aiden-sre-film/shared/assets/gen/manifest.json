@@ -22,10 +22,10 @@
   },
   {
     "file": "G02-3.png",
-    "prompt": "Soft anamorphic light leak on pure black, pale violet #BA99FD and pale cyan #A0EAFC, no hard edges, no text. Light leak originates from the bottom edge. Abstract texture and atmosphere only. No user interface, no typography, no letters, no logos, no objects, no recognizable products.",
+    "prompt": "Soft anamorphic light leak on pure black, pale violet #BA99FD and pale cyan #A0EAFC, no hard edges, no text. The brightest part of the leak touches the bottom edge of the frame and fades upward. The top 40 percent of the frame is pure black. Do not place the streak in the vertical center. Abstract texture and atmosphere only. No user interface, no typography, no letters, no logos, no objects, no recognizable products.",
     "model": "gemini-2.5-flash-image",
     "date": "2026-09-30",
-    "attempts": 2
+    "attempts": 3
   },
   {
     "file": "G03.png",

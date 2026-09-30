@@ -1,0 +1,224 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .sg-support .sg-mask {
+    position: static;
+    background: transparent;
+    display: inline-block;
+    overflow: hidden;
+  }
+  .s17-kicker {
+    position: absolute;
+    left: 48px;
+    top: 36px;
+    font-family: "Geist Mono", monospace;
+    font-size: 18px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sg-mute);
+    border-radius: 0;
+  }
+  .s17-title {
+    position: absolute;
+    left: 48px;
+    top: 68px;
+    font-family: "Geist", sans-serif;
+    font-size: 40px;
+    line-height: 1.1;
+    color: var(--sg-cream);
+    border-radius: 0;
+  }
+  .s17-action {
+    position: absolute;
+    left: 48px;
+    top: 168px;
+    width: 1584px;
+    height: 72px;
+    box-sizing: border-box;
+    font-family: "Geist", sans-serif;
+    font-size: 32px;
+    line-height: 72px;
+    color: var(--sg-cream);
+    border-radius: 0;
+    white-space: nowrap;
+  }
+  .s17-options {
+    position: absolute;
+    left: 48px;
+    top: 268px;
+    font-family: "Geist Mono", monospace;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sg-mute);
+    border-radius: 0;
+  }
+  .s17-chip {
+    position: absolute;
+    top: 308px;
+    height: 64px;
+    box-sizing: border-box;
+    border: 1px solid var(--sg-hairline);
+    background: var(--sg-ink);
+    color: var(--sg-cream);
+    font-family: "Geist Mono", monospace;
+    font-size: 24px;
+    line-height: 64px;
+    padding: 0 20px;
+    border-radius: 0;
+    white-space: nowrap;
+  }
+  .s17-chip.is-lit { border-color: var(--sg-violet); color: var(--sg-violet); }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S17" data-width="1920" data-height="1080">
+  <div id="S17-bg" class="pass pass-bg"></div>
+  <div id="S17-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S17-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { cueT, selectPass, shotData } from "./_shared/layers/shot.js";
+  import { mountRibbons } from "./_shared/layers/ribbons.js";
+  import { mountPlate } from "./_shared/layers/plate.js";
+  import { mountType } from "./_shared/layers/type.js";
+  import { typewriter } from "./_shared/layers/ui.js";
+  import { EASE, DUR } from "./_shared/tokens/motion.js";
+
+  const ID = "S17";
+  const DATA_ID = "S17";
+  const ACTION = "Roll back checkout-svc to previous version";
+  const KEYS = ["action-row", "opt-restart", "opt-scale", "opt-reroute", "opt-rollback"];
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { meta, timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S17-bg");
+  const mid = document.querySelector("#S17-mid .cam");
+  const fg = document.querySelector("#S17-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+
+  mountRibbons(bg, {
+    seed: meta.seed,
+    count: 16,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.45 }],
+  }).bind(tl, D);
+  bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
+
+  const chips = {};
+  let actionText = null;
+  let plateMock = false;
+
+  function light(el, t) {
+    tl.to(el, { borderColor: "var(--sg-violet)", color: "var(--sg-violet)", duration: 0.18, ease: EASE.snap }, t);
+  }
+
+  try {
+    const plate = await mountPlate(mid, { id: "P10", x: 120, y: 90, width: 1680 });
+    for (const key of KEYS) plate.box(key);
+    const action = plate.overlay("action-row");
+    actionText = document.createElement("div");
+    actionText.className = "s17-action";
+    actionText.style.left = "0";
+    actionText.style.top = "0";
+    actionText.style.width = "100%";
+    action.appendChild(actionText);
+    const labels = {
+      "opt-restart": "Restart",
+      "opt-scale": "scale",
+      "opt-reroute": "reroute traffic",
+      "opt-rollback": "roll back",
+    };
+    for (const key of Object.keys(labels)) {
+      const host = plate.overlay(key);
+      const chip = document.createElement("div");
+      chip.className = "s17-chip";
+      chip.style.left = "0";
+      chip.style.top = "0";
+      chip.textContent = labels[key];
+      host.appendChild(chip);
+      chips[key] = chip;
+    }
+    plate.enter(tl, 0, { from: "right" });
+  } catch (err) {
+    plateMock = true;
+    const panel = document.createElement("div");
+    panel.className = "sg-plate";
+    panel.dataset.plate = "P10";
+    panel.dataset.mock = "true";
+    panel.style.left = "120px";
+    panel.style.top = "90px";
+    panel.style.width = "1680px";
+    panel.style.height = "945px";
+    const kicker = document.createElement("div");
+    kicker.className = "s17-kicker";
+    kicker.textContent = "Governed action";
+    panel.appendChild(kicker);
+    const heading = document.createElement("div");
+    heading.className = "s17-title";
+    heading.textContent = "Remediation";
+    panel.appendChild(heading);
+    const action = document.createElement("div");
+    action.className = "s17-action";
+    action.dataset.key = "action-row";
+    actionText = document.createElement("div");
+    action.appendChild(actionText);
+    panel.appendChild(action);
+    const options = document.createElement("div");
+    options.className = "s17-options";
+    options.textContent = "Options";
+    panel.appendChild(options);
+    const spec = [
+      ["opt-restart", "Restart", 48, 280],
+      ["opt-scale", "scale", 360, 220],
+      ["opt-reroute", "reroute traffic", 612, 360],
+      ["opt-rollback", "roll back", 1004, 280],
+    ];
+    for (const [key, label, x, w] of spec) {
+      const chip = document.createElement("div");
+      chip.className = "s17-chip";
+      chip.dataset.key = key;
+      chip.style.left = x + "px";
+      chip.style.width = w + "px";
+      chip.textContent = label;
+      panel.appendChild(chip);
+      chips[key] = chip;
+    }
+    mid.appendChild(panel);
+    gsap.set(panel, { x: 240, opacity: 0 });
+    tl.to(panel, { x: 0, opacity: 1, duration: DUR.enter, ease: EASE.enter }, 0);
+  }
+
+  typewriter(tl, actionText, ACTION, 0.5, { cps: 60 });
+  light(chips["opt-restart"], cueT(timing, "Restart"));
+  light(chips["opt-scale"], cueT(timing, "scale"));
+
+  const type = mountType(fg);
+  type.fromOst(tl, timing.ost, { support: { x: 120, y: 960, inline: true } });
+  const line = fg.querySelector(".sg-support");
+  if (line) {
+    line.setAttribute("data-layout-allow-overlap", "");
+    line.setAttribute("data-layout-allow-caption-zone", "");
+  }
+
+  applyCamera(tl, cam, roots, D);
+  tl.set({}, {}, D);
+  window.__timelines[ID] = tl;
+  if (!plateMock && !chips["opt-restart"]) throw new Error("P10 chips missing");
+</script>
+</body>
+</html>

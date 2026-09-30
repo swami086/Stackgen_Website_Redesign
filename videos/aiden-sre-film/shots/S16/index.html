@@ -1,0 +1,199 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .sg-eyebrow .sg-mask, .sg-support .sg-mask {
+    position: static;
+    background: transparent;
+    display: inline-block;
+    overflow: hidden;
+  }
+  #S16-mid { filter: saturate(0.6); }
+  .s16-card {
+    position: absolute;
+    box-sizing: border-box;
+    background: var(--sg-panel);
+    border: 1px solid var(--sg-hairline);
+    border-radius: 0;
+    color: var(--sg-cream);
+    overflow: hidden;
+  }
+  .s16-title {
+    font-family: "Geist", sans-serif;
+    font-size: 28px;
+    line-height: 1.2;
+    padding: 28px 32px 12px;
+    border-radius: 0;
+  }
+  .s16-row {
+    font-family: "Geist Mono", monospace;
+    font-size: 18px;
+    line-height: 1.35;
+    color: var(--sg-mute);
+    padding: 6px 32px;
+    border-radius: 0;
+  }
+  .s16-fix {
+    position: absolute;
+    left: 632px;
+    top: 300px;
+    width: 148px;
+    height: 44px;
+    box-sizing: border-box;
+    border: 1px solid var(--sg-hairline);
+    border-radius: 0;
+    font-family: "Geist Mono", monospace;
+    font-size: 18px;
+    line-height: 44px;
+    padding-left: 16px;
+    color: var(--sg-cream);
+  }
+  .s16-float { filter: blur(2px); }
+  .s16-runbook {
+    font-family: "Geist Mono", monospace;
+    font-size: 20px;
+    line-height: 120px;
+    padding-left: 28px;
+    white-space: nowrap;
+  }
+  .s16-channel {
+    font-family: "Geist", sans-serif;
+    font-size: 24px;
+    line-height: 1.3;
+    padding: 22px 28px 8px;
+  }
+  .s16-reply {
+    font-family: "Geist Mono", monospace;
+    font-size: 16px;
+    line-height: 1.35;
+    color: var(--sg-mute);
+    padding: 4px 28px;
+  }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S16" data-width="1920" data-height="1080">
+  <div id="S16-bg" class="pass pass-bg"></div>
+  <div id="S16-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S16-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { selectPass, shotData } from "./_shared/layers/shot.js";
+  import { mountRibbons } from "./_shared/layers/ribbons.js";
+  import { mountType } from "./_shared/layers/type.js";
+  import { mountCursor } from "./_shared/layers/cursor.js";
+  import { leak } from "./_shared/layers/ui.js";
+  import { EASE } from "./_shared/tokens/motion.js";
+
+  const ID = "S16";
+  const DATA_ID = "S16";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { meta, timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S16-bg");
+  const mid = document.querySelector("#S16-mid .cam");
+  const fg = document.querySelector("#S16-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+
+  mountRibbons(bg, {
+    seed: meta.seed,
+    count: 16,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.3 }],
+  }).bind(tl, D);
+  bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
+  leak(tl, bg, 0.0, { src: "_shared/assets/gen/G02-3.png" });
+
+  const rca = document.createElement("div");
+  rca.className = "s16-card";
+  rca.dataset.key = "rca-summary";
+  rca.style.left = "560px";
+  rca.style.top = "260px";
+  rca.style.width = "820px";
+  rca.style.height = "420px";
+  const title = document.createElement("div");
+  title.className = "s16-title";
+  title.textContent = "RCA summary";
+  rca.appendChild(title);
+  const rows = [
+    "checkout-svc · deploy regression",
+    "p99 latency 2.4s · error rate 4.2%",
+    "Evidence tied to the last release",
+  ];
+  for (const text of rows) {
+    const row = document.createElement("div");
+    row.className = "s16-row";
+    row.textContent = text;
+    rca.appendChild(row);
+  }
+  const fix = document.createElement("div");
+  fix.className = "s16-fix";
+  fix.dataset.key = "fix";
+  fix.textContent = "Fix";
+  rca.appendChild(fix);
+  mid.appendChild(rca);
+
+  function floatCard(className, x, y, w, h, t) {
+    const el = document.createElement("div");
+    el.className = "s16-card s16-float";
+    el.style.left = x + "px";
+    el.style.top = y + "px";
+    el.style.width = w + "px";
+    el.style.height = h + "px";
+    el.setAttribute("data-layout-allow-overlap", "");
+    mid.appendChild(el);
+    gsap.set(el, { opacity: 0, y: 28 });
+    tl.fromTo(el, { opacity: 0, y: 28 }, {
+      opacity: 1, y: 0, duration: 0.5, ease: EASE.enter, immediateRender: false,
+    }, t);
+    return el;
+  }
+
+  const runbook = floatCard("s16-runbook", 1180, 620, 520, 120, 1.2);
+  runbook.classList.add("s16-runbook");
+  runbook.dataset.key = "runbook";
+  runbook.textContent = "runbook: checkout-svc rollback.md";
+
+  const chat = floatCard("", 1120, 760, 560, 200, 1.6);
+  chat.dataset.key = "chat";
+  const channel = document.createElement("div");
+  channel.className = "s16-channel";
+  channel.textContent = "#oncall · who knows checkout-svc?";
+  chat.appendChild(channel);
+  for (const text of ["alex: last deploy touched checkout", "sam: rollback notes are in the repo"]) {
+    const reply = document.createElement("div");
+    reply.className = "s16-reply";
+    reply.textContent = text;
+    chat.appendChild(reply);
+  }
+
+  const cursor = mountCursor(mid);
+  mid.querySelector(".sg-cursor").setAttribute("data-layout-allow-overlap", "");
+  cursor.show(tl, 0.4);
+  cursor.path(tl, [
+    { t: 0.4, x: 700, y: 220 },
+    { t: 1.05, x: 1208, y: 572 },
+  ]);
+
+  const type = mountType(fg);
+  type.fromOst(tl, timing.ost, { eyebrow: { x: 120, y: 60 } });
+
+  applyCamera(tl, cam, roots, D);
+  tl.set({}, {}, D);
+  window.__timelines[ID] = tl;
+</script>
+</body>
+</html>

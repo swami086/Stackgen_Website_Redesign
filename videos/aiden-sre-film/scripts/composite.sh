@@ -7,7 +7,7 @@ P="$ROOT/renders/passes/$S"
 FPS_IN=$(cat "$P.fps")
 N=$(( FPS_IN / 30 ))
 WEIGHTS=$(printf '1 %.0s' $(seq 1 "$N"))
-BLOOM_MID="${BLOOM_MID:-0.35}"; BLOOM_FG="${BLOOM_FG:-0.25}"; GRAIN="${GRAIN:-4}"
+BLOOM_MID="${BLOOM_MID:-0.25}"; BLOOM_FG="${BLOOM_FG:-0.25}"; GRAIN="${GRAIN:-5}"
 mkdir -p "$ROOT/renders/shots"
 ffmpeg -loglevel error -y -i "$P-bg.mov" -i "$P-mid.mov" -i "$P-fg.mov" -filter_complex "
  [0:v]format=rgba64le[bg];

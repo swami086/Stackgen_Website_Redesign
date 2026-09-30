@@ -1,0 +1,113 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .s12-track { position: absolute; height: 6px; background: var(--sg-ink-raised); overflow: hidden; border-radius: 0; }
+  .s12-bar { display: block; height: 6px; width: 100%; border-radius: 0; }
+  .s12-bar.is-lead { background: var(--sg-violet); }
+  .s12-bar.is-rest { background: var(--sg-mute); }
+  .s12-score {
+    position: absolute; height: 24px; box-sizing: border-box;
+    font-family: "Geist Mono", monospace; font-size: 20px; line-height: 24px;
+    background: var(--sg-panel); color: var(--sg-mute);
+    border: 1px solid var(--sg-hairline); border-radius: 0;
+    padding-left: 6px;
+  }
+  .s12-score.is-lead { color: var(--sg-violet); }
+  .s12-rule {
+    position: absolute; width: 1px; background: var(--sg-violet);
+    border-radius: 0; transform-origin: center top;
+  }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S12" data-width="1920" data-height="1080">
+  <div id="S12-bg" class="pass pass-bg"></div>
+  <div id="S12-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S12-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { selectPass, shotData } from "./_shared/layers/shot.js";
+  const ID = "S12";
+  const DATA_ID = "S12";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { meta, timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S12-bg");
+  const mid = document.querySelector("#S12-mid .cam");
+  const fg = document.querySelector("#S12-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+
+  // SHOT BUILD: mount layers into bg / mid / fg; add tweens at shot-relative times from `timing`.
+  document.getElementById("root").dataset.duration = String(timing.duration);
+  const D = timing.duration;
+  const { mountRibbons } = await import("./_shared/layers/ribbons.js");
+  const { mountPlate } = await import("./_shared/layers/plate.js");
+  const { fillBars } = await import("./_shared/layers/ui.js");
+  const { EASE } = await import("./_shared/tokens/motion.js");
+
+  mountRibbons(bg, {
+    seed: 112,
+    count: 22,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.6 }],
+  }).bind(tl, D);
+  bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
+
+  const plate = await mountPlate(mid, { id: "P07", x: 120, y: 90, width: 1680 });
+  const scale = 1680 / 1920;
+  const values = [87, 34, 22, 11, 6, 4];
+  const bars = [];
+  for (let i = 0; i < 6; i++) {
+    const n = i + 1;
+    const row = plate.box("hyp-" + n);
+    const top = row.y - 90;
+    const lead = n === 1;
+
+    const track = document.createElement("div");
+    track.className = "s12-track";
+    track.dataset.key = "hyp-" + n + "-bar";
+    track.style.left = (1220 * scale) + "px";
+    track.style.top = (top + (row.h - 6) / 2) + "px";
+    track.style.width = (230 * scale) + "px";
+    const fill = document.createElement("div");
+    fill.className = "s12-bar " + (lead ? "is-lead" : "is-rest");
+    track.appendChild(fill);
+    plate.el.appendChild(track);
+
+    const score = document.createElement("div");
+    score.className = "s12-score " + (lead ? "is-lead" : "is-rest");
+    score.dataset.key = "hyp-" + n + "-score";
+    score.style.left = (1464 * scale) + "px";
+    score.style.top = (top + (row.h - 24) / 2) + "px";
+    score.style.width = (72 * scale) + "px";
+    plate.el.appendChild(score);
+
+    bars.push({ el: fill, to: values[i] / 100, label: score, value: values[i] });
+  }
+  fillBars(tl, bars, 0.15, { stagger: 0.12 });
+
+  const row1 = plate.box("hyp-1");
+  const rule = document.createElement("div");
+  rule.className = "s12-rule";
+  rule.style.left = (row1.x - 120 - 10) + "px";
+  rule.style.top = (row1.y - 90) + "px";
+  rule.style.height = row1.h + "px";
+  plate.el.appendChild(rule);
+  tl.fromTo(rule, { scaleY: 0 }, { scaleY: 1, duration: 0.3, ease: EASE.enter }, 1.2);
+
+  applyCamera(tl, cam, roots, timing.duration);
+  tl.set({}, {}, timing.duration);
+  window.__timelines[ID] = tl;
+</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .s22-chip {
+    box-sizing: border-box; display: flex; align-items: center;
+    width: 220px; height: 56px; padding: 0 10px; font-size: 14px;
+  }
+  .sg-support .sg-mask { position: static; background: transparent; }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S22" data-width="1920" data-height="1080">
+  <div id="S22-bg" class="pass pass-bg"></div>
+  <div id="S22-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S22-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera, poseAt, PARALLAX } from "./_shared/layers/camera.js";
+  import { selectPass, shotData } from "./_shared/layers/shot.js";
+  import { mountRibbons } from "./_shared/layers/ribbons.js";
+  import { mountLattice } from "./_shared/layers/lattice.js";
+  import { chipAlong } from "./_shared/layers/ui.js";
+  import { mountType } from "./_shared/layers/type.js";
+  import { EASE } from "./_shared/tokens/motion.js";
+
+  const ID = "S22";
+  const DATA_ID = "S22";
+  const CHIP = { w: 220, h: 56 };
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { meta, timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S22-bg");
+  const mid = document.querySelector("#S22-mid .cam");
+  const fg = document.querySelector("#S22-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+  const D = timing.duration;
+  document.getElementById("root").dataset.duration = String(D);
+
+  mountRibbons(bg, {
+    seed: meta.seed,
+    count: 16,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.3 }],
+  }).bind(tl, D);
+  const canvas = bg.querySelector("canvas");
+  if (canvas) canvas.setAttribute("data-layout-allow-overflow", "");
+
+  const lattice = mountLattice(bg, { graph: window.SG_DATA.graph, seed: meta.seed });
+  lattice.showAll();
+  bg.querySelectorAll(".sg-lat-label").forEach((el) => {
+    el.setAttribute("data-layout-allow-overlap", "");
+    el.setAttribute("data-layout-allow-occlusion", "");
+  });
+  const node = lattice.node("checkout-svc");
+  const travel = 1;
+  const landT = 0.2 + travel;
+  const land = midPointForNode(node, landT);
+  const chip = chipAlong(tl, mid, {
+    label: "checkout-svc · rollback",
+    from: { x: 850, y: 492 },
+    to: { x: land.x - CHIP.w / 2, y: land.y - CHIP.h / 2 },
+    t: 0.2,
+    dur: travel,
+  });
+  chip.classList.add("s22-chip");
+  chip.setAttribute("data-layout-allow-overflow", "");
+  chip.setAttribute("data-layout-allow-overlap", "");
+  chip.setAttribute("data-layout-allow-occlusion", "");
+  lattice.mark(tl, "checkout-svc", landT);
+  tl.to(chip, { opacity: 0, duration: 0.28, ease: EASE.exit }, landT);
+
+  mountType(fg).fromOst(tl, timing.ost, { support: { x: 120, y: 960 } });
+
+  applyCamera(tl, cam, roots, D);
+  tl.set({}, {}, D);
+  window.__timelines[ID] = tl;
+
+  function midPointForNode(pt, tLand) {
+    const linear = Math.min(1, Math.max(0, tLand / D));
+    const pose = poseAt(cam, gsap.parseEase(cam.ease)(linear));
+    const originX = 960;
+    const originY = 540;
+    const persp = cam.perspective || 2400;
+    const f = PARALLAX.bg;
+    const zBg = pose.z * f;
+    const k = Number(((1 + (pose.scale - 1) * f) * (persp / (persp - zBg))).toFixed(5));
+    const txBg = pose.x * f;
+    const tyBg = pose.y * f;
+    const rz = pose.rz * f * Math.PI / 180;
+    const dx = pt.x - originX;
+    const dy = pt.y - originY;
+    const cosR = Math.cos(rz);
+    const sinR = Math.sin(rz);
+    const sx = k * (dx * cosR - dy * sinR) + txBg;
+    const sy = k * (dx * sinR + dy * cosR) + tyBg;
+    const s = pose.scale;
+    const theta = pose.rx * Math.PI / 180;
+    const tx = pose.x;
+    const ty = pose.y;
+    const tz = pose.z;
+    const cosT = Math.cos(theta);
+    const sinT = Math.sin(theta);
+    const ly = (sy * (persp - tz) - ty * persp) / (s * (cosT * persp + sy * sinT));
+    const z4 = s * ly * sinT + tz;
+    const x4 = sx * (persp - z4) / persp;
+    const lx = (x4 - tx) / s;
+    return { x: originX + lx, y: originY + ly };
+  }
+</script>
+</body>
+</html>

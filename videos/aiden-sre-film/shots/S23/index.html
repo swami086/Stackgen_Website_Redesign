@@ -1,0 +1,301 @@
+<!doctype html>
+<html data-composition-variables='[{"id":"pass","type":"string","label":"Pass: bg|mid|fg|all","default":"all"},{"id":"mode","type":"string","label":"Edit: full|cut","default":"full"}]'>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_shared/tokens/brand.css">
+<link rel="stylesheet" href="_shared/layers/layers.css">
+<link rel="stylesheet" href="_shared/layers/ui.css">
+<link rel="stylesheet" href="_shared/layers/type.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("_shared/assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
+  .s23-kicker, .s23-title, .s23-copy {
+    position: absolute; margin: 0; border-radius: 0; color: var(--sg-cream);
+  }
+  .s23-kicker { font-family: "Geist Mono", monospace; font-size: 16px; letter-spacing: 0.12em; }
+  .s23-title { font-family: "Geist", sans-serif; font-size: 32px; line-height: 1.1; }
+  .s23-copy { font-family: "Geist Mono", monospace; font-size: 18px; line-height: 1.2; }
+  .s23-row {
+    position: absolute; box-sizing: border-box; display: flex; align-items: center;
+    padding: 0 16px 0 14px; border-bottom: 1px solid var(--sg-hairline); border-radius: 0;
+    color: var(--sg-cream); font-family: "Geist Mono", monospace; font-size: 16px;
+  }
+  .s23-rule {
+    position: absolute; left: 0; top: 0; width: 2px; height: 100%;
+    background: var(--sg-violet); border-radius: 0; transform-origin: center top;
+  }
+  .s23-track { position: absolute; background: var(--sg-ink); border-radius: 0; overflow: hidden; }
+  .s23-fill {
+    position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+    background: var(--sg-violet); border-radius: 0; transform-origin: left center;
+  }
+  .s23-tick {
+    position: absolute; width: 2px; background: var(--sg-amber); border-radius: 0;
+    box-shadow: 0 0 12px var(--sg-amber);
+  }
+  .s23-alert {
+    position: absolute; box-sizing: border-box; display: flex; align-items: center;
+    width: 196px; height: 36px; padding: 0 10px; border-radius: 0;
+    background: var(--sg-panel); border: 1px solid var(--sg-hairline);
+    border-left: 3px solid var(--sg-coral); color: var(--sg-cream);
+    font-family: "Geist Mono", monospace; font-size: 14px; white-space: nowrap;
+  }
+  .sg-support .sg-mask { position: static; background: transparent; }
+</style>
+<script src="_shared/vendor/gsap.min.js"></script>
+<script src="_shared/build/data.js"></script>
+</head>
+<body>
+<div id="root" data-composition-id="S23" data-width="1920" data-height="1080">
+  <div id="S23-bg" class="pass pass-bg"></div>
+  <div id="S23-mid" class="pass pass-mid"><div class="cam"></div></div>
+  <div id="S23-fg" class="pass pass-fg"><div class="cam"></div></div>
+</div>
+<script type="module">
+  import { applyCamera } from "./_shared/layers/camera.js";
+  import { cueT, selectPass, shotData } from "./_shared/layers/shot.js";
+  import { mountLattice } from "./_shared/layers/lattice.js";
+  import { mountPlate } from "./_shared/layers/plate.js";
+  import { mountType } from "./_shared/layers/type.js";
+  import { EASE, DUR } from "./_shared/tokens/motion.js";
+
+  const ID = "S23";
+  const DATA_ID = "S23";
+  const { pass, mode } = window.__hyperframes.getVariables();
+  const { meta, timing, cam } = shotData(DATA_ID, mode);
+  const roots = selectPass(ID, pass);
+  const bg = document.getElementById("S23-bg");
+  const mid = document.querySelector("#S23-mid .cam");
+  const fg = document.querySelector("#S23-fg .cam");
+  const tl = gsap.timeline({ paused: true });
+  const D = timing.duration;
+  const cut = mode === "cut";
+  document.getElementById("root").dataset.duration = String(D);
+
+  const latHost = document.createElement("div");
+  latHost.style.position = "absolute";
+  latHost.style.inset = "0";
+  bg.appendChild(latHost);
+  const lattice = mountLattice(latHost, { graph: window.SG_DATA.graph, seed: meta.seed });
+  lattice.showAll();
+  latHost.querySelectorAll(".sg-lat-label").forEach((el) => {
+    el.setAttribute("data-layout-allow-overlap", "");
+    el.setAttribute("data-layout-allow-occlusion", "");
+  });
+  const marked = latHost.querySelector('[data-id="checkout-svc"]');
+  if (marked && marked.nextElementSibling) {
+    gsap.set(marked.nextElementSibling, {
+      autoAlpha: 1, scale: 1, rotation: 45, borderColor: "var(--sg-violet)",
+    });
+  }
+  lattice.mark(tl, "checkout-svc", 0);
+
+  const node = lattice.node("checkout-svc");
+  const alert = document.createElement("div");
+  alert.className = "s23-alert";
+  alert.textContent = "checkout-svc · p99";
+  alert.setAttribute("data-layout-allow-occlusion", "");
+  alert.setAttribute("data-layout-allow-overlap", "");
+  alert.style.left = (node.x - 98) + "px";
+  alert.style.top = "0px";
+  latHost.appendChild(alert);
+  tl.fromTo(alert, { y: node.y - 160, opacity: 0 }, {
+    y: node.y - 18, opacity: 1, duration: 0.45, ease: EASE.snap,
+  }, 0.2);
+  lattice.pulse(tl, "checkout-svc", 0.2);
+
+  const p15 = await openPlate(mid, { id: "P15", x: 980, y: 240, width: 820 }, {
+    kicker: "INVESTIGATION",
+    title: "Seen before",
+    boxes: {
+      "seen-before-row": { lx: 28, ly: 132, w: 764, h: 56, text: "checkout-svc · rollback · 14 days ago" },
+    },
+  });
+  p15.el.setAttribute("data-layout-allow-overflow", "");
+  p15.el.setAttribute("data-layout-allow-occlusion", "");
+  p15.enter(tl, 0.5, { from: "right" });
+  const row = p15.box("seen-before-row");
+  const rule = document.createElement("div");
+  rule.className = "s23-rule";
+  rule.style.left = (row.x - 980) + "px";
+  rule.style.top = (row.y - 240) + "px";
+  rule.style.height = row.h + "px";
+  p15.el.appendChild(rule);
+  gsap.set(rule, { scaleY: 0 });
+  tl.to(rule, { scaleY: 1, duration: 0.3, ease: EASE.enter }, 0.9);
+
+  const fade = [latHost, p15.el];
+  if (!cut) {
+    const budgetT = cueT(timing, "Error budget tracking");
+    const slot = document.createElement("div");
+    slot.style.position = "absolute";
+    slot.style.left = "0";
+    slot.style.top = "0";
+    slot.style.width = "1920px";
+    slot.style.height = "1080px";
+    mid.appendChild(slot);
+    const p14 = await openPlate(slot, { id: "P14", x: 120, y: 640, width: 820 }, {
+      kicker: "RELIABILITY",
+      title: "Error budget",
+      boxes: {
+        "budget-bar": { lx: 36, ly: 168, w: 748, h: 8 },
+        "budget-threshold": { lx: 36 + 748 * 0.8 - 1, ly: 160, w: 2, h: 24 },
+      },
+    });
+    p14.el.setAttribute("data-layout-allow-overflow", "");
+    p14.el.setAttribute("data-layout-allow-occlusion", "");
+    p14.el.style.top = "1440px";
+    tl.fromTo(p14.el, { y: 0 }, {
+      y: -800, duration: DUR.enter, ease: EASE.enter, immediateRender: false,
+    }, budgetT);
+    gsap.set(slot, { opacity: 0 });
+    tl.to(slot, { opacity: 1, duration: 0.35, ease: EASE.enter }, budgetT);
+    const track = p14.overlay("budget-bar");
+    track.classList.add("s23-track");
+    const fill = document.createElement("div");
+    fill.className = "s23-fill";
+    track.appendChild(fill);
+    gsap.set(fill, { scaleX: 0 });
+    tl.to(fill, { scaleX: 0.78, duration: 0.8, ease: EASE.enter }, budgetT);
+    const pct = document.createElement("div");
+    pct.className = "s23-copy";
+    pct.style.left = "36px";
+    pct.style.top = "192px";
+    pct.textContent = "78%";
+    p14.el.appendChild(pct);
+    const tick = p14.overlay("budget-threshold");
+    tick.classList.add("s23-tick");
+    tl.fromTo(tick, { opacity: 0.2 }, { opacity: 1, duration: 0.45, ease: EASE.enter }, budgetT);
+    fade.push(slot);
+  }
+
+  mountType(fg).fromOst(tl, timing.ost, { support: { x: 120, y: 960 } });
+  const support = fg.querySelector(".sg-support");
+  if (support) fade.push(support);
+
+  const handoff = await openPlate(mid, { id: "P12", x: 120, y: 90, width: 1680 }, {
+    kicker: "INCIDENT",
+    title: "checkout-svc",
+    lines: ["Status  Resolved", "Action  rollback"],
+    boxes: {},
+  });
+  gsap.set(handoff.el, { opacity: 0 });
+  handoff.el.setAttribute("data-layout-allow-occlusion", "");
+  handoff.el.setAttribute("data-layout-allow-overflow", "");
+  const end = D - 0.4;
+  fade.forEach((el) => tl.to(el, { opacity: 0, duration: 0.4, ease: "none" }, end));
+  tl.to(handoff.el, { opacity: 1, duration: 0.4, ease: "none" }, end);
+
+  applyCamera(tl, cam, roots, D);
+  tl.set({}, {}, D);
+  window.__timelines[ID] = tl;
+
+  async function openPlate(host, opts, mockSpec) {
+    try {
+      return await mountPlate(host, opts);
+    } catch (err) {
+      return mockPlate(host, opts, mockSpec);
+    }
+  }
+
+  function mockPlate(host, opts, spec) {
+    const x = opts.x;
+    const y = opts.y;
+    const width = opts.width;
+    const height = width * 1080 / 1920;
+    const el = document.createElement("div");
+    el.className = "sg-plate";
+    el.dataset.mock = opts.id;
+    el.style.left = x + "px";
+    el.style.top = y + "px";
+    el.style.width = width + "px";
+    el.style.height = height + "px";
+    host.appendChild(el);
+    if (spec.kicker) {
+      const kicker = document.createElement("div");
+      kicker.className = "s23-kicker";
+      kicker.style.left = "28px";
+      kicker.style.top = "28px";
+      kicker.textContent = spec.kicker;
+      el.appendChild(kicker);
+    }
+    if (spec.title) {
+      const title = document.createElement("div");
+      title.className = "s23-title";
+      title.style.left = "28px";
+      title.style.top = "58px";
+      title.textContent = spec.title;
+      el.appendChild(title);
+    }
+    (spec.lines || []).forEach((text, i) => {
+      const line = document.createElement("div");
+      line.className = "s23-copy";
+      line.style.left = "28px";
+      line.style.top = (140 + i * 40) + "px";
+      line.textContent = text;
+      el.appendChild(line);
+    });
+    const boxes = spec.boxes || {};
+    Object.keys(boxes).forEach((key) => {
+      const b = boxes[key];
+      if (!b.text) return;
+      const row = document.createElement("div");
+      row.className = "s23-row";
+      row.dataset.key = key;
+      row.style.left = b.lx + "px";
+      row.style.top = b.ly + "px";
+      row.style.width = b.w + "px";
+      row.style.height = b.h + "px";
+      row.textContent = b.text;
+      row.setAttribute("data-layout-allow-overlap", "");
+      el.appendChild(row);
+    });
+    function stageBox(key) {
+      const b = boxes[key];
+      if (!b) throw new Error("plate " + opts.id + " missing box " + key);
+      return { x: x + b.lx, y: y + b.ly, w: b.w, h: b.h };
+    }
+    return {
+      el,
+      box: stageBox,
+      overlay(key) {
+        const b = stageBox(key);
+        const node = document.createElement("div");
+        node.className = "sg-overlay";
+        node.dataset.key = key;
+        node.style.position = "absolute";
+        node.style.left = (b.x - x) + "px";
+        node.style.top = (b.y - y) + "px";
+        node.style.width = b.w + "px";
+        node.style.height = b.h + "px";
+        el.appendChild(node);
+        return node;
+      },
+      enter(timeline, t, enterOpts) {
+        const from = (enterOpts && enterOpts.from) || "right";
+        const dur = (enterOpts && enterOpts.dur) || DUR.enter;
+        const fromVars = {};
+        const toVars = { duration: dur, ease: EASE.enter };
+        if (from === "below") {
+          fromVars.y = 120;
+          toVars.y = 0;
+        } else if (from === "left") {
+          fromVars.x = -240;
+          toVars.x = 0;
+          fromVars.opacity = 0;
+          toVars.opacity = 1;
+        } else {
+          fromVars.x = 240;
+          toVars.x = 0;
+          fromVars.opacity = 0;
+          toVars.opacity = 1;
+        }
+        gsap.set(el, fromVars);
+        timeline.to(el, toVars, t);
+      },
+    };
+  }
+</script>
+</body>
+</html>

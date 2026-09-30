@@ -1,0 +1,18 @@
+{
+  "id": "P02",
+  "viewport": { "w": 1920, "h": 1080, "dpr": 2 },
+  "image": "P02.png",
+  "boxes": {
+    "panel": { "x": 324, "y": 24, "w": 1572, "h": 905, "label": "High severity filter" },
+    "list": { "x": 324, "y": 308, "w": 1572, "h": 573, "label": "High alerts" },
+    "row-1": { "x": 324, "y": 348, "w": 1572, "h": 89, "label": "Auth Validation Latency High" },
+    "row-2": { "x": 324, "y": 437, "w": 1572, "h": 89, "label": "Pod Crash Loop" },
+    "row-3": { "x": 324, "y": 526, "w": 1572, "h": 89, "label": "Pod Crash Loop" },
+    "row-4": { "x": 324, "y": 615, "w": 1572, "h": 89, "label": "Pod Crash Loop" },
+    "row-5": { "x": 324, "y": 704, "w": 1572, "h": 89, "label": "Pod Crash Loop" },
+    "row-6": { "x": 324, "y": 793, "w": 1572, "h": 88, "label": "Pod Crash Loop" },
+    "row-critical-k8s": { "x": 324, "y": 437, "w": 1572, "h": 89, "label": "Pod Crash Loop" },
+    "header-count": { "x": 324, "y": 132, "w": 1572, "h": 104, "label": "Triage chips (6 High visible)" }
+  },
+  "missing": ["row-7"]
+}

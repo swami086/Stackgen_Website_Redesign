@@ -1,0 +1,8 @@
+{
+  "id": "P12",
+  "viewport": { "w": 1920, "h": 1080, "dpr": 2 },
+  "image": "P12.png",
+  "boxes": {},
+  "missing": ["*"],
+  "reason": "Resolved incident status pill and error-rate chart view not present in stage demo workspace."
+}

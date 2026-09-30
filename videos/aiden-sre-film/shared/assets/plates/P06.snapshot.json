@@ -1,0 +1,12 @@
+{
+  "id": "P06",
+  "viewport": { "w": 1920, "h": 1080, "dpr": 2 },
+  "image": "P06.png",
+  "boxes": {
+    "panel": { "x": 1014, "y": 6, "w": 900, "h": 1068, "label": "Investigation drawer" },
+    "summary": { "x": 1048, "y": 487, "w": 832, "h": 137, "label": "Incident summary" },
+    "urgency": { "x": 1048, "y": 141, "w": 410, "h": 47, "label": "False Positive" },
+    "close-btn": { "x": 1877, "y": 19, "w": 24, "h": 24, "label": "Close" }
+  },
+  "missing": []
+}

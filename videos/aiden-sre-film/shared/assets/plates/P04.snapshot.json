@@ -1,0 +1,10 @@
+{
+  "id": "P04",
+  "viewport": { "w": 1920, "h": 1080, "dpr": 2 },
+  "image": "P04.png",
+  "boxes": {
+    "panel": { "x": 324, "y": 24, "w": 1572, "h": 973, "label": "Alerts hover" },
+    "row-critical-k8s": { "x": 324, "y": 437, "w": 1572, "h": 89, "label": "Pod Crash Loop hover" }
+  },
+  "missing": []
+}

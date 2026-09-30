@@ -1,0 +1,14 @@
+{
+  "id": "P05",
+  "viewport": { "w": 1920, "h": 1080, "dpr": 2 },
+  "image": "P05.png",
+  "boxes": {
+    "panel": { "x": 320, "y": 20, "w": 1580, "h": 520, "label": "Integrations" },
+    "tile-1": { "x": 320, "y": 176, "w": 1580, "h": 63, "label": "datadog-demo" },
+    "tile-2": { "x": 320, "y": 239, "w": 1580, "h": 63, "label": "stackgen-commerce-aws" },
+    "tile-3": { "x": 320, "y": 302, "w": 1580, "h": 63, "label": "stackgen-commerce-datadog" },
+    "tile-4": { "x": 320, "y": 365, "w": 1580, "h": 63, "label": "stackgen-commerce-github" },
+    "tile-5": { "x": 320, "y": 428, "w": 1580, "h": 63, "label": "stackgen-commerce-jenkins" }
+  },
+  "missing": ["tile-6"]
+}

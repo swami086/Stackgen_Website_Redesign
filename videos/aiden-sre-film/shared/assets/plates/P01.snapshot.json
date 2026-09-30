@@ -1,0 +1,19 @@
+{
+  "id": "P01",
+  "viewport": { "w": 1920, "h": 1080, "dpr": 2 },
+  "image": "P01.png",
+  "boxes": {
+    "panel": { "x": 324, "y": 24, "w": 1572, "h": 973, "label": "Alerts panel" },
+    "list": { "x": 324, "y": 308, "w": 1572, "h": 641, "label": "Alerts table" },
+    "row-1": { "x": 324, "y": 348, "w": 1572, "h": 89, "label": "[Triggered] Auth Validation Latency High" },
+    "row-2": { "x": 324, "y": 437, "w": 1572, "h": 89, "label": "Pod Crash Loop" },
+    "row-3": { "x": 324, "y": 526, "w": 1572, "h": 89, "label": "Pod Crash Loop" },
+    "row-4": { "x": 324, "y": 615, "w": 1572, "h": 89, "label": "Pod Crash Loop" },
+    "row-5": { "x": 324, "y": 704, "w": 1572, "h": 89, "label": "Pod Crash Loop" },
+    "row-6": { "x": 324, "y": 793, "w": 1572, "h": 67, "label": "System Load is High" },
+    "row-7": { "x": 324, "y": 861, "w": 1572, "h": 88, "label": "Kafka Lag RCA" },
+    "header-count": { "x": 324, "y": 132, "w": 1572, "h": 104, "label": "All Active 7" },
+    "col-classification": { "x": 324, "y": 132, "w": 1572, "h": 104, "label": "Triage classification chips" }
+  },
+  "missing": ["row-8", "row-9", "row-10", "row-11", "row-12"]
+}

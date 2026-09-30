@@ -1,0 +1,8 @@
+{
+  "id": "P15",
+  "viewport": { "w": 1920, "h": 1080, "dpr": 2 },
+  "image": "P15.png",
+  "boxes": {},
+  "missing": ["*"],
+  "reason": "Seen-before / similar-incident reference block not found in hero Pod Crash Loop investigation."
+}

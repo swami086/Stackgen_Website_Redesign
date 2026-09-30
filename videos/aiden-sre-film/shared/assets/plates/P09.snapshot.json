@@ -1,0 +1,13 @@
+{
+  "id": "P09",
+  "viewport": { "w": 1920, "h": 1080, "dpr": 2 },
+  "image": "P09.png",
+  "boxes": {
+    "panel": { "x": 320, "y": 0, "w": 1280, "h": 1080, "label": "Full RCA report" },
+    "title": { "x": 438, "y": 120, "w": 700, "h": 32, "label": "Pod Crash Loop Investigation" },
+    "section-1": { "x": 438, "y": 280, "w": 832, "h": 120, "label": "Probable Root Cause" },
+    "section-2": { "x": 438, "y": 420, "w": 832, "h": 180, "label": "Triage so far" },
+    "section-3": { "x": 438, "y": 520, "w": 832, "h": 200, "label": "What was ruled out" }
+  },
+  "missing": []
+}

@@ -1,0 +1,8 @@
+{
+  "id": "P10",
+  "viewport": { "w": 1920, "h": 1080, "dpr": 2 },
+  "image": "P10.png",
+  "boxes": {},
+  "missing": ["*"],
+  "reason": "Governed remediation card with restart/scale/reroute/rollback options not exposed in ai-sre-demo stage chat."
+}

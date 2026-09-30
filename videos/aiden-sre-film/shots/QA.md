@@ -20,3 +20,5 @@
 - S19, plate P11, keys mocked: approve-btn, gate-policy, audit-line-last.
 - S20, plate P12, keys mocked: status-pill, chart-error-rate.
 - S15, plate P09, keys mocked: section-1, section-2, section-3. Copy: Probable cause, Evidence, Ruled out.
+- S06, plate P01, keys mocked: row-8, row-9, row-10, row-11, row-12. Rows 1–7 are the captured plate. Mock copy: redis-cache · Evictions rising, Pod Crash Loop, inventory-db · Slow queries, Pod Crash Loop, api-gateway · Upstream resets.
+- S07, plate P01, keys mocked: row-8, row-9, row-10, row-11, row-12. Same mock copy as S06.

@@ -29,11 +29,13 @@ def validate(c):
     return c
 
 
-def is_moving(c, min_scale=0.02, min_drift=30.0):
+def is_moving(c, min_scale=0.02, min_drift=30.0, min_tilt=1.0):
     a = c["keys"][0]
     for k in c["keys"][1:]:
         if abs(k["scale"] - a["scale"]) / a["scale"] >= min_scale - 1e-9:
             return True
         if math.dist((k["x"], k["y"], k["z"]), (a["x"], a["y"], a["z"])) >= min_drift:
+            return True
+        if max(abs(k[ax] - a[ax]) for ax in ("rx", "ry", "rz")) >= min_tilt:
             return True
     return False

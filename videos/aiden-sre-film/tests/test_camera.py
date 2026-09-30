@@ -18,8 +18,9 @@ def test_scale_counts_as_motion():
     assert camera.is_moving(camera.make("S01", 4.6, CAM))
 
 
-def test_rotation_only_is_static():
-    assert not camera.is_moving(camera.make("X", 4, {**CAM, "to": {**K0, "ry": -12}}))
+def test_tilt_counts_as_motion():
+    assert camera.is_moving(camera.make("X", 4, {**CAM, "to": {**K0, "ry": -12}}))
+    assert not camera.is_moving(camera.make("X", 4, {**CAM, "to": {**K0, "ry": -0.5}}))
 
 
 def test_drift_threshold():

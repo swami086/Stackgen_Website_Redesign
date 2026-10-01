@@ -36,6 +36,7 @@ Wave 0  T1 scaffold + MCP smoke (orchestrator + 1 worker)
         └── T5 QA + finish + fetch ───┘
 Wave 1  ├── T6 Figma product components (worker)          ┐
         ├── T7 Figma layout + missing-beat frames (worker) │ parallel with the audio chain
+        ├── T7b official vendor logos (worker)             │
         ├── T8 live interaction truth (orchestrator, Chrome DevTools MCP)
         └── audio chain (orchestrator MCP + 1 worker, serial):
             T9 casting ─G1a─ T10 takes ─G1b─ T11 transcribe+split+voice timing
@@ -55,6 +56,7 @@ User gates: G1a voice, G1b takes, G1c score + music offset, G1d stills, G2 golde
 | T1 | `hyperframes-skills` → `hyperframes`, `product-launch-video` (Steps 0–2), `hyperframes-cli`; `elevenlabs-skills` → `creative-studio` (smoke test) |
 | T2–T5 | superpowers `test-driven-development`; `hyperframes-core` (T2 storyboard format: `hyperframes/references/storyboard-format.md`) |
 | T6–T7 | `hyperframes-skills` → `figma`; `hyperframes-core` |
+| T7b | `company-logos` (lookup procedure only; files come from official brand kits); `media-use` (adopt) |
 | T8 | `chrome-devtools-skills` → `chrome-devtools` |
 | T9–T10 | `elevenlabs-skills` → `creative-studio`; reference `text-to-speech`; MCP `creative_get_model_guide(eleven_v4)`; `hyperframes-creative` `references/narration.md` |
 | T11 | `media-use` (`audio/references/tts.md` transcribe section); `hyperframes-cli` |
@@ -305,7 +307,7 @@ Expected: FAIL (`FileNotFoundError: … data/frames.json`).
 [
 {"frame":1,"id":"F01","slug":"cold-open","title":"Cold open","scene":"intro","line":null,"take":null,"est":3.0,"flex":[2.0,4.6],"snap":false,"figma":[],"el_video":["A1"],"blueprint":"overwhelm-surround","rules":["particle-burst","ambient-glow-bloom","vertical-spring-ticker"],"ost":[],"hits":[],"counter":[0,212],"sfx":["sub-swell","alert-ping","room-tone"],"picture":"Ink stage; A1 alert-storm footage; ribbons wake; first coral pings spark; corner counter fades in and climbs 0 to 212."},
 {"frame":2,"id":"F02","slug":"alert-flood","title":"Buried in alerts","scene":"intro","line":"L01","take":"T1","est":7.1,"flex":null,"snap":true,"figma":["66:2","48:2"],"el_video":[],"blueprint":"overwhelm-surround","rules":["waterfall-entry","counting-dynamic-scale","3d-camera-flight","motion-blur-streak"],"ost":[],"hits":[],"counter":[212,1284],"sfx":["row-tick","sub-swell"],"picture":"Notification cards with real alert titles from Figma 01 stack faster than readable; 3D dolly back reveals hundreds; counter climbs to 1,284 (tabular); 'most of them don't matter' greys 90% of cards; 'hours' makes one coral card throb."},
-{"frame":3,"id":"F03","slug":"meet-aiden","title":"Meet Aiden for SRE","scene":"intro","line":"L02","take":"T1","est":10.4,"flex":null,"snap":false,"figma":["66:27","66:30","54:2"],"el_video":[],"blueprint":"constellation-hub","rules":["svg-path-draw","split-tilt-cards","hacker-flip-3d","viewport-change"],"ost":[{"text":"Aiden for SRE","word":"Meet"},{"text":"Your AI SRE teammate.","word":"teammate"},{"text":"Discovers your services and dependencies","word":"maps"}],"hits":[{"label":"title","word":"Meet"}],"counter":null,"sfx":["whoosh-long","kinetic-slam","ui-click"],"picture":"Cards whip away; two-weight title mask-reveals; tool logos connect to Aiden by drawn ribbons; cut to Discovery panel where the service map draws services then dependencies."},
+{"frame":3,"id":"F03","slug":"meet-aiden","title":"Meet Aiden for SRE","scene":"intro","line":"L02","take":"T1","est":10.4,"flex":null,"snap":false,"figma":["66:27","66:30","54:2"],"el_video":[],"blueprint":"constellation-hub","rules":["svg-path-draw","split-tilt-cards","hacker-flip-3d","viewport-change"],"ost":[{"text":"Aiden for SRE","word":"Meet"},{"text":"Your AI SRE teammate.","word":"teammate"},{"text":"Discovers your services and dependencies","word":"maps"}],"hits":[{"label":"title","word":"Meet"}],"counter":null,"sfx":["whoosh-long","kinetic-slam","ui-click"],"picture":"Cards whip away; two-weight title mask-reveals; official full-color logos (Datadog, Grafana, Prometheus, New Relic, PagerDuty, AWS, Google Cloud, Microsoft Azure) on small light tiles connect to Aiden by drawn ribbons; cut to Discovery panel where the service map draws services then dependencies."},
 {"frame":4,"id":"F04","slug":"bridge-triage","title":"ALERT TRIAGE","scene":"triage","line":null,"take":null,"est":2.4,"flex":[1.6,4.2],"snap":false,"figma":[],"el_video":["A2"],"blueprint":"kinetic-type-beats","rules":["kinetic-beat-slam"],"ost":[{"text":"ALERT TRIAGE","word":null}],"hits":[{"label":"scene-triage","at":"start"}],"counter":null,"sfx":["impact-low","whoosh-short"],"picture":"Eyebrow slams; A2 ribbons converge into a panel silhouette that lands on F05 frame 0."},
 {"frame":5,"id":"F05","slug":"alerts-pour-in","title":"Flood of alerts","scene":"triage","line":"L03","take":"T2","est":2.5,"flex":null,"snap":true,"figma":["48:2"],"el_video":[],"blueprint":"cursor-ui-demo","rules":["waterfall-entry","vertical-spring-ticker","viewport-change"],"ost":[],"hits":[],"counter":[1284,1284],"sfx":["row-tick"],"picture":"Alerts panel tilts in; rows pour in with momentum; corner counter re-enters holding 1,284; product summary cards keep real values."},
 {"frame":6,"id":"F06","slug":"triage-groups","title":"Aiden triages","scene":"triage","line":"L04","take":"T2","est":9.0,"flex":null,"snap":false,"figma":["48:2"],"el_video":[],"blueprint":"panel-edit-live-sync","rules":["card-morph-anchor","anchored-layout-expand","stat-bars-and-fills","coordinate-target-zoom"],"ost":[{"text":"Correlated","word":"groups"},{"text":"de-duplicated","word":"filters"},{"text":"ranked by service impact","word":"ranks"}],"hits":[],"counter":[1284,1284],"sfx":["ui-click","soft-tick"],"picture":"Punch-in; noise rows collapse and grey; related rows FLIP into groups; list re-sorts by impact; callout chips land on their words."},
@@ -1239,6 +1241,17 @@ Expected: ≥ 6 component dirs; 0 lint errors; `data/components.json` lists all 
 - [ ] **Step 2:** Fidelity check as Task 6.
 - [ ] **Step 3:** Verify lint 0 errors; every node in `data/components.json`.
 
+### Task 7b: Official vendor logos for F03 (worker)
+
+**Files:** Create `shared/logos/vendors/{datadog,grafana,prometheus,new-relic,pagerduty,aws,google-cloud,microsoft-azure}.svg`, `shared/logos/vendors/SOURCES.md`
+
+**Interfaces:** Produces one official full-color SVG per vendor at the path above; F03's worker reads only these files.
+
+- [ ] **Step 1:** Read `company-logos` for the lookup procedure, but take every file from the vendor's own official brand / press / media kit page (not Simple Icons, not redraws, not the Figma file unless it is byte-identical to the official asset). Full-color primary logo, SVG.
+- [ ] **Step 2:** For each vendor record in `SOURCES.md`: source page URL, download URL, date fetched, the guideline rules that apply on a dark film (minimum clear space, minimum size, no recolor, background requirements). Use the full-color logo on a small light tile (`#FAF7F2`, 0 px radius, clear space per guideline) so colors stay correct on the ink stage.
+- [ ] **Step 3:** Verify each file is a valid SVG with the vendor's official colors (open it; compare against the brand page), then adopt via `media-use` with `--entity "<Vendor>"`.
+- [ ] **Step 4:** Report any vendor whose guidelines forbid this use (for example co-branding or on-tile placement) so the orchestrator can ask the user before F03 is built.
+
 ### Task 8: Live interaction truth (orchestrator, Chrome DevTools MCP)
 
 **Files:** Create `source/live/{alerts,act-now,investigation,recommended-action}.json`
@@ -1250,7 +1263,7 @@ Expected: ≥ 6 component dirs; 0 lint errors; `data/components.json` lists all 
 ### Task 9: Voice casting (orchestrator, ElevenLabs MCP) → Gate G1a
 
 - [ ] **Step 1:** `creative_get_model_guide(model_id: eleven_v4)`; read `hyperframes-creative/references/narration.md`.
-- [ ] **Step 2:** `creative_list_voices` (English; narration / documentary / conversational; mid-low; neutral US). Shortlist River (`SAz9YHcvj6GT2YYXdXww`, if in the workspace) + the two best Voice Library narrators (prefer Professional Voice Clones of real narrators). Record ids and descriptions in `NOTES.md`.
+- [ ] **Step 2:** `creative_list_voices` (English; narration / documentary / conversational; mid-low; neutral US). Shortlist River (`SAz9YHcvj6GT2YYXdXww`, if in the workspace) + the best male and the best female Voice Library narrator (prefer Professional Voice Clones of real narrators). Record ids and descriptions in `NOTES.md`.
 - [ ] **Step 3:** `creative_create_flow` "casting". Per voice: `creative_generate_speech(model_id: eleven_v4, voice_id, prompt: T3 markup, generations_count: 4, flow_id, estimate_only: true)`, then the real call once the estimate is within budget.
 - [ ] **Step 4:** Poll `creative_get_flow_run_status`; `creative_show_flow_results` for the user. Download every variation with `scripts/el_fetch.py` to `assets/audio/vo/casting/<voice>-v<k>.mp3`.
 - [ ] **Step 5: Gate G1a.** User picks the voice. Record `voice_id` in `NOTES.md` and on each take in `data/takes.json` (`"voice_id"`).
@@ -1261,7 +1274,7 @@ Expected: ≥ 6 component dirs; 0 lint errors; `data/components.json` lists all 
 - [ ] **Step 2:** `creative_create_flow` "narration". For T1…T5: `creative_generate_speech(model_id: eleven_v4, voice_id: <G1a>, prompt: markup, generations_count: 4, flow_id)` after an estimate.
 - [ ] **Step 3:** Download all variations to `assets/audio/vo/takes/Tn-v<k>.mp3` with provenance.
 - [ ] **Step 4:** Pre-screen with rubric R1–R7 (spec §9.1); write one table per take in `NOTES.md` (variation × R1–R7 pass/fail + notes). Present passing variations with `creative_show_flow_results`.
-- [ ] **Step 5: Gate G1b.** User picks one variation per take and runs the blind comparison against a 30 s GitLab reference excerpt (`source/reference/gitlab-vo-30s.wav`; cut with `yt-dlp -x` + ffmpeg if absent). A failing take is regenerated whole (never spliced). If U6 scratch read exists, also run the `voice-changer` node (`eleven_multilingual_sts_v2`, chosen voice) on it and offer it alongside.
+- [ ] **Step 5: Gate G1b.** User picks one variation per take and runs the blind comparison against a 30 s GitLab reference excerpt (`source/reference/gitlab-vo-30s.wav`; cut with `yt-dlp -x` + ffmpeg if absent). A failing take is regenerated whole (never spliced).
 - [ ] **Step 6:** Write chosen `generation_id`s to `data/takes.json` `chosen`; convert picks to `assets/audio/vo/takes/Tn.wav` (48 kHz 24-bit).
 
 ### Task 11: Transcribe, split, voice timing (worker)

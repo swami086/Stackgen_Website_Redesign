@@ -41,11 +41,13 @@ Nothing downstream writes back upstream. HyperFrames never calls ElevenLabs at r
 | D3 | Runtime | Storyboard Cut A + Cut B (lines L08 and L14 removed, 14 lines). Target 1:50–2:06, driven by the chosen narration take; bridges flex to land on the music (§9.2). |
 | D4 | Generated video | ElevenLabs MCP video models only (no Apiframe). Atmosphere and transitions only. Never product UI. |
 | D5 | Execution | Cursor Composer 2.5 (`composer-2.5-fast`) for build subagents; stronger models for review gates (§12). |
-| D6 | Audio | ElevenLabs MCP only: narration, music, SFX. River is the default voice but is re-cast against two Voice Library narrators on Eleven v4 (§9.1). |
+| D6 | Audio | ElevenLabs MCP only: narration, music, SFX. River is the default voice but is re-cast against one male and one female Voice Library narrator on Eleven v4 (§9.1). |
 | D7 | Motion | Very rich motion. No static images or held frames anywhere (§5 is the measurable contract). |
 | D8 | Narration bar | As close to a human narrator as possible; must not read as AI voice or AI-written. Quality bar is the GitLab Duo Workflow film's read and mix (§9.1 protocol, A13). |
 | D9 | Music | Blends with and is in sync with the narration: music is generated after narration lock from a spotting sheet, beat-mapped, and the cut's flexible beats are snapped to it; mixed with a spectral voiceover carve, not a flat duck (§9.2, §9.4). |
 | D10 | Assembly | HyperFrames assembles everything (picture, audio mix, captions, render). ElevenLabs outputs enter only as frozen files. |
+| D11 | Words | Storyboard VO words stay exactly as approved (`lines.json`). No ear pass. Human delivery comes from voice, markup and take selection only. |
+| D12 | Integration logos (F03) | Datadog, Grafana, Prometheus, New Relic, PagerDuty, AWS, Google Cloud, Microsoft Azure — authentic logos from each vendor's official brand kit, full color on small light tiles. |
 
 ---
 
@@ -210,7 +212,7 @@ Bridge flex ranges (seconds): F01 2.0–4.6, F04 1.6–4.2, F08 1.6–4.2, F12 1
 |---|---|---|---|---|---|---|---|---|---|
 | F01 | — | 3.0 | 0.00 | (silent) | — | Ink stage; A1 alert-storm footage; ribbons wake; first coral pings spark; counter `0` fades in, starts climbing | `overwhelm-surround` · `particle-burst`, `ambient-glow-bloom`, `vertical-spring-ticker` | A1 | sub swell, distant pings |
 | F02 | L01 | 7.1 | 3.00 | "Your on-call team is buried in alerts…" | 07 `66:2` | Notification cards (real alert titles from 01) stack faster than readable; 3D camera dolly back reveals hundreds; counter climbs to 1,284 (tabular); "most of them don't matter" greys 90% of cards; "hours" → coral card throbs | `overwhelm-surround` · `waterfall-entry`, `counting-dynamic-scale`, `3d-camera-flight`, `motion-blur-streak` | — | card ticks, rising tension |
-| F03 | L02 | 10.4 | 10.10 | "Meet Aiden for SRE, your AI SRE teammate…" | 08 `66:27` → 09 `66:30` → 03 `54:2` | Cards whip away; title "Aiden for SRE / Your AI SRE teammate." mask-reveals two-weight; tool logos connect to Aiden by drawn ribbons; cut to Discovery panel: service map draws services then dependencies | `logo-assemble-lockup` → `constellation-hub` → `cursor-ui-demo` · `svg-path-draw`, `split-tilt-cards`, `hacker-flip-3d` | — | whoosh, title hit, soft clicks |
+| F03 | L02 | 10.4 | 10.10 | "Meet Aiden for SRE, your AI SRE teammate…" | 08 `66:27` → 09 `66:30` → 03 `54:2` | Cards whip away; title "Aiden for SRE / Your AI SRE teammate." mask-reveals two-weight; official full-color logos (§1 D12) on small light tiles connect to Aiden by drawn ribbons; cut to Discovery panel: service map draws services then dependencies | `logo-assemble-lockup` → `constellation-hub` → `cursor-ui-demo` · `svg-path-draw`, `split-tilt-cards`, `hacker-flip-3d` | — | whoosh, title hit, soft clicks |
 | F04 | — | 2.4 | 20.50 | (silent) | — | Eyebrow `ALERT TRIAGE` slams; A2 ribbons converge into a panel silhouette that lands exactly on F05's first frame | `kinetic-type-beats` · `kinetic-beat-slam` | A2 (end frame = F05 frame 0) | impact, whoosh |
 | F05 | L03 | 2.5 | 22.90 | "One failure can set off a flood of alerts." | 01 `48:2` | Alerts panel tilts in; rows pour in from top with momentum; the film's corner counter (not the product's summary cards, which keep their real values) re-enters holding the F02 baseline 1,284 | `cursor-ui-demo` · `waterfall-entry`, `vertical-spring-ticker` | — | row ticks |
 | F06 | L04 | 9.0 | 25.40 | "Aiden triages every alert as it arrives…" | 01 `48:2` (states built in HTML) | Punch-in on list; noise rows collapse + grey ("filters the noise"); related rows FLIP into groups ("groups related alerts"); list re-sorts by impact ("ranks"); callout chips `Correlated · de-duplicated · ranked by service impact` land on their words | `panel-edit-live-sync` · `card-morph-anchor`, `anchored-layout-expand`, `stat-bars-and-fills`, `cursor-click-ripple` | — | soft UI clicks, sort swish |
@@ -285,7 +287,7 @@ Research basis (2026-10-01, Firecrawl): ElevenLabs best-practice docs (v4/v3 pro
 
 Tag rules: describe how it is spoken, at most one tag change per sentence group, never `[excited]` or promo tags (the salesy register is the strongest "AI ad" tell). Target register: a calm senior engineer explaining to peers, unhurried, confident, the GitLab Duo Workflow narrator's register.
 
-**Casting (Gate G1a).** `creative_list_voices` with filters for English, narration/documentary/conversational, mid-low pitch, neutral US accent; shortlist River (`SAz9YHcvj6GT2YYXdXww`, the earlier pick) plus the two strongest Voice Library narrators, preferring Professional Voice Clones of real narrators. Each voice reads T3 (the most technical take) on `eleven_v4`, 4 variations. The user picks the voice by ear. Fallback model `eleven_v3` only if v4 fails the rubric for every voice.
+**Casting (Gate G1a).** `creative_list_voices` with filters for English, narration/documentary/conversational, mid-low pitch, neutral US accent; shortlist River (`SAz9YHcvj6GT2YYXdXww`, the earlier pick) plus the strongest male and the strongest female Voice Library narrator, preferring Professional Voice Clones of real narrators. Each voice reads T3 (the most technical take) on `eleven_v4`, 4 variations. The user picks the voice by ear. Fallback model `eleven_v3` only if v4 fails the rubric for every voice.
 
 **Takes (Gate G1b).** Chosen voice reads T1–T5, 4 variations each. Pick one variation per take by the rubric:
 
@@ -301,7 +303,7 @@ Tag rules: describe how it is spoken, at most one tag change per sentence group,
 
 If one line inside an otherwise good take fails, regenerate the **whole take**, never splice a single line from another generation (mismatched prosody is audible). Final listen: the chosen takes back to back against a 30 s excerpt of the GitLab reference narration; the user must not flag ours as obviously synthetic (A13).
 
-**Gold path (optional, U6).** If a human scratch read exists (the user or a colleague reading `lines.json` into a phone, quiet room), run it through the ElevenLabs `voice-changer` node (`eleven_multilingual_sts_v2`) into the chosen voice. Speech-to-speech keeps human timing, emphasis and breath, which is the most human result available; the rubric still applies.
+**Gold path (declined by the user 2026-10-01; kept for reference only).** If a human scratch read exists (the user or a colleague reading `lines.json` into a phone, quiet room), run it through the ElevenLabs `voice-changer` node (`eleven_multilingual_sts_v2`) into the chosen voice. Speech-to-speech keeps human timing, emphasis and breath, which is the most human result available; the rubric still applies.
 
 **Into HyperFrames.**
 1. Download chosen takes → `assets/audio/vo/takes/Tn.mp3` → 48 kHz 24-bit wav.
@@ -386,7 +388,7 @@ Routers first, then exactly one member, per `skill-catalog-routing`. "Why" recor
 | Beat grid | `music-to-video` → `scripts/analyze-beatgrid.py` only (do not run that workflow) | HyperFrames' single trusted beat analyzer, output feeds `fit_bridges.py` | Ad-hoc librosa |
 | Mix | `hyperframes-audio` (`scripts/carve.mjs`, effect chain, automation) | Audio lives in `index.html`; dynamic spectral carve is what the research recommends over broadband ducking | old `mix.py` (outside the composition) |
 | Generated video prompts | `hyperframes-creative` (look language) + `veo` (`~/.agents/skills/veo`, prompt grammar) + MCP `creative_get_model_guide` per model | **Picker gap:** no ElevenLabs-video skill; `veo` has the closest cinematic grammar | `seo-image-gen` (marketing stills) |
-| Logos | `company-logos` | Official marks for F03 connections | Generated logos |
+| Logos | `company-logos` (lookup procedure) + each vendor's official brand/press kit as the file source | D12 requires authentic originals | Simple Icons redraws; generated logos |
 | Motion QA | `emil-skills` → `review-animations` | Easing, choreography, overlap on rendered motion | — |
 | Composition QA | `critique-composition`, `critique-visual-hierarchy` | Same lenses as the prior audit | — |
 | Film audit | `hyperframes-skills` → `video-production-audit` | `hyperframes check`, Code2Video axes, one defect ledger | Ad-hoc review |
@@ -431,13 +433,15 @@ Not applicable: **Reticle** (no instrumented web app; output is video). **Ourobo
 
 | # | Input | Needed by | Default if not given |
 |---|---|---|---|
-| U1 | ElevenLabs credit budget for this film | before G1a | Orchestrator runs `estimate_only` on each batch and asks before any batch over 2,000 credits |
-| U2 | Integration logos allowed in F03 | Wave 3 F03 | Datadog only; cloud wordmarks withheld |
-| U3 | Evidence panel badges read "Unverified host" in frame 04 — show, blur, or edit? | G2 golden frame | Blur under depth-of-field; never readable |
-| U4 | Voice pick (G1a), take picks (G1b), score pick (G1c) | Wave 1 | None — these are listening gates |
-| U5 | `[VERIFY]` sign-offs (Navin: null-hypothesis testing, demoable actions, write-back; integration logos) | before G4 | Lines stay verbatim; flagged in `NOTES.md` |
-| U6 | Optional human scratch read of the 14 lines (phone, quiet room) for the speech-to-speech gold path | G1b | Text-to-speech path only |
-| U7 | Permission for an "ear pass" on the locked words (contractions, splitting L07/L11 into shorter sentences) | G1b | Words stay locked; delivery shaped by markup only |
+| U1 | ElevenLabs credit budget | **Answered:** no overall cap; ask before any single batch over 2,000 credits | — |
+| U2 | Integration logos in F03 | **Answered:** D12 — eight vendors, official brand-kit files, full color on light tiles | — |
+| U3 | Evidence panel "Unverified host" badges | **Answered:** depth-of-field blur, never readable | — |
+| U4 | Voice pick (G1a), take picks (G1b), score pick (G1c) + music offset | Wave 1 | Listening gates; casting = River + one male + one female narrator |
+| U5 | `[VERIFY]` sign-offs (Navin: null-hypothesis testing, demoable actions, write-back) | **Answered:** pending — build as written, flag in `NOTES.md`, clear before G4 | — |
+| U6 | Human scratch read for speech-to-speech | **Answered:** no — text-to-speech only | — |
+| U7 | Ear pass on the locked words | **Answered:** no — words stay exactly as approved (D11) | — |
+| U8 | Score direction | **Answered:** spec §9.2 direction (96 BPM cinematic tech underscore) | — |
+| U9 | Execution | **Answered:** subagent-driven (Composer 2.5 workers + reviewers) on new branch `film/aiden-sre-launch` from current HEAD; old-film uncommitted changes stay untouched | — |
 
 ---
 
@@ -447,7 +451,7 @@ Not applicable: **Reticle** (no instrumented web app; output is video). **Ourobo
 |---|---|
 | Figma component import drifts from Figma pixels | Mandatory fidelity self-check per component; report drift, never silently hand-tweak |
 | v4 speaks a tag aloud or overacts | R6 rejects it; simplify tags for that take; fallback `eleven_v3` |
-| Every variation of a take fails the rubric | Regenerate the whole take with adjusted markup; after two rounds, U6 gold path or recast |
+| Every variation of a take fails the rubric | Regenerate the whole take with adjusted markup; after two rounds, recast (next-best voice from G1a) |
 | MCP returns no downloadable URL for a generation | Task 1 smoke test proves the download path first; fallback `creative_get_available_assets` lookup, else user exports from the canvas link |
 | Music variations do not follow the energy curve | Second round with tighter time markers; then `video-to-music` on the animatic |
 | A bridge cannot reach a downbeat inside its flex range | `fit_bridges.py` takes the nearest beat and logs it; if > 80 ms off a downbeat, widen that bridge's range by ≤ 0.5 s with user OK |

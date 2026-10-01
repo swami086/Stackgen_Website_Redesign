@@ -94,14 +94,17 @@
     el.className = row[2] ? "alert is-critical" : "alert";
     el.setAttribute("data-layout-allow-overflow", "");
     el.setAttribute("data-layout-allow-overlap", "");
+    el.setAttribute("data-layout-allow-occlusion", "");
     const svc = document.createElement("div");
     svc.className = "alert-svc";
     svc.textContent = row[0];
     svc.setAttribute("data-layout-allow-overlap", "");
+    svc.setAttribute("data-layout-allow-occlusion", "");
     const title = document.createElement("div");
     title.className = "alert-title";
     title.textContent = row[1];
     title.setAttribute("data-layout-allow-overlap", "");
+    title.setAttribute("data-layout-allow-occlusion", "");
     el.appendChild(svc);
     el.appendChild(title);
     return { el, critical: row[2] };
@@ -189,10 +192,11 @@
   mid.querySelectorAll(".sg-ring").forEach((ring) => ring.setAttribute("data-layout-allow-overflow", ""));
 
   const type = mountType(fg);
-  type.counter(tl, { from: 1284, to: 4906, t: 0, dur: D, x: 1120, y: 140 });
+  type.counter(tl, { from: 1284, to: 4906, t: 0, dur: D, x: 1480, y: 48 });
   const counterEl = fg.querySelector(".sg-counter");
   counterEl.setAttribute("data-layout-allow-overflow", "");
   counterEl.setAttribute("data-layout-allow-overlap", "");
+  counterEl.setAttribute("data-layout-allow-occlusion", "");
 
   applyCamera(tl, cam, roots, D);
   const whips = [bg, mid, fg];

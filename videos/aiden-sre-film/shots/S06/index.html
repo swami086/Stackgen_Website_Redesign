@@ -48,18 +48,17 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 220px;
-    height: 64px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-    background: var(--sg-panel);
-    color: var(--sg-cream);
+    width: auto;
+    height: auto;
+    display: block;
+    padding: 0;
+    background: transparent;
+    color: #1C1A22;
     font-family: "Geist", sans-serif;
-    font-size: 32px;
-    font-weight: 500;
+    font-size: 40px;
+    font-weight: 600;
     line-height: 1;
+    font-variant-numeric: tabular-nums;
     border-radius: 0;
   }
 </style>
@@ -183,62 +182,7 @@
     plate = mountMock(mid);
   }
   plate.enter(tl, 0.05, { from: "right" });
-  plate.mask("list");
-  const list = plate.overlay("list");
-  list.style.clipPath = "inset(0)";
-  const track = document.createElement("div");
-  track.className = "s06-track";
-  list.appendChild(track);
-
-  const ROW_COUNT = 12;
-  const INTERVAL = 0.28;
   const PUSH_START = 0.2;
-  const listH = plate.box("list").h;
-  const ROW_H = rowExtent(plate);
-  const travel = ROW_COUNT * ROW_H - listH;
-  if (!(travel > 0)) throw new Error("S06 list is not taller than its mask");
-  const pushes = Math.floor((D - PUSH_START) / INTERVAL + 1e-9);
-  const pre = ROW_COUNT - pushes;
-  track.style.height = (ROW_COUNT * ROW_H) + "px";
-  track.setAttribute("data-layout-allow-overflow", "");
-
-  for (let n = 1; n <= ROW_COUNT; n++) {
-    const row = document.createElement("div");
-    row.className = "s06-row";
-    row.dataset.key = "row-" + n;
-    row.style.position = "absolute";
-    row.style.left = "0";
-    row.style.width = "100%";
-    row.style.top = ((n - 1) * ROW_H) + "px";
-    row.style.height = ROW_H + "px";
-    const title = document.createElement("div");
-    title.className = "s06-title";
-    title.textContent = rowLabel(plate, n);
-    title.setAttribute("data-layout-allow-overlap", "");
-    const line = document.createElement("div");
-    line.className = "s06-line";
-    row.appendChild(title);
-    row.appendChild(line);
-    track.appendChild(row);
-
-    const fromOldest = ROW_COUNT - n;
-    if (fromOldest >= pre) {
-      const tEnter = PUSH_START + (fromOldest - pre) * INTERVAL;
-      tl.fromTo(row, { y: -ROW_H }, {
-        y: 0,
-        duration: 0.24,
-        ease: EASE.snap,
-        immediateRender: false,
-      }, tEnter);
-    }
-  }
-
-  tl.fromTo(track, { y: -travel }, {
-    y: 0,
-    duration: Math.max(0.2, D - PUSH_START),
-    ease: "power3.out",
-    immediateRender: true,
-  }, PUSH_START);
 
   const countHost = plate.overlay("header-count");
   const countEl = document.createElement("div");

@@ -16,8 +16,8 @@
     position: absolute;
     box-sizing: border-box;
     left: 0;
-    background: var(--sg-ink-raised);
-    border-bottom: 1px solid var(--sg-hairline);
+    background: #F4EFFA;
+    border-bottom: 1px solid #E3D8F2;
     border-radius: 0;
     overflow: hidden;
   }
@@ -38,28 +38,10 @@
     display: flex;
     align-items: center;
     font-family: "Geist", sans-serif;
-    font-size: 19px;
+    font-size: 20px;
     line-height: 1;
-    color: var(--sg-cream);
+    color: #1C1A22;
     white-space: nowrap;
-  }
-  .sg-counter {
-    font-size: 64px;
-    line-height: 1;
-    background: var(--sg-ink);
-    padding: 8px 12px;
-  }
-  .sg-support .sg-mask {
-    position: relative;
-    background: transparent;
-  }
-  .sg-support {
-    background: var(--sg-ink);
-    padding: 6px 14px;
-  }
-  .sg-support .sg-rise {
-    background: var(--sg-ink);
-    color: var(--sg-cream);
   }
 </style>
 <script src="_shared/vendor/gsap.min.js"></script>
@@ -185,7 +167,7 @@
   }
 
   const type = mountType(fg);
-  type.counter(tl, { from: 1284, to: 7, t: 0.4, dur: 1.6, x: 1560, y: 80 });
+  type.counter(tl, { from: 4906, to: 7, t: 0.4, dur: 1.6, x: 1480, y: 72 });
   type.fromOst(tl, timing.ost, { support: { x: 200, y: 960 } });
   fg.querySelectorAll(".sg-counter, .sg-support").forEach((el) => {
     el.setAttribute("data-layout-allow-overflow", "");

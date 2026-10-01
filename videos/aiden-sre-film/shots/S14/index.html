@@ -11,6 +11,18 @@
   @font-face { font-family: "Geist Mono"; src: url("_shared/assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
   body { margin: 0; font-family: "Geist", sans-serif; color: var(--sg-cream); }
   .s14-arrow { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: visible; pointer-events: none; }
+  .s14-chip {
+    position: absolute;
+    padding: 6px 10px;
+    background: #F4EFFA;
+    border: 1px solid #E3D8F2;
+    color: #1C1A22;
+    font-family: "Geist Mono", monospace;
+    font-size: 20px;
+    line-height: 1.2;
+    border-radius: 0;
+    white-space: nowrap;
+  }
 </style>
 <script src="_shared/vendor/gsap.min.js"></script>
 <script src="_shared/build/data.js"></script>
@@ -53,16 +65,15 @@
   plate.enter(tl, 0, { from: "z" });
 
   const marker = plate.box("marker-downstream");
-  ringPulse(tl, mid, marker, 0.4, { color: "var(--sg-cyan)", rings: 1 });
-
   const symptom = plate.box("row-symptom");
-  const root = plate.box("row-root");
-  const x1 = symptom.x + symptom.w;
+  const mx = marker.x + marker.w / 2;
+  const my = marker.y + marker.h / 2;
+  const x1 = symptom.x + 80;
   const y1 = symptom.y + symptom.h / 2;
-  const x2 = root.x + root.w;
-  const y2 = root.y + root.h / 2;
-  const cx = (x1 + x2) / 2 - 160;
-  const cy = (y1 + y2) / 2;
+  const x2 = mx;
+  const y2 = my;
+  const cx = (x1 + x2) / 2;
+  const cy = (y1 + y2) / 2 - 36;
   const dx = x2 - cx;
   const dy = y2 - cy;
   const len = Math.hypot(dx, dy) || 1;
@@ -83,24 +94,31 @@
   svg.setAttribute("data-layout-allow-overflow", "");
   const under = document.createElementNS("http://www.w3.org/2000/svg", "path");
   under.setAttribute("fill", "none");
-  under.setAttribute("stroke", "var(--sg-ink)");
+  under.setAttribute("stroke", "#1C1A22");
   under.setAttribute("stroke-width", "5");
   under.setAttribute("d", d);
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
   path.setAttribute("fill", "none");
-  path.setAttribute("stroke", "var(--sg-cream)");
+  path.setAttribute("stroke", "#6B6280");
   path.setAttribute("stroke-width", "3");
   path.setAttribute("d", d);
   svg.appendChild(under);
   svg.appendChild(path);
   mid.appendChild(svg);
 
+  const chip = document.createElement("div");
+  chip.className = "s14-chip";
+  chip.textContent = "Downstream";
+  chip.style.left = (marker.x + 24) + "px";
+  chip.style.top = (marker.y - 8) + "px";
+  mid.appendChild(chip);
+
   const tPoint = cueT(timing, "Root signal · downstream effect");
   drawPath(tl, under, tPoint - 0.4, 0.6);
   drawPath(tl, path, tPoint - 0.4, 0.6);
-  ringPulse(tl, mid, root, tPoint, { color: "var(--sg-violet)", rings: 1 });
+  ringPulse(tl, mid, marker, tPoint, { color: "var(--sg-violet)", rings: 1 });
   mid.querySelectorAll(".sg-ring").forEach((el) => el.setAttribute("data-layout-allow-overflow", ""));
-  mountType(fg).fromOst(tl, timing.ost, { support: { x: 260, y: 1004 } });
+  mountType(fg).fromOst(tl, timing.ost, { support: { x: 260, y: 940 } });
 
   applyCamera(tl, cam, roots, timing.duration);
   tl.set({}, {}, timing.duration);

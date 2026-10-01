@@ -181,8 +181,15 @@ export function mountType(host) {
     el.className = "sg-counter";
     const y = spec.y != null ? spec.y : 80;
     place(el, { x: spec.x, y }, { x: 1560, y: 80 });
+    const label = document.createElement("div");
+    label.className = "sg-counter-label";
+    label.textContent = spec.label || "All Active";
+    const num = document.createElement("div");
+    num.className = "sg-counter-num";
     const fmt = (n) => Math.round(n).toLocaleString("en-US");
-    el.textContent = fmt(spec.from);
+    num.textContent = fmt(spec.from);
+    el.appendChild(label);
+    el.appendChild(num);
     host.appendChild(el);
     const proxy = { n: spec.from };
     tl.fromTo(proxy, { n: spec.from }, {
@@ -190,7 +197,7 @@ export function mountType(host) {
       duration: spec.dur,
       ease: EASE.snap,
       immediateRender: false,
-      onUpdate: () => { el.textContent = fmt(proxy.n); },
+      onUpdate: () => { num.textContent = fmt(proxy.n); },
     }, spec.t);
   }
 

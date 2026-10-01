@@ -57,7 +57,7 @@
     seed: 127,
     count: 16,
     modes: [
-      { t: 0, mode: "rail", opacity: 1 },
+      { t: 0, mode: "rail", opacity: 0.35 },
       { t: 0.6, mode: "dormant", opacity: 0.4 },
     ],
   }).bind(tl, D);
@@ -76,7 +76,8 @@
     primary: "Book a demo",
     secondary: "Try Community Edition",
     micro: "free for up to two users",
-  }, cueT(timing, "Book a demo"), cueT(timing, "Try Community Edition"));
+    y: 620,
+  }, 1.2, 2.0);
 
   applyCamera(tl, cam, roots, D);
   tl.set({}, {}, D);

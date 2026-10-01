@@ -85,13 +85,30 @@
 }
 
 .sg-counter {
-  font-family: var(--sg-mono);
-  font-size: 120px;
-  font-weight: 400;
-  font-variant-numeric: tabular-nums;
-  color: var(--sg-cream);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 22px 18px;
+  background: #F4EFFA;
+  border: 1px solid #E3D8F2;
+  box-shadow: 0 12px 32px rgba(28, 20, 40, 0.18);
   line-height: 1;
   white-space: nowrap;
+}
+.sg-counter-label {
+  font-family: var(--sg-mono);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #6B6280;
+}
+.sg-counter-num {
+  font-family: var(--sg-mono);
+  font-size: 72px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: #1C1A22;
+  line-height: 1;
 }
 
 .sg-cta {

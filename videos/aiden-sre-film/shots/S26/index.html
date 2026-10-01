@@ -13,26 +13,27 @@
   .sg-eyebrow .sg-mask { position: static; background: none; display: inline-block; overflow: hidden; }
   .qtile {
     position: absolute;
-    width: 420px;
-    height: 420px;
+    width: 300px;
+    height: 300px;
     box-sizing: border-box;
-    background: var(--sg-panel);
-    border: 2px solid var(--sg-hairline);
+    background: #F4EFFA;
+    border: 1px solid #E3D8F2;
     border-radius: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 8px;
+    padding: 24px;
     z-index: 2;
   }
-  .qtile.is-dim { opacity: 0.85; }
+  .qtile.is-dim { opacity: 1; }
   .qname, .qlabel, .slab-label, .pill {
     font-family: "Geist Mono", monospace;
     border-radius: 0;
   }
-  .qname { font-size: 28px; line-height: 1.2; color: var(--sg-cream); }
-  .qsub { font-size: 16px; line-height: 1.2; color: var(--sg-cream); }
+  .qname { font-size: 22px; line-height: 1.2; color: #1C1A22; }
+  .qsub { font-size: 20px; line-height: 1.3; color: #3D3550; text-align: center; }
   .qlabel {
     position: absolute;
     width: 640px;
@@ -111,11 +112,11 @@
 
   const ID = "S26";
   const DATA_ID = "S26";
-  const TILE = 420;
+  const TILE = 300;
   const GAP = 16;
   const STEP = TILE + GAP;
   const LEFT = 750;
-  const TOP = 210;
+  const TOP = 200;
   const SLAB_X = 460;
   const SLAB_Y = 888;
   const OS_Y = 984;
@@ -139,27 +140,24 @@
   bg.querySelector("canvas").setAttribute("data-layout-allow-overflow", "");
 
   const quarters = [
-    { name: "REMEDIATE", col: 0, row: 0, border: "var(--sg-cyan)", dim: false },
-    { name: "BUILD", col: 1, row: 0, border: "var(--sg-violet)", dim: true },
-    { name: "OPERATE", col: 0, row: 1, border: "var(--sg-amber)", dim: true },
-    { name: "OBSERVE", col: 1, row: 1, border: "var(--sg-coral)", dim: true },
+    { name: "REMEDIATE", line: "Act on the open alert", col: 0, row: 0, dim: false },
+    { name: "BUILD", line: "Change the service", col: 1, row: 0, dim: true },
+    { name: "OPERATE", line: "Run the fix", col: 0, row: 1, dim: true },
+    { name: "OBSERVE", line: "Watch the queue", col: 1, row: 1, dim: true },
   ];
   quarters.forEach((q) => {
     const el = document.createElement("div");
     el.className = q.dim ? "qtile is-dim" : "qtile";
     el.style.left = (LEFT + q.col * STEP) + "px";
     el.style.top = (TOP + q.row * STEP) + "px";
-    el.style.borderColor = q.border;
     const name = document.createElement("div");
     name.className = "qname";
     name.textContent = q.name;
+    const sub = document.createElement("div");
+    sub.className = "qsub";
+    sub.textContent = q.line;
     el.appendChild(name);
-    if (!q.dim) {
-      const sub = document.createElement("div");
-      sub.className = "qsub";
-      sub.textContent = "Aiden for SRE";
-      el.appendChild(sub);
-    }
+    el.appendChild(sub);
     mid.appendChild(el);
   });
 

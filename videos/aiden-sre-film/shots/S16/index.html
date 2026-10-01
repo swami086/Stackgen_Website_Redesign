@@ -20,10 +20,10 @@
   .s16-card {
     position: absolute;
     box-sizing: border-box;
-    background: var(--sg-panel);
-    border: 1px solid var(--sg-hairline);
+    background: #F4EFFA;
+    border: 1px solid #E3D8F2;
     border-radius: 0;
-    color: var(--sg-cream);
+    color: #1C1A22;
     overflow: hidden;
   }
   .s16-title {
@@ -32,29 +32,31 @@
     line-height: 1.2;
     padding: 28px 32px 12px;
     border-radius: 0;
+    color: #1C1A22;
   }
   .s16-row {
     font-family: "Geist Mono", monospace;
-    font-size: 18px;
+    font-size: 20px;
     line-height: 1.35;
-    color: var(--sg-mute);
+    color: #6B6280;
     padding: 6px 32px;
     border-radius: 0;
   }
   .s16-fix {
     position: absolute;
-    left: 632px;
-    top: 300px;
+    left: 32px;
+    top: 284px;
     width: 148px;
     height: 44px;
     box-sizing: border-box;
-    border: 1px solid var(--sg-hairline);
+    border: 1px solid #E3D8F2;
+    background: #ffffff;
     border-radius: 0;
     font-family: "Geist Mono", monospace;
-    font-size: 18px;
+    font-size: 20px;
     line-height: 44px;
     padding-left: 16px;
-    color: var(--sg-cream);
+    color: #1C1A22;
   }
   .s16-float { filter: blur(2px); }
   .s16-runbook {
@@ -72,9 +74,9 @@
   }
   .s16-reply {
     font-family: "Geist Mono", monospace;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 1.35;
-    color: var(--sg-mute);
+    color: #6B6280;
     padding: 4px 28px;
   }
 </style>
@@ -123,7 +125,7 @@
   rca.style.left = "560px";
   rca.style.top = "260px";
   rca.style.width = "820px";
-  rca.style.height = "420px";
+  rca.style.height = "360px";
   const title = document.createElement("div");
   title.className = "s16-title";
   title.textContent = "RCA summary";
@@ -132,6 +134,8 @@
     "checkout-svc · deploy regression",
     "p99 latency 2.4s · error rate 4.2%",
     "Evidence tied to the last release",
+    "Last release · worker-service latest_79ece31",
+    "Rollback held · error rate back to baseline",
   ];
   for (const text of rows) {
     const row = document.createElement("div");
@@ -185,7 +189,7 @@
   cursor.show(tl, 0.4);
   cursor.path(tl, [
     { t: 0.4, x: 700, y: 220 },
-    { t: 1.05, x: 1208, y: 572 },
+    { t: 1.05, x: 560, y: 520 },
   ]);
 
   const type = mountType(fg);

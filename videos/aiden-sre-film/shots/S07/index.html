@@ -18,10 +18,11 @@
     left: 0;
     width: 100%;
     padding: 0 16px 6px;
-    background: var(--sg-panel);
+    background: transparent;
     border-radius: 0;
     overflow: hidden;
   }
+  .s07-title, .s07-line { display: none; }
   .s07-title {
     font-family: "Geist", sans-serif;
     font-size: 16px;
@@ -50,34 +51,33 @@
   .s07-head {
     position: absolute;
     right: 12px;
-    height: 20px;
+    height: auto;
     box-sizing: border-box;
-    border-left: 2px solid var(--sg-violet);
+    border: 1px solid #E3D8F2;
     border-radius: 0;
-    background: var(--sg-panel);
-    color: var(--sg-cream);
+    background: #F4EFFA;
+    color: #1C1A22;
     font-family: "Geist Mono", monospace;
-    font-size: 13px;
-    line-height: 20px;
-    padding: 0 8px;
+    font-size: 20px;
+    line-height: 1.2;
+    padding: 6px 10px;
     z-index: 3;
   }
   .s07-count {
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 220px;
-    height: 64px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-    background: var(--sg-panel);
-    color: var(--sg-cream);
+    width: auto;
+    height: auto;
+    display: block;
+    padding: 0;
+    background: transparent;
+    color: #1C1A22;
     font-family: "Geist", sans-serif;
-    font-size: 32px;
-    font-weight: 500;
+    font-size: 40px;
+    font-weight: 600;
     line-height: 1;
+    font-variant-numeric: tabular-nums;
     border-radius: 0;
   }
 </style>
@@ -183,7 +183,6 @@
   const under = await placePlate(mid, "P03");
   const top = await placePlate(mid, "P01");
   const plate = top.plate;
-  plate.mask("list");
   const list = plate.overlay("list");
   const track = document.createElement("div");
   track.className = "s07-track";

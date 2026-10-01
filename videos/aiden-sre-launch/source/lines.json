@@ -1,0 +1,18 @@
+[
+{"id":"L01","scene":1,"text":"Your on-call team is buried in alerts, and most of them don't matter. The ones that do can take hours to untangle."},
+{"id":"L02","scene":1,"gap_before":{"full":0.6,"cut":0.6},"text":"Meet Aiden for SRE, your AI SRE teammate. It connects to the observability tools you already run and maps your services on its own."},
+{"id":"L03","scene":2,"text":"One failure can set off a flood of alerts."},
+{"id":"L04","scene":2,"gap_before":{"full":0.771,"cut":0.771},"text":"Aiden triages every alert as it arrives. It groups related alerts, filters the noise, and ranks the rest by impact on your services."},
+{"id":"L05","scene":2,"text":"Your engineers see only the alerts that need them, and save their energy for real incidents."},
+{"id":"L06","scene":3,"text":"When a real incident hits, most of the time goes into investigation."},
+{"id":"L07","scene":3,"text":"Aiden starts investigating the moment an alert fires. It correlates logs, metrics and events across your dependencies. Then it scores every possible cause against the evidence, and even tries to prove itself wrong."},
+{"id":"L08","scene":3,"full_only":true,"gap_before":{"full":0.876},"text":"When several things break at once, it points you to the one that started it."},
+{"id":"L09","scene":3,"gap_before":{"cut":0.876},"text":"Your team starts from a probable root cause, and MTTR comes down."},
+{"id":"L10","scene":4,"text":"Even with the cause in hand, the fix is often manual."},
+{"id":"L11","scene":4,"text":"Aiden runs the remediation, from restarting a service or scaling out to rerouting traffic or rolling back a deployment. Your team sets which actions need approval, and every action goes into a full audit trail."},
+{"id":"L12","scene":4,"text":"Incidents close faster, and your team stays in control of what runs."},
+{"id":"L13","scene":5,"text":"And it keeps learning. Every investigation adds to what Aiden knows about your environment, so the next incident starts further ahead."},
+{"id":"L14","scene":5,"full_only":true,"gap_before":{"full":0.748},"text":"Aiden watches your error budgets too, and acts before a breach."},
+{"id":"L15","scene":6,"gap_before":{"cut":2.45},"text":"Aiden for SRE runs on the Aiden World Model, the shared record of what's deployed, what changed, what broke and what fixed it. And Aiden OS holds every action to your policies."},
+{"id":"L16","scene":7,"text":"See Aiden for SRE on your own alerts. Book a demo, or try the free Community Edition."}
+]

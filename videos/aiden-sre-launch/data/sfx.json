@@ -1,0 +1,21 @@
+[
+{"id":"ui-click","prompt":"single soft modern UI mouse click, close, dry","duration":0.5,"loop":false},
+{"id":"soft-tick","prompt":"very soft tick, subtle interface feedback","duration":0.5,"loop":false},
+{"id":"row-tick","prompt":"quick light tick of a list row appearing, airy","duration":0.5,"loop":false},
+{"id":"whoosh-short","prompt":"short clean whoosh, camera whip, no rumble","duration":0.6,"loop":false},
+{"id":"whoosh-long","prompt":"long smooth cinematic whoosh passing by","duration":1.5,"loop":false},
+{"id":"impact-low","prompt":"deep soft cinematic low impact, tight tail","duration":1.5,"loop":false},
+{"id":"kinetic-slam","prompt":"punchy title text slam, short transient, subtle sub","duration":0.8,"loop":false},
+{"id":"alert-ping","prompt":"small distant notification ping, slightly tense","duration":0.6,"loop":false},
+{"id":"slack-pop","prompt":"gentle chat message pop notification","duration":0.5,"loop":false},
+{"id":"clock-tick","prompt":"quiet mechanical clock ticking, steady","duration":2.0,"loop":true},
+{"id":"bar-riser","prompt":"short airy riser as a progress bar fills","duration":1.2,"loop":false},
+{"id":"strike","prompt":"crisp short pen strike-through swish","duration":0.5,"loop":false},
+{"id":"approve-chime","prompt":"warm short two-note approval chime in D minor","duration":1.0,"loop":false},
+{"id":"resolve-chime","prompt":"soft satisfying resolve chime in D major, gentle","duration":1.5,"loop":false},
+{"id":"data-whoosh","prompt":"soft digital data whoosh with sparkle tail","duration":1.0,"loop":false},
+{"id":"sub-swell","prompt":"slow deep sub bass swell rising, cinematic","duration":3.0,"loop":false},
+{"id":"logo-sting","prompt":"elegant short logo sting, soft synth bloom in D","duration":2.5,"loop":false},
+{"id":"keyboard-clatter","prompt":"tired slow typing on a laptop keyboard, close","duration":3.0,"loop":false},
+{"id":"room-tone","prompt":"quiet treated studio room tone, very low, no hum","duration":10.0,"loop":true}
+]

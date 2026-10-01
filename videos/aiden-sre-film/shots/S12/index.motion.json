@@ -1,0 +1,7 @@
+{
+  "assertions": [
+    { "kind": "appearsBy", "selector": ".s12-score.is-lead", "bySec": 1.2 },
+    { "kind": "appearsBy", "selector": ".s12-rail", "bySec": 0.4 },
+    { "kind": "staysInFrame", "selector": ".s12-rail" }
+  ]
+}

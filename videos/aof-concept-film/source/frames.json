@@ -1,0 +1,14 @@
+[
+{"frame":1,"id":"F01","slug":"software-factory","title":"Software factory alone","line":"L01","take":"T1","john":6.493,"screens":[],"inserts":["M0"],"sfx":["sub-swell","capsule-tick","room-tone"]},
+{"frame":2,"id":"F02","slug":"quarters-drift","title":"Four quarters drift","line":"L02","take":"T1","john":9.803,"screens":[],"inserts":[],"sfx":["capsule-tick","footfall-soft","room-tone"]},
+{"frame":3,"id":"F03","slug":"quarters-lock","title":"Quarters lock","line":"L03","take":"T1","john":5.666,"screens":[],"inserts":["M1"],"sfx":["seam-seat","sweep-shimmer"]},
+{"frame":4,"id":"F04","slug":"click","title":"The two factories click","line":"L04","take":"T1","john":6.493,"screens":[],"inserts":["M2"],"sfx":["heavy-click","impact-low","capsule-tick"]},
+{"frame":5,"id":"F05","slug":"four-ways","title":"Four ways to start","line":"L05","take":"T2","john":5.252,"screens":[],"inserts":[],"sfx":["tone-ping"]},
+{"frame":6,"id":"F06","slug":"sre","title":"Aiden for SRE","line":"L06","take":"T2","john":21.390,"screens":["6a","6b","6c"],"inserts":[],"sfx":["whoosh-short","row-tick","approve-chime","resolve-chime"]},
+{"frame":7,"id":"F07","slug":"infraops","title":"Aiden for InfraOps","line":"L07","take":"T3","john":16.838,"screens":["7a","7b"],"inserts":[],"sfx":["typing-soft","gate-tick","impact-low"]},
+{"frame":8,"id":"F08","slug":"devops","title":"Aiden for DevOps","line":"L08","take":"T3","john":18.907,"screens":["8a","8b"],"inserts":[],"sfx":["row-tick","whoosh-short","approve-chime"]},
+{"frame":9,"id":"F09","slug":"observability","title":"Aiden for Observability","line":"L09","take":"T4","john":20.562,"screens":["9a","9b"],"inserts":[],"sfx":["row-tick","sub-swell","resolve-chime"]},
+{"frame":10,"id":"F10","slug":"world-model","title":"World Model","line":"L10","take":"T5","john":11.045,"screens":["10a"],"inserts":[],"sfx":["plate-thud","whoosh-long","tone-ping"]},
+{"frame":11,"id":"F11","slug":"aiden-os","title":"Aiden OS","line":"L11","take":"T5","john":11.872,"screens":["11a"],"inserts":[],"sfx":["plate-thud","gate-tick","approve-chime","typing-soft"]},
+{"frame":12,"id":"F12","slug":"close","title":"Close","line":"L12","take":"T5","john":4.424,"screens":[],"inserts":["M3"],"sfx":["logo-sting"]}
+]

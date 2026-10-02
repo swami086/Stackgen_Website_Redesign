@@ -1,0 +1,14 @@
+[
+{"id":"L01","frame":"F01","text":"AI turned coding into a software factory. Code is being written faster than ever."},
+{"id":"L02","frame":"F02","text":"But operations can't keep pace. Build, operate, observe and remediate still run as separate pieces, on separate tools, held together by people."},
+{"id":"L03","frame":"F03","text":"What's missing is an operations factory, where all four work as one."},
+{"id":"L04","frame":"F04","text":"Join the two, and the whole software lifecycle runs at the speed AI promised."},
+{"id":"L05","frame":"F05","text":"StackGen's Aiden agents give you four ways to start building yours."},
+{"id":"L06","frame":"F06","text":"Aiden for SRE is your AI SRE teammate, built to cut toil and MTTR. It learns your environment from the tools you already run, triages every alert, and finds root cause with the evidence behind it. It remediates with your approval, and carries what it learns into the next incident."},
+{"id":"L07","frame":"F07","text":"Aiden for InfraOps lets developers request infrastructure from their IDE, a coding agent or ServiceNow. It builds Terraform or OpenTofu from your approved modules, checks it against your policies, and queues it for approval before anything reaches your cloud."},
+{"id":"L08","frame":"F08","text":"Aiden for DevOps takes repeat work off your team. Requests from ServiceNow, Jira and Linear land in one operations inbox, where Aiden triages each ticket, matches it to a workflow and shows its reasoning. You choose the autonomy level, and every run keeps a full record."},
+{"id":"L09","frame":"F09","text":"Aiden for Observability is fully managed, open-source observability on OpenTelemetry, with Aiden built in. Choose from over three hundred integrations, deploy in minutes, and run it as private SaaS or in your own cloud. When something breaks, ask Aiden, and it shows the likely cause with the evidence."},
+{"id":"L10","frame":"F10","text":"All four agents run on unified context: the Aiden World Model. Every agent reads and writes it, so what one learns, the others already know."},
+{"id":"L11","frame":"F11","text":"Aiden OS governs all of it. Every action is checked against your policies before it runs. Your team decides what needs approval, and every step is recorded."},
+{"id":"L12","frame":"F12","text":"Start anywhere and build your operations factory today."}
+]

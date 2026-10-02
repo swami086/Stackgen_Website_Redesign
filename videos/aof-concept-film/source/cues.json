@@ -1,0 +1,19 @@
+{
+"F01": [{"key": "f01.eyebrow", "anchor": "software factory"}],
+"F02": [{"key": "f02.label.build", "anchor": "Build"}, {"key": "f02.label.operate", "anchor": "operate"},
+        {"key": "f02.label.observe", "anchor": "observe"}, {"key": "f02.label.remediate", "anchor": "remediate"},
+        {"key": "f02.figure", "anchor": "held together by people"}],
+"F03": [{"key": "f03.eyebrow", "anchor": "operations factory"}],
+"F04": [{"key": "f04.head", "anchor": "Join the two"}],
+"F06": [{"key": "f06.6a", "anchor": "triages every alert"}, {"key": "f06.6b", "anchor": "finds root cause"},
+        {"key": "f06.6c", "anchor": "remediates with your approval"}, {"key": "f06.rail", "anchor": "carries what it learns"}],
+"F07": [{"key": "f07.request", "anchor": "from their IDE"}, {"key": "f07.module", "anchor": "from your approved modules"},
+        {"key": "f07.policy", "anchor": "against your policies"}, {"key": "f07.queue", "anchor": "before anything reaches your cloud"}],
+"F08": [{"key": "f08.inbox", "anchor": "land in one operations inbox"}, {"key": "f08.triage", "anchor": "triages each ticket"},
+        {"key": "f08.autonomy", "anchor": "You choose the autonomy level"}, {"key": "f08.record", "anchor": "every run keeps a full record"}],
+"F09": [{"key": "f09.otel", "anchor": "open-source observability on OpenTelemetry"},
+        {"key": "f09.integrations", "anchor": "three hundred integrations"},
+        {"key": "f09.cloud", "anchor": "in your own cloud"}, {"key": "f09.ask", "anchor": "ask Aiden"}],
+"F10": [{"key": "f10.chip", "anchor": "reads and writes it"}],
+"F11": [{"key": "f11.gate", "anchor": "checked against your policies"}, {"key": "f11.audit", "anchor": "every step is recorded"}]
+}

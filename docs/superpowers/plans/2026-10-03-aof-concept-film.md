@@ -44,8 +44,8 @@
 
 **Spend**
 - Spend and write MCP calls run **only in the orchestrator session**: Figma writes, Chrome DevTools, ElevenLabs, Gemini, Veo, Apiframe.
-- Context MCPs are read-only. Workers may call Sourcegraph search/read tools and Torbit `get_graph_schema` / `run_sql`. Workers never call Torbit `index`, never `git push`, and never a spend or write MCP.
-- The orchestrator owns Torbit `index` and the origin push. Both happen before a task that needs that context, not inside the worker.
+- Context MCPs are read-only except Torbit `index`, which refreshes the local graph and always runs first. Workers may call Sourcegraph search/read tools and Torbit `index`, `get_graph_schema`, and `run_sql`. Workers never `git push` and never call a spend or write MCP.
+- Whoever is about to call Torbit runs `index` first, in that same session, immediately before `run_sql`. A previous index does not count. The orchestrator owns the origin push.
 - Never call a generator twice to retry. Poll its status tool.
 - Estimate any batch before it runs.
 - Ask the user before any ElevenLabs batch over 2,000 credits, or any Gemini, Veo, or Apiframe batch with an unknown or higher-than-quoted cost.
@@ -81,7 +81,7 @@ Two read-only maps of this repo. They see different clocks. Using the wrong one 
 |---|---|---|
 | Sees | The GitHub remote `github.com/swami086/Stackgen_Website_Redesign` only. Unpushed and uncommitted files are invisible. | The local working tree at `/Users/swami/Documents/Stackgen_Website_Redesign`, after an index. DuckDB at `~/.orbit/graph.duckdb`. |
 | Default revision | HEAD of the default branch. This film is on `film/aiden-sre-launch`. A query without that revision reads `main` and misses the film. | The filesystem path you indexed. The manifest stamps `commit_sha` of HEAD at index time. |
-| Use for | Exact symbols, "how does the committed SRE film do X", commit history, reading a file that is already on origin. | Symbols, imports, and call edges in files that are local, dirty, or not pushed yet. The new `videos/aof-concept-film/` tree lives here until it is pushed, and here again the moment it is edited after the push. |
+| Use for | Exact symbols, "how does the committed SRE film do X", commit history, reading a file that is already on origin. | Locating a node inside HyperFrames HTML and the stage module, then editing or fixing only that line range. Also symbols and imports in files that are local, dirty, or not pushed yet. |
 
 **Repo constants.** `repo:^github\.com/swami086/Stackgen_Website_Redesign$` and `rev:film/aiden-sre-launch` on every Sourcegraph query. `read_file` and `list_files` take `revision: "film/aiden-sre-launch"`. `commit_search` takes `repos: ["github.com/swami086/Stackgen_Website_Redesign"]` and `revisions: ["film/aiden-sre-launch"]`. Do not index any other GitHub repo.
 
@@ -89,20 +89,21 @@ Two read-only maps of this repo. They see different clocks. Using the wrong one 
 
 **Torbit tools.** `get_graph_schema` once per session before the first SQL if the tables are not already known. `run_sql` is read-only, one statement per array element, always `LIMIT`. Tables: `_orbit_manifest`, `gl_file`, `gl_definition` (`fqn`, `name`, `file_path`, `start_line`, `end_line`), `gl_edge`, `gl_imported_symbol`, `gl_directory`. Scope every query with `project_id` from the manifest row whose `repo_path` is this repo, so worktree indexes are not mixed in.
 
-**Index before use.** Indexing is slow. Do it once per wave, not once per symbol.
+**Index before every Torbit call.** No query runs on a previous index. `index` with `path: "/Users/swami/Documents/Stackgen_Website_Redesign"` is the first call of every Torbit use, including a second query after an edit. Do not skip it because `_orbit_manifest.commit_sha` matches HEAD. That sha does not include HTML written after the index.
 
-1. `run_sql`: `SELECT commit_sha, last_indexed_at FROM _orbit_manifest WHERE repo_path = '/Users/swami/Documents/Stackgen_Website_Redesign'`.
-2. Reindex when there is no row, when `commit_sha` is not `git rev-parse HEAD`, or when the files this task will query are untracked or modified. Call `index` with `path: "/Users/swami/Documents/Stackgen_Website_Redesign"`.
-3. If a query for a file just written returns no row, reindex once and query again. Then stop. Do not loop.
+1. `index` the repo path.
+2. Then `get_graph_schema` if this session has not read the tables yet, then `run_sql`.
+3. Edit from the returned `file_path` plus `start_line` / `end_line`.
+4. Any later Torbit query, including a check that the edit landed, starts again at step 1.
 
-Known stale point at the time this section was written: the manifest row for this path was commit `6f79bbd` indexed 2026-10-01. Reindex at the start of the next code-reading task. Do not treat that SHA as current.
+**HyperFrames HTML.** This is why Torbit is on this plan. Frame compositions, `index.html`, and `compositions/subtitles.html` are long. Before changing one, index, then query `gl_definition` or `gl_file` for that path and use only the returned line range. Fix that range. Do not scan the file to find a node the graph already locates. After the fix, index again before querying to confirm the new text. Tasks: T8, T9, T18, T21, T22, T23, T24, T26.
 
 **Push before Sourcegraph.** After each orchestrator commit, `git push -u origin HEAD` (no force) before a later task searches those paths. If the push fails, the task uses Torbit or a local Read, and `NOTES.md` records that Sourcegraph is behind. An empty Sourcegraph result is handled in this order: the query included `rev:film/aiden-sre-launch`; `git rev-parse HEAD` equals `git rev-parse origin/film/aiden-sre-launch`; if not, push once and retry the query once; if still empty, the file is local-only, so Torbit or Read. Never conclude the symbol does not exist from an empty Sourcegraph result alone.
 
 **Who calls what.**
 
-- Orchestrator: manifest check, `index`, push, and a prefetch for the task's Context line. Paste the file paths and line ranges into the worker prompt.
-- Worker: may call the read-only tools above when a step needs a symbol the prefetch did not include. The worker does not index and does not push.
+- Orchestrator: push, and a prefetch for the task's Context line. Its own Torbit prefetch also starts with `index`. Paste the file paths and line ranges into the worker prompt.
+- Worker: calls `index` immediately before its own `run_sql`, and again after an HTML edit before the next query. May call Sourcegraph read tools. Does not `git push`. Does not call a spend or write MCP.
 - Skip both tools when the task's inputs are the spec, a JSON file in this plan, or a generator API. Local Read of a named path is enough.
 
 **Per-task map.** Prefetch only the row for the task about to run.
@@ -113,13 +114,14 @@ Known stale point at the time this section was written: the manifest row for thi
 | T2, T3, T4, T11, T12, T15, T17, T19, T27 | Neither. | Spec, Chrome, Figma writes, or generator APIs. |
 | T5, T6 | Sourcegraph `list_files` `videos/aiden-sre-launch/source/figma` at `film/aiden-sre-launch`, else local `ls`. | Which SRE plates exist to re-skin. |
 | T7 | Sourcegraph `keyword_search` `repo:^github\.com/swami086/Stackgen_Website_Redesign$ rev:film/aiden-sre-launch file:videos/aiden-sre-launch hyperframes figma`. | The export command the SRE film already ran. |
-| T8 | Reindex first. Sourcegraph `nls_search` `repo:^github\.com/swami086/Stackgen_Website_Redesign$ rev:film/aiden-sre-launch file:videos/aiden-sre-launch/compositions gsap timeline paused`. Then `read_file` on the frame it names. | Seek-safe GSAP pattern in the committed SRE film. New stage files are not on the remote yet. |
-| T9, T18 | Torbit `gl_definition` where `file_path` like `%aof-concept-film/shared/stage%`. Reindex if no rows. | Stage module is local until pushed. |
-| T10, T13, T14, T16 | Torbit `gl_definition` for the function being patched (`words`, `norm`, `segments`). Sourcegraph `keyword_search` the same name under `file:videos/aiden-sre-launch/scripts` on `rev:film/aiden-sre-launch` when comparing to the read-only original. | Edits are local; the original is on the film branch once pushed. |
+| T8 | `index`, then Torbit on the stage files about to change. Sourcegraph `nls_search` `repo:^github\.com/swami086/Stackgen_Website_Redesign$ rev:film/aiden-sre-launch file:videos/aiden-sre-launch/compositions gsap timeline paused`, then `read_file` on the frame it names. | Seek-safe GSAP pattern is committed. The new stage HTML/JS is local, so Torbit locates the lines to edit. |
+| T9, T18 | `index`, then Torbit `gl_definition` where `file_path` like `%aof-concept-film/shared/stage%` or the style-frame HTML. Edit that line range. `index` again before a follow-up query. | HyperFrames HTML and stage. A stale index misses the last edit. |
+| T10, T13, T14, T16 | `index`, then Torbit `gl_definition` for the function being patched (`words`, `norm`, `segments`). Sourcegraph `keyword_search` the same name under `file:videos/aiden-sre-launch/scripts` on `rev:film/aiden-sre-launch` when comparing to the read-only original. | Edits are local; the original is on the film branch once pushed. |
 | T20 | Sourcegraph `keyword_search` `file:videos/aiden-sre-launch/STORYBOARD.md` on `rev:film/aiden-sre-launch`. | Packet shape already used on the SRE film. |
-| T21, T22 | Sourcegraph `read_file` `videos/aiden-sre-launch/compositions/frames/10-investigation.html` revision `film/aiden-sre-launch`. Torbit for `shared/stage` symbols. Local Read of `compositions/frames/06-sre.html` once T21 has written it. | F10 picture lock is committed; F6 gold and the stage may still be local. |
-| T23 | Sourcegraph `read_file` `videos/aiden-sre-launch/index.html` revision `film/aiden-sre-launch`. | Audio markup and voiceover carve the SRE master already uses. |
-| T24, T25, T26 | Torbit or local Read of `videos/aof-concept-film` only. | Inputs are this film's own timing, renders, and scripts. |
+| T21, T22 | Sourcegraph `read_file` `videos/aiden-sre-launch/compositions/frames/10-investigation.html` revision `film/aiden-sre-launch`. Then `index` and Torbit the frame HTML plus `shared/stage` for the node being changed. Edit that line range. `index` again before confirming. | F10 picture lock is committed. The frame being written is local HTML; Torbit is how the edit stays precise. |
+| T23 | Sourcegraph `read_file` `videos/aiden-sre-launch/index.html` revision `film/aiden-sre-launch` for the committed carve markup. `index`, then Torbit this film's `index.html` for the audio nodes being edited. | Remote file is the pattern. Local `index.html` is the file under edit. |
+| T24, T26 | `index`, then Torbit the composition HTML named by the task (subtitles, or the frame in the audit row). Fix only that line range. `index` again before the next query. | These passes change HTML. Torbit names the lines. |
+| T25 | Local Read of render scripts. `index` first if a step calls Torbit. | QA and finish. No HTML navigation unless a step says so. |
 
 ## Lanes and dispatch
 
@@ -155,10 +157,12 @@ in /Users/swami/Documents/Stackgen_Website_Redesign. Read Global Constraints and
 then the spec sections it cites (docs/superpowers/specs/2026-10-03-aof-concept-film-design.md).
 Read the skills listed for Task <N>: router SKILL.md first, then only the named member.
 Follow the steps in order. Write the failing test before the code where the task says so.
-Do not edit files outside the task's Files list. Do not git commit. Do not git push. Do not call Torbit index.
+Do not edit files outside the task's Files list. Do not git commit. Do not git push.
 Do not call Figma, Chrome DevTools, ElevenLabs, Gemini, Veo, or Apiframe.
 If the task has a Context line, use that lookup. You may call Sourcegraph keyword_search, nls_search,
-read_file, list_files, commit_search, diff_search and Torbit get_graph_schema / run_sql.
+read_file, list_files, commit_search, diff_search and Torbit index, get_graph_schema, run_sql.
+Before every Torbit run_sql, call index on /Users/swami/Documents/Stackgen_Website_Redesign.
+Index again after an HTML edit before the next Torbit query. Use the returned start_line and end_line.
 Every Sourcegraph query includes repo:^github\.com/swami086/Stackgen_Website_Redesign$ and rev:film/aiden-sre-launch
 (or revision "film/aiden-sre-launch"). An empty result is not proof the file is missing: say so and use a local Read.
 Run every verification command and paste its real output. Report: files changed, commands run
@@ -175,7 +179,7 @@ Product pixels are source/figma/<screen>.png on a glass slab, shown whole. Every
 anchor word ±0.12 s using data/timing.json. Register one paused GSAP timeline under the frame id and
 as window.__timelines.main. No Date.now, no Math.random, no fetch. Render, run qa_motion, open stills
 at 25/50/75% and at every cue, check spec §6.9 yourself, then report with the output pasted.
-Context: follow this task's Context line. Sourcegraph and Torbit reads are allowed under the rules in Context tools. Do not index, do not push, do not call a spend MCP. An empty Sourcegraph result means try Torbit or a local Read, not that the symbol is absent.
+Context: follow this task's Context line. Before every Torbit query, index /Users/swami/Documents/Stackgen_Website_Redesign. For HyperFrames HTML, query gl_definition or gl_file for the composition you are changing and edit only the returned line range. Index again after the edit before you query to confirm it. Do not push. Do not call a spend MCP. An empty Sourcegraph result means try Torbit or a local Read, not that the symbol is absent.
 ```
 
 **Reviewer (Sonnet 5.5; Opus 5.5 for Tasks 21 and 26).** `subagent_type: generalPurpose`.
@@ -967,7 +971,7 @@ PY
 - Create: `shared/stage/{pieces.js,materials.js,rig.js,stage.js,README.md}`
 - Create: `compositions/_stage-test.html`, `compositions/_stage-nested.html`
 
-**Context:** Orchestrator reindexes Torbit first if the manifest sha is not HEAD. Sourcegraph nls_search "repo:^github\.com/swami086/Stackgen_Website_Redesign$ rev:film/aiden-sre-launch file:videos/aiden-sre-launch/compositions gsap timeline paused", then read_file on the path it returns with revision film/aiden-sre-launch.
+**Context:** Index the repo, then Torbit the stage file you are about to edit and change only the returned line range. Index again before any follow-up Torbit query. Sourcegraph nls_search "repo:^github\.com/swami086/Stackgen_Website_Redesign$ rev:film/aiden-sre-launch file:videos/aiden-sre-launch/compositions gsap timeline paused", then read_file on the path it returns with revision film/aiden-sre-launch.
 
 **Interfaces:**
 - Consumes: `source/live/tokens.json` (peach, command_center), `source/strings.{en,es}.json`.
@@ -1434,7 +1438,7 @@ If the nested hash differs, the `hf-seek` microtask render is firing before GSAP
 **Files:**
 - Create: `compositions/style/B{1,2,3,4}.html`, `assets/style/B{1,2,3,4}.png`, `assets/style/board.png`
 
-**Context:** Torbit run_sql on gl_definition where file_path LIKE '%aof-concept-film/shared/stage%'. Reindex once if no rows.
+**Context:** Index, then Torbit gl_definition where file_path LIKE '%aof-concept-film/shared/stage%' or the HTML you are changing. Edit that line range. Index again before the next Torbit query.
 
 **Interfaces:**
 - Consumes: `shared/stage/*`, `shared/film.css`, `source/figma/6a.png` (or the Task 5 screenshot of 6a if Task 7 is not done yet), `source/live/home.png`.
@@ -2174,7 +2178,7 @@ Expected: `missing none`.
 - Create: `assets/inserts/<id>/ref-first.png`, `assets/inserts/<id>/ref-last.png`
 - Create: `data/inserts.json`
 
-**Context:** Same Torbit stage lookup as Task 9. Do not Sourcegraph-search shared/stage until NOTES.md records that the T8 commit was pushed.
+**Context:** Same as Task 9: index, Torbit the stage or insert HTML, edit the returned line range, index again before a follow-up query. Do not Sourcegraph-search shared/stage until NOTES.md records that the T8 commit was pushed.
 
 **Interfaces:**
 - Consumes: `shared/stage/*`, the Direction lock, `data/timing.json` (for the shot each insert covers).
@@ -2402,7 +2406,7 @@ Expected: no output.
 
 **Files:** `compositions/frames/06-sre.html`, `renders/frames/06.mp4`, `renders/frames/06-with-vo-{en,es}.mp4`.
 
-**Context:** Sourcegraph read_file videos/aiden-sre-launch/compositions/frames/10-investigation.html revision film/aiden-sre-launch. Torbit for shared/stage symbols. Local Read if the remote read is empty.
+**Context:** Sourcegraph read_file videos/aiden-sre-launch/compositions/frames/10-investigation.html revision film/aiden-sre-launch. Local Read if that is empty. Index, then Torbit this frame's HTML and shared/stage for the node you will change. Edit that line range. Index again before confirming.
 
 **Interfaces:**
 - Consumes: packet `06-sre.md`, `source/figma/6a.png`, `6b.png`, `6c.png`, `shared/*`.
@@ -2465,7 +2469,7 @@ python3 scripts/gen_shared.py --lang en
 
 **Files:** one `compositions/frames/<NN>-<slug>.html` and one `renders/frames/<NN>.mp4` per frame.
 
-**Context:** Same as Task 21, plus a local Read of compositions/frames/06-sre.html. Do not read F6 from Sourcegraph until the T21 commit is recorded as pushed in NOTES.md.
+**Context:** Same as Task 21 for each frame HTML you change: index, Torbit, edit the line range, index again before the next query. Also local-read compositions/frames/06-sre.html. Do not read F6 from Sourcegraph until the T21 commit is recorded as pushed in NOTES.md.
 
 **Batches:**
 - **Batch 1 (8 at once):** F01, F02, F03, F04, F05, F07, F08, F09.
@@ -2511,7 +2515,7 @@ The orchestrator commits frames as each one passes review.
 - Create: `scripts/build_index.py`, `tests/test_build_index.py`
 - Create: `index.html` (generated per language), `assets/audio/music/bed.fit.wav`, `assets/audio/sfx/room-tone.fit.wav`
 
-**Context:** Sourcegraph read_file videos/aiden-sre-launch/index.html revision film/aiden-sre-launch for the audio and carve markup. Local Read if empty.
+**Context:** Sourcegraph read_file videos/aiden-sre-launch/index.html revision film/aiden-sre-launch for the audio and carve markup. Local Read if empty. Index, then Torbit this film's index.html and edit only the audio-node line range. Index again before a follow-up query.
 
 **Interfaces:**
 - Consumes: `data/timing.json`, `assets/audio/vo/<lang>/*.wav`, `assets/audio/music/bed.wav`, the music offset in `NOTES.md`.
@@ -2971,7 +2975,7 @@ Renders over 100 MB stay out of git. Add them to `videos/aof-concept-film/.gitig
 | §11 build and delivery | T23–T25 |
 | §12 gates | S (T3), A (T6), B (T9), C1 (T11), C2 (T13), C3 (T15), D (T19), E (T21), F (T24), G (T27) |
 | §13 models | Model routing |
-| Context tools | Context tools section; Context line on T1, T5–T10, T13, T14, T16, T18, T20–T26 |
+| Context tools | Context tools section. Sourcegraph on origin with rev:film/aiden-sre-launch. Torbit for HyperFrames HTML line ranges. Index immediately before every Torbit query, including after an edit. |
 | §14 skills | the **Skills** line on every task |
 | §16 open flags | Peach and Chrome session (T4), Bogotá date (T3), World Model (T27) |
 

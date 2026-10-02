@@ -97,6 +97,18 @@
         ],
         "createdAt": "2026-09-30T09:13:39.798Z",
         "reason": "Plan 2026-09-30-aof-jigsaw-picture.md Task 1: ports the already-approved isometric jigsaw artwork from assets/jigsaw-v1.html (Drive-approved '260909 - Factory Jigsaw Animation v1.0.html') verbatim, per explicit task instruction not to substitute a different picture. Deliberate hand-authored illustration (parametric corner tabs, isometric projection, gradients), not placeholder clip art."
+      },
+      {
+        "rule": "overused-font",
+        "value": "geist",
+        "createdAt": "2026-10-01T12:00:29.452Z",
+        "reason": "Film spec §6.1 and plan Task 1 freeze --sg-font Geist for launch film chrome"
+      },
+      {
+        "rule": "overused-font",
+        "value": "geist mono",
+        "createdAt": "2026-10-01T12:00:29.492Z",
+        "reason": "Film spec §6.1 mandates Geist Mono for film mono type"
       }
     ]
   }

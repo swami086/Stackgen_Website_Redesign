@@ -1,0 +1,278 @@
+[
+  {
+    "text": "Your",
+    "start": 0.09,
+    "end": 0.36,
+    "id": "w0"
+  },
+  {
+    "text": "on-call",
+    "start": 0.36,
+    "end": 0.99,
+    "id": "w1"
+  },
+  {
+    "text": "team",
+    "start": 0.99,
+    "end": 1.21,
+    "id": "w2"
+  },
+  {
+    "text": "is",
+    "start": 1.37,
+    "end": 1.53,
+    "id": "w3"
+  },
+  {
+    "text": "buried",
+    "start": 1.53,
+    "end": 2.07,
+    "id": "w4"
+  },
+  {
+    "text": "in",
+    "start": 2.07,
+    "end": 2.21,
+    "id": "w5"
+  },
+  {
+    "text": "alerts.",
+    "start": 2.29,
+    "end": 2.8,
+    "id": "w6"
+  },
+  {
+    "text": "And",
+    "start": 2.89,
+    "end": 3,
+    "id": "w7"
+  },
+  {
+    "text": "most",
+    "start": 3,
+    "end": 3.26,
+    "id": "w8"
+  },
+  {
+    "text": "of",
+    "start": 3.29,
+    "end": 3.4,
+    "id": "w9"
+  },
+  {
+    "text": "them",
+    "start": 3.4,
+    "end": 3.67,
+    "id": "w10"
+  },
+  {
+    "text": "don't",
+    "start": 3.67,
+    "end": 4,
+    "id": "w11"
+  },
+  {
+    "text": "matter.",
+    "start": 4,
+    "end": 4.63,
+    "id": "w12"
+  },
+  {
+    "text": "The",
+    "start": 4.73,
+    "end": 4.86,
+    "id": "w13"
+  },
+  {
+    "text": "ones",
+    "start": 4.9,
+    "end": 5.23,
+    "id": "w14"
+  },
+  {
+    "text": "that",
+    "start": 5.23,
+    "end": 5.57,
+    "id": "w15"
+  },
+  {
+    "text": "do",
+    "start": 5.57,
+    "end": 5.74,
+    "id": "w16"
+  },
+  {
+    "text": "can",
+    "start": 5.74,
+    "end": 5.87,
+    "id": "w17"
+  },
+  {
+    "text": "take",
+    "start": 6.01,
+    "end": 6.33,
+    "id": "w18"
+  },
+  {
+    "text": "hours",
+    "start": 6.33,
+    "end": 6.76,
+    "id": "w19"
+  },
+  {
+    "text": "to",
+    "start": 6.76,
+    "end": 6.85,
+    "id": "w20"
+  },
+  {
+    "text": "untangle.",
+    "start": 6.93,
+    "end": 7.91,
+    "id": "w21"
+  },
+  {
+    "text": "Meet",
+    "start": 8.01,
+    "end": 8.38,
+    "id": "w22"
+  },
+  {
+    "text": "ADEN",
+    "start": 8.41,
+    "end": 8.87,
+    "id": "w23"
+  },
+  {
+    "text": "for",
+    "start": 8.87,
+    "end": 9.13,
+    "id": "w24"
+  },
+  {
+    "text": "SRE,",
+    "start": 9.29,
+    "end": 9.84,
+    "id": "w25"
+  },
+  {
+    "text": "your",
+    "start": 9.84,
+    "end": 10.26,
+    "id": "w26"
+  },
+  {
+    "text": "AI",
+    "start": 10.26,
+    "end": 10.46,
+    "id": "w27"
+  },
+  {
+    "text": "SRE",
+    "start": 10.46,
+    "end": 10.75,
+    "id": "w28"
+  },
+  {
+    "text": "teammate.",
+    "start": 10.81,
+    "end": 11.94,
+    "id": "w29"
+  },
+  {
+    "text": "It",
+    "start": 12.02,
+    "end": 12.04,
+    "id": "w30"
+  },
+  {
+    "text": "connects",
+    "start": 12.04,
+    "end": 12.43,
+    "id": "w31"
+  },
+  {
+    "text": "to",
+    "start": 12.49,
+    "end": 12.57,
+    "id": "w32"
+  },
+  {
+    "text": "the",
+    "start": 12.57,
+    "end": 12.72,
+    "id": "w33"
+  },
+  {
+    "text": "observability",
+    "start": 12.72,
+    "end": 13.42,
+    "id": "w34"
+  },
+  {
+    "text": "tools",
+    "start": 13.42,
+    "end": 13.72,
+    "id": "w35"
+  },
+  {
+    "text": "you",
+    "start": 13.72,
+    "end": 13.91,
+    "id": "w36"
+  },
+  {
+    "text": "already",
+    "start": 13.91,
+    "end": 14.36,
+    "id": "w37"
+  },
+  {
+    "text": "run",
+    "start": 14.36,
+    "end": 14.86,
+    "id": "w38"
+  },
+  {
+    "text": "and",
+    "start": 14.94,
+    "end": 15.04,
+    "id": "w39"
+  },
+  {
+    "text": "maps",
+    "start": 15.04,
+    "end": 15.28,
+    "id": "w40"
+  },
+  {
+    "text": "your",
+    "start": 15.28,
+    "end": 15.52,
+    "id": "w41"
+  },
+  {
+    "text": "services",
+    "start": 15.52,
+    "end": 16,
+    "id": "w42"
+  },
+  {
+    "text": "on",
+    "start": 16,
+    "end": 16.09,
+    "id": "w43"
+  },
+  {
+    "text": "its",
+    "start": 16.23,
+    "end": 16.31,
+    "id": "w44"
+  },
+  {
+    "text": "own.",
+    "start": 16.31,
+    "end": 16.72,
+    "id": "w45"
+  }
+]

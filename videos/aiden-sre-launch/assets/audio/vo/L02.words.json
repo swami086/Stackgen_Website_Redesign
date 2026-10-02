@@ -1,0 +1,146 @@
+[
+ {
+  "id": "w0",
+  "text": "Meet",
+  "start": 0.05,
+  "end": 0.42
+ },
+ {
+  "id": "w1",
+  "text": "ADEN",
+  "start": 0.45,
+  "end": 0.91
+ },
+ {
+  "id": "w2",
+  "text": "for",
+  "start": 0.91,
+  "end": 1.17
+ },
+ {
+  "id": "w3",
+  "text": "SRE,",
+  "start": 1.33,
+  "end": 1.88
+ },
+ {
+  "id": "w4",
+  "text": "your",
+  "start": 1.88,
+  "end": 2.3
+ },
+ {
+  "id": "w5",
+  "text": "AI",
+  "start": 2.3,
+  "end": 2.5
+ },
+ {
+  "id": "w6",
+  "text": "SRE",
+  "start": 2.5,
+  "end": 2.79
+ },
+ {
+  "id": "w7",
+  "text": "teammate.",
+  "start": 2.85,
+  "end": 3.98
+ },
+ {
+  "id": "w8",
+  "text": "It",
+  "start": 4.06,
+  "end": 4.08
+ },
+ {
+  "id": "w9",
+  "text": "connects",
+  "start": 4.08,
+  "end": 4.47
+ },
+ {
+  "id": "w10",
+  "text": "to",
+  "start": 4.53,
+  "end": 4.61
+ },
+ {
+  "id": "w11",
+  "text": "the",
+  "start": 4.61,
+  "end": 4.76
+ },
+ {
+  "id": "w12",
+  "text": "observability",
+  "start": 4.76,
+  "end": 5.46
+ },
+ {
+  "id": "w13",
+  "text": "tools",
+  "start": 5.46,
+  "end": 5.76
+ },
+ {
+  "id": "w14",
+  "text": "you",
+  "start": 5.76,
+  "end": 5.95
+ },
+ {
+  "id": "w15",
+  "text": "already",
+  "start": 5.95,
+  "end": 6.4
+ },
+ {
+  "id": "w16",
+  "text": "run",
+  "start": 6.4,
+  "end": 6.9
+ },
+ {
+  "id": "w17",
+  "text": "and",
+  "start": 6.98,
+  "end": 7.08
+ },
+ {
+  "id": "w18",
+  "text": "maps",
+  "start": 7.08,
+  "end": 7.32
+ },
+ {
+  "id": "w19",
+  "text": "your",
+  "start": 7.32,
+  "end": 7.56
+ },
+ {
+  "id": "w20",
+  "text": "services",
+  "start": 7.56,
+  "end": 8.04
+ },
+ {
+  "id": "w21",
+  "text": "on",
+  "start": 8.04,
+  "end": 8.13
+ },
+ {
+  "id": "w22",
+  "text": "its",
+  "start": 8.27,
+  "end": 8.35
+ },
+ {
+  "id": "w23",
+  "text": "own.",
+  "start": 8.35,
+  "end": 8.68
+ }
+]

@@ -14,13 +14,8 @@
 **Tech Stack:**
 - HyperFrames 0.8.103 on Node 22, with GSAP and three.js inside compositions.
 - Python 3 (pytest, librosa via the beat analyzer), ffmpeg/ffprobe, whisper via `hyperframes transcribe`.
-- MCPs:
-  - Figma
-  - Chrome DevTools
-  - ElevenLabs (`user-elevenlabs`)
-  - Gemini (`user-genmedia-gemini`)
-  - Veo (`user-genmedia-veo`)
-  - Apiframe (`user-apiframe`)
+- MCPs, spend and write (orchestrator only): Figma, Chrome DevTools, ElevenLabs (`user-elevenlabs`), Gemini (`user-genmedia-gemini`), Veo (`user-genmedia-veo`), Apiframe (`user-apiframe`).
+- MCPs, context (read-only, used wherever a task reads existing code): Sourcegraph (`user-sourcegraph`), Torbit (`user-torbit`). Rules are in Context tools below.
 
 ## Global Constraints
 
@@ -48,7 +43,9 @@
 - Markup may add only punctuation, capitals, and the respellings in §8.1.
 
 **Spend**
-- MCP calls run **only in the orchestrator session**: Figma writes, Chrome DevTools, ElevenLabs, Gemini, Veo, Apiframe.
+- Spend and write MCP calls run **only in the orchestrator session**: Figma writes, Chrome DevTools, ElevenLabs, Gemini, Veo, Apiframe.
+- Context MCPs are read-only. Workers may call Sourcegraph search/read tools and Torbit `get_graph_schema` / `run_sql`. Workers never call Torbit `index`, never `git push`, and never a spend or write MCP.
+- The orchestrator owns Torbit `index` and the origin push. Both happen before a task that needs that context, not inside the worker.
 - Never call a generator twice to retry. Poll its status tool.
 - Estimate any batch before it runs.
 - Ask the user before any ElevenLabs batch over 2,000 credits, or any Gemini, Veo, or Apiframe batch with an unknown or higher-than-quoted cost.
@@ -57,7 +54,7 @@
 - Gates S, A, B, C1, C2, C3, D, E, F, G are hard stops (§12). Nothing that depends on a gate starts before the user says its pass phrase.
 
 **Workers and git**
-- Workers never `git commit`. The orchestrator commits each accepted task with explicit paths.
+- Workers never `git commit` and never `git push`. The orchestrator commits each accepted task with explicit paths, then pushes `film/aiden-sre-launch` to origin before the next task that uses Sourcegraph on those paths. Never force-push. Record the pushed SHA in `NOTES.md`.
 - Workers may not edit files outside their task's **Files** list.
 - At most 8 subagents at once.
 
@@ -75,6 +72,54 @@ Each model gets the work it is strongest at. The Task tool slug is fixed per row
 | Sonnet 5.5 | `claude-sonnet-5-5-high` | Careful checklist review | Per-task review of every worker task |
 
 The orchestrator (Opus 5.5) never writes Python tools or frame compositions. It runs MCP steps, gates, reviews, and commits.
+
+## Context tools
+
+Two read-only maps of this repo. They see different clocks. Using the wrong one returns an empty result that is not evidence the code is missing.
+
+| | Sourcegraph `user-sourcegraph` | Torbit `user-torbit` |
+|---|---|---|
+| Sees | The GitHub remote `github.com/swami086/Stackgen_Website_Redesign` only. Unpushed and uncommitted files are invisible. | The local working tree at `/Users/swami/Documents/Stackgen_Website_Redesign`, after an index. DuckDB at `~/.orbit/graph.duckdb`. |
+| Default revision | HEAD of the default branch. This film is on `film/aiden-sre-launch`. A query without that revision reads `main` and misses the film. | The filesystem path you indexed. The manifest stamps `commit_sha` of HEAD at index time. |
+| Use for | Exact symbols, "how does the committed SRE film do X", commit history, reading a file that is already on origin. | Symbols, imports, and call edges in files that are local, dirty, or not pushed yet. The new `videos/aof-concept-film/` tree lives here until it is pushed, and here again the moment it is edited after the push. |
+
+**Repo constants.** `repo:^github\.com/swami086/Stackgen_Website_Redesign$` and `rev:film/aiden-sre-launch` on every Sourcegraph query. `read_file` and `list_files` take `revision: "film/aiden-sre-launch"`. `commit_search` takes `repos: ["github.com/swami086/Stackgen_Website_Redesign"]` and `revisions: ["film/aiden-sre-launch"]`. Do not index any other GitHub repo.
+
+**Sourcegraph tools.** `nls_search` when the symbol name is unknown (2–5 keywords, no boolean words). `keyword_search` when the name is known. `read_file` only after a search or `list_files` has confirmed the path. `commit_search` / `diff_search` for who changed a line and when. `list_repos` only to confirm the repo name.
+
+**Torbit tools.** `get_graph_schema` once per session before the first SQL if the tables are not already known. `run_sql` is read-only, one statement per array element, always `LIMIT`. Tables: `_orbit_manifest`, `gl_file`, `gl_definition` (`fqn`, `name`, `file_path`, `start_line`, `end_line`), `gl_edge`, `gl_imported_symbol`, `gl_directory`. Scope every query with `project_id` from the manifest row whose `repo_path` is this repo, so worktree indexes are not mixed in.
+
+**Index before use.** Indexing is slow. Do it once per wave, not once per symbol.
+
+1. `run_sql`: `SELECT commit_sha, last_indexed_at FROM _orbit_manifest WHERE repo_path = '/Users/swami/Documents/Stackgen_Website_Redesign'`.
+2. Reindex when there is no row, when `commit_sha` is not `git rev-parse HEAD`, or when the files this task will query are untracked or modified. Call `index` with `path: "/Users/swami/Documents/Stackgen_Website_Redesign"`.
+3. If a query for a file just written returns no row, reindex once and query again. Then stop. Do not loop.
+
+Known stale point at the time this section was written: the manifest row for this path was commit `6f79bbd` indexed 2026-10-01. Reindex at the start of the next code-reading task. Do not treat that SHA as current.
+
+**Push before Sourcegraph.** After each orchestrator commit, `git push -u origin HEAD` (no force) before a later task searches those paths. If the push fails, the task uses Torbit or a local Read, and `NOTES.md` records that Sourcegraph is behind. An empty Sourcegraph result is handled in this order: the query included `rev:film/aiden-sre-launch`; `git rev-parse HEAD` equals `git rev-parse origin/film/aiden-sre-launch`; if not, push once and retry the query once; if still empty, the file is local-only, so Torbit or Read. Never conclude the symbol does not exist from an empty Sourcegraph result alone.
+
+**Who calls what.**
+
+- Orchestrator: manifest check, `index`, push, and a prefetch for the task's Context line. Paste the file paths and line ranges into the worker prompt.
+- Worker: may call the read-only tools above when a step needs a symbol the prefetch did not include. The worker does not index and does not push.
+- Skip both tools when the task's inputs are the spec, a JSON file in this plan, or a generator API. Local Read of a named path is enough.
+
+**Per-task map.** Prefetch only the row for the task about to run.
+
+| Tasks | First lookup | Why |
+|---|---|---|
+| T1 | Local copy from `videos/aiden-sre-launch/`. Sourcegraph `list_files` on that path only to confirm a committed file exists before copying. | Scaffold. T1 may already be on disk from a prior session; do not recopy. |
+| T2, T3, T4, T11, T12, T15, T17, T19, T27 | Neither. | Spec, Chrome, Figma writes, or generator APIs. |
+| T5, T6 | Sourcegraph `list_files` `videos/aiden-sre-launch/source/figma` at `film/aiden-sre-launch`, else local `ls`. | Which SRE plates exist to re-skin. |
+| T7 | Sourcegraph `keyword_search` `repo:^github\.com/swami086/Stackgen_Website_Redesign$ rev:film/aiden-sre-launch file:videos/aiden-sre-launch hyperframes figma`. | The export command the SRE film already ran. |
+| T8 | Reindex first. Sourcegraph `nls_search` `repo:^github\.com/swami086/Stackgen_Website_Redesign$ rev:film/aiden-sre-launch file:videos/aiden-sre-launch/compositions gsap timeline paused`. Then `read_file` on the frame it names. | Seek-safe GSAP pattern in the committed SRE film. New stage files are not on the remote yet. |
+| T9, T18 | Torbit `gl_definition` where `file_path` like `%aof-concept-film/shared/stage%`. Reindex if no rows. | Stage module is local until pushed. |
+| T10, T13, T14, T16 | Torbit `gl_definition` for the function being patched (`words`, `norm`, `segments`). Sourcegraph `keyword_search` the same name under `file:videos/aiden-sre-launch/scripts` on `rev:film/aiden-sre-launch` when comparing to the read-only original. | Edits are local; the original is on the film branch once pushed. |
+| T20 | Sourcegraph `keyword_search` `file:videos/aiden-sre-launch/STORYBOARD.md` on `rev:film/aiden-sre-launch`. | Packet shape already used on the SRE film. |
+| T21, T22 | Sourcegraph `read_file` `videos/aiden-sre-launch/compositions/frames/10-investigation.html` revision `film/aiden-sre-launch`. Torbit for `shared/stage` symbols. Local Read of `compositions/frames/06-sre.html` once T21 has written it. | F10 picture lock is committed; F6 gold and the stage may still be local. |
+| T23 | Sourcegraph `read_file` `videos/aiden-sre-launch/index.html` revision `film/aiden-sre-launch`. | Audio markup and voiceover carve the SRE master already uses. |
+| T24, T25, T26 | Torbit or local Read of `videos/aof-concept-film` only. | Inputs are this film's own timing, renders, and scripts. |
 
 ## Lanes and dispatch
 
@@ -110,7 +155,12 @@ in /Users/swami/Documents/Stackgen_Website_Redesign. Read Global Constraints and
 then the spec sections it cites (docs/superpowers/specs/2026-10-03-aof-concept-film-design.md).
 Read the skills listed for Task <N>: router SKILL.md first, then only the named member.
 Follow the steps in order. Write the failing test before the code where the task says so.
-Do not edit files outside the task's Files list. Do not git commit. Do not call any MCP tool.
+Do not edit files outside the task's Files list. Do not git commit. Do not git push. Do not call Torbit index.
+Do not call Figma, Chrome DevTools, ElevenLabs, Gemini, Veo, or Apiframe.
+If the task has a Context line, use that lookup. You may call Sourcegraph keyword_search, nls_search,
+read_file, list_files, commit_search, diff_search and Torbit get_graph_schema / run_sql.
+Every Sourcegraph query includes repo:^github\.com/swami086/Stackgen_Website_Redesign$ and rev:film/aiden-sre-launch
+(or revision "film/aiden-sre-launch"). An empty result is not proof the file is missing: say so and use a local Read.
 Run every verification command and paste its real output. Report: files changed, commands run
 with output, anything you could not do and why.
 ```
@@ -125,6 +175,7 @@ Product pixels are source/figma/<screen>.png on a glass slab, shown whole. Every
 anchor word ±0.12 s using data/timing.json. Register one paused GSAP timeline under the frame id and
 as window.__timelines.main. No Date.now, no Math.random, no fetch. Render, run qa_motion, open stills
 at 25/50/75% and at every cue, check spec §6.9 yourself, then report with the output pasted.
+Context: follow this task's Context line. Sourcegraph and Torbit reads are allowed under the rules in Context tools. Do not index, do not push, do not call a spend MCP. An empty Sourcegraph result means try Torbit or a local Read, not that the symbol is absent.
 ```
 
 **Reviewer (Sonnet 5.5; Opus 5.5 for Tasks 21 and 26).** `subagent_type: generalPurpose`.
@@ -135,6 +186,7 @@ every requirement with PASS/FAIL and evidence (file:line, or command output you 
 Stage 2, quality: Critical / Important / Minor. For frames, also open stills at 25/50/75% and at every
 cue and check spec §6.9 (signs of AI), §6.2 type, §6.6 panel rest pose, and the F6 gold lock. Do not
 fix; report.
+For tasks with a Context line, confirm the worker used the named lookup or recorded why it was empty. Do not call spend MCPs.
 ```
 
 ## File structure
@@ -181,6 +233,8 @@ All paths below are under `videos/aof-concept-film/`.
 - Create: `videos/aof-concept-film/shared/fonts/` (copy)
 - Create: `videos/aof-concept-film/scripts/{check_markup.py,split_takes.py,qa_motion.py,qa_loudness.py,el_fetch.py}` (copy)
 - Create: `videos/aof-concept-film/tests/{conftest.py,test_check_markup.py,test_split_takes.py,test_qa.py}` (copy)
+
+**Context:** Copy from local videos/aiden-sre-launch/. Sourcegraph list_files on that path only to confirm a committed file exists. Do not recopy if videos/aof-concept-film/ already has package.json.
 
 **Interfaces:**
 - Consumes: nothing.
@@ -752,6 +806,8 @@ Expected: `tokens OK …`. Append the values to `NOTES.md` under “Live tokens.
 - Figma file `zpQTgAfsrkN6PI3eTHOb5p`, new page “AOF concept film.”
 - Create: `source/figma/screens.json`, a map of screen id to Figma node id.
 
+**Context:** Sourcegraph list_files videos/aiden-sre-launch/source/figma at revision film/aiden-sre-launch. If that list is empty, ls the same path locally and record in NOTES.md that the film branch is not on origin.
+
 **Interfaces:**
 - Consumes: `source/live/tokens.json` (`command_center`); base frames `48:2`, `58:2`, `64:2`.
 - Produces: `source/figma/screens.json` → `{"6a": "<nodeId>", "6b": "<nodeId>", "6c": "<nodeId>", …}`. Task 6 adds the rest; Task 7 reads it.
@@ -798,6 +854,8 @@ Expected: `tokens OK …`. Append the values to `NOTES.md` under “Live tokens.
 
 **Files:** Figma page “AOF concept film”; `source/figma/screens.json` (add 7a, 7b, 8a, 8b, 9a, 9b, 10a, 11a).
 
+**Context:** Sourcegraph list_files videos/aiden-sre-launch/source/figma at revision film/aiden-sre-launch. If that list is empty, ls the same path locally and record in NOTES.md that the film branch is not on origin.
+
 **Interfaces:**
 - Consumes: Task 5's dark frames as the template, and the content table in spec §4.
 - Produces: the completed `source/figma/screens.json` with 14 keys: 11 screens plus `6c-approved`, `8b-approved`, `11a-approved`.
@@ -840,6 +898,8 @@ Expected: `tokens OK …`. Append the values to `NOTES.md` under “Live tokens.
 **Files:**
 - Create: `source/figma/<screen>.png` ×14 (11 screens plus 3 approved-state variants)
 - Create: `tests/test_figma_exports.py`
+
+**Context:** Sourcegraph keyword_search query "repo:^github\.com/swami086/Stackgen_Website_Redesign$ rev:film/aiden-sre-launch file:videos/aiden-sre-launch hyperframes figma". Empty result: read the SRE export script locally.
 
 **Interfaces:**
 - Consumes: `source/figma/screens.json`.
@@ -906,6 +966,8 @@ PY
 - Create: `scripts/gen_shared.py`, `tests/test_gen_shared.py`. These generate `shared/stage/tokens.js`, `shared/film.css`, `shared/lang.js`, and `shared/strings.js`.
 - Create: `shared/stage/{pieces.js,materials.js,rig.js,stage.js,README.md}`
 - Create: `compositions/_stage-test.html`, `compositions/_stage-nested.html`
+
+**Context:** Orchestrator reindexes Torbit first if the manifest sha is not HEAD. Sourcegraph nls_search "repo:^github\.com/swami086/Stackgen_Website_Redesign$ rev:film/aiden-sre-launch file:videos/aiden-sre-launch/compositions gsap timeline paused", then read_file on the path it returns with revision film/aiden-sre-launch.
 
 **Interfaces:**
 - Consumes: `source/live/tokens.json` (peach, command_center), `source/strings.{en,es}.json`.
@@ -1372,6 +1434,8 @@ If the nested hash differs, the `hf-seek` microtask render is firing before GSAP
 **Files:**
 - Create: `compositions/style/B{1,2,3,4}.html`, `assets/style/B{1,2,3,4}.png`, `assets/style/board.png`
 
+**Context:** Torbit run_sql on gl_definition where file_path LIKE '%aof-concept-film/shared/stage%'. Reindex once if no rows.
+
 **Interfaces:**
 - Consumes: `shared/stage/*`, `shared/film.css`, `source/figma/6a.png` (or the Task 5 screenshot of 6a if Task 7 is not done yet), `source/live/home.png`.
 - Produces: four 3840×2160 stills plus one comparison board.
@@ -1426,6 +1490,8 @@ Expected: `3840,2160`.
 - Modify: `scripts/split_takes.py` (accent folding, `--lang`)
 - Modify: `tests/test_check_markup.py`, `tests/test_split_takes.py`
 - Create: `data/takes.json`
+
+**Context:** Torbit gl_definition for words and norm in videos/aof-concept-film/scripts. Sourcegraph keyword_search the same names under file:videos/aiden-sre-launch/scripts rev:film/aiden-sre-launch when comparing to the read-only original.
 
 **Interfaces:**
 - Consumes: `source/lines.{en,es}.json`, `source/frames.json`.
@@ -1643,6 +1709,8 @@ Write `generation_id` on each take in `data/takes.json`.
 
 **Files:** `assets/audio/vo/{en,es}/T*.transcript.json`, `assets/audio/vo/{en,es}/L*.wav`, `assets/audio/vo/{en,es}/L*.words.json`, `data/vo_report.json`.
 
+**Context:** Torbit gl_definition name segments in split_takes.py. Local Read of the file being patched. Sourcegraph only for the committed SRE original, with rev:film/aiden-sre-launch.
+
 **Interfaces:**
 - Produces `assets/audio/vo/<lang>/<Lxx>.words.json`: `[{"id", "text", "start", "end"}]`, rebased to the line file. Tasks 14, 16, and 24 read these.
 
@@ -1701,6 +1769,8 @@ Repeat for T2 (L05, L06), T3 (L07, L08), T4 (L09), and T5 (L10–L12). Report.
 **Files:**
 - Create: `scripts/lock_timing.py`, `tests/test_lock_timing.py`
 - Create: `data/timing.voice.json`, `data/spotting.json`
+
+**Context:** Same as Task 13, for the SRE timing script the plan names. Local files win if Sourcegraph is behind origin.
 
 **Interfaces:**
 - Consumes: `source/frames.json`, `source/cues.json`, `source/lines.es.json` (`anchors`), `assets/audio/vo/<lang>/<Lxx>.wav`, `assets/audio/vo/<lang>/<Lxx>.words.json`.
@@ -1987,6 +2057,8 @@ PY
 
 **Files:** `audiomap.json`, `data/timing.json`.
 
+**Context:** Torbit for lock_timing once it exists. Sourcegraph keyword_search file:videos/aiden-sre-launch/scripts rev:film/aiden-sre-launch for the beat-grid script. Reindex if the new file has no row.
+
 **Interfaces:**
 - Produces `data/timing.json`:
   ```json
@@ -2102,6 +2174,8 @@ Expected: `missing none`.
 - Create: `assets/inserts/<id>/ref-first.png`, `assets/inserts/<id>/ref-last.png`
 - Create: `data/inserts.json`
 
+**Context:** Same Torbit stage lookup as Task 9. Do not Sourcegraph-search shared/stage until NOTES.md records that the T8 commit was pushed.
+
 **Interfaces:**
 - Consumes: `shared/stage/*`, the Direction lock, `data/timing.json` (for the shot each insert covers).
 - Produces `data/inserts.json`:
@@ -2204,6 +2278,8 @@ Expected: `3840,2160,30/1` per insert. Write the paths, generation or job ids, a
 **Files:**
 - Create: `scripts/gen_timing_js.py`, `tests/test_gen_timing_js.py`, `shared/timing.js`
 - Create: `STORYBOARD.md`, `SCRIPT.md`, `frame.md`, `.hyperframes/frame-packets/_role.md`, `.hyperframes/frame-packets/<NN>-<slug>.md` ×12
+
+**Context:** Sourcegraph keyword_search "repo:^github\.com/swami086/Stackgen_Website_Redesign$ rev:film/aiden-sre-launch file:videos/aiden-sre-launch/STORYBOARD.md". Empty: local Read of that file.
 
 **Interfaces:**
 - Consumes: `data/timing.json`, `source/*`, spec §6–§7.
@@ -2326,6 +2402,8 @@ Expected: no output.
 
 **Files:** `compositions/frames/06-sre.html`, `renders/frames/06.mp4`, `renders/frames/06-with-vo-{en,es}.mp4`.
 
+**Context:** Sourcegraph read_file videos/aiden-sre-launch/compositions/frames/10-investigation.html revision film/aiden-sre-launch. Torbit for shared/stage symbols. Local Read if the remote read is empty.
+
 **Interfaces:**
 - Consumes: packet `06-sre.md`, `source/figma/6a.png`, `6b.png`, `6c.png`, `shared/*`.
 - Produces: the reference every other frame copies for stage setup, title frame, panel entry and exit, type reveals, SFX placement, and the timeline pattern.
@@ -2387,6 +2465,8 @@ python3 scripts/gen_shared.py --lang en
 
 **Files:** one `compositions/frames/<NN>-<slug>.html` and one `renders/frames/<NN>.mp4` per frame.
 
+**Context:** Same as Task 21, plus a local Read of compositions/frames/06-sre.html. Do not read F6 from Sourcegraph until the T21 commit is recorded as pushed in NOTES.md.
+
 **Batches:**
 - **Batch 1 (8 at once):** F01, F02, F03, F04, F05, F07, F08, F09.
 - **Batch 2 (3 at once):** F10, F11, F12.
@@ -2430,6 +2510,8 @@ The orchestrator commits frames as each one passes review.
 **Files:**
 - Create: `scripts/build_index.py`, `tests/test_build_index.py`
 - Create: `index.html` (generated per language), `assets/audio/music/bed.fit.wav`, `assets/audio/sfx/room-tone.fit.wav`
+
+**Context:** Sourcegraph read_file videos/aiden-sre-launch/index.html revision film/aiden-sre-launch for the audio and carve markup. Local Read if empty.
 
 **Interfaces:**
 - Consumes: `data/timing.json`, `assets/audio/vo/<lang>/*.wav`, `assets/audio/music/bed.wav`, the music offset in `NOTES.md`.
@@ -2584,6 +2666,8 @@ Expected: both render; integrated loudness within −16 ±1 LUFS. If it is out o
 **Files:**
 - Create: `scripts/build_subs.py`, `tests/test_build_subs.py`
 - Create: `renders/aof-homepage-en.vtt`, `renders/aof-es.vtt`, `compositions/subtitles.en.html`, `compositions/subtitles.es.html`
+
+**Context:** Torbit or local Read under videos/aof-concept-film only. No Sourcegraph.
 
 **Interfaces:**
 - Consumes: `data/timing.json`, `source/lines.{en,es}.json`, `assets/audio/vo/<lang>/<Lxx>.words.json`.
@@ -2761,6 +2845,8 @@ Check stills at five cue times per language:
 
 **Files:** every delivery file in spec §11.4, plus `scripts/finish.sh`.
 
+**Context:** Torbit or local Read under videos/aof-concept-film only. No Sourcegraph.
+
 **Skills:** `hyperframes-cli`, superpowers `verification-before-completion`.
 
 - [ ] **Step 1: Write `scripts/finish.sh`.** It applies the spec §6.8 finish: vignette 12% and grain 3% luma, with a fixed seed so it is deterministic. Audio passes through.
@@ -2826,6 +2912,8 @@ Expected:
 
 **Files:** `renders/audit.md`, plus fixes in the frames the ledger names.
 
+**Context:** Torbit or local Read under videos/aof-concept-film only. No Sourcegraph.
+
 **Skills:** `hyperframes-skills` → `video-production-audit`; `emil-skills` → `review-animations`; `critique-composition`; `critique-visual-hierarchy`.
 
 - [ ] **Step 1:** Dispatch the auditor at `claude-opus-5-5-high`. It runs `video-production-audit` on `master-en-4k.mp4` and `master-es-4k.mp4` and writes one defect ledger to `renders/audit.md`. Each row has:
@@ -2883,6 +2971,7 @@ Renders over 100 MB stay out of git. Add them to `videos/aof-concept-film/.gitig
 | §11 build and delivery | T23–T25 |
 | §12 gates | S (T3), A (T6), B (T9), C1 (T11), C2 (T13), C3 (T15), D (T19), E (T21), F (T24), G (T27) |
 | §13 models | Model routing |
+| Context tools | Context tools section; Context line on T1, T5–T10, T13, T14, T16, T18, T20–T26 |
 | §14 skills | the **Skills** line on every task |
 | §16 open flags | Peach and Chrome session (T4), Bogotá date (T3), World Model (T27) |
 

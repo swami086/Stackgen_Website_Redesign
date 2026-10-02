@@ -1,0 +1,414 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("shared/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Geist Mono";
+    src: url("shared/fonts/GeistMono-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-panel: #211d15;
+    --sg-hairline: #3f3b39;
+    --sg-cream: #f1eae0;
+    --sg-cream-bright: #faf7f2;
+    --sg-mute: #96897c;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+    --sg-coral: #fda39b;
+    --sg-amber: #fdd89b;
+    --sg-green: #a6f0bf;
+    --sg-glow-violet: rgba(186, 153, 253, 0.35);
+    --sg-glow-cyan: rgba(160, 234, 252, 0.3);
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: "Geist", sans-serif;
+    color: var(--sg-cream);
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f09-bg-fill {
+    background: radial-gradient(1200px 700px at 50% 38%, var(--sg-ink-raised) 0%, var(--sg-ink) 72%);
+  }
+  .f09-world {
+    perspective: 2400px;
+    transform-style: preserve-3d;
+  }
+  .f09-cam {
+    position: absolute;
+    left: 960px;
+    top: 420px;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+  }
+  .f09-panel-stage {
+    position: absolute;
+    left: -768px;
+    top: -354px;
+    width: 1536px;
+    height: 709px;
+    transform-style: preserve-3d;
+  }
+  .f09-panel-glow {
+    position: absolute;
+    left: 50%;
+    top: 92%;
+    width: 920px;
+    height: 120px;
+    margin-left: -460px;
+    background: radial-gradient(ellipse at center, var(--sg-glow-violet) 0%, transparent 70%);
+    opacity: 0.2;
+    filter: blur(8px);
+  }
+  .f09-panel {
+    position: absolute;
+    inset: 0;
+    border-radius: 2px;
+    box-shadow: 0 60px 120px rgba(0, 0, 0, 0.55);
+  }
+  .f09-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-top: 1px solid rgba(241, 234, 224, 0.22);
+    pointer-events: none;
+    z-index: 6;
+  }
+  .f09-ui-viewport {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #f4f5f8;
+  }
+  .f09-ui-scaler {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 886px;
+    zoom: 0.8;
+  }
+  .f09-ui-frame {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 886px;
+    object-fit: fill;
+    border: 0;
+  }
+  .f09-cursor {
+    position: absolute;
+    left: 550px;
+    top: 577px;
+    width: 36px;
+    height: 36px;
+    z-index: 8;
+  }
+  .f09-ripple {
+    position: absolute;
+    left: 534px;
+    top: 556px;
+    width: 48px;
+    height: 48px;
+    border: 1.5px solid #181d24;
+    z-index: 7;
+  }
+  .f09-fg {
+    z-index: 8;
+  }
+  .f09-slack {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 300px;
+    text-align: center;
+  }
+  .f09-ask-wrap {
+    display: inline-block;
+    min-width: 780px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  .f09-ask {
+    font-family: "Geist", sans-serif;
+    font-size: 64px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--sg-cream-bright);
+  }
+  .f09-caret {
+    display: inline-block;
+    width: 3px;
+    height: 58px;
+    margin-left: 6px;
+    background: var(--sg-cream-bright);
+    vertical-align: -6px;
+  }
+  .f09-dots {
+    margin-top: 28px;
+    height: 18px;
+  }
+  .f09-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin: 0 7px;
+    border-radius: 50%;
+    background: var(--sg-mute);
+  }
+  .f09-noreply {
+    margin-top: 22px;
+    font-family: "Geist Mono", monospace;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sg-mute);
+  }
+  .f09-timer {
+    position: absolute;
+    right: 72px;
+    top: 812px;
+    font-family: "Geist Mono", monospace;
+    font-size: 28px;
+    font-weight: 400;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+    color: var(--sg-cream-bright);
+  }
+  .f09-chip {
+    position: absolute;
+    left: 80px;
+    top: 808px;
+    padding: 8px 14px;
+    font-family: "Geist Mono", monospace;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--sg-cream-bright);
+    background: var(--sg-panel);
+    border: 1px solid var(--sg-hairline);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  }
+  .f09-cutaway {
+    width: 1920px;
+    height: 1080px;
+    object-fit: cover;
+    z-index: 9;
+  }
+</style>
+
+<div id="root" data-composition-id="09-incident-hits" data-width="1920" data-height="1080" data-duration="4.39">
+  <div class="clip f09-bg-fill" data-start="0" data-duration="4.39" data-track-index="0"></div>
+
+  <div class="clip" id="f09-ribbon-host" data-start="0" data-duration="4.39" data-track-index="1"></div>
+
+  <div class="clip f09-world" id="f09-world" data-start="0" data-duration="4.39" data-track-index="2">
+    <div class="f09-cam" id="f09-cam">
+      <div class="f09-panel-stage" id="f09-panel-stage">
+        <div class="f09-panel-glow"></div>
+        <div class="f09-panel">
+          <div class="f09-ui-viewport">
+            <div class="f09-ui-scaler">
+              <img class="f09-ui-frame" src="source/figma/48-2.png" alt="Alerts" />
+            </div>
+            <div class="f09-ripple" id="f09-ripple"></div>
+            <svg class="f09-cursor" id="f09-cursor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 2 L5 18 L9.2 14.2 L12.4 21 L15.2 19.6 L12 12.8 L18 12.6 Z" fill="#14110c" stroke="#faf7f2" stroke-width="1.2" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <video
+    class="clip f09-cutaway"
+    src="assets/el-pro/22-slack.mp4"
+    data-start="0"
+    data-duration="1.4"
+    data-track-index="4"
+    data-media-start="0"
+    muted
+    playsinline
+  ></video>
+
+  <div class="clip f09-fg" data-start="0" data-duration="4.39" data-track-index="3">
+    <div class="f09-slack" id="f09-slack">
+      <div class="f09-ask-wrap">
+        <span class="f09-ask" id="f09-ask"></span><span class="f09-caret" id="f09-caret"></span>
+      </div>
+      <div class="f09-dots" id="f09-dots">
+        <span class="f09-dot"></span><span class="f09-dot"></span><span class="f09-dot"></span>
+      </div>
+      <div class="f09-noreply" id="f09-noreply">No replies</div>
+    </div>
+    <div class="f09-timer" id="f09-timer">00:00</div>
+    <div class="f09-chip" id="f09-chip">Investigating</div>
+  </div>
+
+  
+  
+  
+</div>
+
+<script src="assets/frames/10/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "09-incident-hits";
+  const D = 4.39;
+  const ASK = "anyone seeing this?";
+  const CUT = 1.4;
+  const MOVE = 1.95;
+  const CLICK = 2.42;
+  const TIMER_AT = 2.48;
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/10/ribbons-mount.js", import.meta.url).href,
+  );
+
+  mountRibbons(document.getElementById("f09-ribbon-host"), {
+    seed: 409,
+    count: 22,
+    split: 0.68,
+    modes: [
+      { t: 0, mode: "dormant", opacity: 0.55 },
+      { t: 1.4, mode: "converge", opacity: 0.72, target: { x: 960, y: 420 } },
+    ],
+  }).bind(tl, D);
+
+  const cam = document.getElementById("f09-cam");
+  const panelStage = document.getElementById("f09-panel-stage");
+  const slack = document.getElementById("f09-slack");
+  const ask = document.getElementById("f09-ask");
+  const caret = document.getElementById("f09-caret");
+  const dots = document.querySelectorAll("#f09-dots .f09-dot");
+  const noreply = document.getElementById("f09-noreply");
+  const cursor = document.getElementById("f09-cursor");
+  const ripple = document.getElementById("f09-ripple");
+  const timer = document.getElementById("f09-timer");
+  const chip = document.getElementById("f09-chip");
+
+  gsap.set(panelStage, { rotationX: 2, rotationY: -4, transformPerspective: 2400 });
+
+  tl.fromTo(
+    cam,
+    { scale: 0.97, x: 22, y: 8 },
+    { scale: 1.035, x: -48, y: -14, duration: D, ease: "power2.inOut" },
+    0,
+  );
+
+  const typed = { n: 0 };
+  tl.to(
+    typed,
+    {
+      n: ASK.length,
+      duration: 0.92,
+      ease: "power1.inOut",
+      onUpdate: () => {
+        ask.textContent = ASK.slice(0, Math.floor(typed.n));
+      },
+    },
+    0.06,
+  );
+
+  const blink = { p: 0 };
+  tl.to(
+    blink,
+    {
+      p: Math.PI * 2 * 3,
+      duration: CUT,
+      ease: "none",
+      onUpdate: () => {
+        caret.style.opacity = Math.sin(blink.p) > 0 ? "1" : "0";
+      },
+    },
+    0,
+  );
+
+  tl.fromTo(
+    dots,
+    { opacity: 0, scale: 0.4 },
+    { opacity: 1, scale: 1, duration: 0.16, stagger: 0.05, ease: "power2.out" },
+    0.9,
+  );
+  tl.to(dots, { opacity: 0, scale: 0.25, duration: 0.2, stagger: 0.04, ease: "power2.in" }, 1.12);
+  tl.fromTo(noreply, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, 1.14);
+  tl.to(slack, { opacity: 0, duration: 0.08, ease: "power2.in" }, 1.32);
+
+  tl.fromTo(
+    panelStage,
+    { y: 220, scale: 0.72, rotationX: 8, rotationY: -6, opacity: 0 },
+    {
+      y: 0,
+      scale: 1,
+      rotationX: 2,
+      rotationY: -4,
+      opacity: 1,
+      duration: 0.68,
+      ease: "back.out(1.4)",
+    },
+    CUT,
+  );
+
+  tl.fromTo(
+    cursor,
+    { opacity: 0, x: 210, y: -36 },
+    { opacity: 1, x: -28, y: 18, duration: 0.26, ease: "power2.in" },
+    MOVE,
+  );
+  tl.to(cursor, { x: 0, y: 0, duration: 0.21, ease: "power2.out" }, MOVE + 0.26);
+  tl.to(cursor, { scale: 0.88, duration: 0.09, ease: "power2.in", transformOrigin: "0% 0%" }, CLICK);
+  tl.to(cursor, { scale: 1, duration: 0.09, ease: "power2.out", transformOrigin: "0% 0%" }, CLICK + 0.09);
+
+  gsap.set(ripple, { opacity: 0, scale: 0, transformOrigin: "50% 50%" });
+  tl.fromTo(
+    ripple,
+    { opacity: 0, scale: 0 },
+    { opacity: 1, scale: 0.35, duration: 0.07, ease: "power2.out", immediateRender: false },
+    CLICK + 0.02,
+  );
+  tl.to(ripple, { opacity: 0, scale: 1, duration: 0.28, ease: "power2.out" }, CLICK + 0.09);
+
+  tl.fromTo(chip, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.28, ease: "back.out(1.6)" }, TIMER_AT);
+  tl.fromTo(timer, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.24, ease: "power2.out" }, TIMER_AT);
+
+  const clock = { t: 0 };
+  tl.to(
+    clock,
+    {
+      t: D,
+      duration: D,
+      ease: "none",
+      onUpdate: () => {
+        const sec = clock.t < TIMER_AT ? 0 : Math.min(4, Math.floor((clock.t - TIMER_AT) / 0.38));
+        timer.textContent = "00:0" + sec;
+      },
+    },
+    0,
+  );
+</script>
+</template>

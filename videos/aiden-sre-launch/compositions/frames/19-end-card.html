@@ -1,0 +1,360 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("shared/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-panel: #211d15;
+    --sg-hairline: #3f3b39;
+    --sg-cream: #f1eae0;
+    --sg-cream-bright: #faf7f2;
+    --sg-mute: #96897c;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+    --sg-coral: #fda39b;
+    --sg-amber: #fdd89b;
+    --sg-green: #a6f0bf;
+    --sg-glow-violet: rgba(186, 153, 253, 0.35);
+    --sg-glow-cyan: rgba(160, 234, 252, 0.3);
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: "Geist", sans-serif;
+    color: var(--sg-cream);
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f19-plate {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    object-fit: fill;
+    -webkit-mask-image: radial-gradient(ellipse 70% 58% at 50% 46%, transparent 0 56%, #000 80%);
+    mask-image: radial-gradient(ellipse 70% 58% at 50% 46%, transparent 0 56%, #000 80%);
+  }
+  .f19-key-cover {
+    position: absolute;
+    left: 80px;
+    top: 250px;
+    width: 920px;
+    height: 520px;
+    background: #14110c;
+    box-shadow: 0 0 90px 70px #14110c;
+  }
+  .f19-lift {
+    background: radial-gradient(900px 520px at 50% 42%, rgba(27, 24, 17, 0.55) 0%, rgba(20, 17, 12, 0) 70%);
+  }
+  .f19-lockup,
+  .f19-plate-clip,
+  .f19-lift {
+    visibility: hidden;
+  }
+  .f19-video {
+    width: 1920px;
+    height: 1080px;
+    object-fit: cover;
+    z-index: 6;
+  }
+  .f19-lockup {
+    z-index: 4;
+  }
+  .f19-bloom {
+    position: absolute;
+    left: 520px;
+    top: 80px;
+    width: 880px;
+    height: 520px;
+    background: radial-gradient(ellipse at center, rgba(92, 48, 168, 0.95) 0%, rgba(186, 153, 253, 0) 68%);
+    opacity: 0;
+    z-index: 1;
+  }
+  .f19-mark-box {
+    position: absolute;
+    left: 650px;
+    top: 282px;
+    width: 620px;
+    height: 168px;
+    overflow: hidden;
+    z-index: 2;
+  }
+  .f19-mark {
+    position: absolute;
+    left: 0;
+    top: 18px;
+    width: 620px;
+    height: 124px;
+    transform-origin: 50% 50%;
+  }
+  .f19-sweep {
+    position: absolute;
+    left: 0;
+    top: 18px;
+    width: 74px;
+    height: 124px;
+    background: linear-gradient(105deg, rgba(241, 234, 224, 0) 0%, rgba(250, 247, 242, 0.85) 50%, rgba(241, 234, 224, 0) 100%);
+    opacity: 0;
+    z-index: 3;
+  }
+  .f19-cta-stage {
+    position: absolute;
+    left: 640px;
+    top: 490px;
+    width: 640px;
+    height: 128px;
+    z-index: 4;
+  }
+  .f19-bg-glow {
+    position: absolute;
+    left: -420px;
+    top: -260px;
+    width: 1480px;
+    height: 680px;
+    background: radial-gradient(ellipse at center, rgba(120, 72, 196, 0.7) 0%, rgba(20, 17, 12, 0) 70%);
+    opacity: 0;
+    z-index: 0;
+  }
+  .f19-burst {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(110, 62, 190, 0.95) 0%, rgba(186, 153, 253, 0) 68%);
+    filter: blur(48px);
+    opacity: 0;
+    z-index: 1;
+    transform-origin: 50% 50%;
+  }
+  .f19-btn {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--sg-cream-bright);
+    color: var(--sg-ink);
+    font-family: "Geist", sans-serif;
+    font-size: 42px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    transform-origin: 50% 50%;
+  }
+  .f19-secondary {
+    position: absolute;
+    left: 430px;
+    top: 680px;
+    width: 1060px;
+    z-index: 4;
+  }
+  .f19-sec-btn {
+    position: relative;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(241, 234, 224, 0.28);
+    background: #14110c;
+    color: var(--sg-cream);
+    font-family: "Geist", sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .f19-sec-btn .tick {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-color: var(--sg-cream-bright);
+    border-style: solid;
+  }
+  .f19-sec-btn .tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .f19-sec-btn .tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+  .f19-sec-btn .bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+  .f19-sec-btn .br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+  .f19-micro {
+    margin-top: 18px;
+    text-align: center;
+    font-family: "Geist", sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--sg-mute);
+  }
+</style>
+
+<div id="root" data-composition-id="19-end-card" data-width="1920" data-height="1080" data-duration="5.355">
+  <div class="clip f19-plate-clip" data-start="0" data-duration="5.355" data-track-index="0">
+    <img class="f19-plate" id="f19-plate" src="source/figma/66-92.png" alt="" />
+    <div class="f19-key-cover"></div>
+  </div>
+
+  <video
+    class="clip f19-video"
+    src="assets/el-pro/16-end-card.mp4"
+    data-start="0"
+    data-duration="5.355"
+    data-track-index="4"
+    data-media-start="0"
+    muted
+    playsinline
+  ></video>
+
+  <div class="clip f19-lift" data-start="0" data-duration="5.355" data-track-index="1"></div>
+
+  <div class="clip" id="f19-ribbon-host" data-start="0" data-duration="5.355" data-track-index="2"></div>
+
+  <div class="clip f19-lockup" data-start="0" data-duration="5.355" data-track-index="3">
+    <div class="f19-bloom" id="f19-bloom"></div>
+    <div class="f19-mark-box" id="f19-mark-box">
+      <img class="f19-mark" id="f19-mark" src="assets/frames/19/stackgen-wordmark.svg" alt="StackGen" />
+      <div class="f19-sweep" id="f19-sweep"></div>
+    </div>
+
+    <div class="f19-cta-stage" id="f19-cta-stage">
+      <div class="f19-bg-glow" id="f19-bg-glow"></div>
+      <div class="f19-burst" id="f19-burst"></div>
+      <div class="f19-btn" id="f19-btn">Book a demo</div>
+    </div>
+
+    <div class="f19-secondary" id="f19-secondary">
+      <div class="f19-sec-btn">
+        <span class="tick tl"></span>
+        <span class="tick tr"></span>
+        <span class="tick bl"></span>
+        <span class="tick br"></span>
+        Try Community Edition
+      </div>
+      <div class="f19-micro">free for up to two users</div>
+    </div>
+  </div>
+
+  
+</div>
+
+<script src="assets/frames/10/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "19-end-card";
+  const D = 5.355;
+  const CTA = 2.725;
+  const SEC = 4.525;
+  const PRESS_DUR = 0.16;
+  const PRESS_START = 3.18;
+  const RELEASE_START = PRESS_START + PRESS_DUR;
+  const RELEASE_DUR = 0.58;
+  const REST_SHADOW = "0 28px 56px rgba(0,0,0,0.42)";
+  const PRESS_SHADOW = "0 6px 14px rgba(0,0,0,0.62)";
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/10/ribbons-mount.js", import.meta.url).href,
+  );
+
+  mountRibbons(document.getElementById("f19-ribbon-host"), {
+    seed: 419,
+    count: 24,
+    split: 0.62,
+    modes: [
+      { t: 0, mode: "converge", opacity: 0.78, target: { x: 960, y: 362 } },
+      { t: 1.15, mode: "rail", opacity: 0.4 },
+    ],
+  }).bind(tl, D);
+
+  const mark = document.getElementById("f19-mark");
+  const bloom = document.getElementById("f19-bloom");
+  const sweep = document.getElementById("f19-sweep");
+  const btn = document.getElementById("f19-btn");
+  const burst = document.getElementById("f19-burst");
+  const bgGlow = document.getElementById("f19-bg-glow");
+  const secondary = document.getElementById("f19-secondary");
+
+  tl.fromTo(
+    mark,
+    { scale: 0.92, opacity: 1 },
+    { scale: 1, opacity: 1, duration: 0.72, ease: "back.out(1.4)" },
+    0.04,
+  );
+
+  tl.fromTo(
+    bloom,
+    { opacity: 0, scale: 0.86 },
+    { opacity: 0.28, scale: 1, duration: 0.9, ease: "power2.out" },
+    0.04,
+  );
+
+  const phase = { p: 0 };
+  tl.to(
+    phase,
+    {
+      p: Math.PI * 2 * 1.4,
+      duration: D - 0.94,
+      ease: "none",
+      onUpdate: () => {
+        const s = Math.sin(phase.p);
+        bloom.style.opacity = String(0.28 + s * 0.03);
+        bloom.style.transform = "scale(" + (1 + s * 0.02) + ")";
+      },
+    },
+    0.94,
+  );
+
+  tl.fromTo(
+    sweep,
+    { x: -120, opacity: 0 },
+    { x: 700, opacity: 0.22, duration: 1.15, ease: "none" },
+    0.42,
+  );
+  tl.to(sweep, { opacity: 0, duration: 0.28, ease: "power1.in" }, 1.28);
+
+  tl.fromTo(
+    btn,
+    { scale: 0.9, opacity: 0 },
+    { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.7)" },
+    CTA,
+  );
+
+  tl.fromTo(
+    btn,
+    { scale: 1, boxShadow: REST_SHADOW },
+    { scale: 0.92, boxShadow: PRESS_SHADOW, duration: PRESS_DUR, ease: "power1.in" },
+    PRESS_START,
+  );
+  tl.to(
+    btn,
+    { scale: 1, boxShadow: REST_SHADOW, duration: RELEASE_DUR, ease: "back.out(2)" },
+    RELEASE_START,
+  );
+
+  tl.fromTo(
+    burst,
+    { scale: 1, opacity: 0 },
+    { scale: 6, opacity: 0.65, duration: 0.5, ease: "power2.out" },
+    RELEASE_START,
+  );
+  tl.to(burst, { opacity: 0, duration: 0.55, ease: "power2.in" }, RELEASE_START + 0.5);
+
+  tl.to(bgGlow, { opacity: 0.22, duration: 0.8, ease: "power2.out" }, RELEASE_START);
+
+  tl.fromTo(
+    secondary,
+    { clipPath: "inset(0 100% 0 0)", opacity: 1 },
+    { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 0.48, ease: "power2.out" },
+    SEC,
+  );
+</script>
+</template>

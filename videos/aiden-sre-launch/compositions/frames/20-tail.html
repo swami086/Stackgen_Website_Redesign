@@ -1,0 +1,165 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("shared/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-panel: #211d15;
+    --sg-hairline: #3f3b39;
+    --sg-cream: #f1eae0;
+    --sg-cream-bright: #faf7f2;
+    --sg-mute: #96897c;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+    --sg-coral: #fda39b;
+    --sg-amber: #fdd89b;
+    --sg-green: #a6f0bf;
+    --sg-glow-violet: rgba(186, 153, 253, 0.35);
+    --sg-glow-cyan: rgba(160, 234, 252, 0.3);
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #14110c;
+    font-family: "Geist", sans-serif;
+    color: var(--sg-cream);
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f20-ink {
+    background: #14110c;
+  }
+  .f20-ribbon-host {
+    z-index: 0;
+    -webkit-mask-image: radial-gradient(ellipse 74% 64% at 50% 44%, transparent 0 52%, #000 78%);
+    mask-image: radial-gradient(ellipse 74% 64% at 50% 44%, transparent 0 52%, #000 78%);
+  }
+  .el-atmo {
+    width: 1920px;
+    height: 1080px;
+    object-fit: cover;
+    z-index: 3;
+  }
+  .f20-lockup {
+    z-index: 4;
+  }
+  .f20-bloom {
+    position: absolute;
+    left: 520px;
+    top: 80px;
+    width: 880px;
+    height: 520px;
+    background: radial-gradient(ellipse at center, rgba(92, 48, 168, 0.95) 0%, rgba(186, 153, 253, 0) 68%);
+    opacity: 0.28;
+    z-index: 1;
+  }
+  .f20-mark-box {
+    position: absolute;
+    left: 650px;
+    top: 282px;
+    width: 620px;
+    height: 168px;
+    overflow: hidden;
+    z-index: 2;
+  }
+  .f20-mark {
+    position: absolute;
+    left: 0;
+    top: 18px;
+    width: 620px;
+    height: 124px;
+    opacity: 1;
+  }
+  .f20-cta-stage {
+    position: absolute;
+    left: 640px;
+    top: 490px;
+    width: 640px;
+    height: 128px;
+    z-index: 4;
+  }
+  .f20-btn {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--sg-cream-bright);
+    color: var(--sg-ink);
+    font-family: "Geist", sans-serif;
+    font-size: 42px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    opacity: 1;
+    box-shadow: 0 28px 56px rgba(0, 0, 0, 0.42);
+  }
+  .f20-fade {
+    z-index: 8;
+    background: #14110c;
+    opacity: 0;
+  }
+</style>
+
+<div id="root" data-composition-id="20-tail" data-width="1920" data-height="1080" data-duration="2.5">
+  <div class="clip f20-ink" data-start="0" data-duration="2.5" data-track-index="0"></div>
+
+  <div class="clip f20-ribbon-host" id="f20-ribbon-host" data-start="0" data-duration="2.5" data-track-index="1"></div>
+
+  <video class="clip el-atmo" src="assets/el-video/A6.mp4" data-start="0" data-duration="2.5" data-track-index="5" data-media-start="0" muted playsinline></video>
+
+  <div class="clip f20-lockup" data-start="0" data-duration="2.5" data-track-index="2">
+    <div class="f20-bloom" id="f20-bloom"></div>
+    <div class="f20-mark-box">
+      <img class="f20-mark" id="f20-mark" src="assets/frames/19/stackgen-wordmark.svg" alt="StackGen" />
+    </div>
+    <div class="f20-cta-stage">
+      <div class="f20-btn" id="f20-btn">Book a demo</div>
+    </div>
+  </div>
+
+  <div class="clip f20-fade" id="f20-fade" data-start="0" data-duration="2.5" data-track-index="3"></div>
+</div>
+
+<script src="assets/frames/10/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "20-tail";
+  const D = 2.5;
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/10/ribbons-mount.js", import.meta.url).href,
+  );
+
+  mountRibbons(document.getElementById("f20-ribbon-host"), {
+    seed: 420,
+    count: 24,
+    split: 0.62,
+    modes: [{ t: 0, mode: "rail", opacity: 0.4 }],
+  }).bind(tl, D);
+
+  const fade = document.getElementById("f20-fade");
+  gsap.set(document.getElementById("f20-mark"), { opacity: 1 });
+  gsap.set(document.getElementById("f20-btn"), { opacity: 1 });
+  gsap.set(fade, { opacity: 0 });
+
+  tl.fromTo(fade, { opacity: 0 }, { opacity: 1, duration: D, ease: "none" }, 0);
+
+  tl.to({}, { duration: 2.5 }, 0);
+</script>
+</template>

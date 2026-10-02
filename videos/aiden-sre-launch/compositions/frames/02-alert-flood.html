@@ -1,0 +1,383 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("shared/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Geist Mono";
+    src: url("shared/fonts/GeistMono-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-panel: #211d15;
+    --sg-hairline: #3f3b39;
+    --sg-cream: #f1eae0;
+    --sg-cream-bright: #faf7f2;
+    --sg-mute: #96897c;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+    --sg-coral: #fda39b;
+    --sg-amber: #fdd89b;
+    --sg-green: #a6f0bf;
+    --sg-glow-violet: rgba(186, 153, 253, 0.35);
+    --sg-glow-cyan: rgba(160, 234, 252, 0.3);
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: "Geist", sans-serif;
+    color: var(--sg-cream);
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f02-bg-fill {
+    background: radial-gradient(1200px 700px at 50% 38%, var(--sg-ink-raised) 0%, var(--sg-ink) 72%);
+  }
+  .f02-lens {
+    z-index: 2;
+    perspective: 2400px;
+    overflow: hidden;
+    filter: url(#f02-streak);
+  }
+  .f02-cam {
+    position: absolute;
+    left: 880px;
+    top: 500px;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+  }
+  .f02-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+    transform-origin: 50% 50%;
+  }
+  .f02-card {
+    position: absolute;
+    width: 268px;
+    height: 54px;
+    margin-left: -134px;
+    margin-top: -27px;
+    box-sizing: border-box;
+    padding: 7px 12px 0;
+    background: var(--sg-panel);
+    border: 1px solid var(--sg-hairline);
+    border-radius: 2px;
+    opacity: 0;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  }
+  .f02-card-kicker {
+    font-family: "Geist Mono", monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sg-mute);
+    line-height: 1.1;
+  }
+  .f02-card-title {
+    margin-top: 3px;
+    font-size: 16px;
+    font-weight: 560;
+    line-height: 1.15;
+    color: var(--sg-cream-bright);
+    white-space: nowrap;
+  }
+  .f02-hero {
+    background: #2a211f;
+    border-left: 3px solid var(--sg-coral);
+    z-index: 2;
+  }
+  .f02-hero .f02-card-kicker,
+  .f02-hero .f02-card-title {
+    color: var(--sg-coral);
+  }
+  .f02-counter-plate {
+    position: absolute;
+    top: 108px;
+    right: 88px;
+    width: 360px;
+    padding: 18px 22px 16px;
+    background: var(--sg-panel);
+    border: 1px solid var(--sg-hairline);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+  }
+  .f02-counter-kicker {
+    font-family: "Geist Mono", monospace;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--sg-mute);
+  }
+  .f02-counter-wrap {
+    width: 316px;
+    margin-top: 4px;
+  }
+  .f02-counter {
+    display: inline-block;
+    font-family: "Geist", sans-serif;
+    font-size: 84px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--sg-cream-bright);
+    transform-origin: 0% 70%;
+  }
+</style>
+
+<div id="root" data-composition-id="02-alert-flood" data-width="1920" data-height="1080" data-duration="7.96">
+  <div class="clip f02-bg-fill" id="f02-bg" data-start="0" data-duration="7.96" data-track-index="0"></div>
+
+  <div class="clip" id="f02-ribbon-host" data-start="0" data-duration="7.96" data-track-index="1"></div>
+
+  <svg width="0" height="0" aria-hidden="true" style="position: absolute">
+    <filter id="f02-streak" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur id="f02-streak-blur" in="SourceGraphic" stdDeviation="0 0"></feGaussianBlur>
+    </filter>
+  </svg>
+
+  <div class="clip f02-lens" id="f02-lens" data-start="0" data-duration="7.96" data-track-index="2">
+    <div class="f02-cam" id="f02-cam">
+      <div class="f02-stage" id="f02-stage" data-layout-allow-overflow>
+        <div id="f02-field"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="clip" id="f02-fg" data-start="0" data-duration="7.96" data-track-index="3">
+    <div class="f02-counter-plate" id="f02-counter-plate">
+      <div class="f02-counter-kicker">Active</div>
+      <div class="f02-counter-wrap">
+        <span class="f02-counter" id="f02-counter">212</span>
+      </div>
+    </div>
+  </div>
+
+  
+  
+  
+  
+</div>
+
+<script src="assets/frames/10/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "02-alert-flood";
+  const D = 7.96;
+  const COLS = 13;
+  const ROWS = 10;
+  const TITLES = [
+    ["High", "Auth Validation Latency High"],
+    ["High", "Pod Crash Loop"],
+    ["Medium", "System Load is High"],
+    ["High", "API Request Latency High"],
+  ];
+  const HERO = 71;
+
+  const field = document.getElementById("f02-field");
+  const cards = [];
+  for (let i = 0; i < COLS * ROWS; i++) {
+    const col = i % COLS;
+    const row = (i / COLS) | 0;
+    const pair = i === HERO ? TITLES[0] : TITLES[i % TITLES.length];
+    const el = document.createElement("div");
+    el.className = "f02-card" + (i === HERO ? " f02-hero" : "");
+    if (i !== HERO && i % 10 !== 1) el.classList.add("f02-noise");
+    el.id = i === HERO ? "f02-hero" : "f02-card-" + i;
+    const x = (col - 6) * 280 + (row % 2) * 16;
+    const y = (row - 4.5) * 64;
+    el.style.left = x + "px";
+    el.style.top = y + "px";
+    const kicker = document.createElement("div");
+    kicker.className = "f02-card-kicker";
+    kicker.textContent = pair[0];
+    const title = document.createElement("div");
+    title.className = "f02-card-title";
+    title.textContent = pair[1];
+    el.appendChild(kicker);
+    el.appendChild(title);
+    field.appendChild(el);
+    cards.push(el);
+  }
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/02/ribbons-mount.js", import.meta.url).href,
+  );
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  mountRibbons(document.getElementById("f02-ribbon-host"), {
+    seed: 402,
+    count: 24,
+    split: 0.7,
+    modes: [
+      { t: 0, mode: "dormant", opacity: 0.5 },
+      { t: 1.5, mode: "converge", opacity: 0.82, target: { x: 880, y: 500 } },
+      { t: 4.2, mode: "rail", opacity: 0.64 },
+    ],
+  }).bind(tl, D);
+
+  const cam = document.getElementById("f02-cam");
+  const stage = document.getElementById("f02-stage");
+  const counter = document.getElementById("f02-counter");
+  const hero = document.getElementById("f02-hero");
+  const blurNode = document.getElementById("f02-streak-blur");
+  const blurProxy = { v: 0 };
+  const writeBlur = () => blurNode.setAttribute("stdDeviation", `${blurProxy.v} ${blurProxy.v}`);
+  writeBlur();
+
+  const camState = { x: -40, y: 18, z: 40, s: 1.68 };
+  function applyCamera() {
+    cam.style.transform = `translate3d(${camState.x}px, ${camState.y}px, ${camState.z}px) scale(${camState.s})`;
+  }
+  applyCamera();
+
+  gsap.set(stage, { rotationX: 8, rotationY: -6 });
+  gsap.set(counter, { scale: 0.55 });
+
+  tl.to(
+    stage,
+    { rotationX: 2, rotationY: -4, duration: 0.8, ease: "power4.out" },
+    0.05,
+  );
+
+  const F = 1 / 60;
+  const order = cards
+    .map((el, i) => {
+      const col = i % COLS;
+      const row = (i / COLS) | 0;
+      const dx = col - 6;
+      const dy = row - 4.5;
+      return { el, d: dx * dx + dy * dy + i * 0.0001 };
+    })
+    .sort((a, b) => a.d - b.d);
+
+  let tCard = 0.1;
+  order.forEach((item, n) => {
+    let dur;
+    let y0;
+    let step;
+    if (n < 8) {
+      dur = 0.18 - n * 0.008;
+      y0 = 76 - n * 4;
+      step = dur - F;
+    } else if (n < 28) {
+      dur = 0.11;
+      y0 = 46;
+      step = 0.028;
+    } else {
+      dur = 0.08;
+      y0 = 32;
+      step = 0.008;
+    }
+    tl.set(item.el, { opacity: 1, y: y0 }, tCard);
+    tl.to(item.el, { y: 0, duration: dur, ease: "power4.out" }, tCard);
+    tCard += step;
+  });
+
+  const DOLLY_AT = 1.5;
+  const DOLLY_DUR = 2.4;
+  tl.fromTo(
+    camState,
+    { x: -40, y: 18, z: 40, s: 1.68 },
+    {
+      x: -16,
+      y: 0,
+      z: -80,
+      s: 0.56,
+      duration: DOLLY_DUR,
+      ease: "power2.inOut",
+      onUpdate: applyCamera,
+    },
+    DOLLY_AT,
+  );
+  tl.to(
+    blurProxy,
+    { v: 16, duration: DOLLY_DUR / 2, ease: "power2.in", onUpdate: writeBlur },
+    DOLLY_AT,
+  );
+  tl.to(
+    blurProxy,
+    { v: 0, duration: DOLLY_DUR / 2, ease: "power2.out", onUpdate: writeBlur },
+    DOLLY_AT + DOLLY_DUR / 2,
+  );
+
+  tl.to(
+    camState,
+    {
+      x: -48,
+      y: -16,
+      z: -120,
+      s: 0.5,
+      duration: D - (DOLLY_AT + DOLLY_DUR),
+      ease: "power1.inOut",
+      onUpdate: applyCamera,
+    },
+    DOLLY_AT + DOLLY_DUR,
+  );
+  tl.to(
+    stage,
+    { rotationX: 2.4, rotationY: -4.5, duration: 3.6, ease: "sine.inOut" },
+    4.2,
+  );
+
+  const countState = { value: 212 };
+  tl.to(
+    countState,
+    {
+      value: 1284,
+      duration: 2.2,
+      ease: "power3.out",
+      onUpdate: () => {
+        counter.textContent = Math.round(countState.value).toLocaleString("en-US");
+      },
+    },
+    0.2,
+  );
+  tl.fromTo(
+    counter,
+    { scale: 0.55 },
+    { scale: 1, duration: 2.2, ease: "power3.out" },
+    0.2,
+  );
+
+  tl.to(
+    ".f02-noise",
+    { backgroundColor: "#1b1811", borderColor: "#2c2926", duration: 1.25, ease: "power2.out" },
+    3.0,
+  );
+  tl.to(
+    ".f02-noise .f02-card-title, .f02-noise .f02-card-kicker",
+    { color: "#6d655c", duration: 1.25, ease: "power2.out" },
+    3.0,
+  );
+
+  tl.to(hero, { scale: 1.16, duration: 0.26, ease: "power2.out" }, 6.33);
+  tl.to(hero, { scale: 1, duration: 0.32, ease: "power2.inOut" }, 6.59);
+  tl.to(hero, { scale: 1.08, duration: 0.28, ease: "power2.out" }, 6.91);
+  tl.to(hero, { scale: 1.03, duration: 0.45, ease: "sine.out" }, 7.19);
+
+  tl.to({}, { duration: D }, 0);
+</script>
+</template>

@@ -1,0 +1,257 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("shared/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Geist Mono";
+    src: url("shared/fonts/GeistMono-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-panel: #211d15;
+    --sg-hairline: #3f3b39;
+    --sg-cream: #f1eae0;
+    --sg-cream-bright: #faf7f2;
+    --sg-mute: #96897c;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+    --sg-coral: #fda39b;
+    --sg-amber: #fdd89b;
+    --sg-green: #a6f0bf;
+    --sg-glow-violet: rgba(186, 153, 253, 0.35);
+    --sg-glow-cyan: rgba(160, 234, 252, 0.3);
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: "Geist", sans-serif;
+    color: var(--sg-cream);
+    background: var(--sg-ink);
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f16-bg {
+    background: radial-gradient(1200px 700px at 50% 38%, var(--sg-ink-raised) 0%, var(--sg-ink) 72%);
+  }
+  .f16-lens {
+    z-index: 2;
+    perspective: 2400px;
+    overflow: hidden;
+  }
+  .f16-stage {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    transform-origin: 50% 50%;
+  }
+  .f16-track {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: visible;
+  }
+  .f16-track path {
+    fill: none;
+    stroke: #cfc3b6;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+  .f16-card {
+    position: absolute;
+    top: 312px;
+    z-index: 2;
+    box-sizing: border-box;
+    width: 300px;
+    height: 104px;
+    padding: 18px 18px 0;
+    background: #1b1811;
+    border: 1px solid var(--sg-hairline);
+    border-radius: 2px;
+    opacity: 1;
+    transform-style: preserve-3d;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  }
+  .f16-kicker,
+  .f16-title,
+  .f16-line,
+  .f16-next {
+    opacity: 1;
+  }
+  .f16-kicker {
+    font-family: "Geist Mono", monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    color: #cfc3b6;
+  }
+  .f16-title {
+    margin: 8px 0 0;
+    font-family: "Geist", sans-serif;
+    font-size: 26px;
+    font-weight: 520;
+    line-height: 1.15;
+    color: #faf7f2;
+    white-space: nowrap;
+  }
+  .f16-caption-layer {
+    z-index: 4;
+  }
+  .f16-caption {
+    position: absolute;
+    left: 50%;
+    top: 828px;
+    transform: translateX(-50%);
+    padding: 16px 28px 18px;
+    background: #14110c;
+    opacity: 1;
+  }
+  .f16-line {
+    margin: 0;
+    font-family: "Geist", sans-serif;
+    font-size: 40px;
+    font-weight: 440;
+    line-height: 1.15;
+    color: #f1eae0;
+    white-space: nowrap;
+  }
+  .f16-next {
+    display: inline-block;
+    color: #faf7f2;
+    transform-origin: 50% 70%;
+  }
+</style>
+
+<div
+  id="root"
+  data-composition-id="16-keeps-learning"
+  data-width="1920"
+  data-height="1080"
+  data-duration="8.245"
+>
+  <div class="clip f16-bg" id="f16-bg" data-start="0" data-duration="8.245" data-track-index="0"></div>
+
+  <div
+    class="clip"
+    id="f16-ribbon-host"
+    data-start="0"
+    data-duration="8.245"
+    data-track-index="1"
+  ></div>
+
+  <div class="clip f16-lens" id="f16-lens" data-start="0" data-duration="8.245" data-track-index="2">
+    <div class="f16-stage" id="f16-stage" data-layout-allow-overflow>
+      <svg class="f16-track" viewBox="0 0 1920 1080" aria-hidden="true">
+        <path id="f16-rail" d="M 438 416 L 1482 416"></path>
+      </svg>
+
+      <div class="f16-card" style="left: 288px">
+        <div class="f16-kicker">Track 01</div>
+        <p class="f16-title">Known path</p>
+      </div>
+      <div class="f16-card" style="left: 636px">
+        <div class="f16-kicker">Track 02</div>
+        <p class="f16-title">Added</p>
+      </div>
+      <div class="f16-card" style="left: 984px">
+        <div class="f16-kicker">Track 03</div>
+        <p class="f16-title">Environment</p>
+      </div>
+      <div class="f16-card" style="left: 1332px">
+        <div class="f16-kicker">Track 04</div>
+        <p class="f16-title">Further ahead</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="clip f16-caption-layer" id="f16-caption-layer" data-start="0" data-duration="8.245" data-track-index="3">
+    <div class="f16-caption" id="f16-caption">
+      <p class="f16-line">
+        Every incident makes the <span class="f16-next" id="f16-next">next</span> one easier
+      </p>
+    </div>
+  </div>
+
+  
+  
+  
+  
+  
+</div>
+
+<script src="assets/frames/10/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "16-keeps-learning";
+  const D = 8.245;
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/10/ribbons-mount.js", import.meta.url).href,
+  );
+
+  mountRibbons(document.getElementById("f16-ribbon-host"), {
+    seed: 416,
+    count: 24,
+    split: 0.7,
+    modes: [
+      { t: 0, mode: "dormant", opacity: 0.5 },
+      { t: 1.85, mode: "converge", opacity: 0.78, target: { x: 960, y: 380 } },
+      { t: 5.76, mode: "rail", opacity: 0.58 },
+    ],
+  }).bind(tl, D);
+
+  const stage = document.getElementById("f16-stage");
+  const cards = Array.from(document.querySelectorAll(".f16-card"));
+  const rail = document.getElementById("f16-rail");
+  const caption = document.getElementById("f16-caption");
+  const nextWord = document.getElementById("f16-next");
+
+  gsap.set(stage, { rotationX: 8, rotationY: -6 });
+  gsap.set(cards, { y: 56, z: 36 });
+
+  const railLen = rail.getTotalLength();
+  rail.style.strokeDasharray = `${railLen}`;
+  rail.style.strokeDashoffset = `${railLen}`;
+
+  tl.to(stage, { rotationX: 2, rotationY: -4, duration: 0.85, ease: "power4.out" }, 0.05);
+
+  cards.forEach((el, i) => {
+    tl.to(el, { y: 0, z: 0, duration: 0.72, ease: "power3.out" }, 1.85 + i * 0.7);
+  });
+
+  tl.to(rail, { strokeDashoffset: 0, duration: 2.5, ease: "power2.out" }, 1.85);
+
+  tl.fromTo(
+    caption,
+    { clipPath: "inset(0 0 100% 0)" },
+    { clipPath: "inset(0 0 0% 0)", duration: 0.42, ease: "power2.out", immediateRender: true },
+    5.76,
+  );
+  tl.fromTo(
+    nextWord,
+    { scale: 1 },
+    { scale: 1.06, duration: 0.35, ease: "power2.out" },
+    5.76,
+  );
+
+  tl.to({}, { duration: D }, 0);
+</script>
+</template>

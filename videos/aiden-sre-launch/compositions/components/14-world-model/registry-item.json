@@ -1,0 +1,12 @@
+{
+  "name": "14-world-model",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/66:76",
+  "files": [
+    {
+      "path": "14-world-model.html",
+      "target": "compositions/components/14-world-model/14-world-model.html",
+      "type": "hyperframes:snippet"
+    }
+  ]
+}

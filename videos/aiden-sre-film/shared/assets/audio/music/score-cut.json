@@ -1,0 +1,419 @@
+{
+ "positive_global_styles": [
+  "108 BPM",
+  "bright",
+  "major key",
+  "light electronic",
+  "soft kick",
+  "plucked synth",
+  "instrumental",
+  "space for a narrator"
+ ],
+ "negative_global_styles": [
+  "somber",
+  "dark ambient",
+  "drone",
+  "minor key",
+  "sad",
+  "vocals",
+  "lyrics",
+  "edm drop",
+  "heavy bass",
+  "new song",
+  "tempo change"
+ ],
+ "chunks": [
+  {
+   "duration_ms": 7809,
+   "text": "[L01]\nInstrumental only. Continue the same bed. Do not restart.\nVoice: Your on-call team is buried in alerts, and most of them don't matter. The ones that do can take hours to untangle.\nMusic: Steady forward pulse. Tighten slightly on alerts, open on hours. Stay bright.",
+   "positive_styles": [
+    "108 BPM",
+    "bright",
+    "major key",
+    "light electronic",
+    "soft kick",
+    "plucked synth",
+    "instrumental",
+    "space for a narrator"
+   ],
+   "negative_styles": [
+    "somber",
+    "dark ambient",
+    "drone",
+    "minor key",
+    "sad",
+    "vocals",
+    "lyrics",
+    "edm drop",
+    "heavy bass",
+    "new song",
+    "tempo change"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "duration_ms": 10174,
+   "text": "[L02]\nInstrumental only. Continue the same bed. Do not restart.\nVoice: Meet Aiden for SRE, your AI SRE teammate. It connects to the observability tools you already run and maps your services on its own.\nMusic: Lift and open on Meet Aiden for SRE. Wider plucks, same tempo.",
+   "positive_styles": [
+    "108 BPM",
+    "bright",
+    "major key",
+    "light electronic",
+    "soft kick",
+    "plucked synth",
+    "instrumental",
+    "space for a narrator"
+   ],
+   "negative_styles": [
+    "somber",
+    "dark ambient",
+    "drone",
+    "minor key",
+    "sad",
+    "vocals",
+    "lyrics",
+    "edm drop",
+    "heavy bass",
+    "new song",
+    "tempo change"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "duration_ms": 3000,
+   "text": "[L03]\nInstrumental only. Continue the same bed. Do not restart.\nVoice: One failure can set off a flood of alerts.\nMusic: One short surge on flood of alerts, then settle. Same tempo.",
+   "positive_styles": [
+    "108 BPM",
+    "bright",
+    "major key",
+    "light electronic",
+    "soft kick",
+    "plucked synth",
+    "instrumental",
+    "space for a narrator"
+   ],
+   "negative_styles": [
+    "somber",
+    "dark ambient",
+    "drone",
+    "minor key",
+    "sad",
+    "vocals",
+    "lyrics",
+    "edm drop",
+    "heavy bass",
+    "new song",
+    "tempo change"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "duration_ms": 8570,
+   "text": "[L04]\nInstrumental only. Continue the same bed. Do not restart.\nVoice: Aiden triages every alert as it arrives. It groups related alerts, filters the noise, and ranks the rest by impact on your services.\nMusic: Clear and orderly, like sorting. Light hats under the triage.",
+   "positive_styles": [
+    "108 BPM",
+    "bright",
+    "major key",
+    "light electronic",
+    "soft kick",
+    "plucked synth",
+    "instrumental",
+    "space for a narrator"
+   ],
+   "negative_styles": [
+    "somber",
+    "dark ambient",
+    "drone",
+    "minor key",
+    "sad",
+    "vocals",
+    "lyrics",
+    "edm drop",
+    "heavy bass",
+    "new song",
+    "tempo change"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "duration_ms": 5716,
+   "text": "[L05]\nInstrumental only. Continue the same bed. Do not restart.\nVoice: Your engineers see only the alerts that need them, and save their energy for real incidents.\nMusic: Breathe. Fewer notes. Resolve on only the alerts that need you.",
+   "positive_styles": [
+    "108 BPM",
+    "bright",
+    "major key",
+    "light electronic",
+    "soft kick",
+    "plucked synth",
+    "instrumental",
+    "space for a narrator"
+   ],
+   "negative_styles": [
+    "somber",
+    "dark ambient",
+    "drone",
+    "minor key",
+    "sad",
+    "vocals",
+    "lyrics",
+    "edm drop",
+    "heavy bass",
+    "new song",
+    "tempo change"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "duration_ms": 4065,
+   "text": "[L06]\nInstrumental only. Continue the same bed. Do not restart.\nVoice: When a real incident hits, most of the time goes into investigation.\nMusic: A firmer pulse as a real incident hits. Still major, not dark.",
+   "positive_styles": [
+    "108 BPM",
+    "bright",
+    "major key",
+    "light electronic",
+    "soft kick",
+    "plucked synth",
+    "instrumental",
+    "space for a narrator"
+   ],
+   "negative_styles": [
+    "somber",
+    "dark ambient",
+    "drone",
+    "minor key",
+    "sad",
+    "vocals",
+    "lyrics",
+    "edm drop",
+    "heavy bass",
+    "new song",
+    "tempo change"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "duration_ms": 13368,
+   "text": "[L07]\nInstrumental only. Continue the same bed. Do not restart.\nVoice: Aiden starts investigating the moment an alert fires. It correlates logs, metrics and events across your dependencies. Then it scores every possible cause against the evidence, and\neven tries to prove itself wrong.\nMusic: Investigative plucks while the voice names logs, metrics, events, evidence.",
+   "positive_styles": [
+    "108 BPM",
+    "bright",
+    "major key",
+    "light electronic",
+    "soft kick",
+    "plucked synth",
+    "instrumental",
+    "space for a narrator"
+   ],
+   "negative_styles": [
+    "somber",
+    "dark ambient",
+    "drone",
+    "minor key",
+    "sad",
+    "vocals",
+    "lyrics",
+    "edm drop",
+    "heavy bass",
+    "new song",
+    "tempo change"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "duration_ms": 4555,
+   "text": "[L09]\nInstrumental only. Continue the same bed. Do not restart.\nVoice: Your team starts from a probable root cause, and MTTR comes down.\nMusic: Release downward under probable cause. MTTR comes down.",
+   "positive_styles": [
+    "108 BPM",
+    "bright",
+    "major key",
+    "light electronic",
+    "soft kick",
+    "plucked synth",
+    "instrumental",
+    "space for a narrator"
+   ],
+   "negative_styles": [
+    "somber",
+    "dark ambient",
+    "drone",
+    "minor key",
+    "sad",
+    "vocals",
+    "lyrics",
+    "edm drop",
+    "heavy bass",
+    "new song",
+    "tempo change"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "duration_ms": 3369,
+   "text": "[L10]\nInstrumental only. Continue the same bed. Do not restart.\nVoice: Even with the cause in hand, the fix is often manual.\nMusic: Hold simpler. The fix is still manual. Less motion.",
+   "positive_styles": [
+    "108 BPM",
+    "bright",
+    "major key",
+    "light electronic",
+    "soft kick",
+    "plucked synth",
+    "instrumental",
+    "space for a narrator"
+   ],
+   "negative_styles": [
+    "somber",
+    "dark ambient",
+    "drone",
+    "minor key",
+    "sad",
+    "vocals",
+    "lyrics",
+    "edm drop",
+    "heavy bass",
+    "new song",
+    "tempo change"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "duration_ms": 12564,
+   "text": "[L11]\nInstrumental only. Continue the same bed. Do not restart.\nVoice: Aiden runs the remediation, from restarting a service or scaling out to rerouting traffic or rolling back a deployment. Your team sets which actions need approval, and every action\ngoes into a full audit trail.\nMusic: Active on restart, scale, reroute, roll back, then steady for approval.",
+   "positive_styles": [
+    "108 BPM",
+    "bright",
+    "major key",
+    "light electronic",
+    "soft kick",
+    "plucked synth",
+    "instrumental",
+    "space for a narrator"
+   ],
+   "negative_styles": [
+    "somber",
+    "dark ambient",
+    "drone",
+    "minor key",
+    "sad",
+    "vocals",
+    "lyrics",
+    "edm drop",
+    "heavy bass",
+    "new song",
+    "tempo change"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "duration_ms": 4508,
+   "text": "[L12]\nInstrumental only. Continue the same bed. Do not restart.\nVoice: Incidents close faster, and your team stays in control of what runs.\nMusic: Settle. In control. Soft and open.",
+   "positive_styles": [
+    "108 BPM",
+    "bright",
+    "major key",
+    "light electronic",
+    "soft kick",
+    "plucked synth",
+    "instrumental",
+    "space for a narrator"
+   ],
+   "negative_styles": [
+    "somber",
+    "dark ambient",
+    "drone",
+    "minor key",
+    "sad",
+    "vocals",
+    "lyrics",
+    "edm drop",
+    "heavy bass",
+    "new song",
+    "tempo change"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "duration_ms": 9462,
+   "text": "[L13]\nInstrumental only. Continue the same bed. Do not restart.\nVoice: And it keeps learning. Every investigation adds to what Aiden knows about your environment, so the next incident starts further ahead.\nMusic: Warm forward motion. Learning. The next incident starts ahead.",
+   "positive_styles": [
+    "108 BPM",
+    "bright",
+    "major key",
+    "light electronic",
+    "soft kick",
+    "plucked synth",
+    "instrumental",
+    "space for a narrator"
+   ],
+   "negative_styles": [
+    "somber",
+    "dark ambient",
+    "drone",
+    "minor key",
+    "sad",
+    "vocals",
+    "lyrics",
+    "edm drop",
+    "heavy bass",
+    "new song",
+    "tempo change"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "duration_ms": 11567,
+   "text": "[L15]\nInstrumental only. Continue the same bed. Do not restart.\nVoice: Aiden for SRE runs on the Aiden World Model, the shared record of what's deployed, what changed, what broke and what fixed it. And Aiden OS holds every action to your policies.\nMusic: Widest section: world model, deployed, changed, broke, fixed, policy.",
+   "positive_styles": [
+    "108 BPM",
+    "bright",
+    "major key",
+    "light electronic",
+    "soft kick",
+    "plucked synth",
+    "instrumental",
+    "space for a narrator"
+   ],
+   "negative_styles": [
+    "somber",
+    "dark ambient",
+    "drone",
+    "minor key",
+    "sad",
+    "vocals",
+    "lyrics",
+    "edm drop",
+    "heavy bass",
+    "new song",
+    "tempo change"
+   ],
+   "context_adherence": "high"
+  },
+  {
+   "duration_ms": 6516,
+   "text": "[L16]\nInstrumental only. Continue the same bed. Do not restart.\nVoice: See Aiden for SRE on your own alerts. Book a demo, or try the free Community Edition.\nMusic: Resolve into an open call to action. Thin out the last two seconds.",
+   "positive_styles": [
+    "108 BPM",
+    "bright",
+    "major key",
+    "light electronic",
+    "soft kick",
+    "plucked synth",
+    "instrumental",
+    "space for a narrator"
+   ],
+   "negative_styles": [
+    "somber",
+    "dark ambient",
+    "drone",
+    "minor key",
+    "sad",
+    "vocals",
+    "lyrics",
+    "edm drop",
+    "heavy bass",
+    "new song",
+    "tempo change"
+   ],
+   "context_adherence": "high"
+  }
+ ]
+}

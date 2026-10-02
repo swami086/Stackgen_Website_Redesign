@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the ~2:00 Aiden for SRE launch film specified in `docs/superpowers/specs/2026-10-01-aiden-sre-launch-film-design.md`: real product UI from Figma rebuilt as moving HTML, ElevenLabs-only narration/music/SFX/atmosphere video, assembled, mixed and rendered by HyperFrames.
+**Goal:** Build the ~2:00 Aiden for SRE launch film specified in `docs/superpowers/specs/2026-10-01-aiden-sre-launch-film-design.md`: product screens are the exported Figma frames, motion and captions are HTML around those pictures, ElevenLabs-only narration/music/SFX/atmosphere video, assembled, mixed and rendered by HyperFrames.
 
-**Architecture:** One HyperFrames project (`videos/aiden-sre-launch/`) on the `product-launch-video` workflow. Narration is locked first (ElevenLabs MCP, scene takes picked by ear), music is generated from a spotting sheet and beat-mapped, silent bridge frames flex to land narration entries on downbeats, and `data/timing.json` becomes the single lock every frame worker reads. Frames are built in parallel by Composer 2.5 workers, one file each, after a golden frame locks the look.
+**Architecture:** One HyperFrames project (`videos/aiden-sre-launch/`) on the `product-launch-video` workflow. Narration is locked first (ElevenLabs MCP, scene takes picked by ear), music is generated from a spotting sheet and beat-mapped, silent bridge frames flex to land narration entries on downbeats, and `data/timing.json` becomes the single lock every frame worker reads. Remaining frame renders are built by Grok 4.7, one file each, copying the locked F10 picture rules.
 
 **Tech Stack:** HyperFrames 0.8.103 (Node 22), GSAP + three.js inside compositions, ElevenLabs MCP (`user-elevenlabs`), Figma REST via `hyperframes figma` (`FIGMA_TOKEN`), Chrome DevTools MCP, Python 3 (pytest, librosa for the beat analyzer), ffmpeg/ffprobe, whisper-cli (via `hyperframes transcribe`).
 
@@ -17,11 +17,11 @@
 - ElevenLabs is the only generative vendor, used only through the ElevenLabs MCP. No Apiframe. No REST keys.
 - ElevenLabs MCP calls are made **only by the orchestrator session** (spend in one place; MCP availability is not assumed in subagents). Never call a generator twice to retry; poll `creative_get_flow_run_status`. Run `estimate_only: true` before any batch over 200 credits; ask the user before any batch over 2,000 credits (U1).
 - No time-stretching of narration. No head trim after transcription. Word timings always come from transcribing the exact shipped file.
-- Product UI only from `compositions/components/*` (Figma imports). Never screenshots as plates, never generated UI.
+- Product plates are the Figma exports in `source/figma/*.png`, shown whole. Do not rebuild a product screen from `compositions/components/*`. Those HTML dumps do not match the app: absolute boxes, IBM Plex missing inside iframes (`@font-face` on the parent does not apply), and bold labels stacked on the same origin as the body. Motion, ribbons, and captions are HTML around the picture. Never generate product UI.
 - Motion contract M1–M10 (§5) applies to every frame. No layer static for > 0.6 s unless another layer is in a primary move.
-- Film tokens §6.1, type §6.2, light-UI treatment §6.3 are frozen after Task 1. Workers may not edit `shared/`, `data/`, `STORYBOARD.md`, `index.html`.
+- Film tokens §6.1 and type §6.2 stay frozen. Panel tilt and Evidence blur in spec §6.3 / U3 are overridden by the F10 lock below. Workers may not edit `shared/`, `data/`, `STORYBOARD.md`, `index.html`.
 - Workers never run `git commit`. The orchestrator commits each accepted task with explicit paths.
-- Model routing: build workers `composer-2.5-fast`; per-task reviewer `claude-sonnet-5-5-high`; golden frame + final audit reviewer `claude-opus-5-5-high`.
+- Model routing: non-frame build workers `composer-2.5-fast`. Every frame composition and its render from here on (T18, and any re-render of a frame) uses Grok 4.7, Task tool slug `grok-4.7-high-fast`. Per-task reviewer `claude-sonnet-5-5-high`. Final audit reviewer `claude-opus-5-5-high`.
 - Max 8 concurrent subagents.
 
 ---
@@ -84,21 +84,29 @@ Run every verification command and paste its real output in your report. Report:
 commands run with output, anything you could not do and why.
 ```
 
-**Frame worker (T17/T18):** same header, plus:
+**Frame worker (T18 and any frame re-render):** `subagent_type: generalPurpose`, `model: grok-4.7-high-fast` (Grok 4.7). Same header, plus:
 
 ```text
-Your frame: F<NN> (<slug>). Read first, in order: .hyperframes/frame-packets/_role.md,
-.hyperframes/frame-packets/<NN>-<slug>.md, frame.md, spec §5, §6.3, §6.4 and the F<NN> row of §7,
-data/timing.json entry for frame <NN> (duration, cues[].local, hits[].t − start), and
-compositions/frames/10-investigation.html (golden reference; not for F10 itself).
+Your frame: F<NN> (<slug>). Read first, in order: the F10 picture lock in this plan,
+compositions/frames/10-investigation.html (the golden reference; not for F10 itself),
+.hyperframes/frame-packets/_role.md, .hyperframes/frame-packets/<NN>-<slug>.md, frame.md,
+spec §5 and §6.4, the F<NN> row of §7, and the data/timing.json entry for frame <NN>
+(duration, cues[].local, hits[].t − start).
+Where the packet or spec §6.3 says to mount a product component, blur Evidence, or rest at
+rotateX(6deg) rotateY(-10deg), follow the F10 picture lock instead.
 Write only compositions/frames/<NN>-<slug>.html and assets/frames/<NN>/*.
-Product UI comes only from compositions/components/<name>/ listed in your packet narrative.
+Product picture: the matching source/figma PNG, shown whole at 1920×886 inside zoom 0.80.
+Do not iframe compositions/components. Film captions sit in the dark band under the panel.
 Every cue lands at its local time ±0.12 s. Place SFX cues as <audio> clips at the hit times named in the packet.
+Register the GSAP timeline under its frame id and as window.__timelines.main.
+Read "Batch A lessons" in this plan before writing. Apply every bullet. Do not edit index.html.
 Self-check per _role.md, then render your frame:
 PATH=/opt/homebrew/opt/node@22/bin:$PATH npx --yes hyperframes@0.8.103 render videos/aiden-sre-launch \
   -c compositions/frames/<NN>-<slug>.html --fps 60 --quality draft -o videos/aiden-sre-launch/renders/frames/<NN>.mp4
 python3 videos/aiden-sre-launch/scripts/qa_motion.py videos/aiden-sre-launch/renders/frames/<NN>.mp4
-Both must pass. Paste output.
+Both must pass. Paste output. Before you report, open a still and confirm product type is the
+Figma picture: no stacked label/body, no caption covering the UI, no fogged column,
+no ribbon through a glyph, no word cut by a card edge or the 1920 frame.
 ```
 
 **Reviewer:** `model: claude-sonnet-5-5-high` (`claude-opus-5-5-high` for T17, T22).
@@ -107,7 +115,11 @@ Both must pass. Paste output.
 Review Task <N> against the plan task and spec sections it cites. Stage 1 spec compliance: list every
 requirement and PASS/FAIL with evidence (file:line or command output you ran yourself). Stage 2 quality:
 Critical / Important / Minor findings. For frames, also open renders/frames/<NN>.mp4 stills at 25/50/75%
-and at every cue time and check §5 M3–M7, §6.3, §6.4. Do not fix; report.
+and at every cue time and check §5 M3–M7, §6.4, the F10 picture lock, and Batch A lessons
+(PNG plate, stage-only tilt, no type stacked on itself, no caption on the product,
+no ribbon through a glyph, no word cut by a card or the frame edge, chips in front of the plate).
+Do not score the frame against the retired
+§6.3 tilt or Evidence blur. Do not fix; report.
 ```
 
 ---
@@ -1513,9 +1525,22 @@ ls .hyperframes/frame-packets | wc -l
 ```
 Expected: tests pass; `durations consistent` (if not, the lock and the adapter disagree — stop and report); 21 files (20 packets + `_role.md`), none over 48 KB.
 
-### Task 17: Golden frame F10 (worker `composer-2.5-fast`, reviewer `claude-opus-5-5-high`) → Gate G2
+## F10 picture lock (2026-10-02)
 
-- [ ] **Step 1:** Dispatch the frame-worker template for F10 (it is the reference). Extra instructions: spec §6.3 exactly (panel scale 0.80, tilt `rotateX(6deg) rotateY(-10deg)`, rim, shadow, 6% cream multiply, no bloom on UI), Evidence panel under DOF (U3 default), ribbons from `shared/layers/ribbons.js` behind the panel.
+Settled on the golden frame after the HTML rebuild was rejected. Later frame renders copy this. Do not re-open it.
+
+- The product picture is the Figma frame, not the HTML import. F10 uses `source/figma/58-2-triage.png`, then `source/figma/61-2.png` at the ruled-out cut. Both exports are 3840×1772, shown at 1920×886 inside `.f10-ui-scaler { zoom: 0.8 }` (stage 1536×709). No crop, no scroll, no empty white band.
+- `58-2.png` stays the untouched export. On that export the “Triage so far” rows paint the bold label on the same origin as the sentence (`58:196`, `58:206`). `58-2-triage.png` is the plate with those two rows repainted in IBM Plex 14 / 22.75 (bold `#181D24`, body `#1D2229`). Check every other product PNG for the same stacked row before its first render and patch a copy, not the export.
+- Film captions (“Hypotheses with confidence scores”, “ruled out · 4%”) sit in the dark band under the panel. Nothing is composited on the product: no hypotheses card, no flying chips, no tracking box, no cream multiply, no Evidence veil, no badge blur.
+- Rest tilt is on the stage only: `rotateX(2deg) rotateY(-4deg)`, perspective 2400. Entrance from `rotateX(8deg) rotateY(-6deg)`. Tilting the stage and the picture doubles the slant. Spec §6.3’s `rotateX(6deg) rotateY(-10deg)` and the U3 Evidence blur were both rejected.
+- Ribbons stay behind the panel (`shared/layers/ribbons.js`). The GSAP timeline is registered as the frame id and as `window.__timelines.main`.
+- Torbit describes code relationships. It is not the picture. Do not rebuild the panel from `src/aiden-2/`.
+
+Can you search some community pro forums on how to
+
+F10’s picture is already at `compositions/frames/10-investigation.html`. G2 is not locked until the user says so. Do not rebuild it from the HTML components.
+
+- [ ] **Step 1:** The plate is the F10 picture lock above, not a fresh component mount. Spec §6.3 tilt and U3 Evidence blur do not apply.
 - [ ] **Step 2:** Render at high quality and calibrate the motion floor:
 
 ```bash
@@ -1530,7 +1555,9 @@ python3 scripts/qa_motion.py renders/frames/10.mp4 --calibrate
 
 ## Wave 3
 
-### Task 18: Frame workers (19 frames, ≤ 8 concurrent)
+### Task 18: Frame workers (19 frames, ≤ 8 concurrent, Grok 4.7)
+
+Dispatch each frame with `model: grok-4.7-high-fast`. The F10 picture lock and the Batch A lessons are already in the frame-worker template. Do not spend a batch rediscovering the plate, the tilt, the ribbon mask, or the chip crop.
 
 | Batch | Frames |
 |---|---|
@@ -1538,7 +1565,7 @@ python3 scripts/qa_motion.py renders/frames/10.mp4 --calibrate
 | B | F07, F11, F13, F15, F16, F01, F04, F08 |
 | C | F12, F17, F20 |
 
-Each batch waits for the previous batch's reviews so lessons propagate (add a "Lessons" line to the next batch's dispatch).
+Batch A is built. Batches B and C start from the Batch A lessons above. Do not add a fresh lessons pass unless a new still fails one of those checks.
 
 - [ ] **Step 1:** Dispatch the frame-worker template per frame. Bridge frames (F01, F04, F08, F12, F17, F20) mount a `<video>` slot for `assets/el-video/Ax.mp4` over the ribbon field fallback, so they render before T19 lands.
 - [ ] **Step 2:** Reviewer per frame (sonnet). Critical/Important → re-dispatch the same worker with findings; Minor → `NOTES.md`.
@@ -1604,7 +1631,7 @@ Expected: motion exit 0, loudness PASS, duration assert passes. Paste all output
 
 - [ ] **Step 1:** `video-production-audit` on `renders/aiden-sre-launch.mp4`, plus `review-animations`, `critique-composition`, `critique-visual-hierarchy` on hold stills and every cue time. Write `AUDIT.md` (same structure as the earlier film's).
 - [ ] **Step 2:** Check A1–A15 with evidence in `AUDIT.md`.
-- [ ] **Step 3:** Each P0/P1 → re-dispatch the owning frame worker or the mix step; re-render affected frames; rerun T20 Step 3 and T21. Loop until the verdict is "ship".
+- [ ] **Step 3:** Each P0/P1 → re-dispatch the owning frame worker (`model: grok-4.7-high-fast`) or the mix step; re-render affected frames; rerun T20 Step 3 and T21. Loop until the verdict is "ship".
 
 ### Task 23: Deliver → Gate G4
 
@@ -1618,6 +1645,8 @@ Expected: motion exit 0, loudness PASS, duration assert passes. Paste all output
 
 ## Self-review (writing-plans)
 
-- **Spec coverage:** §2 inputs (T1, T6–T8); §3 rules (T6 Step 3, frames.json counter, T17 §6.3, T21 QA); §4 tool roles + MCP contract (T1 Step 7, T9–T15, T19); §5 motion (T17 calibrate, T18 self-check, T21); §6 (T1 Step 4, T17); §7 (T2, T16); §8 (T15, T19); §9.1 (T9–T11); §9.2 (T11–T13); §9.3 (T14); §9.4 (T20); §10 (T1, T21); §11 (skills table); §12 (dispatch, templates, model routing); §13 A1–A15 (T13 Step 3, T21, T22); §14 (gates G1a–G4; U3 default in T17); §16 (caption sidecar only, T20/T23).
+- **Spec coverage:** §2 inputs (T1, T6–T8); §3 rules (T6 Step 3, frames.json counter, T17 §6.3, T21 QA); §4 tool roles + MCP contract (T1 Step 7, T9–T15, T19); §5 motion (T17 calibrate, T18 self-check, T21); §6 (T1 Step 4, T17); §7 (T2, T16); §8 (T15, T19); §9.1 (T9–T11); §9.2 (T11–T13); §9.3 (T14); §9.4 (T20); §10 (T1, T21); §11 (skills table); §12 (dispatch, templates, model routing); §13 A1–A15 (T13 Step 3, T21, T22); §14 (gates G1a–G4; U3 Evidence blur and §6.3 rest tilt retired by the F10 picture lock); §16 (caption sidecar only, T20/T23).
+- **F10 lock:** product plates are the Figma PNGs; rest tilt is `rotateX(2deg) rotateY(-4deg)` on the stage only; frame renders from T18 on use Grok 4.7 (`grok-4.7-high-fast`).
+- **Batch A lessons:** ribbon host masked out of the center and kept under opaque type; floating chips show the whole text column (`object-fit: contain`) in front of the plate and inside the 1920 frame after the tilt; workers do not edit `index.html`.
 - **Placeholders:** values unknowable in advance (voice id, generation ids, music offset, final-hit time, MCP URL field) are produced by named steps and written to named files.
 - **Type consistency:** `frames.json` keys (`frame`, `line`, `est`, `flex`, `snap`, `ost`, `hits`) are read identically by `build_timing.layout`, `fit_bridges.fit`, `write_docs.storyboard`; `timing.json` keys (`start`, `dur`, `cues[].local`, `hits[].t`) match the frame-worker template; `audio_meta.json` matches `product-launch-video`'s `toProductLaunchMeta` shape (`frame`, `path`, `duration_s`, `words[{id,text,start,end}]`).

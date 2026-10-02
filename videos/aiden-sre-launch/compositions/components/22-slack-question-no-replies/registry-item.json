@@ -1,0 +1,12 @@
+{
+  "name": "22-slack-question-no-replies",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/99:3",
+  "files": [
+    {
+      "path": "22-slack-question-no-replies.html",
+      "target": "compositions/components/22-slack-question-no-replies/22-slack-question-no-replies.html",
+      "type": "hyperframes:snippet"
+    }
+  ]
+}

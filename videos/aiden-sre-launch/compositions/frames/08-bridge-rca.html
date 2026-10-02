@@ -1,0 +1,138 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("shared/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-panel: #211d15;
+    --sg-hairline: #3f3b39;
+    --sg-cream: #f1eae0;
+    --sg-cream-bright: #faf7f2;
+    --sg-mute: #96897c;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+    --sg-coral: #fda39b;
+    --sg-amber: #fdd89b;
+    --sg-green: #a6f0bf;
+    --sg-glow-violet: rgba(186, 153, 253, 0.35);
+    --sg-glow-cyan: rgba(160, 234, 252, 0.3);
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #14110c;
+    font-family: "Geist", sans-serif;
+    color: var(--sg-cream);
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f08-stage {
+    background: #14110c;
+  }
+  .el-atmo {
+    width: 1920px;
+    height: 1080px;
+    object-fit: cover;
+    z-index: 3;
+  }
+  .f08-lock {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 392px;
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+  }
+  .f08-slam {
+    position: relative;
+    transform-origin: 50% 50%;
+  }
+  .f08-ink {
+    position: absolute;
+    left: -72px;
+    right: -72px;
+    top: -40px;
+    bottom: -40px;
+    background: #14110c;
+    box-shadow: 0 0 72px 48px #14110c;
+  }
+  .f08-eyebrow {
+    position: relative;
+    font-family: "Geist", sans-serif;
+    font-size: 64px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    color: #f1eae0;
+    opacity: 1;
+    white-space: nowrap;
+    text-align: center;
+  }
+</style>
+
+<div id="root" data-composition-id="08-bridge-rca" data-width="1920" data-height="1080" data-duration="2.896">
+  <div class="clip f08-stage" data-start="0" data-duration="2.896" data-track-index="0"></div>
+
+  <video class="clip el-atmo" src="assets/el-video/A3.mp4" data-start="0" data-duration="2.896" data-track-index="4" data-media-start="0" muted playsinline></video>
+
+  <div class="clip" id="f08-ribbon-host" data-start="0" data-duration="2.896" data-track-index="1"></div>
+
+  <div class="clip" data-start="0" data-duration="2.896" data-track-index="2">
+    <div class="f08-lock">
+      <div class="f08-slam" id="f08-slam">
+        <div class="f08-ink"></div>
+        <div class="f08-eyebrow">ROOT CAUSE ANALYSIS</div>
+      </div>
+    </div>
+  </div>
+
+  
+  
+</div>
+
+<script src="assets/frames/10/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "08-bridge-rca";
+  const D = 2.896;
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/10/ribbons-mount.js", import.meta.url).href,
+  );
+
+  mountRibbons(document.getElementById("f08-ribbon-host"), {
+    seed: 808,
+    count: 24,
+    split: 0.62,
+    modes: [
+      { t: 0, mode: "storm", opacity: 0.82 },
+      { t: 0.42, mode: "converge", opacity: 0.9, target: { x: 960, y: 760 } },
+    ],
+  }).bind(tl, D);
+
+  tl.fromTo(
+    "#f08-slam",
+    { scale: 1.16 },
+    { scale: 1, duration: 0.42, ease: "back.out(1.8)" },
+    0,
+  );
+
+  tl.to({}, { duration: D }, 0);
+</script>
+</template>

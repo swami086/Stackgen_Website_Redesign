@@ -1,0 +1,68 @@
+[
+ {
+  "id": "w0",
+  "text": "Even",
+  "start": 0.1,
+  "end": 0.28
+ },
+ {
+  "id": "w1",
+  "text": "with",
+  "start": 0.28,
+  "end": 0.56
+ },
+ {
+  "id": "w2",
+  "text": "the",
+  "start": 0.56,
+  "end": 0.77
+ },
+ {
+  "id": "w3",
+  "text": "cause",
+  "start": 0.77,
+  "end": 1.11
+ },
+ {
+  "id": "w4",
+  "text": "in",
+  "start": 1.11,
+  "end": 1.25
+ },
+ {
+  "id": "w5",
+  "text": "hand,",
+  "start": 1.25,
+  "end": 1.56
+ },
+ {
+  "id": "w6",
+  "text": "the",
+  "start": 1.77,
+  "end": 1.9
+ },
+ {
+  "id": "w7",
+  "text": "fix",
+  "start": 1.99,
+  "end": 2.23
+ },
+ {
+  "id": "w8",
+  "text": "is",
+  "start": 2.24,
+  "end": 2.43
+ },
+ {
+  "id": "w9",
+  "text": "often",
+  "start": 2.43,
+  "end": 2.91
+ },
+ {
+  "id": "w10",
+  "text": "manual.",
+  "start": 2.91,
+  "end": 3.48
+ }
+]

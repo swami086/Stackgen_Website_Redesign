@@ -1,0 +1,32 @@
+{
+ "href": "https://stage.dev.stackgen.com/app/sre/ai-sre-demo/alerts",
+ "captured": "2026-10-01",
+ "font": "IBM Plex Sans, ui-sans-serif, system-ui, sans-serif",
+ "filters": [
+  "Active",
+  "Ignored",
+  "All Sources",
+  "All Severities",
+  "All Correlation",
+  "Sort by severity"
+ ],
+ "row_actions": [
+  "Investigate",
+  "View investigation",
+  "Open investigation"
+ ],
+ "sample_row": {
+  "severity": "Medium",
+  "title": "System Load is High",
+  "source": "datadog",
+  "copy": "This monitor monitors the system load for a local machine ~ laptop",
+  "age": "20d ago"
+ },
+ "nav": [
+  "Alerts",
+  "Investigations 7",
+  "Discovery",
+  "Conversation History"
+ ],
+ "note": "Act now, investigation popup, and recommended action not captured yet. Read-only; no approve or ignore."
+}

@@ -1,82 +1,82 @@
 [
  {
   "word": "Your",
-  "start": 0.0,
-  "end": 0.221
+  "start": 0.05,
+  "end": 0.35
  },
  {
   "word": "engineers",
-  "start": 0.267,
-  "end": 0.697
+  "start": 0.35,
+  "end": 1.14
  },
  {
   "word": "see",
-  "start": 0.731,
-  "end": 0.882
+  "start": 1.14,
+  "end": 1.39
  },
  {
   "word": "only",
-  "start": 0.952,
-  "end": 1.207
+  "start": 1.5,
+  "end": 1.75
  },
  {
   "word": "the",
-  "start": 1.254,
-  "end": 1.335
+  "start": 1.75,
+  "end": 2.01
  },
  {
   "word": "alerts",
-  "start": 1.393,
-  "end": 1.718
+  "start": 2.01,
+  "end": 2.53
  },
  {
   "word": "that",
-  "start": 1.753,
-  "end": 1.881
+  "start": 2.6,
+  "end": 2.71
  },
  {
   "word": "need",
-  "start": 1.939,
-  "end": 2.125
+  "start": 2.72,
+  "end": 3.22
  },
  {
   "word": "them,",
-  "start": 2.171,
-  "end": 2.473
+  "start": 3.22,
+  "end": 3.28
  },
  {
   "word": "and",
-  "start": 2.647,
-  "end": 2.81
+  "start": 3.76,
+  "end": 3.9
  },
  {
   "word": "save",
-  "start": 2.879,
-  "end": 3.088
+  "start": 3.92,
+  "end": 4.24
  },
  {
   "word": "their",
-  "start": 3.111,
-  "end": 3.251
+  "start": 4.24,
+  "end": 4.62
  },
  {
   "word": "energy",
-  "start": 3.309,
-  "end": 3.692
+  "start": 4.62,
+  "end": 4.98
  },
  {
   "word": "for",
-  "start": 3.762,
-  "end": 3.878
+  "start": 5.16,
+  "end": 5.37
  },
  {
   "word": "real",
-  "start": 3.936,
-  "end": 4.122
+  "start": 5.37,
+  "end": 5.74
  },
  {
   "word": "incidents.",
-  "start": 4.191,
-  "end": 5.016
+  "start": 5.77,
+  "end": 6.17
  }
 ]

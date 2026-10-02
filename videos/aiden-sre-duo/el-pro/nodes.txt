@@ -1,0 +1,17 @@
+V0kcxRRAuVWFSjQ0xVwi 07-alert-flood.mp4
+DLqoxHSDsSgtkMfkxQHk 00-title.mp4
+hFASHgCpWqjUqBJv9U4V 09-connections.mp4
+8KmpusIIAMdRGuogRdU6 02-discovery.mp4
+DKaITNUStQoxGNAogS5d 01-alert-triage.mp4
+M0xw90mrUDOtFCPJVvFd 11-site-triage.mp4
+cbcXFKxxcXCX2LpH71Zg 15-act-now.mp4
+TQAXGKRn0ByW5pJIY9WT 04-root-cause.mp4
+5KE1bkHH3xtY9XKZNU95 16-ruled-out.mp4
+pQa7wgjHWg6oMz4A9yVQ 24-downstream.mp4
+XIm9B01q6TOj1Xoy4edj 22-slack.mp4
+ZgXiUa4GcZVi1nBtE7p7 12-site-remediation.mp4
+ORgQx8HZBC2ZyGTbtgZV 17-recommended-action.mp4
+mWajwzORwgm4T1YCT5rE 26-resolved.mp4
+67zzRrwzVVH2H6PH8nt0 05-slos.mp4
+1PMdSLYtG0fz621hf1oO 08-world-model.mp4
+a86ZyrbuftM7BuR348A1 16-end-card.mp4

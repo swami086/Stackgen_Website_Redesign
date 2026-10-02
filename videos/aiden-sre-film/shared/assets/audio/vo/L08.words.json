@@ -1,77 +1,77 @@
 [
  {
   "word": "When",
-  "start": 0.0,
-  "end": 0.221
+  "start": 0.13,
+  "end": 0.28
  },
  {
   "word": "several",
-  "start": 0.302,
-  "end": 0.627
+  "start": 0.28,
+  "end": 0.77
  },
  {
   "word": "things",
-  "start": 0.685,
-  "end": 0.94
+  "start": 0.77,
+  "end": 1.18
  },
  {
   "word": "break",
-  "start": 0.998,
-  "end": 1.231
+  "start": 1.18,
+  "end": 1.54
  },
  {
   "word": "at",
-  "start": 1.265,
-  "end": 1.335
+  "start": 1.54,
+  "end": 1.67
  },
  {
   "word": "once,",
-  "start": 1.405,
-  "end": 1.776
+  "start": 1.67,
+  "end": 1.86
  },
  {
   "word": "it",
-  "start": 1.985,
-  "end": 2.125
+  "start": 2.12,
+  "end": 2.2
  },
  {
   "word": "points",
-  "start": 2.183,
-  "end": 2.461
+  "start": 2.28,
+  "end": 2.6
  },
  {
   "word": "you",
-  "start": 2.496,
-  "end": 2.589
+  "start": 2.6,
+  "end": 2.8
  },
  {
   "word": "to",
-  "start": 2.624,
-  "end": 2.67
+  "start": 2.8,
+  "end": 2.9
  },
  {
   "word": "the",
-  "start": 2.717,
-  "end": 2.786
+  "start": 2.9,
+  "end": 3.06
  },
  {
   "word": "one",
-  "start": 2.868,
-  "end": 3.03
+  "start": 3.06,
+  "end": 3.22
  },
  {
   "word": "that",
-  "start": 3.053,
-  "end": 3.181
+  "start": 3.22,
+  "end": 3.43
  },
  {
   "word": "started",
-  "start": 3.228,
-  "end": 3.599
+  "start": 3.43,
+  "end": 3.8
  },
  {
   "word": "it.",
-  "start": 3.657,
-  "end": 4.087
+  "start": 3.8,
+  "end": 3.9
  }
 ]

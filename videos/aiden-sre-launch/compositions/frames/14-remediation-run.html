@@ -1,0 +1,392 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("shared/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Geist Mono";
+    src: url("shared/fonts/GeistMono-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-panel: #211d15;
+    --sg-hairline: #3f3b39;
+    --sg-cream: #f1eae0;
+    --sg-cream-bright: #faf7f2;
+    --sg-mute: #96897c;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+    --sg-coral: #fda39b;
+    --sg-amber: #fdd89b;
+    --sg-green: #a6f0bf;
+    --sg-glow-violet: rgba(186, 153, 253, 0.35);
+    --sg-glow-cyan: rgba(160, 234, 252, 0.3);
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: "Geist", sans-serif;
+    color: var(--sg-cream);
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f14-bg-fill {
+    background: radial-gradient(1200px 700px at 50% 38%, var(--sg-ink-raised) 0%, var(--sg-ink) 72%);
+  }
+  .f14-world {
+    perspective: 2400px;
+    transform-style: preserve-3d;
+  }
+  .f14-cam {
+    position: absolute;
+    left: 960px;
+    top: 420px;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+  }
+  .f14-panel-stage {
+    position: absolute;
+    left: -768px;
+    top: -354px;
+    width: 1536px;
+    height: 709px;
+    transform-style: preserve-3d;
+  }
+  .f14-panel-glow {
+    position: absolute;
+    left: 50%;
+    top: 92%;
+    width: 920px;
+    height: 120px;
+    margin-left: -460px;
+    background: radial-gradient(ellipse at center, var(--sg-glow-violet) 0%, transparent 70%);
+    opacity: 0.2;
+    filter: blur(8px);
+  }
+  .f14-panel {
+    position: absolute;
+    inset: 0;
+    border-radius: 2px;
+    box-shadow: 0 60px 120px rgba(0, 0, 0, 0.55);
+  }
+  .f14-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-top: 1px solid rgba(241, 234, 224, 0.22);
+    pointer-events: none;
+    z-index: 6;
+  }
+  .f14-ui-viewport {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #f4f5f8;
+  }
+  .f14-ui-scaler {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 886px;
+    zoom: 0.8;
+  }
+  .f14-ui-frame {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 886px;
+    object-fit: fill;
+    border: 0;
+  }
+  .f14-fg {
+    z-index: 8;
+  }
+  .f14-band {
+    position: absolute;
+    left: 192px;
+    top: 808px;
+    width: 1536px;
+    height: 52px;
+  }
+  .f14-chip {
+    position: absolute;
+    top: 0;
+    height: 42px;
+    box-sizing: border-box;
+    padding: 8px 14px;
+    font-family: "Geist", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.01em;
+    text-align: center;
+    white-space: nowrap;
+    color: var(--sg-cream-bright);
+    background: var(--sg-panel);
+    border: 1px solid var(--sg-hairline);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    transform-origin: 50% 50%;
+    will-change: transform;
+  }
+  .f14-chip-restart { left: 187px; width: 140px; }
+  .f14-chip-scale { left: 339px; width: 112px; }
+  .f14-chip-reroute { left: 463px; width: 236px; }
+  .f14-chip-rollback { left: 711px; width: 156px; }
+  .f14-chip-approval { left: 879px; width: 210px; z-index: 2; }
+  .f14-chip-audit { left: 1101px; width: 248px; }
+  .f14-burst {
+    position: absolute;
+    left: 960px;
+    top: -3px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(166, 240, 191, 0.85) 0%, rgba(166, 240, 191, 0) 70%);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .f14-ripple {
+    position: absolute;
+    left: 1148px;
+    top: 801px;
+    width: 56px;
+    height: 56px;
+    margin: 0;
+    border-radius: 50%;
+    border: 2px solid var(--sg-green);
+    opacity: 0;
+    z-index: 9;
+    pointer-events: none;
+  }
+  .f14-cursor {
+    position: absolute;
+    left: 1176px;
+    top: 829px;
+    width: 36px;
+    height: 36px;
+    z-index: 12;
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+
+<div id="root" data-composition-id="14-remediation-run" data-width="1920" data-height="1080" data-duration="12.855">
+  <div class="clip f14-bg-fill" data-start="0" data-duration="12.855" data-track-index="0"></div>
+
+  <div class="clip" id="f14-ribbon-host" data-start="0" data-duration="12.855" data-track-index="1"></div>
+
+  <div class="clip f14-world" id="f14-world" data-start="0" data-duration="12.855" data-track-index="2">
+    <div class="f14-cam" id="f14-cam">
+      <div class="f14-panel-stage" id="f14-panel-stage">
+        <div class="f14-panel-glow"></div>
+        <div class="f14-panel" id="f14-panel">
+          <div class="f14-ui-viewport">
+            <div class="f14-ui-scaler">
+              <img class="f14-ui-frame" id="f14-ui" src="source/figma/64-2.png" alt="Recommended actions" />
+              <video
+                class="f14-ui-frame"
+                src="assets/el-pro/17-recommended-action.mp4"
+                data-start="0"
+                data-duration="12.855"
+                data-track-index="4"
+                data-media-start="0"
+                muted
+                playsinline
+              ></video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="clip f14-fg" data-start="0" data-duration="12.855" data-track-index="3">
+    <div class="f14-band" id="f14-band">
+      <div class="f14-chip f14-chip-restart" id="f14-chip-restart">Restart</div>
+      <div class="f14-chip f14-chip-scale" id="f14-chip-scale">scale</div>
+      <div class="f14-chip f14-chip-reroute" id="f14-chip-reroute">reroute traffic</div>
+      <div class="f14-chip f14-chip-rollback" id="f14-chip-rollback">roll back</div>
+      <div class="f14-burst" id="f14-burst"></div>
+      <div class="f14-chip f14-chip-approval" id="f14-chip-approval">Approval gate</div>
+      <div class="f14-chip f14-chip-audit" id="f14-chip-audit">full audit trail</div>
+    </div>
+    <div class="f14-ripple" id="f14-ripple-1"></div>
+    <div class="f14-ripple" id="f14-ripple-2"></div>
+    <svg class="f14-cursor" id="f14-cursor" viewBox="0 0 36 36" aria-hidden="true">
+      <path d="M0 0 L0 26 L7 19 L13 30 L17 28 L11 17 L22 17 Z" fill="#faf7f2" stroke="#14110c" stroke-width="1.5"></path>
+    </svg>
+  </div>
+
+  
+  
+  
+  
+  
+  
+</div>
+
+<script src="assets/frames/10/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "14-remediation-run";
+  const D = 12.855;
+  const CUES = {
+    restart: 2.195,
+    scale: 3.425,
+    reroute: 4.535,
+    rollback: 5.705,
+    approval: 9.255,
+    audit: 11.775,
+  };
+  const POP = 0.48;
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/10/ribbons-mount.js", import.meta.url).href,
+  );
+
+  mountRibbons(document.getElementById("f14-ribbon-host"), {
+    seed: 414,
+    count: 24,
+    split: 0.62,
+    modes: [
+      { t: 0, mode: "dormant", opacity: 0.5 },
+      { t: 1.4, mode: "converge", opacity: 0.82, target: { x: 960, y: 420 } },
+      { t: 6.2, mode: "rail", opacity: 0.7 },
+    ],
+  }).bind(tl, D);
+
+  const cam = document.getElementById("f14-cam");
+  const panelStage = document.getElementById("f14-panel-stage");
+  const approval = document.getElementById("f14-chip-approval");
+  const cursor = document.getElementById("f14-cursor");
+  const burst = document.getElementById("f14-burst");
+
+  gsap.set(panelStage, {
+    rotationX: 2,
+    rotationY: -4,
+    transformPerspective: 2400,
+  });
+
+  tl.fromTo(
+    panelStage,
+    { y: 220, scale: 0.72, rotationX: 8, rotationY: -6, opacity: 0.2 },
+    {
+      y: 0,
+      scale: 1,
+      rotationX: 2,
+      rotationY: -4,
+      opacity: 1,
+      duration: 0.85,
+      ease: "back.out(1.4)",
+    },
+    0.05,
+  );
+
+  tl.fromTo(
+    cam,
+    { scale: 0.96, x: 18, y: 10 },
+    { scale: 1.04, x: -16, y: -6, duration: D, ease: "power2.inOut" },
+    0,
+  );
+
+  tl.to(
+    panelStage,
+    { rotationX: 2.4, rotationY: -3.4, duration: D - 1.1, ease: "sine.inOut" },
+    1.1,
+  );
+
+  const chips = [
+    ["#f14-chip-restart", CUES.restart],
+    ["#f14-chip-scale", CUES.scale],
+    ["#f14-chip-reroute", CUES.reroute],
+    ["#f14-chip-rollback", CUES.rollback],
+    ["#f14-chip-approval", CUES.approval],
+    ["#f14-chip-audit", CUES.audit],
+  ];
+  chips.forEach(([sel, at]) => {
+    tl.fromTo(
+      sel,
+      { scale: 0, opacity: 0, y: 16 },
+      { scale: 1, opacity: 1, y: 0, duration: POP, ease: "power3.out" },
+      at,
+    );
+  });
+
+  const moveAt = 8.85;
+  const clickAt = CUES.approval + POP;
+  const pressDur = 0.1;
+  const releaseAt = clickAt + pressDur;
+
+  tl.fromTo(
+    cursor,
+    { x: 420, y: 150, opacity: 0 },
+    { x: 0, y: 0, opacity: 1, duration: 0.65, ease: "power3.out" },
+    moveAt,
+  );
+
+  tl.to(
+    cursor,
+    { scale: 0.86, duration: pressDur, ease: "power2.in", yoyo: true, repeat: 1 },
+    clickAt,
+  );
+  tl.to(
+    approval,
+    { scale: 0.94, duration: pressDur, ease: "power1.in" },
+    clickAt,
+  );
+  tl.to(
+    approval,
+    {
+      scale: 1,
+      borderColor: "#a6f0bf",
+      color: "#a6f0bf",
+      duration: 0.48,
+      ease: "back.out(1.5)",
+    },
+    releaseAt,
+  );
+
+  tl.fromTo(
+    burst,
+    { scale: 1, opacity: 0 },
+    { scale: 1.6, opacity: 0.7, duration: 0.4, ease: "power2.out" },
+    releaseAt,
+  );
+  tl.to(burst, { opacity: 0, duration: 0.45, ease: "power2.in" }, releaseAt + 0.4);
+
+  tl.fromTo(
+    "#f14-ripple-1",
+    { scale: 0, opacity: 0.9 },
+    { scale: 1.7, opacity: 0, duration: 0.7, ease: "power2.out", immediateRender: false },
+    clickAt,
+  );
+  tl.fromTo(
+    "#f14-ripple-2",
+    { scale: 0, opacity: 0.85 },
+    { scale: 1.7, opacity: 0, duration: 0.7, ease: "power2.out", immediateRender: false },
+    clickAt + 0.08,
+  );
+
+  tl.to({}, { duration: D }, 0);
+</script>
+</template>

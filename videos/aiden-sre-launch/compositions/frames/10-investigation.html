@@ -1,0 +1,486 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("shared/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Geist Mono";
+    src: url("shared/fonts/GeistMono-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-panel: #211d15;
+    --sg-hairline: #3f3b39;
+    --sg-cream: #f1eae0;
+    --sg-cream-bright: #faf7f2;
+    --sg-mute: #96897c;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+    --sg-coral: #fda39b;
+    --sg-amber: #fdd89b;
+    --sg-green: #a6f0bf;
+    --sg-glow-violet: rgba(186, 153, 253, 0.35);
+    --sg-glow-cyan: rgba(160, 234, 252, 0.3);
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: "Geist", sans-serif;
+    color: var(--sg-cream);
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f10-bg-fill {
+    background: radial-gradient(1200px 700px at 50% 38%, var(--sg-ink-raised) 0%, var(--sg-ink) 72%);
+  }
+  .f10-world {
+    perspective: 2400px;
+    transform-style: preserve-3d;
+  }
+  .f10-cam {
+    position: absolute;
+    left: 960px;
+    top: 420px;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+  }
+  .f10-panel-stage {
+    position: absolute;
+    left: -768px;
+    top: -354px;
+    width: 1536px;
+    height: 709px;
+    transform-style: preserve-3d;
+  }
+  .f10-panel-glow {
+    position: absolute;
+    left: 50%;
+    top: 92%;
+    width: 920px;
+    height: 120px;
+    margin-left: -460px;
+    background: radial-gradient(ellipse at center, var(--sg-glow-violet) 0%, transparent 70%);
+    opacity: 0.2;
+    filter: blur(8px);
+  }
+  .f10-panel {
+    position: absolute;
+    inset: 0;
+    border-radius: 2px;
+    box-shadow: 0 60px 120px rgba(0, 0, 0, 0.55);
+  }
+  .f10-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-top: 1px solid rgba(241, 234, 224, 0.22);
+    pointer-events: none;
+    z-index: 6;
+  }
+  .f10-ui-viewport {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #f4f5f8;
+  }
+  .f10-ui-scaler {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 886px;
+    zoom: 0.8;
+  }
+  .f10-ui-scroller {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 886px;
+  }
+  .f10-ui-frame {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 886px;
+    object-fit: fill;
+    border: 0;
+  }
+  .f10-cream-multiply {
+    position: absolute;
+    inset: 0;
+    background: #f1eae0;
+    mix-blend-mode: multiply;
+    opacity: 0.06;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .f10-dof-nav {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    z-index: 4;
+    --dof: 0px;
+    backdrop-filter: blur(var(--dof));
+    -webkit-backdrop-filter: blur(var(--dof));
+    background: rgba(244, 245, 248, 0.08);
+    pointer-events: none;
+    left: 0;
+    width: 35px;
+  }
+  .f10-fg-layer {
+    z-index: 8;
+  }
+  .f10-chip {
+    position: absolute;
+    padding: 8px 14px;
+    font-family: "Geist Mono", monospace;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--sg-cream-bright);
+    background: var(--sg-panel);
+    border: 1px solid var(--sg-hairline);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  }
+  .f10-ost {
+    position: absolute;
+    left: 80px;
+    top: 900px;
+    max-width: 720px;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--sg-cream);
+    text-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  }
+  .f10-ost .word {
+    display: inline-block;
+    margin-right: 0.22em;
+    transform-origin: 50% 50%;
+  }
+  .f10-hypo-card {
+    position: absolute;
+    left: 248px;
+    top: 520px;
+    width: 620px;
+    padding: 18px 20px 16px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid #e2e5e9;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.28);
+    color: #181d24;
+  }
+  .f10-hypo-title {
+    font-family: "Geist", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .f10-hypo-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    font-family: "Geist", sans-serif;
+    font-size: 14px;
+  }
+  .f10-hypo-row.is-struck {
+    opacity: 0.45;
+  }
+  .f10-hypo-row.is-struck .label {
+    text-decoration: line-through;
+  }
+  .f10-hypo-track {
+    flex: 1;
+    height: 8px;
+    background: #e6eaee;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .f10-hypo-fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #9e33ea, #ba99fd);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  .f10-hypo-pct {
+    width: 44px;
+    font-family: "Geist Mono", monospace;
+    font-size: 13px;
+    text-align: right;
+  }
+  .f10-callout {
+    position: absolute;
+    left: 860px;
+    top: 920px;
+    padding: 10px 14px;
+    font-family: "Geist Mono", monospace;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--sg-cream);
+    background: var(--sg-panel);
+    border: 1px solid var(--sg-hairline);
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  .f10-track-box {
+    position: absolute;
+    left: 520px;
+    top: 300px;
+    width: 280px;
+    height: 120px;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .f10-track-box .corner {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border-color: #facc15;
+    border-style: solid;
+  }
+  .f10-track-box .tl {
+    top: 0;
+    left: 0;
+    border-width: 4px 0 0 4px;
+  }
+  .f10-track-box .tr {
+    top: 0;
+    right: 0;
+    border-width: 4px 4px 0 0;
+  }
+  .f10-track-box .bl {
+    bottom: 0;
+    left: 0;
+    border-width: 0 0 4px 4px;
+  }
+  .f10-track-box .br {
+    bottom: 0;
+    right: 0;
+    border-width: 0 4px 4px 0;
+  }
+  .f10-track-label {
+    position: absolute;
+    top: -36px;
+    left: 0;
+    padding: 4px 8px;
+    background: #facc15;
+    color: #111;
+    font-family: "Geist Mono", monospace;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+</style>
+
+<div id="root" data-composition-id="10-investigation" data-width="1920" data-height="1080" data-duration="13.185">
+  <div
+    class="clip f10-bg-fill"
+    data-start="0"
+    data-duration="13.185"
+    data-track-index="0"
+  ></div>
+
+  <div
+    class="clip"
+    id="f10-ribbon-host"
+    data-start="0"
+    data-duration="13.185"
+    data-track-index="1"
+  ></div>
+
+  <div
+    class="clip f10-world"
+    id="f10-world"
+    data-start="0"
+    data-duration="13.185"
+    data-track-index="2"
+  >
+    <div class="f10-cam" id="f10-cam">
+      <div class="f10-panel-stage" id="f10-panel-stage">
+        <div class="f10-panel-glow"></div>
+        <div class="f10-panel" id="f10-panel">
+          <div class="f10-ui-viewport">
+            <div class="f10-ui-scaler" id="f10-ui-scaler">
+              <img
+                class="f10-ui-frame"
+                id="f10-ui-a"
+                src="source/figma/58-2-triage.png"
+                alt="Investigation"
+              />
+              <img
+                class="f10-ui-frame"
+                id="f10-ui-b"
+                src="source/figma/61-2.png"
+                alt="Ruled out"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="clip f10-fg-layer"
+    data-start="0"
+    data-duration="13.185"
+    data-track-index="3"
+  >
+    <div class="f10-ost" id="f10-ost">
+      <span class="word" data-word="hyp">Hypotheses</span>
+      <span> </span>
+      <span class="word" data-word="conf">with confidence</span>
+      <span> </span>
+      <span class="word" data-word="scores">scores</span>
+    </div>
+
+    <div class="f10-callout" id="f10-callout">ruled out · 4%</div>
+  </div>
+
+  
+  
+  
+</div>
+
+<script src="assets/frames/10/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "10-investigation";
+  const D = 13.185;
+  const T = {
+    panelOpen: 0.35,
+    chipsStart: 3.41,
+    chipsEnd: 5.68,
+    hypoOst: 7.86,
+    hypoBuild: 7.74,
+    ruledOut: 12.37,
+  };
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/10/ribbons-mount.js", import.meta.url).href,
+  );
+
+  const ribbonHost = document.getElementById("f10-ribbon-host");
+  mountRibbons(ribbonHost, {
+    seed: 410,
+    count: 26,
+    split: 0.68,
+    modes: [
+      { t: 0, mode: "dormant", opacity: 0.55 },
+      { t: 2.8, mode: "converge", opacity: 0.85, target: { x: 960, y: 420 } },
+      { t: 8.5, mode: "rail", opacity: 0.72 },
+    ],
+  }).bind(tl, D);
+
+  const cam = document.getElementById("f10-cam");
+  const panelStage = document.getElementById("f10-panel-stage");
+  const uiA = document.getElementById("f10-ui-a");
+  const uiB = document.getElementById("f10-ui-b");
+  const callout = document.getElementById("f10-callout");
+  const ostWords = document.querySelectorAll("#f10-ost .word");
+
+  gsap.set(panelStage, {
+    rotationX: 2,
+    rotationY: -4,
+    transformPerspective: 2400,
+  });
+  gsap.set([uiA, uiB], { opacity: 1 });
+  gsap.set(uiB, { opacity: 0 });
+
+  tl.fromTo(
+    panelStage,
+    { y: 220, scale: 0.72, rotationX: 8, rotationY: -6, opacity: 0.2 },
+    {
+      y: 0,
+      scale: 1,
+      rotationX: 2,
+      rotationY: -4,
+      opacity: 1,
+      duration: 0.85,
+      ease: "back.out(1.4)",
+    },
+    0.05,
+  );
+
+  tl.fromTo(
+    cam,
+    { scale: 0.96, x: 18, y: 10 },
+    { scale: 1.06, x: -22, y: -8, duration: D, ease: "power2.inOut" },
+    0,
+  );
+
+  const ostTimings = {
+    hyp: { start: 7.5, end: 8.1 },
+    conf: { start: 8.0, end: 8.55 },
+    scores: { start: 7.86, end: 8.35 },
+  };
+  const ostDriver = { t: 0 };
+  tl.to(
+    ostDriver,
+    {
+      t: D,
+      duration: D,
+      ease: "none",
+      onUpdate: () => {
+        ostWords.forEach((el) => {
+          const key = el.dataset.word;
+          const w = ostTimings[key];
+          if (!w) return;
+          let env = 0;
+          const time = ostDriver.t;
+          if (time >= w.start && time < w.end) env = Math.min((time - w.start) / 0.12, 1);
+          else if (time >= w.end) env = Math.max(0.18, 1 - (time - w.end) / 0.35);
+          el.style.textShadow = `0 0 ${34 * env}px rgba(186,153,253,${0.35 + env * 0.45})`;
+          el.style.transform = `scale(${1 + env * 0.08})`;
+          el.style.color = env > 0.35 ? "#faf7f2" : "#96897c";
+        });
+      },
+    },
+    0,
+  );
+  tl.fromTo(
+    document.getElementById("f10-ost"),
+    { opacity: 0, y: 16 },
+    { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+    7.5,
+  );
+
+  tl.to(uiA, { opacity: 0, duration: 0.001 }, T.ruledOut);
+  tl.to(uiB, { opacity: 1, duration: 0.001 }, T.ruledOut);
+
+  tl.fromTo(
+    callout,
+    { opacity: 0, y: 16, scale: 0.94 },
+    { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.8)" },
+    T.ruledOut,
+  );
+
+  tl.to(
+    panelStage,
+    { rotationX: 3, rotationY: -5, duration: 2.4, ease: "sine.inOut" },
+    10.2,
+  );
+
+  tl.to({}, { duration: D }, 0);
+</script>
+</template>

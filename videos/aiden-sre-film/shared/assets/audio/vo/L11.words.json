@@ -1,177 +1,177 @@
 [
  {
   "word": "Aiden",
-  "start": 0.0,
-  "end": 0.302
+  "start": 0.05,
+  "end": 0.09
  },
  {
   "word": "runs",
-  "start": 0.372,
-  "end": 0.639
+  "start": 0.41,
+  "end": 0.72
  },
  {
   "word": "the",
-  "start": 0.673,
-  "end": 0.743
+  "start": 0.76,
+  "end": 0.99
  },
  {
   "word": "remediation,",
-  "start": 0.778,
-  "end": 1.637
+  "start": 0.99,
+  "end": 1.4
  },
  {
   "word": "from",
-  "start": 1.846,
-  "end": 2.02
+  "start": 2.06,
+  "end": 2.14
  },
  {
   "word": "restarting",
-  "start": 2.09,
-  "end": 2.601
+  "start": 2.14,
+  "end": 2.54
  },
  {
   "word": "a",
-  "start": 2.647,
-  "end": 2.67
+  "start": 2.72,
+  "end": 2.81
  },
  {
   "word": "service",
-  "start": 2.74,
-  "end": 3.123
+  "start": 2.81,
+  "end": 3.48
  },
  {
   "word": "or",
-  "start": 3.158,
-  "end": 3.251
+  "start": 3.48,
+  "end": 3.6
  },
  {
   "word": "scaling",
-  "start": 3.32,
-  "end": 3.692
+  "start": 3.6,
+  "end": 4.2
  },
  {
   "word": "out",
-  "start": 3.75,
-  "end": 3.889
+  "start": 4.2,
+  "end": 4.56
  },
  {
   "word": "to",
-  "start": 3.936,
-  "end": 4.005
+  "start": 4.88,
+  "end": 5.0
  },
  {
   "word": "rerouting",
-  "start": 4.087,
-  "end": 4.505
+  "start": 5.0,
+  "end": 5.17
  },
  {
   "word": "traffic",
-  "start": 4.563,
-  "end": 4.981
+  "start": 5.75,
+  "end": 6.1
  },
  {
   "word": "or",
-  "start": 5.062,
-  "end": 5.224
+  "start": 6.41,
+  "end": 6.53
  },
  {
   "word": "rolling",
-  "start": 5.294,
-  "end": 5.584
+  "start": 6.53,
+  "end": 7.08
  },
  {
   "word": "back",
-  "start": 5.631,
-  "end": 5.805
+  "start": 7.12,
+  "end": 7.46
  },
  {
   "word": "a",
-  "start": 5.84,
-  "end": 5.863
+  "start": 7.47,
+  "end": 7.55
  },
  {
   "word": "deployment.",
-  "start": 5.909,
-  "end": 6.502
+  "start": 7.55,
+  "end": 8.12
  },
  {
   "word": "Your",
-  "start": 7.105,
-  "end": 7.291
+  "start": 8.43,
+  "end": 8.68
  },
  {
   "word": "team",
-  "start": 7.338,
-  "end": 7.535
+  "start": 8.96,
+  "end": 9.24
  },
  {
   "word": "sets",
-  "start": 7.605,
-  "end": 7.86
+  "start": 9.24,
+  "end": 9.52
  },
  {
   "word": "which",
-  "start": 7.906,
-  "end": 8.092
+  "start": 9.52,
+  "end": 9.87
  },
  {
   "word": "actions",
-  "start": 8.15,
-  "end": 8.533
+  "start": 9.87,
+  "end": 10.37
  },
  {
   "word": "need",
-  "start": 8.58,
-  "end": 8.719
+  "start": 10.37,
+  "end": 10.46
  },
  {
   "word": "approval,",
-  "start": 8.742,
-  "end": 9.334
+  "start": 10.75,
+  "end": 11.22
  },
  {
   "word": "and",
-  "start": 9.509,
-  "end": 9.659
+  "start": 11.22,
+  "end": 11.43
  },
  {
   "word": "every",
-  "start": 9.741,
-  "end": 10.008
+  "start": 11.43,
+  "end": 11.78
  },
  {
   "word": "action",
-  "start": 10.077,
-  "end": 10.426
+  "start": 11.78,
+  "end": 12.21
  },
  {
   "word": "goes",
-  "start": 10.484,
-  "end": 10.67
+  "start": 12.21,
+  "end": 12.47
  },
  {
   "word": "into",
-  "start": 10.704,
-  "end": 10.855
+  "start": 12.51,
+  "end": 12.77
  },
  {
   "word": "a",
-  "start": 10.937,
-  "end": 10.96
+  "start": 12.77,
+  "end": 12.84
  },
  {
   "word": "full",
-  "start": 11.018,
-  "end": 11.227
+  "start": 12.84,
+  "end": 13.09
  },
  {
   "word": "audit",
-  "start": 11.285,
-  "end": 11.529
+  "start": 13.09,
+  "end": 13.27
  },
  {
   "word": "trail.",
-  "start": 11.564,
-  "end": 12.214
+  "start": 13.56,
+  "end": 13.92
  }
 ]

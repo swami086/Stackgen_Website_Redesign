@@ -1,0 +1,12 @@
+{
+  "name": "13-learn",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/66:73",
+  "files": [
+    {
+      "path": "13-learn.html",
+      "target": "compositions/components/13-learn/13-learn.html",
+      "type": "hyperframes:snippet"
+    }
+  ]
+}

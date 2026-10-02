@@ -1,0 +1,300 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("shared/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Geist Mono";
+    src: url("shared/fonts/GeistMono-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-panel: #211d15;
+    --sg-hairline: #3f3b39;
+    --sg-cream: #f1eae0;
+    --sg-cream-bright: #faf7f2;
+    --sg-mute: #96897c;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+    --sg-coral: #fda39b;
+    --sg-amber: #fdd89b;
+    --sg-green: #a6f0bf;
+    --sg-glow-violet: rgba(186, 153, 253, 0.35);
+    --sg-glow-cyan: rgba(160, 234, 252, 0.3);
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: "Geist", sans-serif;
+    color: var(--sg-cream);
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f05-bg-fill {
+    background: radial-gradient(1200px 700px at 50% 38%, var(--sg-ink-raised) 0%, var(--sg-ink) 72%);
+  }
+  .f05-world {
+    perspective: 2400px;
+    transform-style: preserve-3d;
+  }
+  .f05-cam {
+    position: absolute;
+    left: 960px;
+    top: 420px;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+  }
+  .f05-panel-stage {
+    position: absolute;
+    left: -768px;
+    top: -354px;
+    width: 1536px;
+    height: 709px;
+    transform-style: preserve-3d;
+  }
+  .f05-panel-glow {
+    position: absolute;
+    left: 50%;
+    top: 92%;
+    width: 920px;
+    height: 120px;
+    margin-left: -460px;
+    background: radial-gradient(ellipse at center, var(--sg-glow-violet) 0%, transparent 70%);
+    opacity: 0.2;
+    filter: blur(8px);
+  }
+  .f05-panel {
+    position: absolute;
+    inset: 0;
+    border-radius: 2px;
+    box-shadow: 0 60px 120px rgba(0, 0, 0, 0.55);
+    z-index: 4;
+  }
+  .f05-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-top: 1px solid rgba(241, 234, 224, 0.22);
+    pointer-events: none;
+    z-index: 6;
+  }
+  .f05-ui-viewport {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #f4f5f8;
+  }
+  .f05-ui-scaler {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 886px;
+    zoom: 0.8;
+  }
+  .f05-ui-frame {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 886px;
+    object-fit: fill;
+    border: 0;
+  }
+  .f05-row {
+    position: absolute;
+    width: 716px;
+    height: auto;
+    object-fit: contain;
+    object-position: left center;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+    z-index: 7;
+  }
+  .f05-row.is-left {
+    left: -176px;
+  }
+  .f05-row.is-right {
+    right: 48px;
+  }
+  .f05-fg-layer {
+    z-index: 8;
+  }
+  .f05-counter {
+    position: absolute;
+    right: 72px;
+    bottom: 180px;
+    font-family: "Geist Mono", monospace;
+    font-size: 120px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+    color: var(--sg-cream-bright);
+    text-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+  }
+</style>
+
+<div id="root" data-composition-id="05-alerts-pour-in" data-width="1920" data-height="1080" data-duration="3.56">
+  <div
+    class="clip f05-bg-fill"
+    data-start="0"
+    data-duration="3.56"
+    data-track-index="0"
+  ></div>
+
+  <div
+    class="clip"
+    id="f05-ribbon-host"
+    data-start="0"
+    data-duration="3.56"
+    data-track-index="1"
+  ></div>
+
+  <div
+    class="clip f05-world"
+    id="f05-world"
+    data-start="0"
+    data-duration="3.56"
+    data-track-index="2"
+  >
+    <div class="f05-cam" id="f05-cam">
+      <div class="f05-panel-stage" id="f05-panel-stage">
+        <div class="f05-panel-glow"></div>
+        <img class="f05-row is-left" id="f05-row-0" src="assets/frames/05/row-0.png" alt="" style="top: 12px" />
+        <img class="f05-row is-right" id="f05-row-1" src="assets/frames/05/row-1.png" alt="" style="top: 78px" />
+        <img class="f05-row is-left" id="f05-row-2" src="assets/frames/05/row-2.png" alt="" style="top: 210px" />
+        <img class="f05-row is-right" id="f05-row-3" src="assets/frames/05/row-3.png" alt="" style="top: 286px" />
+        <img class="f05-row is-left" id="f05-row-4" src="assets/frames/05/row-4.png" alt="" style="top: 420px" />
+        <img class="f05-row is-right" id="f05-row-5" src="assets/frames/05/row-0.png" alt="" style="top: 500px" />
+        <img class="f05-row is-left" id="f05-row-6" src="assets/frames/05/row-1.png" alt="" style="top: 600px" />
+        <div class="f05-panel" id="f05-panel">
+          <div class="f05-ui-viewport">
+            <div class="f05-ui-scaler">
+              <img class="f05-ui-frame" src="source/figma/48-2.png" alt="Alerts" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="clip f05-fg-layer"
+    data-start="0"
+    data-duration="3.56"
+    data-track-index="3"
+  >
+    <div class="f05-counter" id="f05-counter">1,284</div>
+  </div>
+
+  
+  
+  
+  
+  
+  
+  
+</div>
+
+<script src="assets/frames/10/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "05-alerts-pour-in";
+  const D = 3.56;
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/10/ribbons-mount.js", import.meta.url).href,
+  );
+
+  const ribbonHost = document.getElementById("f05-ribbon-host");
+  mountRibbons(ribbonHost, {
+    seed: 405,
+    count: 24,
+    split: 0.62,
+    modes: [
+      { t: 0, mode: "converge", opacity: 0.62, target: { x: 960, y: 380 } },
+      { t: 1.4, mode: "rail", opacity: 0.8 },
+      { t: 2.6, mode: "converge", opacity: 0.7, target: { x: 880, y: 460 } },
+    ],
+  }).bind(tl, D);
+
+  const cam = document.getElementById("f05-cam");
+  const panelStage = document.getElementById("f05-panel-stage");
+  const counter = document.getElementById("f05-counter");
+  const rows = [
+    { id: "f05-row-0", t: 0.32, dur: 0.34, travel: -240 },
+    { id: "f05-row-1", t: 0.48, dur: 0.3, travel: -200 },
+    { id: "f05-row-2", t: 0.62, dur: 0.32, travel: -220 },
+    { id: "f05-row-3", t: 0.78, dur: 0.28, travel: -180 },
+    { id: "f05-row-4", t: 1.7, dur: 0.36, travel: -260 },
+    { id: "f05-row-5", t: 1.92, dur: 0.32, travel: -210 },
+    { id: "f05-row-6", t: 2.16, dur: 0.4, travel: -280 },
+  ];
+
+  gsap.set(panelStage, {
+    rotationX: 2,
+    rotationY: -4,
+    transformPerspective: 2400,
+  });
+
+  tl.fromTo(
+    panelStage,
+    { y: -110, scale: 0.94, rotationX: 8, rotationY: -6, opacity: 0.35 },
+    {
+      y: 0,
+      scale: 1,
+      rotationX: 2,
+      rotationY: -4,
+      opacity: 1,
+      duration: 0.7,
+      ease: "power4.out",
+    },
+    0.04,
+  );
+
+  tl.fromTo(
+    cam,
+    { scale: 0.98, x: 18, y: 14 },
+    { scale: 1.045, x: -20, y: -16, duration: D, ease: "power2.inOut" },
+    0,
+  );
+
+  rows.forEach((row) => {
+    const el = document.getElementById(row.id);
+    tl.set(el, { opacity: 0 }, 0);
+    tl.set(el, { opacity: 1, y: row.travel }, row.t);
+    tl.to(el, { y: 0, duration: row.dur, ease: "power4.out" }, row.t);
+  });
+
+  tl.set(counter, { opacity: 0 }, 0);
+  tl.set(counter, { opacity: 1, y: 36 }, 0.55);
+  tl.to(counter, { y: 0, duration: 0.32, ease: "power4.out" }, 0.55);
+
+  tl.to(
+    panelStage,
+    { rotationX: 2.5, rotationY: -4.5, duration: 2.5, ease: "sine.inOut" },
+    0.9,
+  );
+
+  tl.to({}, { duration: D }, 0);
+</script>
+</template>

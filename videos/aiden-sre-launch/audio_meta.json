@@ -1,0 +1,1784 @@
+{
+ "bgm": {
+  "path": "assets/audio/music/bed.fit.wav",
+  "volume": 0.5,
+  "query": null,
+  "duration_s": 121.607
+ },
+ "bgm_pending": false,
+ "voices": [
+  {
+   "frame": 2,
+   "path": "assets/audio/vo/L01.wav",
+   "duration_s": 7.96,
+   "words": [
+    {
+     "id": "w0",
+     "text": "Your",
+     "start": 0.09,
+     "end": 0.36
+    },
+    {
+     "id": "w1",
+     "text": "on-call",
+     "start": 0.36,
+     "end": 0.99
+    },
+    {
+     "id": "w2",
+     "text": "team",
+     "start": 0.99,
+     "end": 1.21
+    },
+    {
+     "id": "w3",
+     "text": "is",
+     "start": 1.37,
+     "end": 1.53
+    },
+    {
+     "id": "w4",
+     "text": "buried",
+     "start": 1.53,
+     "end": 2.07
+    },
+    {
+     "id": "w5",
+     "text": "in",
+     "start": 2.07,
+     "end": 2.21
+    },
+    {
+     "id": "w6",
+     "text": "alerts.",
+     "start": 2.29,
+     "end": 2.8
+    },
+    {
+     "id": "w7",
+     "text": "And",
+     "start": 2.89,
+     "end": 3.0
+    },
+    {
+     "id": "w8",
+     "text": "most",
+     "start": 3.0,
+     "end": 3.26
+    },
+    {
+     "id": "w9",
+     "text": "of",
+     "start": 3.29,
+     "end": 3.4
+    },
+    {
+     "id": "w10",
+     "text": "them",
+     "start": 3.4,
+     "end": 3.67
+    },
+    {
+     "id": "w11",
+     "text": "don't",
+     "start": 3.67,
+     "end": 4.0
+    },
+    {
+     "id": "w12",
+     "text": "matter.",
+     "start": 4.0,
+     "end": 4.63
+    },
+    {
+     "id": "w13",
+     "text": "The",
+     "start": 4.73,
+     "end": 4.86
+    },
+    {
+     "id": "w14",
+     "text": "ones",
+     "start": 4.9,
+     "end": 5.23
+    },
+    {
+     "id": "w15",
+     "text": "that",
+     "start": 5.23,
+     "end": 5.57
+    },
+    {
+     "id": "w16",
+     "text": "do",
+     "start": 5.57,
+     "end": 5.74
+    },
+    {
+     "id": "w17",
+     "text": "can",
+     "start": 5.74,
+     "end": 5.87
+    },
+    {
+     "id": "w18",
+     "text": "take",
+     "start": 6.01,
+     "end": 6.33
+    },
+    {
+     "id": "w19",
+     "text": "hours",
+     "start": 6.33,
+     "end": 6.76
+    },
+    {
+     "id": "w20",
+     "text": "to",
+     "start": 6.76,
+     "end": 6.85
+    },
+    {
+     "id": "w21",
+     "text": "untangle.",
+     "start": 6.93,
+     "end": 7.91
+    }
+   ]
+  },
+  {
+   "frame": 3,
+   "path": "assets/audio/vo/L02.wav",
+   "duration_s": 8.68,
+   "words": [
+    {
+     "id": "w0",
+     "text": "Meet",
+     "start": 0.05,
+     "end": 0.42
+    },
+    {
+     "id": "w1",
+     "text": "ADEN",
+     "start": 0.45,
+     "end": 0.91
+    },
+    {
+     "id": "w2",
+     "text": "for",
+     "start": 0.91,
+     "end": 1.17
+    },
+    {
+     "id": "w3",
+     "text": "SRE,",
+     "start": 1.33,
+     "end": 1.88
+    },
+    {
+     "id": "w4",
+     "text": "your",
+     "start": 1.88,
+     "end": 2.3
+    },
+    {
+     "id": "w5",
+     "text": "AI",
+     "start": 2.3,
+     "end": 2.5
+    },
+    {
+     "id": "w6",
+     "text": "SRE",
+     "start": 2.5,
+     "end": 2.79
+    },
+    {
+     "id": "w7",
+     "text": "teammate.",
+     "start": 2.85,
+     "end": 3.98
+    },
+    {
+     "id": "w8",
+     "text": "It",
+     "start": 4.06,
+     "end": 4.08
+    },
+    {
+     "id": "w9",
+     "text": "connects",
+     "start": 4.08,
+     "end": 4.47
+    },
+    {
+     "id": "w10",
+     "text": "to",
+     "start": 4.53,
+     "end": 4.61
+    },
+    {
+     "id": "w11",
+     "text": "the",
+     "start": 4.61,
+     "end": 4.76
+    },
+    {
+     "id": "w12",
+     "text": "observability",
+     "start": 4.76,
+     "end": 5.46
+    },
+    {
+     "id": "w13",
+     "text": "tools",
+     "start": 5.46,
+     "end": 5.76
+    },
+    {
+     "id": "w14",
+     "text": "you",
+     "start": 5.76,
+     "end": 5.95
+    },
+    {
+     "id": "w15",
+     "text": "already",
+     "start": 5.95,
+     "end": 6.4
+    },
+    {
+     "id": "w16",
+     "text": "run",
+     "start": 6.4,
+     "end": 6.9
+    },
+    {
+     "id": "w17",
+     "text": "and",
+     "start": 6.98,
+     "end": 7.08
+    },
+    {
+     "id": "w18",
+     "text": "maps",
+     "start": 7.08,
+     "end": 7.32
+    },
+    {
+     "id": "w19",
+     "text": "your",
+     "start": 7.32,
+     "end": 7.56
+    },
+    {
+     "id": "w20",
+     "text": "services",
+     "start": 7.56,
+     "end": 8.04
+    },
+    {
+     "id": "w21",
+     "text": "on",
+     "start": 8.04,
+     "end": 8.13
+    },
+    {
+     "id": "w22",
+     "text": "its",
+     "start": 8.27,
+     "end": 8.35
+    },
+    {
+     "id": "w23",
+     "text": "own.",
+     "start": 8.35,
+     "end": 8.68
+    }
+   ]
+  },
+  {
+   "frame": 5,
+   "path": "assets/audio/vo/L03.wav",
+   "duration_s": 3.56,
+   "words": [
+    {
+     "id": "w0",
+     "text": "One",
+     "start": 0.1,
+     "end": 0.32
+    },
+    {
+     "id": "w1",
+     "text": "failure",
+     "start": 0.32,
+     "end": 0.99
+    },
+    {
+     "id": "w2",
+     "text": "can",
+     "start": 1.05,
+     "end": 1.38
+    },
+    {
+     "id": "w3",
+     "text": "set",
+     "start": 1.38,
+     "end": 1.7
+    },
+    {
+     "id": "w4",
+     "text": "off",
+     "start": 1.7,
+     "end": 2.02
+    },
+    {
+     "id": "w5",
+     "text": "a",
+     "start": 2.02,
+     "end": 2.12
+    },
+    {
+     "id": "w6",
+     "text": "flood",
+     "start": 2.12,
+     "end": 2.65
+    },
+    {
+     "id": "w7",
+     "text": "of",
+     "start": 2.65,
+     "end": 2.77
+    },
+    {
+     "id": "w8",
+     "text": "alerts.",
+     "start": 2.86,
+     "end": 3.52
+    }
+   ]
+  },
+  {
+   "frame": 6,
+   "path": "assets/audio/vo/L04.wav",
+   "duration_s": 8.325,
+   "words": [
+    {
+     "id": "w0",
+     "text": "Aiden",
+     "start": 0.04,
+     "end": 0.36
+    },
+    {
+     "id": "w1",
+     "text": "triages",
+     "start": 0.5,
+     "end": 0.95
+    },
+    {
+     "id": "w2",
+     "text": "every",
+     "start": 0.95,
+     "end": 1.37
+    },
+    {
+     "id": "w3",
+     "text": "alert",
+     "start": 1.37,
+     "end": 1.73
+    },
+    {
+     "id": "w4",
+     "text": "as",
+     "start": 1.95,
+     "end": 1.96
+    },
+    {
+     "id": "w5",
+     "text": "it",
+     "start": 1.96,
+     "end": 2.13
+    },
+    {
+     "id": "w6",
+     "text": "arrives.",
+     "start": 2.13,
+     "end": 2.76
+    },
+    {
+     "id": "w7",
+     "text": "It",
+     "start": 2.86,
+     "end": 2.89
+    },
+    {
+     "id": "w8",
+     "text": "groups",
+     "start": 2.89,
+     "end": 3.16
+    },
+    {
+     "id": "w9",
+     "text": "related",
+     "start": 3.29,
+     "end": 3.76
+    },
+    {
+     "id": "w10",
+     "text": "alerts,",
+     "start": 3.76,
+     "end": 4.32
+    },
+    {
+     "id": "w11",
+     "text": "filters",
+     "start": 4.32,
+     "end": 4.82
+    },
+    {
+     "id": "w12",
+     "text": "the",
+     "start": 4.82,
+     "end": 5.03
+    },
+    {
+     "id": "w13",
+     "text": "noise,",
+     "start": 5.03,
+     "end": 5.48
+    },
+    {
+     "id": "w14",
+     "text": "and",
+     "start": 5.5,
+     "end": 5.55
+    },
+    {
+     "id": "w15",
+     "text": "ranks",
+     "start": 5.63,
+     "end": 5.86
+    },
+    {
+     "id": "w16",
+     "text": "the",
+     "start": 5.86,
+     "end": 5.93
+    },
+    {
+     "id": "w17",
+     "text": "rest",
+     "start": 5.93,
+     "end": 6.42
+    },
+    {
+     "id": "w18",
+     "text": "by",
+     "start": 6.42,
+     "end": 6.52
+    },
+    {
+     "id": "w19",
+     "text": "impact",
+     "start": 6.52,
+     "end": 6.92
+    },
+    {
+     "id": "w20",
+     "text": "on",
+     "start": 6.92,
+     "end": 7.0
+    },
+    {
+     "id": "w21",
+     "text": "your",
+     "start": 7.0,
+     "end": 7.29
+    },
+    {
+     "id": "w22",
+     "text": "services.",
+     "start": 7.4,
+     "end": 8.27
+    }
+   ]
+  },
+  {
+   "frame": 7,
+   "path": "assets/audio/vo/L05.wav",
+   "duration_s": 5.235,
+   "words": [
+    {
+     "id": "w0",
+     "text": "Your",
+     "start": 0.055,
+     "end": 0.235
+    },
+    {
+     "id": "w1",
+     "text": "engineers",
+     "start": 0.235,
+     "end": 0.865
+    },
+    {
+     "id": "w2",
+     "text": "see",
+     "start": 0.865,
+     "end": 1.075
+    },
+    {
+     "id": "w3",
+     "text": "only",
+     "start": 1.075,
+     "end": 1.355
+    },
+    {
+     "id": "w4",
+     "text": "the",
+     "start": 1.355,
+     "end": 1.515
+    },
+    {
+     "id": "w5",
+     "text": "alerts",
+     "start": 1.635,
+     "end": 1.985
+    },
+    {
+     "id": "w6",
+     "text": "that",
+     "start": 1.985,
+     "end": 2.265
+    },
+    {
+     "id": "w7",
+     "text": "need",
+     "start": 2.265,
+     "end": 2.545
+    },
+    {
+     "id": "w8",
+     "text": "them",
+     "start": 2.545,
+     "end": 2.835
+    },
+    {
+     "id": "w9",
+     "text": "and",
+     "start": 2.835,
+     "end": 3.025
+    },
+    {
+     "id": "w10",
+     "text": "save",
+     "start": 3.025,
+     "end": 3.105
+    },
+    {
+     "id": "w11",
+     "text": "their",
+     "start": 3.605,
+     "end": 3.625
+    },
+    {
+     "id": "w12",
+     "text": "energy",
+     "start": 3.625,
+     "end": 4.025
+    },
+    {
+     "id": "w13",
+     "text": "for",
+     "start": 4.025,
+     "end": 4.225
+    },
+    {
+     "id": "w14",
+     "text": "real",
+     "start": 4.225,
+     "end": 4.485
+    },
+    {
+     "id": "w15",
+     "text": "incidents.",
+     "start": 4.485,
+     "end": 5.235
+    }
+   ]
+  },
+  {
+   "frame": 9,
+   "path": "assets/audio/vo/L06.wav",
+   "duration_s": 4.39,
+   "words": [
+    {
+     "id": "w0",
+     "text": "When",
+     "start": 0.12,
+     "end": 0.29
+    },
+    {
+     "id": "w1",
+     "text": "a",
+     "start": 0.29,
+     "end": 0.36
+    },
+    {
+     "id": "w2",
+     "text": "real",
+     "start": 0.36,
+     "end": 0.66
+    },
+    {
+     "id": "w3",
+     "text": "incident",
+     "start": 0.66,
+     "end": 1.26
+    },
+    {
+     "id": "w4",
+     "text": "hits,",
+     "start": 1.26,
+     "end": 1.62
+    },
+    {
+     "id": "w5",
+     "text": "most",
+     "start": 1.89,
+     "end": 2.02
+    },
+    {
+     "id": "w6",
+     "text": "of",
+     "start": 2.02,
+     "end": 2.15
+    },
+    {
+     "id": "w7",
+     "text": "the",
+     "start": 2.15,
+     "end": 2.35
+    },
+    {
+     "id": "w8",
+     "text": "time",
+     "start": 2.35,
+     "end": 2.63
+    },
+    {
+     "id": "w9",
+     "text": "goes",
+     "start": 2.63,
+     "end": 2.96
+    },
+    {
+     "id": "w10",
+     "text": "into",
+     "start": 2.96,
+     "end": 3.27
+    },
+    {
+     "id": "w11",
+     "text": "investigation.",
+     "start": 3.3,
+     "end": 4.39
+    }
+   ]
+  },
+  {
+   "frame": 10,
+   "path": "assets/audio/vo/L07.wav",
+   "duration_s": 13.185,
+   "words": [
+    {
+     "id": "w0",
+     "text": "Aiden",
+     "start": 0.0,
+     "end": 0.33
+    },
+    {
+     "id": "w1",
+     "text": "starts",
+     "start": 0.33,
+     "end": 0.73
+    },
+    {
+     "id": "w2",
+     "text": "investigating",
+     "start": 0.74,
+     "end": 1.57
+    },
+    {
+     "id": "w3",
+     "text": "the",
+     "start": 1.57,
+     "end": 1.9
+    },
+    {
+     "id": "w4",
+     "text": "moment",
+     "start": 1.9,
+     "end": 2.23
+    },
+    {
+     "id": "w5",
+     "text": "an",
+     "start": 2.23,
+     "end": 2.36
+    },
+    {
+     "id": "w6",
+     "text": "alert",
+     "start": 2.36,
+     "end": 2.7
+    },
+    {
+     "id": "w7",
+     "text": "fires.",
+     "start": 2.7,
+     "end": 3.27
+    },
+    {
+     "id": "w8",
+     "text": "It",
+     "start": 3.27,
+     "end": 3.41
+    },
+    {
+     "id": "w9",
+     "text": "correlates",
+     "start": 3.41,
+     "end": 4.09
+    },
+    {
+     "id": "w10",
+     "text": "logs,",
+     "start": 4.09,
+     "end": 4.49
+    },
+    {
+     "id": "w11",
+     "text": "metrics,",
+     "start": 4.49,
+     "end": 5.09
+    },
+    {
+     "id": "w12",
+     "text": "and",
+     "start": 5.18,
+     "end": 5.29
+    },
+    {
+     "id": "w13",
+     "text": "events",
+     "start": 5.29,
+     "end": 5.68
+    },
+    {
+     "id": "w14",
+     "text": "across",
+     "start": 5.69,
+     "end": 6.09
+    },
+    {
+     "id": "w15",
+     "text": "your",
+     "start": 6.09,
+     "end": 6.36
+    },
+    {
+     "id": "w16",
+     "text": "dependencies.",
+     "start": 6.36,
+     "end": 7.37
+    },
+    {
+     "id": "w17",
+     "text": "Then",
+     "start": 7.57,
+     "end": 7.72
+    },
+    {
+     "id": "w18",
+     "text": "it",
+     "start": 7.72,
+     "end": 7.84
+    },
+    {
+     "id": "w19",
+     "text": "scores",
+     "start": 7.86,
+     "end": 8.27
+    },
+    {
+     "id": "w20",
+     "text": "every",
+     "start": 8.27,
+     "end": 8.62
+    },
+    {
+     "id": "w21",
+     "text": "possible",
+     "start": 8.62,
+     "end": 9.04
+    },
+    {
+     "id": "w22",
+     "text": "cause",
+     "start": 9.34,
+     "end": 9.52
+    },
+    {
+     "id": "w23",
+     "text": "against",
+     "start": 9.52,
+     "end": 10.0
+    },
+    {
+     "id": "w24",
+     "text": "the",
+     "start": 10.0,
+     "end": 10.21
+    },
+    {
+     "id": "w25",
+     "text": "evidence,",
+     "start": 10.21,
+     "end": 10.91
+    },
+    {
+     "id": "w26",
+     "text": "and",
+     "start": 10.95,
+     "end": 11.1
+    },
+    {
+     "id": "w27",
+     "text": "even",
+     "start": 11.1,
+     "end": 11.36
+    },
+    {
+     "id": "w28",
+     "text": "tries",
+     "start": 11.36,
+     "end": 11.53
+    },
+    {
+     "id": "w29",
+     "text": "to",
+     "start": 11.53,
+     "end": 11.765
+    },
+    {
+     "id": "w30",
+     "text": "prove",
+     "start": 11.765,
+     "end": 12.0
+    },
+    {
+     "id": "w31",
+     "text": "itself",
+     "start": 12.0,
+     "end": 12.27
+    },
+    {
+     "id": "w32",
+     "text": "wrong.",
+     "start": 12.37,
+     "end": 13.12
+    }
+   ]
+  },
+  {
+   "frame": 11,
+   "path": "assets/audio/vo/L09.wav",
+   "duration_s": 4.735,
+   "words": [
+    {
+     "id": "w0",
+     "text": "Your",
+     "start": 0.065,
+     "end": 0.265
+    },
+    {
+     "id": "w1",
+     "text": "team",
+     "start": 0.265,
+     "end": 0.585
+    },
+    {
+     "id": "w2",
+     "text": "starts",
+     "start": 0.585,
+     "end": 1.075
+    },
+    {
+     "id": "w3",
+     "text": "from",
+     "start": 1.075,
+     "end": 1.415
+    },
+    {
+     "id": "w4",
+     "text": "a",
+     "start": 1.415,
+     "end": 1.495
+    },
+    {
+     "id": "w5",
+     "text": "probable",
+     "start": 1.495,
+     "end": 2.155
+    },
+    {
+     "id": "w6",
+     "text": "root",
+     "start": 2.155,
+     "end": 2.485
+    },
+    {
+     "id": "w7",
+     "text": "cause,",
+     "start": 2.485,
+     "end": 3.035
+    },
+    {
+     "id": "w8",
+     "text": "and",
+     "start": 3.065,
+     "end": 3.295
+    },
+    {
+     "id": "w9",
+     "text": "MTTR",
+     "start": 3.295,
+     "end": 3.615
+    },
+    {
+     "id": "w10",
+     "text": "comes",
+     "start": 3.615,
+     "end": 4.005
+    },
+    {
+     "id": "w11",
+     "text": "down.",
+     "start": 4.005,
+     "end": 4.655
+    }
+   ]
+  },
+  {
+   "frame": 13,
+   "path": "assets/audio/vo/L10.wav",
+   "duration_s": 3.675,
+   "words": [
+    {
+     "id": "w0",
+     "text": "Even",
+     "start": 0.1,
+     "end": 0.28
+    },
+    {
+     "id": "w1",
+     "text": "with",
+     "start": 0.28,
+     "end": 0.56
+    },
+    {
+     "id": "w2",
+     "text": "the",
+     "start": 0.56,
+     "end": 0.77
+    },
+    {
+     "id": "w3",
+     "text": "cause",
+     "start": 0.77,
+     "end": 1.11
+    },
+    {
+     "id": "w4",
+     "text": "in",
+     "start": 1.11,
+     "end": 1.25
+    },
+    {
+     "id": "w5",
+     "text": "hand,",
+     "start": 1.25,
+     "end": 1.56
+    },
+    {
+     "id": "w6",
+     "text": "the",
+     "start": 1.77,
+     "end": 1.9
+    },
+    {
+     "id": "w7",
+     "text": "fix",
+     "start": 1.99,
+     "end": 2.23
+    },
+    {
+     "id": "w8",
+     "text": "is",
+     "start": 2.24,
+     "end": 2.43
+    },
+    {
+     "id": "w9",
+     "text": "often",
+     "start": 2.43,
+     "end": 2.91
+    },
+    {
+     "id": "w10",
+     "text": "manual.",
+     "start": 2.91,
+     "end": 3.48
+    }
+   ]
+  },
+  {
+   "frame": 14,
+   "path": "assets/audio/vo/L11.wav",
+   "duration_s": 12.855,
+   "words": [
+    {
+     "id": "w0",
+     "text": "Aiden",
+     "start": 0.195,
+     "end": 0.495
+    },
+    {
+     "id": "w1",
+     "text": "runs",
+     "start": 0.495,
+     "end": 0.775
+    },
+    {
+     "id": "w2",
+     "text": "the",
+     "start": 0.815,
+     "end": 1.015
+    },
+    {
+     "id": "w3",
+     "text": "remediation,",
+     "start": 1.015,
+     "end": 1.985
+    },
+    {
+     "id": "w4",
+     "text": "from",
+     "start": 1.985,
+     "end": 2.195
+    },
+    {
+     "id": "w5",
+     "text": "restarting",
+     "start": 2.195,
+     "end": 2.715
+    },
+    {
+     "id": "w6",
+     "text": "a",
+     "start": 2.725,
+     "end": 2.795
+    },
+    {
+     "id": "w7",
+     "text": "service",
+     "start": 2.795,
+     "end": 3.275
+    },
+    {
+     "id": "w8",
+     "text": "or",
+     "start": 3.285,
+     "end": 3.425
+    },
+    {
+     "id": "w9",
+     "text": "scaling",
+     "start": 3.425,
+     "end": 3.485
+    },
+    {
+     "id": "w10",
+     "text": "out",
+     "start": 4.075,
+     "end": 4.405
+    },
+    {
+     "id": "w11",
+     "text": "to",
+     "start": 4.505,
+     "end": 4.535
+    },
+    {
+     "id": "w12",
+     "text": "rerouting",
+     "start": 4.535,
+     "end": 5.105
+    },
+    {
+     "id": "w13",
+     "text": "traffic",
+     "start": 5.165,
+     "end": 5.575
+    },
+    {
+     "id": "w14",
+     "text": "or",
+     "start": 5.575,
+     "end": 5.705
+    },
+    {
+     "id": "w15",
+     "text": "rolling",
+     "start": 5.705,
+     "end": 5.875
+    },
+    {
+     "id": "w16",
+     "text": "back",
+     "start": 6.175,
+     "end": 6.425
+    },
+    {
+     "id": "w17",
+     "text": "a",
+     "start": 6.425,
+     "end": 6.485
+    },
+    {
+     "id": "w18",
+     "text": "deployment.",
+     "start": 6.485,
+     "end": 7.365
+    },
+    {
+     "id": "w19",
+     "text": "Your",
+     "start": 7.465,
+     "end": 7.625
+    },
+    {
+     "id": "w20",
+     "text": "team",
+     "start": 7.625,
+     "end": 7.815
+    },
+    {
+     "id": "w21",
+     "text": "sets",
+     "start": 7.905,
+     "end": 8.145
+    },
+    {
+     "id": "w22",
+     "text": "which",
+     "start": 8.145,
+     "end": 8.475
+    },
+    {
+     "id": "w23",
+     "text": "actions",
+     "start": 8.475,
+     "end": 8.835
+    },
+    {
+     "id": "w24",
+     "text": "need",
+     "start": 8.835,
+     "end": 9.195
+    },
+    {
+     "id": "w25",
+     "text": "approval,",
+     "start": 9.255,
+     "end": 9.765
+    },
+    {
+     "id": "w26",
+     "text": "and",
+     "start": 9.865,
+     "end": 9.975
+    },
+    {
+     "id": "w27",
+     "text": "every",
+     "start": 9.975,
+     "end": 10.355
+    },
+    {
+     "id": "w28",
+     "text": "action",
+     "start": 10.355,
+     "end": 10.805
+    },
+    {
+     "id": "w29",
+     "text": "goes",
+     "start": 10.805,
+     "end": 11.105
+    },
+    {
+     "id": "w30",
+     "text": "into",
+     "start": 11.105,
+     "end": 11.235
+    },
+    {
+     "id": "w31",
+     "text": "a",
+     "start": 11.235,
+     "end": 11.535
+    },
+    {
+     "id": "w32",
+     "text": "full",
+     "start": 11.535,
+     "end": 11.775
+    },
+    {
+     "id": "w33",
+     "text": "audit",
+     "start": 11.775,
+     "end": 12.145
+    },
+    {
+     "id": "w34",
+     "text": "trail.",
+     "start": 12.145,
+     "end": 12.805
+    }
+   ]
+  },
+  {
+   "frame": 15,
+   "path": "assets/audio/vo/L12.wav",
+   "duration_s": 4.35,
+   "words": [
+    {
+     "id": "w0",
+     "text": "Incidents",
+     "start": 0.05,
+     "end": 0.6
+    },
+    {
+     "id": "w1",
+     "text": "close",
+     "start": 0.71,
+     "end": 1.06
+    },
+    {
+     "id": "w2",
+     "text": "faster,",
+     "start": 1.06,
+     "end": 1.67
+    },
+    {
+     "id": "w3",
+     "text": "and",
+     "start": 1.72,
+     "end": 1.86
+    },
+    {
+     "id": "w4",
+     "text": "your",
+     "start": 1.94,
+     "end": 2.1
+    },
+    {
+     "id": "w5",
+     "text": "team",
+     "start": 2.12,
+     "end": 2.36
+    },
+    {
+     "id": "w6",
+     "text": "stays",
+     "start": 2.36,
+     "end": 2.71
+    },
+    {
+     "id": "w7",
+     "text": "in",
+     "start": 2.71,
+     "end": 2.85
+    },
+    {
+     "id": "w8",
+     "text": "control",
+     "start": 2.85,
+     "end": 3.29
+    },
+    {
+     "id": "w9",
+     "text": "of",
+     "start": 3.29,
+     "end": 3.595
+    },
+    {
+     "id": "w10",
+     "text": "what",
+     "start": 3.595,
+     "end": 3.9
+    },
+    {
+     "id": "w11",
+     "text": "runs.",
+     "start": 3.9,
+     "end": 4.35
+    }
+   ]
+  },
+  {
+   "frame": 16,
+   "path": "assets/audio/vo/L13.wav",
+   "duration_s": 8.245,
+   "words": [
+    {
+     "id": "w0",
+     "text": "and",
+     "start": 0.09,
+     "end": 0.26
+    },
+    {
+     "id": "w1",
+     "text": "it",
+     "start": 0.36,
+     "end": 0.47
+    },
+    {
+     "id": "w2",
+     "text": "keeps",
+     "start": 0.47,
+     "end": 0.94
+    },
+    {
+     "id": "w3",
+     "text": "learning.",
+     "start": 0.94,
+     "end": 1.76
+    },
+    {
+     "id": "w4",
+     "text": "Every",
+     "start": 1.85,
+     "end": 2.02
+    },
+    {
+     "id": "w5",
+     "text": "investigation",
+     "start": 2.13,
+     "end": 2.95
+    },
+    {
+     "id": "w6",
+     "text": "adds",
+     "start": 2.95,
+     "end": 3.15
+    },
+    {
+     "id": "w7",
+     "text": "to",
+     "start": 3.32,
+     "end": 3.35
+    },
+    {
+     "id": "w8",
+     "text": "what",
+     "start": 3.59,
+     "end": 3.62
+    },
+    {
+     "id": "w9",
+     "text": "Aiden",
+     "start": 3.62,
+     "end": 3.88
+    },
+    {
+     "id": "w10",
+     "text": "knows",
+     "start": 3.88,
+     "end": 4.23
+    },
+    {
+     "id": "w11",
+     "text": "about",
+     "start": 4.23,
+     "end": 4.44
+    },
+    {
+     "id": "w12",
+     "text": "your",
+     "start": 4.44,
+     "end": 4.56
+    },
+    {
+     "id": "w13",
+     "text": "environment,",
+     "start": 4.56,
+     "end": 5.4
+    },
+    {
+     "id": "w14",
+     "text": "so",
+     "start": 5.5,
+     "end": 5.54
+    },
+    {
+     "id": "w15",
+     "text": "the",
+     "start": 5.54,
+     "end": 5.66
+    },
+    {
+     "id": "w16",
+     "text": "next",
+     "start": 5.76,
+     "end": 6.05
+    },
+    {
+     "id": "w17",
+     "text": "incident",
+     "start": 6.05,
+     "end": 6.59
+    },
+    {
+     "id": "w18",
+     "text": "starts",
+     "start": 6.65,
+     "end": 6.82
+    },
+    {
+     "id": "w19",
+     "text": "further",
+     "start": 7.24,
+     "end": 7.58
+    },
+    {
+     "id": "w20",
+     "text": "ahead.",
+     "start": 7.58,
+     "end": 8.2
+    }
+   ]
+  },
+  {
+   "frame": 18,
+   "path": "assets/audio/vo/L15.wav",
+   "duration_s": 11.84,
+   "words": [
+    {
+     "id": "w0",
+     "text": "Aiden",
+     "start": 0.045,
+     "end": 0.405
+    },
+    {
+     "id": "w1",
+     "text": "for",
+     "start": 0.405,
+     "end": 0.675
+    },
+    {
+     "id": "w2",
+     "text": "SRE",
+     "start": 0.675,
+     "end": 0.945
+    },
+    {
+     "id": "w3",
+     "text": "runs",
+     "start": 0.945,
+     "end": 1.265
+    },
+    {
+     "id": "w4",
+     "text": "on",
+     "start": 1.265,
+     "end": 1.395
+    },
+    {
+     "id": "w5",
+     "text": "the",
+     "start": 1.395,
+     "end": 1.795
+    },
+    {
+     "id": "w6",
+     "text": "Aiden",
+     "start": 1.795,
+     "end": 2.205
+    },
+    {
+     "id": "w7",
+     "text": "World",
+     "start": 2.205,
+     "end": 2.655
+    },
+    {
+     "id": "w8",
+     "text": "Model,",
+     "start": 2.655,
+     "end": 3.115
+    },
+    {
+     "id": "w9",
+     "text": "the",
+     "start": 3.205,
+     "end": 3.285
+    },
+    {
+     "id": "w10",
+     "text": "shared",
+     "start": 3.285,
+     "end": 3.625
+    },
+    {
+     "id": "w11",
+     "text": "record",
+     "start": 3.625,
+     "end": 3.965
+    },
+    {
+     "id": "w12",
+     "text": "of",
+     "start": 3.965,
+     "end": 4.075
+    },
+    {
+     "id": "w13",
+     "text": "what's",
+     "start": 4.075,
+     "end": 4.405
+    },
+    {
+     "id": "w14",
+     "text": "deployed,",
+     "start": 4.405,
+     "end": 4.995
+    },
+    {
+     "id": "w15",
+     "text": "what",
+     "start": 4.995,
+     "end": 5.275
+    },
+    {
+     "id": "w16",
+     "text": "changed,",
+     "start": 5.275,
+     "end": 5.915
+    },
+    {
+     "id": "w17",
+     "text": "what",
+     "start": 6.005,
+     "end": 6.175
+    },
+    {
+     "id": "w18",
+     "text": "broke,",
+     "start": 6.275,
+     "end": 6.715
+    },
+    {
+     "id": "w19",
+     "text": "and",
+     "start": 6.715,
+     "end": 7.005
+    },
+    {
+     "id": "w20",
+     "text": "what",
+     "start": 7.005,
+     "end": 7.245
+    },
+    {
+     "id": "w21",
+     "text": "fixed",
+     "start": 7.745,
+     "end": 7.865
+    },
+    {
+     "id": "w22",
+     "text": "it.",
+     "start": 7.925,
+     "end": 8.075
+    },
+    {
+     "id": "w23",
+     "text": "And",
+     "start": 8.165,
+     "end": 8.325
+    },
+    {
+     "id": "w24",
+     "text": "Aiden",
+     "start": 8.325,
+     "end": 8.745
+    },
+    {
+     "id": "w25",
+     "text": "OS",
+     "start": 8.745,
+     "end": 8.915
+    },
+    {
+     "id": "w26",
+     "text": "holds",
+     "start": 8.915,
+     "end": 9.335
+    },
+    {
+     "id": "w27",
+     "text": "every",
+     "start": 9.335,
+     "end": 9.505
+    },
+    {
+     "id": "w28",
+     "text": "action",
+     "start": 9.915,
+     "end": 10.285
+    },
+    {
+     "id": "w29",
+     "text": "to",
+     "start": 10.285,
+     "end": 10.425
+    },
+    {
+     "id": "w30",
+     "text": "your",
+     "start": 10.435,
+     "end": 10.795
+    },
+    {
+     "id": "w31",
+     "text": "policies.",
+     "start": 10.795,
+     "end": 11.795
+    }
+   ]
+  },
+  {
+   "frame": 19,
+   "path": "assets/audio/vo/L16.wav",
+   "duration_s": 5.355,
+   "words": [
+    {
+     "id": "w0",
+     "text": "See",
+     "start": 0.045,
+     "end": 0.205
+    },
+    {
+     "id": "w1",
+     "text": "Aiden",
+     "start": 0.205,
+     "end": 0.615
+    },
+    {
+     "id": "w2",
+     "text": "for",
+     "start": 0.615,
+     "end": 0.865
+    },
+    {
+     "id": "w3",
+     "text": "SRE",
+     "start": 0.865,
+     "end": 1.105
+    },
+    {
+     "id": "w4",
+     "text": "on",
+     "start": 1.105,
+     "end": 1.265
+    },
+    {
+     "id": "w5",
+     "text": "your",
+     "start": 1.265,
+     "end": 1.395
+    },
+    {
+     "id": "w6",
+     "text": "own",
+     "start": 1.785,
+     "end": 1.845
+    },
+    {
+     "id": "w7",
+     "text": "alerts.",
+     "start": 1.845,
+     "end": 2.635
+    },
+    {
+     "id": "w8",
+     "text": "Book",
+     "start": 2.725,
+     "end": 2.895
+    },
+    {
+     "id": "w9",
+     "text": "a",
+     "start": 2.995,
+     "end": 3.085
+    },
+    {
+     "id": "w10",
+     "text": "demo",
+     "start": 3.085,
+     "end": 3.445
+    },
+    {
+     "id": "w11",
+     "text": "or",
+     "start": 3.445,
+     "end": 3.625
+    },
+    {
+     "id": "w12",
+     "text": "try",
+     "start": 3.625,
+     "end": 3.895
+    },
+    {
+     "id": "w13",
+     "text": "the",
+     "start": 3.895,
+     "end": 4.055
+    },
+    {
+     "id": "w14",
+     "text": "free",
+     "start": 4.465,
+     "end": 4.525
+    },
+    {
+     "id": "w15",
+     "text": "community",
+     "start": 4.525,
+     "end": 5.325
+    },
+    {
+     "id": "w16",
+     "text": "edition.",
+     "start": 5.325,
+     "end": 5.355
+    }
+   ]
+  }
+ ],
+ "sfx": []
+}

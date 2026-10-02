@@ -19,6 +19,10 @@ function cssColor(name) {
 export function mountRibbons(host, { seed, count = 28, modes, split = 0.7 }) {
   const canvas = document.createElement("canvas");
   canvas.style.cssText = "position:absolute;inset:0;width:100%;height:100%";
+  host.style.zIndex = "0";
+  host.style.webkitMaskImage =
+    "radial-gradient(ellipse 74% 64% at 50% 44%, transparent 0 52%, #000 78%)";
+  host.style.maskImage = host.style.webkitMaskImage;
   host.appendChild(canvas);
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, preserveDrawingBuffer: true });
   renderer.setPixelRatio(2);

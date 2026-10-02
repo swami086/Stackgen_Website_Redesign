@@ -1,0 +1,154 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("shared/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-panel: #211d15;
+    --sg-hairline: #3f3b39;
+    --sg-cream: #f1eae0;
+    --sg-cream-bright: #faf7f2;
+    --sg-mute: #96897c;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+    --sg-coral: #fda39b;
+    --sg-amber: #fdd89b;
+    --sg-green: #a6f0bf;
+    --sg-glow-violet: rgba(186, 153, 253, 0.35);
+    --sg-glow-cyan: rgba(160, 234, 252, 0.3);
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #14110c;
+    font-family: "Geist", sans-serif;
+    color: #f1eae0;
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f04-ink {
+    background: #14110c;
+  }
+  .f04-ribbon-host {
+    z-index: 0;
+    -webkit-mask-image: radial-gradient(ellipse 74% 64% at 50% 44%, transparent 0 52%, #000 78%);
+    mask-image: radial-gradient(ellipse 74% 64% at 50% 44%, transparent 0 52%, #000 78%);
+  }
+  .f04-lockup {
+    z-index: 2;
+  }
+  .f04-silhouette {
+    position: absolute;
+    left: 192px;
+    top: 66px;
+    width: 1536px;
+    height: 709px;
+    box-sizing: border-box;
+    border: 2px solid #f1eae0;
+    border-radius: 2px;
+    background: transparent;
+    opacity: 1;
+    transform-origin: 50% 50%;
+  }
+  .el-atmo {
+    width: 1920px;
+    height: 1080px;
+    object-fit: cover;
+    z-index: 3;
+  }
+  .f04-eyebrow-slot {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 196px;
+    display: flex;
+    justify-content: center;
+    z-index: 4;
+  }
+  .f04-eyebrow {
+    background: #14110c;
+    color: #f1eae0;
+    opacity: 1;
+    font-family: "Geist", sans-serif;
+    font-size: 52px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    line-height: 1;
+    padding: 28px 54px 30px 64px;
+    white-space: nowrap;
+    transform-origin: 50% 60%;
+  }
+</style>
+
+<div id="root" data-composition-id="04-bridge-triage" data-width="1920" data-height="1080" data-duration="3.352">
+  <div class="clip f04-ink" data-start="0" data-duration="3.352" data-track-index="0"></div>
+
+  <video class="clip el-atmo" src="assets/el-video/A2.mp4" data-start="0" data-duration="3.352" data-track-index="4" data-media-start="0" muted playsinline></video>
+  <div class="clip f04-ribbon-host" id="f04-ribbon-host" data-start="0" data-duration="3.352" data-track-index="1"></div>
+
+  <div class="clip f04-lockup" data-start="0" data-duration="3.352" data-track-index="2">
+    <div class="f04-silhouette" id="f04-silhouette"></div>
+    <div class="f04-eyebrow-slot">
+      <div class="f04-eyebrow" id="f04-eyebrow">ALERT TRIAGE</div>
+    </div>
+  </div>
+
+  
+  
+</div>
+
+<script src="assets/frames/10/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "04-bridge-triage";
+  const D = 3.352;
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/10/ribbons-mount.js", import.meta.url).href,
+  );
+
+  mountRibbons(document.getElementById("f04-ribbon-host"), {
+    seed: 404,
+    count: 26,
+    split: 0.7,
+    modes: [
+      { t: 0, mode: "storm", opacity: 0.7 },
+      { t: 0.18, mode: "converge", opacity: 0.86, target: { x: 960, y: 420 } },
+    ],
+  }).bind(tl, D);
+
+  const eyebrow = document.getElementById("f04-eyebrow");
+  const silhouette = document.getElementById("f04-silhouette");
+
+  tl.fromTo(
+    eyebrow,
+    { scale: 1.52, opacity: 1 },
+    { scale: 1, opacity: 1, duration: 0.42, ease: "power4.out" },
+    0,
+  );
+
+  tl.fromTo(
+    silhouette,
+    { scale: 1.06, opacity: 1 },
+    { scale: 1, opacity: 1, duration: 1.15, ease: "power3.out" },
+    0,
+  );
+
+  tl.to({}, { duration: D }, 0);
+</script>
+</template>

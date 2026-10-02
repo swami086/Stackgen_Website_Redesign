@@ -1,0 +1,199 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("shared/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Geist Mono";
+    src: url("shared/fonts/GeistMono-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-panel: #211d15;
+    --sg-hairline: #3f3b39;
+    --sg-cream: #f1eae0;
+    --sg-cream-bright: #faf7f2;
+    --sg-mute: #96897c;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+    --sg-coral: #fda39b;
+    --sg-amber: #fdd89b;
+    --sg-green: #a6f0bf;
+    --sg-glow-violet: rgba(186, 153, 253, 0.35);
+    --sg-glow-cyan: rgba(160, 234, 252, 0.3);
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: "Geist", sans-serif;
+    color: var(--sg-cream);
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f13-bg-fill {
+    background: radial-gradient(1200px 700px at 50% 38%, var(--sg-ink-raised) 0%, var(--sg-ink) 72%);
+  }
+  .f13-world {
+    z-index: 1;
+    perspective: 2400px;
+    transform-style: preserve-3d;
+  }
+  .f13-cam {
+    position: absolute;
+    left: 960px;
+    top: 420px;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+  }
+  .f13-panel-stage {
+    position: absolute;
+    left: -768px;
+    top: -354px;
+    width: 1536px;
+    height: 709px;
+    opacity: 1;
+    transform-style: preserve-3d;
+  }
+  .f13-panel-glow {
+    position: absolute;
+    left: 50%;
+    top: 92%;
+    width: 920px;
+    height: 120px;
+    margin-left: -460px;
+    background: radial-gradient(ellipse at center, var(--sg-glow-violet) 0%, transparent 70%);
+    opacity: 0.2;
+    filter: blur(8px);
+  }
+  .f13-panel {
+    position: absolute;
+    inset: 0;
+    opacity: 1;
+    border-radius: 2px;
+    box-shadow: 0 60px 120px rgba(0, 0, 0, 0.55);
+  }
+  .f13-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-top: 1px solid rgba(241, 234, 224, 0.22);
+    pointer-events: none;
+    z-index: 6;
+  }
+  .f13-ui-viewport {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #14110c;
+  }
+  .f13-ui-scaler {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 886px;
+    zoom: 0.8;
+  }
+  .f13-ui-frame {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 886px;
+    opacity: 1;
+    object-fit: fill;
+    border: 0;
+  }
+</style>
+
+<div id="root" data-composition-id="13-manual-fix" data-width="1920" data-height="1080" data-duration="3.675">
+  <div class="clip f13-bg-fill" data-start="0" data-duration="3.675" data-track-index="0"></div>
+
+  <div class="clip" id="f13-ribbon-host" data-start="0" data-duration="3.675" data-track-index="1"></div>
+
+  <div class="clip f13-world" id="f13-world" data-start="0" data-duration="3.675" data-track-index="2">
+    <div class="f13-cam" id="f13-cam">
+      <div class="f13-panel-stage" id="f13-panel-stage">
+        <div class="f13-panel-glow"></div>
+        <div class="f13-panel">
+          <div class="f13-ui-viewport">
+            <div class="f13-ui-scaler">
+              <img class="f13-ui-frame" src="source/figma/66-49.png" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</div>
+
+<script src="assets/frames/10/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "13-manual-fix";
+  const D = 3.675;
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/10/ribbons-mount.js", import.meta.url).href,
+  );
+
+  mountRibbons(document.getElementById("f13-ribbon-host"), {
+    seed: 413,
+    count: 22,
+    split: 0.68,
+    modes: [{ t: 0, mode: "dormant", opacity: 0.48 }],
+  }).bind(tl, D);
+
+  const cam = document.getElementById("f13-cam");
+  const panelStage = document.getElementById("f13-panel-stage");
+
+  gsap.set(panelStage, {
+    rotationX: 2,
+    rotationY: -4,
+    transformPerspective: 2400,
+    opacity: 1,
+  });
+
+  tl.fromTo(
+    panelStage,
+    { y: 42, scale: 0.975, rotationX: 8, rotationY: -6 },
+    {
+      y: 0,
+      scale: 1,
+      rotationX: 2,
+      rotationY: -4,
+      duration: 2.2,
+      ease: "power2.inOut",
+    },
+    0,
+  );
+
+  tl.fromTo(
+    cam,
+    { scale: 0.992, x: 4, y: 3 },
+    { scale: 1.018, x: -6, y: -2, duration: D, ease: "power1.inOut" },
+    0,
+  );
+
+  tl.to({}, { duration: 3.675 }, 0);
+</script>
+</template>

@@ -1,0 +1,494 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("shared/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Geist Mono";
+    src: url("shared/fonts/GeistMono-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-panel: #211d15;
+    --sg-hairline: #3f3b39;
+    --sg-cream: #f1eae0;
+    --sg-cream-bright: #faf7f2;
+    --sg-mute: #96897c;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+    --sg-coral: #fda39b;
+    --sg-amber: #fdd89b;
+    --sg-green: #a6f0bf;
+    --sg-glow-violet: rgba(186, 153, 253, 0.35);
+    --sg-glow-cyan: rgba(160, 234, 252, 0.3);
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: "Geist", sans-serif;
+    color: var(--sg-cream);
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f03-bg-fill {
+    background: radial-gradient(1200px 700px at 50% 38%, var(--sg-ink-raised) 0%, var(--sg-ink) 72%);
+  }
+  .f03-world {
+    perspective: 2400px;
+    transform-style: preserve-3d;
+  }
+  .f03-cam {
+    position: absolute;
+    inset: 0;
+    transform-origin: 960px 420px;
+  }
+  .f03-constellation {
+    position: absolute;
+    inset: 0;
+  }
+  .f03-card {
+    position: absolute;
+    width: 340px;
+    height: 188px;
+    background: var(--sg-panel);
+    border: 1px solid var(--sg-hairline);
+    box-sizing: border-box;
+    padding: 22px 24px;
+    transform-style: preserve-3d;
+  }
+  .f03-card-left {
+    left: 470px;
+    top: 250px;
+    box-shadow: 18px 28px 48px rgba(0, 0, 0, 0.35);
+  }
+  .f03-card-right {
+    left: 1110px;
+    top: 268px;
+    box-shadow: -18px 28px 48px rgba(0, 0, 0, 0.35);
+  }
+  .f03-card-kicker {
+    font-family: "Geist Mono", monospace;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sg-mute);
+  }
+  .f03-card-stat {
+    margin-top: 18px;
+    font-size: 64px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--sg-cream-bright);
+  }
+  .f03-title-plate {
+    position: absolute;
+    left: 500px;
+    top: 136px;
+    width: 920px;
+    height: 210px;
+    background: #14110c;
+    z-index: 3;
+  }
+  .f03-title {
+    position: absolute;
+    left: 520px;
+    top: 156px;
+    width: 880px;
+    text-align: center;
+    font-size: 96px;
+    font-weight: 300;
+    line-height: 104px;
+    letter-spacing: -0.02em;
+    color: var(--sg-cream-bright);
+    z-index: 4;
+  }
+  .f03-mask {
+    display: block;
+    overflow: hidden;
+    height: 104px;
+  }
+  .f03-line-inner {
+    display: block;
+    white-space: nowrap;
+  }
+  .f03-w500 {
+    font-weight: 500;
+  }
+  .f03-support {
+    position: absolute;
+    left: 520px;
+    top: 276px;
+    width: 880px;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 48px;
+    color: var(--sg-cream);
+    z-index: 4;
+  }
+  .f03-support-mask {
+    display: block;
+    overflow: hidden;
+    height: 48px;
+  }
+  .f03-wires {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    z-index: 1;
+  }
+  .f03-wires path {
+    fill: none;
+    stroke: var(--sg-violet);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .f03-wires path.is-cyan {
+    stroke: var(--sg-cyan);
+  }
+  .f03-logo {
+    position: absolute;
+    box-sizing: border-box;
+    background: #faf7f2;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  .f03-logo-datadog {
+    padding: 0;
+    background: #faf7f2;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    outline: 0;
+  }
+  .f03-logo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .f03-panel-stage {
+    position: absolute;
+    left: 192px;
+    top: 66px;
+    width: 1536px;
+    height: 709px;
+    transform-style: preserve-3d;
+    z-index: 3;
+  }
+  .f03-panel-glow {
+    position: absolute;
+    left: 50%;
+    top: 92%;
+    width: 920px;
+    height: 120px;
+    margin-left: -460px;
+    background: radial-gradient(ellipse at center, var(--sg-glow-violet) 0%, transparent 70%);
+    opacity: 0.2;
+    filter: blur(8px);
+  }
+  .f03-panel {
+    position: absolute;
+    inset: 0;
+    border-radius: 2px;
+    box-shadow: 0 60px 120px rgba(0, 0, 0, 0.55);
+  }
+  .f03-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-top: 1px solid rgba(241, 234, 224, 0.22);
+    pointer-events: none;
+    z-index: 6;
+  }
+  .f03-connect {
+    width: 1920px;
+    height: 1080px;
+    object-fit: cover;
+    z-index: 7;
+  }
+  .f03-ui-viewport {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #f4f5f8;
+  }
+  .f03-ui-scaler {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 886px;
+    zoom: 0.8;
+  }
+  .f03-ui-frame {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 886px;
+    object-fit: fill;
+    border: 0;
+  }
+  .f03-ost-clip {
+    z-index: 8;
+  }
+  .f03-ost {
+    position: absolute;
+    left: 80px;
+    top: 900px;
+    max-width: 1680px;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--sg-cream);
+    white-space: nowrap;
+    text-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  }
+</style>
+
+<div id="root" data-composition-id="03-meet-aiden" data-width="1920" data-height="1080" data-duration="8.68">
+  <div class="clip f03-bg-fill" data-start="0" data-duration="8.68" data-track-index="0"></div>
+
+  <div class="clip" id="f03-ribbon-host" data-start="0" data-duration="8.68" data-track-index="1"></div>
+
+  <div class="clip f03-world" id="f03-world" data-start="0" data-duration="8.68" data-track-index="2">
+    <div class="f03-cam" id="f03-cam">
+      <div class="f03-constellation" id="f03-constellation">
+        <div class="f03-card f03-card-left" id="f03-card-l">
+          <div class="f03-card-kicker">latency</div>
+          <div class="f03-card-stat">4.2s</div>
+        </div>
+        <div class="f03-card f03-card-right" id="f03-card-r">
+          <div class="f03-card-kicker">crash loop</div>
+          <div class="f03-card-stat">payments</div>
+        </div>
+
+        <div class="f03-title-plate"></div>
+        <div class="f03-title" id="f03-title">
+          <span class="f03-mask">
+            <span class="f03-line-inner" id="f03-line-a"><span>Aiden</span> <span class="f03-w500">for SRE</span></span>
+          </span>
+        </div>
+        <div class="f03-support" id="f03-support">
+          <span class="f03-support-mask">
+            <span class="f03-line-inner" id="f03-line-b">Your AI SRE teammate.</span>
+          </span>
+        </div>
+
+        <svg class="f03-wires" id="f03-wires" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div id="f03-logos"></div>
+      </div>
+
+      <div class="f03-panel-stage" id="f03-panel-stage">
+        <div class="f03-panel-glow"></div>
+        <div class="f03-panel">
+          <div class="f03-ui-viewport">
+            <div class="f03-ui-scaler">
+              <img class="f03-ui-frame" id="f03-ui" src="source/figma/54-2.png" alt="Discovery" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <video
+    class="clip f03-connect"
+    src="assets/el-pro/09-connections.mp4"
+    data-start="0"
+    data-duration="8.68"
+    data-track-index="4"
+    data-media-start="0"
+    muted
+    playsinline
+  ></video>
+
+  <div class="clip f03-ost-clip" data-start="0" data-duration="8.68" data-track-index="3">
+    <div class="f03-ost" id="f03-ost">Discovers your services and dependencies</div>
+  </div>
+
+  
+  
+  
+</div>
+
+<script src="assets/frames/10/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "03-meet-aiden";
+  const D = 8.68;
+  const LOGOS = [
+    { id: "datadog", src: "shared/logos/vendors/datadog.svg", alt: "Datadog", x: 96, y: 148, w: 112, h: 112, side: "l" },
+    { id: "grafana", src: "shared/logos/vendors/grafana.svg", alt: "Grafana", x: 72, y: 292, w: 248, h: 68, side: "l" },
+    { id: "prometheus", src: "shared/logos/vendors/prometheus.svg", alt: "Prometheus", x: 64, y: 392, w: 268, h: 68, side: "l" },
+    { id: "new-relic", src: "shared/logos/vendors/new-relic.svg", alt: "New Relic", x: 80, y: 492, w: 248, h: 68, side: "l" },
+    { id: "pagerduty", src: "shared/logos/vendors/pagerduty.svg", alt: "PagerDuty", x: 1600, y: 156, w: 248, h: 68, side: "r" },
+    { id: "aws", src: "shared/logos/vendors/aws.svg", alt: "AWS", x: 1696, y: 268, w: 104, h: 104, side: "r" },
+    { id: "google-cloud", src: "shared/logos/vendors/google-cloud.svg", alt: "Google Cloud", x: 1588, y: 408, w: 268, h: 68, side: "r" },
+    { id: "azure", src: "shared/logos/vendors/microsoft-azure.svg", alt: "Microsoft Azure", x: 1700, y: 512, w: 104, h: 104, side: "r" },
+  ];
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  const logoHost = document.getElementById("f03-logos");
+  const svg = document.getElementById("f03-wires");
+  const ns = "http://www.w3.org/2000/svg";
+  const logoEls = LOGOS.map((logo) => {
+    const el = document.createElement("div");
+    el.className = logo.id === "datadog" ? "f03-logo f03-logo-datadog" : "f03-logo";
+    el.id = "f03-logo-" + logo.id;
+    el.style.left = logo.x + "px";
+    el.style.top = logo.y + "px";
+    el.style.width = logo.w + "px";
+    el.style.height = logo.h + "px";
+    const img = document.createElement("img");
+    img.src = logo.src;
+    img.alt = logo.alt;
+    el.appendChild(img);
+    logoHost.appendChild(el);
+    return el;
+  });
+
+  LOGOS.forEach((logo, i) => {
+    const x1 = logo.side === "l" ? logo.x + logo.w : logo.x;
+    const y1 = logo.y + logo.h / 2;
+    const x2 = logo.side === "l" ? 620 : 1300;
+    const y2 = 176 + (i % 4) * 16;
+    const c = x1 + (x2 - x1) * 0.62;
+    const path = document.createElementNS(ns, "path");
+    path.setAttribute("id", "f03-wire-" + logo.id);
+    path.setAttribute("d", `M ${x1} ${y1} C ${c} ${y1}, ${c} ${y2}, ${x2} ${y2}`);
+    if (i % 2 === 1) path.setAttribute("class", "is-cyan");
+    svg.appendChild(path);
+    const len = path.getTotalLength();
+    path.style.strokeDasharray = String(len);
+    path.style.strokeDashoffset = String(len);
+    const popAt = 0.46 + i * 0.16;
+    tl.fromTo(
+      logoEls[i],
+      { scale: 0.72, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.48, ease: "back.out(1.4)", transformOrigin: "50% 50%" },
+      popAt,
+    );
+    tl.to(path, { strokeDashoffset: 0, duration: 0.5, ease: "power2.out" }, popAt + 0.22);
+  });
+
+  tl.fromTo(
+    "#f03-card-l",
+    { x: 0, y: 0, rotationY: 14, opacity: 1 },
+    { x: -980, y: -36, rotationY: 28, opacity: 0, duration: 0.42, ease: "power2.in" },
+    0,
+  );
+  tl.fromTo(
+    "#f03-card-r",
+    { x: 0, y: 0, rotationY: -14, opacity: 1 },
+    { x: 980, y: 28, rotationY: -28, opacity: 0, duration: 0.42, ease: "power2.in" },
+    0.04,
+  );
+
+  tl.fromTo(
+    "#f03-line-a",
+    { yPercent: 110 },
+    { yPercent: 0, duration: 0.5, ease: "power3.out" },
+    0.05,
+  );
+  tl.fromTo(
+    "#f03-title",
+    { scale: 1.1 },
+    { scale: 1, duration: 0.4, ease: "power3.out", transformOrigin: "50% 60%" },
+    0.05,
+  );
+
+  tl.fromTo(
+    "#f03-line-b",
+    { yPercent: 110 },
+    { yPercent: 0, duration: 0.45, ease: "power3.out" },
+    2.85,
+  );
+
+  tl.to("#f03-wires", { opacity: 0.45, duration: 0.9, ease: "sine.inOut" }, 4.15);
+  tl.to("#f03-wires", { opacity: 1, duration: 0.9, ease: "sine.inOut" }, 5.15);
+  tl.to("#f03-constellation", { y: -20, duration: 6.5, ease: "power1.inOut" }, 0.45);
+  tl.set("#f03-constellation", { autoAlpha: 0 }, 7.08);
+
+  const cam = document.getElementById("f03-cam");
+  const panelStage = document.getElementById("f03-panel-stage");
+
+  tl.fromTo(
+    cam,
+    { scale: 0.96, x: 28, y: 14 },
+    { scale: 1.028, x: -6, y: 0, duration: 6.4, ease: "power2.inOut" },
+    0,
+  );
+  tl.to(cam, { scale: 1.07, x: -36, y: -16, duration: 2.28, ease: "none" }, 6.4);
+
+  tl.fromTo(
+    panelStage,
+    { y: 72, scale: 0.94, rotationX: 8, rotationY: -6, autoAlpha: 0 },
+    {
+      y: 0,
+      scale: 1,
+      rotationX: 2,
+      rotationY: -4,
+      autoAlpha: 1,
+      duration: 0.48,
+      ease: "power3.out",
+      transformPerspective: 2400,
+    },
+    7.08,
+  );
+  tl.to(
+    panelStage,
+    { y: -12, rotationX: 2.9, rotationY: -4.8, duration: 1.1, ease: "none" },
+    7.58,
+  );
+
+  tl.fromTo(
+    "#f03-ost",
+    { opacity: 0, y: 16 },
+    { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+    7.08,
+  );
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/03/ribbons-mount.js", import.meta.url).href,
+  );
+  mountRibbons(document.getElementById("f03-ribbon-host"), {
+    seed: 403,
+    count: 18,
+    split: 0.68,
+    modes: [
+      { t: 0, mode: "dormant", opacity: 0.4 },
+      { t: 0.9, mode: "fan", opacity: 0.34, target: { x: 960, y: 860 } },
+      { t: 7.08, mode: "rail", opacity: 0.48 },
+    ],
+  }).bind(tl, D);
+
+  tl.to({}, { duration: D }, 0);
+</script>
+</template>

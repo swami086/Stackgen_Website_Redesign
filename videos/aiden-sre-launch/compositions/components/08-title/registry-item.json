@@ -1,0 +1,12 @@
+{
+  "name": "08-title",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/66:27",
+  "files": [
+    {
+      "path": "08-title.html",
+      "target": "compositions/components/08-title/08-title.html",
+      "type": "hyperframes:snippet"
+    }
+  ]
+}

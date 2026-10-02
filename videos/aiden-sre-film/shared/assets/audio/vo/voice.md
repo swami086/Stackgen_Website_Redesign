@@ -1,9 +1,9 @@
 # VO voice — CHOSEN
 
-Chosen: River — Relaxed, Neutral, Informative
-Voice ID: `SAz9YHcvj6GT2YYXdXww`
+Chosen: Bryan — Charismatic & Professional
+Voice ID: `bPMKpgEe88vKSwusXTMU`
 
-User gate U2 is closed on this voice. Eric and Sarah are rejected candidates.
+Replaced Jimmy (`Ntx0GnBiEPjRS1PkJ0EA`, eleven_v3, calm conversational) on 2026-10-01. Jimmy takes are in `jimmy/`. River takes are in `river/`. Bryan is eleven_v3, American, confident product-film delivery. Script text is unchanged. Word timings are whisper-aligned to the locked script.
 
 Endpoint: ElevenLabs `text-to-speech` `convert_with_timestamps` (`/v1/text-to-speech/{voice_id}/with-timestamps`).
 

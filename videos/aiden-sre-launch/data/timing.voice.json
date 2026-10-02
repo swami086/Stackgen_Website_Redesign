@@ -1,0 +1,439 @@
+{
+ "total": 117.79,
+ "frames": [
+  {
+   "frame": 1,
+   "id": "F01",
+   "slug": "cold-open",
+   "line": null,
+   "start": 0.0,
+   "dur": 3.0,
+   "snap": false,
+   "cues": [],
+   "hits": []
+  },
+  {
+   "frame": 2,
+   "id": "F02",
+   "slug": "alert-flood",
+   "line": "L01",
+   "start": 3.0,
+   "dur": 7.96,
+   "snap": true,
+   "cues": [],
+   "hits": []
+  },
+  {
+   "frame": 3,
+   "id": "F03",
+   "slug": "meet-aiden",
+   "line": "L02",
+   "start": 10.96,
+   "dur": 8.68,
+   "snap": false,
+   "cues": [
+    {
+     "text": "Aiden for SRE",
+     "local": 0.05,
+     "t": 11.01
+    },
+    {
+     "text": "Your AI SRE teammate.",
+     "local": 2.85,
+     "t": 13.81
+    },
+    {
+     "text": "Discovers your services and dependencies",
+     "local": 7.08,
+     "t": 18.04
+    }
+   ],
+   "hits": [
+    {
+     "label": "title",
+     "t": 11.01
+    }
+   ]
+  },
+  {
+   "frame": 4,
+   "id": "F04",
+   "slug": "bridge-triage",
+   "line": null,
+   "start": 19.64,
+   "dur": 2.4,
+   "snap": false,
+   "cues": [
+    {
+     "text": "ALERT TRIAGE",
+     "local": 0.0,
+     "t": 19.64
+    }
+   ],
+   "hits": [
+    {
+     "label": "scene-triage",
+     "t": 19.64
+    }
+   ]
+  },
+  {
+   "frame": 5,
+   "id": "F05",
+   "slug": "alerts-pour-in",
+   "line": "L03",
+   "start": 22.04,
+   "dur": 3.56,
+   "snap": true,
+   "cues": [],
+   "hits": []
+  },
+  {
+   "frame": 6,
+   "id": "F06",
+   "slug": "triage-groups",
+   "line": "L04",
+   "start": 25.6,
+   "dur": 8.325,
+   "snap": false,
+   "cues": [
+    {
+     "text": "Correlated",
+     "local": 2.89,
+     "t": 28.49
+    },
+    {
+     "text": "de-duplicated",
+     "local": 4.32,
+     "t": 29.92
+    },
+    {
+     "text": "ranked by service impact",
+     "local": 5.63,
+     "t": 31.23
+    }
+   ],
+   "hits": []
+  },
+  {
+   "frame": 7,
+   "id": "F07",
+   "slug": "act-now",
+   "line": "L05",
+   "start": 33.925,
+   "dur": 5.235,
+   "snap": false,
+   "cues": [
+    {
+     "text": "Only the alerts that need you",
+     "local": 1.075,
+     "t": 35.0
+    }
+   ],
+   "hits": [
+    {
+     "label": "counter-7",
+     "t": 36.19
+    }
+   ]
+  },
+  {
+   "frame": 8,
+   "id": "F08",
+   "slug": "bridge-rca",
+   "line": null,
+   "start": 39.16,
+   "dur": 2.4,
+   "snap": false,
+   "cues": [
+    {
+     "text": "ROOT CAUSE ANALYSIS",
+     "local": 0.0,
+     "t": 39.16
+    }
+   ],
+   "hits": [
+    {
+     "label": "scene-rca",
+     "t": 39.16
+    }
+   ]
+  },
+  {
+   "frame": 9,
+   "id": "F09",
+   "slug": "incident-hits",
+   "line": "L06",
+   "start": 41.56,
+   "dur": 4.39,
+   "snap": true,
+   "cues": [],
+   "hits": []
+  },
+  {
+   "frame": 10,
+   "id": "F10",
+   "slug": "investigation",
+   "line": "L07",
+   "start": 45.95,
+   "dur": 13.185,
+   "snap": false,
+   "cues": [
+    {
+     "text": "Hypotheses with confidence scores",
+     "local": 7.86,
+     "t": 53.81
+    },
+    {
+     "text": "ruled out \u00b7 4%",
+     "local": 12.37,
+     "t": 58.32
+    }
+   ],
+   "hits": [
+    {
+     "label": "ruled-out",
+     "t": 58.32
+    }
+   ]
+  },
+  {
+   "frame": 11,
+   "id": "F11",
+   "slug": "probable-cause",
+   "line": "L09",
+   "start": 59.135,
+   "dur": 4.735,
+   "snap": false,
+   "cues": [
+    {
+     "text": "Probable cause, with the evidence",
+     "local": 1.495,
+     "t": 60.63
+    }
+   ],
+   "hits": []
+  },
+  {
+   "frame": 12,
+   "id": "F12",
+   "slug": "bridge-remediation",
+   "line": null,
+   "start": 63.87,
+   "dur": 2.0,
+   "snap": false,
+   "cues": [
+    {
+     "text": "REMEDIATION",
+     "local": 0.0,
+     "t": 63.87
+    }
+   ],
+   "hits": [
+    {
+     "label": "scene-remediation",
+     "t": 63.87
+    }
+   ]
+  },
+  {
+   "frame": 13,
+   "id": "F13",
+   "slug": "manual-fix",
+   "line": "L10",
+   "start": 65.87,
+   "dur": 3.675,
+   "snap": true,
+   "cues": [],
+   "hits": []
+  },
+  {
+   "frame": 14,
+   "id": "F14",
+   "slug": "remediation-run",
+   "line": "L11",
+   "start": 69.545,
+   "dur": 12.855,
+   "snap": false,
+   "cues": [
+    {
+     "text": "Restart",
+     "local": 2.195,
+     "t": 71.74
+    },
+    {
+     "text": "scale",
+     "local": 3.425,
+     "t": 72.97
+    },
+    {
+     "text": "reroute traffic",
+     "local": 4.535,
+     "t": 74.08
+    },
+    {
+     "text": "roll back",
+     "local": 5.705,
+     "t": 75.25
+    },
+    {
+     "text": "Approval gate",
+     "local": 9.255,
+     "t": 78.8
+    },
+    {
+     "text": "full audit trail",
+     "local": 11.775,
+     "t": 81.32
+    }
+   ],
+   "hits": [
+    {
+     "label": "approve",
+     "t": 78.8
+    }
+   ]
+  },
+  {
+   "frame": 15,
+   "id": "F15",
+   "slug": "resolved",
+   "line": "L12",
+   "start": 82.4,
+   "dur": 4.35,
+   "snap": false,
+   "cues": [
+    {
+     "text": "You decide what runs",
+     "local": 2.85,
+     "t": 85.25
+    }
+   ],
+   "hits": [
+    {
+     "label": "resolved",
+     "t": 83.11
+    }
+   ]
+  },
+  {
+   "frame": 16,
+   "id": "F16",
+   "slug": "keeps-learning",
+   "line": "L13",
+   "start": 86.75,
+   "dur": 8.245,
+   "snap": false,
+   "cues": [
+    {
+     "text": "Every incident makes the next one easier",
+     "local": 5.76,
+     "t": 92.51
+    }
+   ],
+   "hits": []
+  },
+  {
+   "frame": 17,
+   "id": "F17",
+   "slug": "bridge-platform",
+   "line": null,
+   "start": 94.995,
+   "dur": 2.6,
+   "snap": false,
+   "cues": [
+    {
+     "text": "AIDEN WORLD MODEL",
+     "local": 0.0,
+     "t": 94.995
+    }
+   ],
+   "hits": [
+    {
+     "label": "scene-platform",
+     "t": 94.995
+    }
+   ]
+  },
+  {
+   "frame": 18,
+   "id": "F18",
+   "slug": "world-model",
+   "line": "L15",
+   "start": 97.595,
+   "dur": 11.84,
+   "snap": true,
+   "cues": [
+    {
+     "text": "deployed",
+     "local": 4.405,
+     "t": 102.0
+    },
+    {
+     "text": "changed",
+     "local": 5.275,
+     "t": 102.87
+    },
+    {
+     "text": "broke",
+     "local": 6.275,
+     "t": 103.87
+    },
+    {
+     "text": "fixed",
+     "local": 7.745,
+     "t": 105.34
+    },
+    {
+     "text": "AIDEN OS \u00b7 policy \u00b7 approvals \u00b7 audit",
+     "local": 8.745,
+     "t": 106.34
+    }
+   ],
+   "hits": []
+  },
+  {
+   "frame": 19,
+   "id": "F19",
+   "slug": "end-card",
+   "line": "L16",
+   "start": 109.435,
+   "dur": 5.355,
+   "snap": false,
+   "cues": [
+    {
+     "text": "Book a demo",
+     "local": 2.725,
+     "t": 112.16
+    },
+    {
+     "text": "Try Community Edition \u00b7 free for up to two users",
+     "local": 4.525,
+     "t": 113.96
+    }
+   ],
+   "hits": [
+    {
+     "label": "wordmark",
+     "t": 109.435
+    }
+   ]
+  },
+  {
+   "frame": 20,
+   "id": "F20",
+   "slug": "tail",
+   "line": null,
+   "start": 114.79,
+   "dur": 3.0,
+   "snap": false,
+   "cues": [],
+   "hits": [
+    {
+     "label": "end",
+     "t": 117.79
+    }
+   ]
+  }
+ ]
+}

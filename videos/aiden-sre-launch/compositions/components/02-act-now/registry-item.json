@@ -1,0 +1,602 @@
+{
+  "name": "02-act-now",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/51:2",
+  "files": [
+    {
+      "path": "02-act-now.html",
+      "target": "compositions/components/02-act-now/02-act-now.html",
+      "type": "hyperframes:snippet"
+    },
+    {
+      "path": "image_192.svg",
+      "target": ".media/images/image_192.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_193.svg",
+      "target": ".media/images/image_193.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_194.svg",
+      "target": ".media/images/image_194.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_195.svg",
+      "target": ".media/images/image_195.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_196.svg",
+      "target": ".media/images/image_196.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_197.svg",
+      "target": ".media/images/image_197.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_198.svg",
+      "target": ".media/images/image_198.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_199.svg",
+      "target": ".media/images/image_199.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_200.svg",
+      "target": ".media/images/image_200.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_201.svg",
+      "target": ".media/images/image_201.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_202.svg",
+      "target": ".media/images/image_202.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_203.svg",
+      "target": ".media/images/image_203.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_204.svg",
+      "target": ".media/images/image_204.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_205.svg",
+      "target": ".media/images/image_205.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_206.svg",
+      "target": ".media/images/image_206.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_207.svg",
+      "target": ".media/images/image_207.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_208.svg",
+      "target": ".media/images/image_208.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_209.svg",
+      "target": ".media/images/image_209.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_210.svg",
+      "target": ".media/images/image_210.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_211.svg",
+      "target": ".media/images/image_211.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_212.svg",
+      "target": ".media/images/image_212.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_213.svg",
+      "target": ".media/images/image_213.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_214.svg",
+      "target": ".media/images/image_214.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_215.svg",
+      "target": ".media/images/image_215.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_216.svg",
+      "target": ".media/images/image_216.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_217.svg",
+      "target": ".media/images/image_217.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_218.svg",
+      "target": ".media/images/image_218.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_219.svg",
+      "target": ".media/images/image_219.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_220.svg",
+      "target": ".media/images/image_220.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_221.svg",
+      "target": ".media/images/image_221.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_222.svg",
+      "target": ".media/images/image_222.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_223.svg",
+      "target": ".media/images/image_223.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_224.svg",
+      "target": ".media/images/image_224.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_225.svg",
+      "target": ".media/images/image_225.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_226.svg",
+      "target": ".media/images/image_226.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_227.svg",
+      "target": ".media/images/image_227.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_228.svg",
+      "target": ".media/images/image_228.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_229.svg",
+      "target": ".media/images/image_229.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_230.svg",
+      "target": ".media/images/image_230.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_231.svg",
+      "target": ".media/images/image_231.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_232.svg",
+      "target": ".media/images/image_232.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_233.svg",
+      "target": ".media/images/image_233.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_234.svg",
+      "target": ".media/images/image_234.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_235.svg",
+      "target": ".media/images/image_235.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_236.svg",
+      "target": ".media/images/image_236.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_237.svg",
+      "target": ".media/images/image_237.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_238.svg",
+      "target": ".media/images/image_238.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_239.svg",
+      "target": ".media/images/image_239.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_240.svg",
+      "target": ".media/images/image_240.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_241.svg",
+      "target": ".media/images/image_241.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_242.svg",
+      "target": ".media/images/image_242.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_243.svg",
+      "target": ".media/images/image_243.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_244.svg",
+      "target": ".media/images/image_244.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_245.svg",
+      "target": ".media/images/image_245.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_246.svg",
+      "target": ".media/images/image_246.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_247.svg",
+      "target": ".media/images/image_247.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_248.svg",
+      "target": ".media/images/image_248.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_249.svg",
+      "target": ".media/images/image_249.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_250.svg",
+      "target": ".media/images/image_250.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_251.svg",
+      "target": ".media/images/image_251.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_252.svg",
+      "target": ".media/images/image_252.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_253.svg",
+      "target": ".media/images/image_253.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_254.svg",
+      "target": ".media/images/image_254.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_255.svg",
+      "target": ".media/images/image_255.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_256.svg",
+      "target": ".media/images/image_256.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_257.svg",
+      "target": ".media/images/image_257.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_258.svg",
+      "target": ".media/images/image_258.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_259.svg",
+      "target": ".media/images/image_259.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_260.svg",
+      "target": ".media/images/image_260.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_261.svg",
+      "target": ".media/images/image_261.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_262.svg",
+      "target": ".media/images/image_262.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_263.svg",
+      "target": ".media/images/image_263.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_264.svg",
+      "target": ".media/images/image_264.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_265.svg",
+      "target": ".media/images/image_265.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_266.svg",
+      "target": ".media/images/image_266.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_267.svg",
+      "target": ".media/images/image_267.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_268.svg",
+      "target": ".media/images/image_268.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_269.svg",
+      "target": ".media/images/image_269.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_270.svg",
+      "target": ".media/images/image_270.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_271.svg",
+      "target": ".media/images/image_271.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_272.svg",
+      "target": ".media/images/image_272.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_273.svg",
+      "target": ".media/images/image_273.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_274.svg",
+      "target": ".media/images/image_274.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_275.svg",
+      "target": ".media/images/image_275.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_276.svg",
+      "target": ".media/images/image_276.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_277.svg",
+      "target": ".media/images/image_277.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_278.svg",
+      "target": ".media/images/image_278.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_279.svg",
+      "target": ".media/images/image_279.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_280.svg",
+      "target": ".media/images/image_280.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_281.svg",
+      "target": ".media/images/image_281.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_282.svg",
+      "target": ".media/images/image_282.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_283.svg",
+      "target": ".media/images/image_283.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_284.svg",
+      "target": ".media/images/image_284.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_285.svg",
+      "target": ".media/images/image_285.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_286.svg",
+      "target": ".media/images/image_286.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_287.svg",
+      "target": ".media/images/image_287.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_288.svg",
+      "target": ".media/images/image_288.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_289.svg",
+      "target": ".media/images/image_289.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_290.svg",
+      "target": ".media/images/image_290.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_291.svg",
+      "target": ".media/images/image_291.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_292.svg",
+      "target": ".media/images/image_292.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_293.svg",
+      "target": ".media/images/image_293.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_294.svg",
+      "target": ".media/images/image_294.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_295.svg",
+      "target": ".media/images/image_295.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_296.svg",
+      "target": ".media/images/image_296.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_297.svg",
+      "target": ".media/images/image_297.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_298.svg",
+      "target": ".media/images/image_298.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_299.svg",
+      "target": ".media/images/image_299.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_300.svg",
+      "target": ".media/images/image_300.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_301.svg",
+      "target": ".media/images/image_301.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_302.svg",
+      "target": ".media/images/image_302.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_303.svg",
+      "target": ".media/images/image_303.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_304.svg",
+      "target": ".media/images/image_304.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_305.svg",
+      "target": ".media/images/image_305.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_306.svg",
+      "target": ".media/images/image_306.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_307.svg",
+      "target": ".media/images/image_307.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_308.svg",
+      "target": ".media/images/image_308.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_309.svg",
+      "target": ".media/images/image_309.svg",
+      "type": "hyperframes:asset"
+    }
+  ]
+}

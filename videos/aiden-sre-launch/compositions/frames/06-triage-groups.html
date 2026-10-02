@@ -1,0 +1,303 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("shared/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Geist Mono";
+    src: url("shared/fonts/GeistMono-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-panel: #211d15;
+    --sg-hairline: #3f3b39;
+    --sg-cream: #f1eae0;
+    --sg-cream-bright: #faf7f2;
+    --sg-mute: #96897c;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+    --sg-coral: #fda39b;
+    --sg-amber: #fdd89b;
+    --sg-green: #a6f0bf;
+    --sg-glow-violet: rgba(186, 153, 253, 0.35);
+    --sg-glow-cyan: rgba(160, 234, 252, 0.3);
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: "Geist", sans-serif;
+    color: var(--sg-cream);
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f06-bg-fill {
+    background: radial-gradient(1200px 700px at 50% 38%, var(--sg-ink-raised) 0%, var(--sg-ink) 72%);
+  }
+  .f06-world {
+    perspective: 2400px;
+    transform-style: preserve-3d;
+  }
+  .f06-cam {
+    position: absolute;
+    left: 960px;
+    top: 420px;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+  }
+  .f06-panel-stage {
+    position: absolute;
+    left: -768px;
+    top: -354px;
+    width: 1536px;
+    height: 709px;
+    transform-style: preserve-3d;
+  }
+  .f06-panel-glow {
+    position: absolute;
+    left: 50%;
+    top: 92%;
+    width: 920px;
+    height: 120px;
+    margin-left: -460px;
+    background: radial-gradient(ellipse at center, var(--sg-glow-violet) 0%, transparent 70%);
+    opacity: 0.2;
+    filter: blur(8px);
+  }
+  .f06-panel {
+    position: absolute;
+    inset: 0;
+    border-radius: 2px;
+    box-shadow: 0 60px 120px rgba(0, 0, 0, 0.55);
+  }
+  .f06-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-top: 1px solid rgba(241, 234, 224, 0.22);
+    pointer-events: none;
+    z-index: 6;
+  }
+  .f06-ui-viewport {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #f4f5f8;
+  }
+  .f06-ui-scaler {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 886px;
+    zoom: 0.8;
+  }
+  .f06-ui-frame {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 886px;
+    object-fit: fill;
+    border: 0;
+  }
+  .f06-fg-layer {
+    z-index: 8;
+  }
+  .f06-chip-row {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 904px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+  .f06-chip {
+    padding: 8px 14px;
+    font-family: "Geist Mono", monospace;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--sg-cream-bright);
+    background: var(--sg-panel);
+    border: 1px solid var(--sg-hairline);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    white-space: nowrap;
+  }
+</style>
+
+<div id="root" data-composition-id="06-triage-groups" data-width="1920" data-height="1080" data-duration="8.325">
+  <div
+    class="clip f06-bg-fill"
+    data-start="0"
+    data-duration="8.325"
+    data-track-index="0"
+  ></div>
+
+  <div
+    class="clip"
+    id="f06-ribbon-host"
+    data-start="0"
+    data-duration="8.325"
+    data-track-index="1"
+  ></div>
+
+  <div
+    class="clip f06-world"
+    id="f06-world"
+    data-start="0"
+    data-duration="8.325"
+    data-track-index="2"
+  >
+    <div class="f06-cam" id="f06-cam">
+      <div class="f06-panel-stage" id="f06-panel-stage">
+        <div class="f06-panel-glow"></div>
+        <div class="f06-panel" id="f06-panel">
+          <div class="f06-ui-viewport">
+            <div class="f06-ui-scaler" id="f06-ui-scaler">
+              <img
+                class="f06-ui-frame"
+                id="f06-ui"
+                src="source/figma/48-2.png"
+                alt="Alerts triage"
+              />
+              <video
+                class="f06-ui-frame"
+                src="assets/el-pro/01-alert-triage.mp4"
+                data-start="0"
+                data-duration="8.325"
+                data-track-index="4"
+                data-media-start="0"
+                muted
+                playsinline
+              ></video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="clip f06-fg-layer"
+    data-start="0"
+    data-duration="8.325"
+    data-track-index="3"
+  >
+    <div class="f06-chip-row" id="f06-chip-row">
+      <div class="f06-chip" id="f06-chip-correlated">Correlated</div>
+      <div class="f06-chip" id="f06-chip-deduped">de-duplicated</div>
+      <div class="f06-chip" id="f06-chip-ranked">ranked by service impact</div>
+    </div>
+  </div>
+
+  
+  
+  
+</div>
+
+<script src="assets/frames/10/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "06-triage-groups";
+  const D = 8.325;
+  const CUE = {
+    correlated: 2.89,
+    deduped: 4.32,
+    ranked: 5.63,
+  };
+  const LAND = 0.28;
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/10/ribbons-mount.js", import.meta.url).href,
+  );
+
+  const ribbonHost = document.getElementById("f06-ribbon-host");
+  mountRibbons(ribbonHost, {
+    seed: 406,
+    count: 26,
+    split: 0.68,
+    modes: [
+      { t: 0, mode: "dormant", opacity: 0.55 },
+      { t: 2.89, mode: "converge", opacity: 0.85, target: { x: 960, y: 420 } },
+      { t: 5.63, mode: "rail", opacity: 0.72 },
+    ],
+  }).bind(tl, D);
+
+  const cam = document.getElementById("f06-cam");
+  const panelStage = document.getElementById("f06-panel-stage");
+
+  gsap.set(panelStage, {
+    rotationX: 2,
+    rotationY: -4,
+    transformPerspective: 2400,
+  });
+
+  tl.fromTo(
+    panelStage,
+    { y: 220, scale: 0.72, rotationX: 8, rotationY: -6, opacity: 0.2 },
+    {
+      y: 0,
+      scale: 1,
+      rotationX: 2,
+      rotationY: -4,
+      opacity: 1,
+      duration: 0.85,
+      ease: "back.out(1.4)",
+    },
+    0.05,
+  );
+
+  tl.fromTo(
+    cam,
+    { scale: 0.92, x: 16, y: 18 },
+    { scale: 1.12, x: -14, y: -16, duration: 2.25, ease: "power2.inOut" },
+    0.2,
+  );
+
+  tl.to(
+    cam,
+    { scale: 1.13, x: -32, y: -42, duration: D - 2.45, ease: "none", immediateRender: false },
+    2.45,
+  );
+
+  tl.to(
+    panelStage,
+    { rotationX: 1.7, rotationY: -4.5, duration: D - 2.45, ease: "none", immediateRender: false },
+    2.45,
+  );
+
+  function landChip(id, cue) {
+    tl.fromTo(
+      document.getElementById(id),
+      { opacity: 0, y: 18, scale: 0.92 },
+      { opacity: 1, y: 0, scale: 1, duration: LAND, ease: "back.out(1.6)" },
+      cue - LAND,
+    );
+  }
+
+  landChip("f06-chip-correlated", CUE.correlated);
+  landChip("f06-chip-deduped", CUE.deduped);
+  landChip("f06-chip-ranked", CUE.ranked);
+
+  tl.to({}, { duration: D }, 0);
+</script>
+</template>

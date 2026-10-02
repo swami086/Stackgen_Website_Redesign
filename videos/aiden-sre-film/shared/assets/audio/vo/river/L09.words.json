@@ -1,0 +1,62 @@
+[
+ {
+  "word": "Your",
+  "start": 0.0,
+  "end": 0.209
+ },
+ {
+  "word": "team",
+  "start": 0.255,
+  "end": 0.43
+ },
+ {
+  "word": "starts",
+  "start": 0.488,
+  "end": 0.755
+ },
+ {
+  "word": "from",
+  "start": 0.789,
+  "end": 0.906
+ },
+ {
+  "word": "a",
+  "start": 0.964,
+  "end": 0.987
+ },
+ {
+  "word": "probable",
+  "start": 1.045,
+  "end": 1.451
+ },
+ {
+  "word": "root",
+  "start": 1.486,
+  "end": 1.66
+ },
+ {
+  "word": "cause,",
+  "start": 1.718,
+  "end": 2.125
+ },
+ {
+  "word": "and",
+  "start": 2.194,
+  "end": 2.345
+ },
+ {
+  "word": "MTTR",
+  "start": 2.403,
+  "end": 2.995
+ },
+ {
+  "word": "comes",
+  "start": 3.053,
+  "end": 3.228
+ },
+ {
+  "word": "down.",
+  "start": 3.274,
+  "end": 3.855
+ }
+]

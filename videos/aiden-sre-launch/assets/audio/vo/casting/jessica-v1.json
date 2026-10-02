@@ -1,0 +1,10 @@
+{
+ "flow_id": "ClZV4C3zXOmhgO08iH7o",
+ "generation_id": "5ZonfUOOdN2P8skdG64I",
+ "model_id": "eleven_v4",
+ "voice_id": "lxYfHSkYm1EzQzGhdbfc",
+ "voice_name": "Jessica Anne Bogart - Narration. A VO Pro. Confident. Conversational. ",
+ "prompt": "[serious] When a real incident hits, most of the time goes into investigation. [pause] [confident] Aiden starts investigating the moment an alert fires. It correlates logs, metrics, and events across your dependencies. Then it scores every possible cause against the evidence \u2014 and even tries to prove itself wrong. [pause] Your team starts from a probable root cause, and M-T-T-R comes down.",
+ "duration_secs": 24.32,
+ "source_url_host": "storage.googleapis.com"
+}

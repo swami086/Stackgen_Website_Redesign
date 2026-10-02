@@ -1,0 +1,52 @@
+{
+  "name": "09-connections",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/66:30",
+  "files": [
+    {
+      "path": "09-connections.html",
+      "target": "compositions/components/09-connections/09-connections.html",
+      "type": "hyperframes:snippet"
+    },
+    {
+      "path": "image_591.svg",
+      "target": ".media/images/image_591.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_592.svg",
+      "target": ".media/images/image_592.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_593.svg",
+      "target": ".media/images/image_593.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_594.svg",
+      "target": ".media/images/image_594.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_595.svg",
+      "target": ".media/images/image_595.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_596.svg",
+      "target": ".media/images/image_596.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_597.svg",
+      "target": ".media/images/image_597.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_598.svg",
+      "target": ".media/images/image_598.svg",
+      "type": "hyperframes:asset"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+ "T1": {
+  "match_ratio": 0.978
+ },
+ "T2": {
+  "match_ratio": 1.0
+ },
+ "T3": {
+  "match_ratio": 1.0
+ },
+ "T4": {
+  "match_ratio": 1.0
+ },
+ "T5": {
+  "match_ratio": 1.0
+ }
+}

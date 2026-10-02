@@ -1,0 +1,6 @@
+.env
+node_modules/
+renders/
+.hyperframes/cache/
+.venv/
+.pytest_cache/

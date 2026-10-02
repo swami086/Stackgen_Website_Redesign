@@ -1,0 +1,12 @@
+{
+  "name": "07-alert-flood",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/66:2",
+  "files": [
+    {
+      "path": "07-alert-flood.html",
+      "target": "compositions/components/07-alert-flood/07-alert-flood.html",
+      "type": "hyperframes:snippet"
+    }
+  ]
+}

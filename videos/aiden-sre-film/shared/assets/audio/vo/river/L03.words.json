@@ -1,0 +1,47 @@
+[
+ {
+  "word": "One",
+  "start": 0.0,
+  "end": 0.174
+ },
+ {
+  "word": "failure",
+  "start": 0.221,
+  "end": 0.534
+ },
+ {
+  "word": "can",
+  "start": 0.569,
+  "end": 0.685
+ },
+ {
+  "word": "set",
+  "start": 0.743,
+  "end": 0.871
+ },
+ {
+  "word": "off",
+  "start": 0.906,
+  "end": 0.998
+ },
+ {
+  "word": "a",
+  "start": 1.045,
+  "end": 1.068
+ },
+ {
+  "word": "flood",
+  "start": 1.126,
+  "end": 1.335
+ },
+ {
+  "word": "of",
+  "start": 1.37,
+  "end": 1.416
+ },
+ {
+  "word": "alerts.",
+  "start": 1.463,
+  "end": 2.229
+ }
+]

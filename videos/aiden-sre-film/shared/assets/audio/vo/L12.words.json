@@ -1,62 +1,62 @@
 [
  {
   "word": "Incidents",
-  "start": 0.0,
-  "end": 0.441
+  "start": 0.11,
+  "end": 0.29
  },
  {
   "word": "close",
-  "start": 0.476,
-  "end": 0.731
+  "start": 0.89,
+  "end": 1.39
  },
  {
   "word": "faster,",
-  "start": 0.766,
-  "end": 1.277
+  "start": 1.39,
+  "end": 2.0
  },
  {
   "word": "and",
-  "start": 1.335,
-  "end": 1.474
+  "start": 2.0,
+  "end": 2.26
  },
  {
   "word": "your",
-  "start": 1.521,
-  "end": 1.637
+  "start": 2.26,
+  "end": 2.6
  },
  {
   "word": "team",
-  "start": 1.683,
-  "end": 1.904
+  "start": 2.6,
+  "end": 2.83
  },
  {
   "word": "stays",
-  "start": 1.985,
-  "end": 2.276
+  "start": 3.03,
+  "end": 3.28
  },
  {
   "word": "in",
-  "start": 2.322,
-  "end": 2.38
+  "start": 3.28,
+  "end": 3.48
  },
  {
   "word": "control",
-  "start": 2.426,
-  "end": 2.81
+  "start": 3.48,
+  "end": 4.17
  },
  {
   "word": "of",
-  "start": 2.868,
-  "end": 2.914
+  "start": 4.18,
+  "end": 4.35
  },
  {
   "word": "what",
-  "start": 2.961,
-  "end": 3.088
+  "start": 4.41,
+  "end": 4.77
  },
  {
   "word": "runs.",
-  "start": 3.135,
-  "end": 3.808
+  "start": 4.77,
+  "end": 4.92
  }
 ]

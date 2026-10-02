@@ -13,6 +13,7 @@ web/playwright-report/
 web/.env
 web/.env.*
 !web/.env.example
+videos/aiden-sre-film/.env
 web/.open-next/
 web/.tmp/
 web/clouduser.*

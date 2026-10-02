@@ -1,0 +1,153 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("shared/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-panel: #211d15;
+    --sg-hairline: #3f3b39;
+    --sg-cream: #f1eae0;
+    --sg-cream-bright: #faf7f2;
+    --sg-mute: #96897c;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+    --sg-coral: #fda39b;
+    --sg-amber: #fdd89b;
+    --sg-green: #a6f0bf;
+    --sg-glow-violet: rgba(186, 153, 253, 0.35);
+    --sg-glow-cyan: rgba(160, 234, 252, 0.3);
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #14110c;
+    font-family: "Geist", sans-serif;
+    color: #f1eae0;
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f12-ink {
+    background: #14110c;
+  }
+  .f12-ribbon-host {
+    z-index: 0;
+    -webkit-mask-image: radial-gradient(ellipse 74% 64% at 50% 44%, transparent 0 52%, #000 78%);
+    mask-image: radial-gradient(ellipse 74% 64% at 50% 44%, transparent 0 52%, #000 78%);
+  }
+  .f12-lockup {
+    z-index: 2;
+  }
+  .f12-front {
+    position: absolute;
+    left: 192px;
+    top: 66px;
+    width: 1536px;
+    height: 709px;
+    box-sizing: border-box;
+    border: 2px solid #a6f0bf;
+    border-radius: 2px;
+    background: transparent;
+    opacity: 1;
+    transform-origin: 50% 50%;
+  }
+  .el-atmo {
+    width: 1920px;
+    height: 1080px;
+    object-fit: cover;
+    z-index: 3;
+  }
+  .f12-eyebrow-slot {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 196px;
+    display: flex;
+    justify-content: center;
+    z-index: 4;
+  }
+  .f12-eyebrow {
+    background: #14110c;
+    color: #f1eae0;
+    opacity: 1;
+    font-family: "Geist", sans-serif;
+    font-size: 52px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    line-height: 1;
+    padding: 28px 54px 30px 64px;
+    white-space: nowrap;
+    transform-origin: 50% 60%;
+  }
+</style>
+
+<div id="root" data-composition-id="12-bridge-remediation" data-width="1920" data-height="1080" data-duration="2.698">
+  <div class="clip f12-ink" data-start="0" data-duration="2.698" data-track-index="0"></div>
+
+  <video class="clip el-atmo" src="assets/el-video/A4.mp4" data-start="0" data-duration="2.698" data-track-index="4" data-media-start="0" muted playsinline></video>
+  <div class="clip f12-ribbon-host" id="f12-ribbon-host" data-start="0" data-duration="2.698" data-track-index="1"></div>
+
+  <div class="clip f12-lockup" data-start="0" data-duration="2.698" data-track-index="2">
+    <div class="f12-front" id="f12-front"></div>
+    <div class="f12-eyebrow-slot">
+      <div class="f12-eyebrow" id="f12-eyebrow">REMEDIATION</div>
+    </div>
+  </div>
+
+  
+</div>
+
+<script src="assets/frames/10/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "12-bridge-remediation";
+  const D = 2.698;
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/10/ribbons-mount.js", import.meta.url).href,
+  );
+
+  mountRibbons(document.getElementById("f12-ribbon-host"), {
+    seed: 412,
+    count: 26,
+    split: 0.7,
+    modes: [
+      { t: 0, mode: "storm", opacity: 0.7 },
+      { t: 0.18, mode: "converge", opacity: 0.86, target: { x: 960, y: 420 } },
+    ],
+  }).bind(tl, D);
+
+  const eyebrow = document.getElementById("f12-eyebrow");
+  const front = document.getElementById("f12-front");
+
+  tl.fromTo(
+    eyebrow,
+    { scale: 1.52, opacity: 1 },
+    { scale: 1, opacity: 1, duration: 0.42, ease: "power4.out" },
+    0,
+  );
+
+  tl.fromTo(
+    front,
+    { scale: 1.06, opacity: 1 },
+    { scale: 1, opacity: 1, duration: 1.15, ease: "power3.out" },
+    0,
+  );
+
+  tl.to({}, { duration: 2.698 }, 0);
+</script>
+</template>

@@ -1,0 +1,350 @@
+[
+  {
+    "text": "Even",
+    "start": 0.1,
+    "end": 0.28,
+    "id": "w0"
+  },
+  {
+    "text": "with",
+    "start": 0.28,
+    "end": 0.56,
+    "id": "w1"
+  },
+  {
+    "text": "the",
+    "start": 0.56,
+    "end": 0.77,
+    "id": "w2"
+  },
+  {
+    "text": "cause",
+    "start": 0.77,
+    "end": 1.11,
+    "id": "w3"
+  },
+  {
+    "text": "in",
+    "start": 1.11,
+    "end": 1.25,
+    "id": "w4"
+  },
+  {
+    "text": "hand,",
+    "start": 1.25,
+    "end": 1.56,
+    "id": "w5"
+  },
+  {
+    "text": "the",
+    "start": 1.77,
+    "end": 1.9,
+    "id": "w6"
+  },
+  {
+    "text": "fix",
+    "start": 1.99,
+    "end": 2.23,
+    "id": "w7"
+  },
+  {
+    "text": "is",
+    "start": 2.24,
+    "end": 2.43,
+    "id": "w8"
+  },
+  {
+    "text": "often",
+    "start": 2.43,
+    "end": 2.91,
+    "id": "w9"
+  },
+  {
+    "text": "manual.",
+    "start": 2.91,
+    "end": 3.48,
+    "id": "w10"
+  },
+  {
+    "text": "Aiden",
+    "start": 3.87,
+    "end": 4.17,
+    "id": "w11"
+  },
+  {
+    "text": "runs",
+    "start": 4.17,
+    "end": 4.45,
+    "id": "w12"
+  },
+  {
+    "text": "the",
+    "start": 4.49,
+    "end": 4.69,
+    "id": "w13"
+  },
+  {
+    "text": "remediation,",
+    "start": 4.69,
+    "end": 5.66,
+    "id": "w14"
+  },
+  {
+    "text": "from",
+    "start": 5.66,
+    "end": 5.87,
+    "id": "w15"
+  },
+  {
+    "text": "restarting",
+    "start": 5.87,
+    "end": 6.39,
+    "id": "w16"
+  },
+  {
+    "text": "a",
+    "start": 6.4,
+    "end": 6.47,
+    "id": "w17"
+  },
+  {
+    "text": "service",
+    "start": 6.47,
+    "end": 6.95,
+    "id": "w18"
+  },
+  {
+    "text": "or",
+    "start": 6.96,
+    "end": 7.1,
+    "id": "w19"
+  },
+  {
+    "text": "scaling",
+    "start": 7.1,
+    "end": 7.16,
+    "id": "w20"
+  },
+  {
+    "text": "out",
+    "start": 7.75,
+    "end": 8.08,
+    "id": "w21"
+  },
+  {
+    "text": "to",
+    "start": 8.18,
+    "end": 8.21,
+    "id": "w22"
+  },
+  {
+    "text": "rerouting",
+    "start": 8.21,
+    "end": 8.78,
+    "id": "w23"
+  },
+  {
+    "text": "traffic",
+    "start": 8.84,
+    "end": 9.25,
+    "id": "w24"
+  },
+  {
+    "text": "or",
+    "start": 9.25,
+    "end": 9.38,
+    "id": "w25"
+  },
+  {
+    "text": "rolling",
+    "start": 9.38,
+    "end": 9.55,
+    "id": "w26"
+  },
+  {
+    "text": "back",
+    "start": 9.85,
+    "end": 10.1,
+    "id": "w27"
+  },
+  {
+    "text": "a",
+    "start": 10.1,
+    "end": 10.16,
+    "id": "w28"
+  },
+  {
+    "text": "deployment.",
+    "start": 10.16,
+    "end": 11.04,
+    "id": "w29"
+  },
+  {
+    "text": "Your",
+    "start": 11.14,
+    "end": 11.3,
+    "id": "w30"
+  },
+  {
+    "text": "team",
+    "start": 11.3,
+    "end": 11.49,
+    "id": "w31"
+  },
+  {
+    "text": "sets",
+    "start": 11.58,
+    "end": 11.82,
+    "id": "w32"
+  },
+  {
+    "text": "which",
+    "start": 11.82,
+    "end": 12.15,
+    "id": "w33"
+  },
+  {
+    "text": "actions",
+    "start": 12.15,
+    "end": 12.51,
+    "id": "w34"
+  },
+  {
+    "text": "need",
+    "start": 12.51,
+    "end": 12.87,
+    "id": "w35"
+  },
+  {
+    "text": "approval,",
+    "start": 12.93,
+    "end": 13.44,
+    "id": "w36"
+  },
+  {
+    "text": "and",
+    "start": 13.54,
+    "end": 13.65,
+    "id": "w37"
+  },
+  {
+    "text": "every",
+    "start": 13.65,
+    "end": 14.03,
+    "id": "w38"
+  },
+  {
+    "text": "action",
+    "start": 14.03,
+    "end": 14.48,
+    "id": "w39"
+  },
+  {
+    "text": "goes",
+    "start": 14.48,
+    "end": 14.78,
+    "id": "w40"
+  },
+  {
+    "text": "into",
+    "start": 14.78,
+    "end": 14.91,
+    "id": "w41"
+  },
+  {
+    "text": "a",
+    "start": 14.91,
+    "end": 15.21,
+    "id": "w42"
+  },
+  {
+    "text": "full",
+    "start": 15.21,
+    "end": 15.45,
+    "id": "w43"
+  },
+  {
+    "text": "audit",
+    "start": 15.45,
+    "end": 15.82,
+    "id": "w44"
+  },
+  {
+    "text": "trail.",
+    "start": 15.82,
+    "end": 16.48,
+    "id": "w45"
+  },
+  {
+    "text": "Incidents",
+    "start": 16.58,
+    "end": 17.13,
+    "id": "w46"
+  },
+  {
+    "text": "close",
+    "start": 17.24,
+    "end": 17.59,
+    "id": "w47"
+  },
+  {
+    "text": "faster,",
+    "start": 17.59,
+    "end": 18.2,
+    "id": "w48"
+  },
+  {
+    "text": "and",
+    "start": 18.25,
+    "end": 18.39,
+    "id": "w49"
+  },
+  {
+    "text": "your",
+    "start": 18.47,
+    "end": 18.63,
+    "id": "w50"
+  },
+  {
+    "text": "team",
+    "start": 18.65,
+    "end": 18.89,
+    "id": "w51"
+  },
+  {
+    "text": "stays",
+    "start": 18.89,
+    "end": 19.24,
+    "id": "w52"
+  },
+  {
+    "text": "in",
+    "start": 19.24,
+    "end": 19.38,
+    "id": "w53"
+  },
+  {
+    "text": "control",
+    "start": 19.38,
+    "end": 19.82,
+    "id": "w54"
+  },
+  {
+    "text": "of",
+    "start": 19.82,
+    "end": 20.125,
+    "id": "w55"
+  },
+  {
+    "text": "what",
+    "start": 20.125,
+    "end": 20.43,
+    "id": "w56"
+  },
+  {
+    "text": "runs.",
+    "start": 20.43,
+    "end": 20.88,
+    "id": "w57"
+  }
+]

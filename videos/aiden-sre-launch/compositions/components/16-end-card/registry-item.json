@@ -1,0 +1,12 @@
+{
+  "name": "16-end-card",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/66:92",
+  "files": [
+    {
+      "path": "16-end-card.html",
+      "target": "compositions/components/16-end-card/16-end-card.html",
+      "type": "hyperframes:snippet"
+    }
+  ]
+}

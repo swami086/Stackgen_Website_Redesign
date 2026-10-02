@@ -1,0 +1,134 @@
+[
+ {
+  "id": "w0",
+  "text": "Your",
+  "start": 0.09,
+  "end": 0.36
+ },
+ {
+  "id": "w1",
+  "text": "on-call",
+  "start": 0.36,
+  "end": 0.99
+ },
+ {
+  "id": "w2",
+  "text": "team",
+  "start": 0.99,
+  "end": 1.21
+ },
+ {
+  "id": "w3",
+  "text": "is",
+  "start": 1.37,
+  "end": 1.53
+ },
+ {
+  "id": "w4",
+  "text": "buried",
+  "start": 1.53,
+  "end": 2.07
+ },
+ {
+  "id": "w5",
+  "text": "in",
+  "start": 2.07,
+  "end": 2.21
+ },
+ {
+  "id": "w6",
+  "text": "alerts.",
+  "start": 2.29,
+  "end": 2.8
+ },
+ {
+  "id": "w7",
+  "text": "And",
+  "start": 2.89,
+  "end": 3.0
+ },
+ {
+  "id": "w8",
+  "text": "most",
+  "start": 3.0,
+  "end": 3.26
+ },
+ {
+  "id": "w9",
+  "text": "of",
+  "start": 3.29,
+  "end": 3.4
+ },
+ {
+  "id": "w10",
+  "text": "them",
+  "start": 3.4,
+  "end": 3.67
+ },
+ {
+  "id": "w11",
+  "text": "don't",
+  "start": 3.67,
+  "end": 4.0
+ },
+ {
+  "id": "w12",
+  "text": "matter.",
+  "start": 4.0,
+  "end": 4.63
+ },
+ {
+  "id": "w13",
+  "text": "The",
+  "start": 4.73,
+  "end": 4.86
+ },
+ {
+  "id": "w14",
+  "text": "ones",
+  "start": 4.9,
+  "end": 5.23
+ },
+ {
+  "id": "w15",
+  "text": "that",
+  "start": 5.23,
+  "end": 5.57
+ },
+ {
+  "id": "w16",
+  "text": "do",
+  "start": 5.57,
+  "end": 5.74
+ },
+ {
+  "id": "w17",
+  "text": "can",
+  "start": 5.74,
+  "end": 5.87
+ },
+ {
+  "id": "w18",
+  "text": "take",
+  "start": 6.01,
+  "end": 6.33
+ },
+ {
+  "id": "w19",
+  "text": "hours",
+  "start": 6.33,
+  "end": 6.76
+ },
+ {
+  "id": "w20",
+  "text": "to",
+  "start": 6.76,
+  "end": 6.85
+ },
+ {
+  "id": "w21",
+  "text": "untangle.",
+  "start": 6.93,
+  "end": 7.91
+ }
+]

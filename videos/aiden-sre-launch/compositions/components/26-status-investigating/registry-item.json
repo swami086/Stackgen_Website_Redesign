@@ -1,0 +1,12 @@
+{
+  "name": "26-status-investigating",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/99:93",
+  "files": [
+    {
+      "path": "26-status-investigating.html",
+      "target": "compositions/components/26-status-investigating/26-status-investigating.html",
+      "type": "hyperframes:snippet"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+[
+ {
+  "id": "w0",
+  "text": "Your",
+  "start": 0.055,
+  "end": 0.235
+ },
+ {
+  "id": "w1",
+  "text": "engineers",
+  "start": 0.235,
+  "end": 0.865
+ },
+ {
+  "id": "w2",
+  "text": "see",
+  "start": 0.865,
+  "end": 1.075
+ },
+ {
+  "id": "w3",
+  "text": "only",
+  "start": 1.075,
+  "end": 1.355
+ },
+ {
+  "id": "w4",
+  "text": "the",
+  "start": 1.355,
+  "end": 1.515
+ },
+ {
+  "id": "w5",
+  "text": "alerts",
+  "start": 1.635,
+  "end": 1.985
+ },
+ {
+  "id": "w6",
+  "text": "that",
+  "start": 1.985,
+  "end": 2.265
+ },
+ {
+  "id": "w7",
+  "text": "need",
+  "start": 2.265,
+  "end": 2.545
+ },
+ {
+  "id": "w8",
+  "text": "them",
+  "start": 2.545,
+  "end": 2.835
+ },
+ {
+  "id": "w9",
+  "text": "and",
+  "start": 2.835,
+  "end": 3.025
+ },
+ {
+  "id": "w10",
+  "text": "save",
+  "start": 3.025,
+  "end": 3.105
+ },
+ {
+  "id": "w11",
+  "text": "their",
+  "start": 3.605,
+  "end": 3.625
+ },
+ {
+  "id": "w12",
+  "text": "energy",
+  "start": 3.625,
+  "end": 4.025
+ },
+ {
+  "id": "w13",
+  "text": "for",
+  "start": 4.025,
+  "end": 4.225
+ },
+ {
+  "id": "w14",
+  "text": "real",
+  "start": 4.225,
+  "end": 4.485
+ },
+ {
+  "id": "w15",
+  "text": "incidents.",
+  "start": 4.485,
+  "end": 5.235
+ }
+]

@@ -1,0 +1,12 @@
+{
+  "name": "27-status-resolved",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/99:100",
+  "files": [
+    {
+      "path": "27-status-resolved.html",
+      "target": "compositions/components/27-status-resolved/27-status-resolved.html",
+      "type": "hyperframes:snippet"
+    }
+  ]
+}

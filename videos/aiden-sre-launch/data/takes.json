@@ -1,7 +1,80 @@
 [
-{"id":"T1","lines":["L01","L02"],"frames":[2,3],"chosen":null,"markup":"[calm, matter-of-fact] Your on-call team is buried in alerts… and most of them don't matter. The ones that do can take HOURS to untangle. [pause] [warmly] Meet Aiden for SRE, your AI SRE teammate. It connects to the observability tools you already run, and maps your services on its own."},
-{"id":"T2","lines":["L03","L04","L05"],"frames":[5,6,7],"chosen":null,"markup":"[measured] One failure can set off a flood of alerts. [pause] Aiden triages every alert as it arrives. It groups related alerts, filters the noise, and ranks the rest by impact on your services. [short pause] [warmly] Your engineers see only the alerts that need them… and save their energy for real incidents."},
-{"id":"T3","lines":["L06","L07","L09"],"frames":[9,10,11],"chosen":null,"markup":"[serious] When a real incident hits, most of the time goes into investigation. [pause] [confident] Aiden starts investigating the moment an alert fires. It correlates logs, metrics, and events across your dependencies. Then it scores every possible cause against the evidence — and even tries to prove itself wrong. [pause] Your team starts from a probable root cause, and M-T-T-R comes down."},
-{"id":"T4","lines":["L10","L11","L12"],"frames":[13,14,15],"chosen":null,"markup":"[matter-of-fact] Even with the cause in hand, the fix is often manual. [pause] [confident] Aiden runs the remediation, from restarting a service or scaling out, to rerouting traffic or rolling back a deployment. Your team sets which actions need approval, and every action goes into a full audit trail. [short pause] [warmly] Incidents close faster… and your team stays in control of what runs."},
-{"id":"T5","lines":["L13","L15","L16"],"frames":[16,18,19],"chosen":null,"markup":"[thoughtful] And it keeps learning. Every investigation adds to what Aiden knows about your environment, so the next incident starts further ahead. [long pause] [confident] Aiden for SRE runs on the Aiden World Model — the shared record of what's deployed, what changed, what broke, and what fixed it. And Aiden OS holds every action to your policies. [pause] [warmly] See Aiden for SRE on your own alerts. Book a demo, or try the free Community Edition."}
+ {
+  "id": "T1",
+  "lines": [
+   "L01",
+   "L02"
+  ],
+  "frames": [
+   2,
+   3
+  ],
+  "chosen": "gLSQHAlhpHXI4p8sMmsS",
+  "markup": "[calm, matter-of-fact] Your on-call team is buried in alerts\u2026 and most of them don't matter. The ones that do can take HOURS to untangle. [pause] [warmly] Meet Aiden for SRE, your AI SRE teammate. It connects to the observability tools you already run, and maps your services on its own.",
+  "voice_id": "SAz9YHcvj6GT2YYXdXww"
+ },
+ {
+  "id": "T2",
+  "lines": [
+   "L03",
+   "L04",
+   "L05"
+  ],
+  "frames": [
+   5,
+   6,
+   7
+  ],
+  "chosen": "U8WL1BX0PrM6JyyiErPK",
+  "markup": "[measured] One failure can set off a flood of alerts. [pause] Aiden triages every alert as it arrives. It groups related alerts, filters the noise, and ranks the rest by impact on your services. [short pause] [warmly] Your engineers see only the alerts that need them\u2026 and save their energy for real incidents.",
+  "voice_id": "SAz9YHcvj6GT2YYXdXww"
+ },
+ {
+  "id": "T3",
+  "lines": [
+   "L06",
+   "L07",
+   "L09"
+  ],
+  "frames": [
+   9,
+   10,
+   11
+  ],
+  "chosen": "NF5HAcXIcfKG52qJ9rZ3",
+  "markup": "[serious] When a real incident hits, most of the time goes into investigation. [pause] [confident] Aiden starts investigating the moment an alert fires. It correlates logs, metrics, and events across your dependencies. Then it scores every possible cause against the evidence \u2014 and even tries to prove itself wrong. [pause] Your team starts from a probable root cause, and M-T-T-R comes down.",
+  "voice_id": "SAz9YHcvj6GT2YYXdXww"
+ },
+ {
+  "id": "T4",
+  "lines": [
+   "L10",
+   "L11",
+   "L12"
+  ],
+  "frames": [
+   13,
+   14,
+   15
+  ],
+  "chosen": "HvO9TCH0DxAofBo7SfHx",
+  "markup": "[matter-of-fact] Even with the cause in hand, the fix is often manual. [pause] [confident] Aiden runs the remediation, from restarting a service or scaling out, to rerouting traffic or rolling back a deployment. Your team sets which actions need approval, and every action goes into a full audit trail. [short pause] [warmly] Incidents close faster\u2026 and your team stays in control of what runs.",
+  "voice_id": "SAz9YHcvj6GT2YYXdXww"
+ },
+ {
+  "id": "T5",
+  "lines": [
+   "L13",
+   "L15",
+   "L16"
+  ],
+  "frames": [
+   16,
+   18,
+   19
+  ],
+  "chosen": "mAKE4x6GQFps6xhnfgAi",
+  "markup": "[thoughtful] And it keeps learning. Every investigation adds to what Aiden knows about your environment, so the next incident starts further ahead. [long pause] [confident] Aiden for SRE runs on the Aiden World Model \u2014 the shared record of what's deployed, what changed, what broke, and what fixed it. And Aiden OS holds every action to your policies. [pause] [warmly] See Aiden for SRE on your own alerts. Book a demo, or try the free Community Edition.",
+  "voice_id": "SAz9YHcvj6GT2YYXdXww"
+ }
 ]

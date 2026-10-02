@@ -1,0 +1,323 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("shared/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Geist Mono";
+    src: url("shared/fonts/GeistMono-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-panel: #211d15;
+    --sg-hairline: #3f3b39;
+    --sg-cream: #f1eae0;
+    --sg-cream-bright: #faf7f2;
+    --sg-mute: #96897c;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+    --sg-coral: #fda39b;
+    --sg-amber: #fdd89b;
+    --sg-green: #a6f0bf;
+    --sg-glow-violet: rgba(186, 153, 253, 0.35);
+    --sg-glow-cyan: rgba(160, 234, 252, 0.3);
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: "Geist", sans-serif;
+    color: var(--sg-cream);
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f18-bg {
+    background: var(--sg-ink);
+  }
+  #f18-ribbon-host {
+    z-index: 1;
+  }
+  .f18-world {
+    z-index: 2;
+    perspective: 2400px;
+    transform-style: preserve-3d;
+  }
+  .f18-cam {
+    position: absolute;
+    left: 960px;
+    top: 540px;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+  }
+  .f18-stage {
+    position: absolute;
+    left: -960px;
+    top: -540px;
+    width: 1920px;
+    height: 1080px;
+    transform-style: preserve-3d;
+  }
+  .f18-sweep {
+    position: absolute;
+    left: -280px;
+    top: 520px;
+    width: 640px;
+    height: 460px;
+    background: radial-gradient(ellipse at center, var(--sg-glow-cyan) 0%, transparent 68%);
+    filter: blur(10px);
+  }
+  .f18-plate,
+  .f18-links,
+  .f18-chip,
+  .f18-os,
+  .f18-sweep {
+    visibility: hidden;
+  }
+  .f18-video {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    object-fit: contain;
+    object-position: center center;
+  }
+  .f18-links {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: visible;
+  }
+  .f18-links line {
+    fill: none;
+    stroke-linecap: round;
+  }
+  .f18-link {
+    stroke: var(--sg-cyan);
+    stroke-width: 1.5;
+  }
+  #f18-rule-deployed { stroke: var(--sg-cyan); stroke-width: 2; }
+  #f18-rule-changed { stroke: var(--sg-violet); stroke-width: 2; }
+  #f18-rule-broke { stroke: var(--sg-coral); stroke-width: 2; }
+  #f18-rule-fixed { stroke: var(--sg-green); stroke-width: 2; }
+  #f18-rule-os { stroke: var(--sg-cyan); stroke-width: 2; }
+  .f18-chip {
+    position: absolute;
+    top: 560px;
+    width: 220px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--sg-panel);
+    color: var(--sg-cream);
+    font-family: "Geist Mono", monospace;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 26px;
+    transform-origin: 50% 50%;
+  }
+  #f18-chip-deployed { left: 160px; }
+  #f18-chip-changed { left: 408px; }
+  #f18-chip-broke { left: 656px; }
+  #f18-chip-fixed { left: 904px; }
+  .f18-os {
+    position: absolute;
+    left: 160px;
+    top: 700px;
+    font-family: "Geist", sans-serif;
+    font-weight: 500;
+    font-size: 34px;
+    line-height: 44px;
+    color: var(--sg-cream);
+    white-space: nowrap;
+    text-shadow: 0 8px 28px rgba(20, 17, 12, 0.85);
+    transform-origin: 0% 50%;
+  }
+  .f18-os-kicker {
+    font-family: "Geist Mono", monospace;
+    font-weight: 400;
+    font-size: 15px;
+    letter-spacing: 1.4px;
+    color: var(--sg-mute);
+    vertical-align: 6px;
+  }
+  .f18-os-sep {
+    color: var(--sg-mute);
+  }
+</style>
+
+<div id="root" data-composition-id="18-world-model" data-width="1920" data-height="1080" data-duration="11.84">
+  <div class="clip f18-bg" id="f18-bg" data-start="0" data-duration="11.84" data-track-index="0"></div>
+
+  <div class="clip" id="f18-ribbon-host" data-start="0" data-duration="11.84" data-track-index="1"></div>
+
+  <div class="clip f18-world" id="f18-world" data-start="0" data-duration="11.84" data-track-index="2">
+    <div class="f18-cam" id="f18-cam">
+      <div class="f18-stage" id="f18-stage">
+        <div class="f18-sweep" id="f18-sweep"></div>
+        <img class="f18-plate" src="source/figma/66-76.png" alt="" />
+        <video
+          class="f18-video"
+          src="assets/el-pro/08-world-model.mp4"
+          data-start="0"
+          data-duration="11.84"
+          data-track-index="4"
+          data-media-start="0"
+          muted
+          playsinline
+        ></video>
+        <svg class="f18-links" viewBox="0 0 1920 1080" width="1920" height="1080">
+          <line id="f18-link-deployed" class="f18-link" x1="436" y1="500" x2="270" y2="558" />
+          <line id="f18-link-changed" class="f18-link" x1="436" y1="500" x2="518" y2="558" />
+          <line id="f18-link-broke" class="f18-link" x1="436" y1="500" x2="766" y2="558" />
+          <line id="f18-link-fixed" class="f18-link" x1="436" y1="500" x2="1014" y2="558" />
+          <line id="f18-rule-deployed" x1="180" y1="636" x2="360" y2="636" />
+          <line id="f18-rule-changed" x1="428" y1="636" x2="608" y2="636" />
+          <line id="f18-rule-broke" x1="676" y1="636" x2="856" y2="636" />
+          <line id="f18-rule-fixed" x1="924" y1="636" x2="1104" y2="636" />
+          <line id="f18-rule-os" x1="160" y1="756" x2="760" y2="756" />
+        </svg>
+        <div class="f18-chip" id="f18-chip-deployed">deployed</div>
+        <div class="f18-chip" id="f18-chip-changed">changed</div>
+        <div class="f18-chip" id="f18-chip-broke">broke</div>
+        <div class="f18-chip" id="f18-chip-fixed">fixed</div>
+        <div class="f18-os" id="f18-os">
+          <span class="f18-os-kicker">AIDEN OS</span><span class="f18-os-sep"> · </span><span>policy</span><span class="f18-os-sep"> · </span><span>approvals</span><span class="f18-os-sep"> · </span><span>audit</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  
+  
+  
+  
+</div>
+
+<script src="assets/frames/18/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "18-world-model";
+  const D = 11.84;
+  const CUE = {
+    deployed: 4.405,
+    changed: 5.275,
+    broke: 6.275,
+    fixed: 7.745,
+    os: 8.745,
+  };
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/18/ribbons-mount.js", import.meta.url).href,
+  );
+
+  mountRibbons(document.getElementById("f18-ribbon-host"), {
+    seed: 18018,
+    count: 32,
+    split: 0.62,
+    modes: [
+      { t: 0, mode: "dormant", opacity: 0.72 },
+      { t: 4.2, mode: "converge", opacity: 0.92, target: { x: 642, y: 600 } },
+      { t: 8.6, mode: "fan", opacity: 0.78, target: { x: 436, y: 500 } },
+    ],
+  }).bind(tl, D);
+
+  const cam = document.getElementById("f18-cam");
+  const stage = document.getElementById("f18-stage");
+  const sweep = document.getElementById("f18-sweep");
+
+  document.querySelectorAll(".f18-links line").forEach((line) => {
+    const len = line.getTotalLength();
+    const safe = len > 0 ? len : 1;
+    line.style.strokeDasharray = `${safe}`;
+    line.style.strokeDashoffset = `${safe}`;
+  });
+
+  tl.fromTo(
+    stage,
+    { y: 36, scale: 0.9, rotationX: 8, rotationY: -6, opacity: 0.4, transformPerspective: 2400 },
+    { y: 0, scale: 0.94, rotationX: 2, rotationY: -4, opacity: 1, duration: 0.75, ease: "power3.out" },
+    0.04,
+  );
+
+  tl.fromTo(
+    cam,
+    { x: 18, y: 10, scale: 1 },
+    { x: -18, y: -12, scale: 1.02, duration: D, ease: "none" },
+    0,
+  );
+
+  tl.fromTo(
+    sweep,
+    { x: 0, opacity: 0.45 },
+    { x: 1280, opacity: 0.7, duration: D, ease: "none" },
+    0,
+  );
+
+  tl.to(
+    stage,
+    { rotationX: 3, rotationY: -5, duration: 2.94, ease: "sine.inOut" },
+    8.9,
+  );
+
+  const chips = [
+    ["deployed", CUE.deployed],
+    ["changed", CUE.changed],
+    ["broke", CUE.broke],
+    ["fixed", CUE.fixed],
+  ];
+
+  chips.forEach(([name, at]) => {
+    tl.fromTo(
+      document.getElementById(`f18-chip-${name}`),
+      { opacity: 0, scale: 0.6, y: 18 },
+      { opacity: 1, scale: 1, y: 0, duration: 0.42, ease: "power3.out", immediateRender: true },
+      at,
+    );
+    tl.to(
+      `#f18-link-${name}`,
+      { strokeDashoffset: 0, duration: 0.38, ease: "power2.out" },
+      at,
+    );
+    tl.to(
+      `#f18-rule-${name}`,
+      { strokeDashoffset: 0, duration: 0.32, ease: "power2.out" },
+      at + 0.12,
+    );
+  });
+
+  tl.fromTo(
+    document.getElementById("f18-os"),
+    { opacity: 0, y: 28 },
+    { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", immediateRender: true },
+    CUE.os,
+  );
+  tl.to(
+    "#f18-rule-os",
+    { strokeDashoffset: 0, duration: 0.45, ease: "power2.out" },
+    CUE.os + 0.16,
+  );
+
+  tl.to({}, { duration: D }, 0);
+</script>
+</template>

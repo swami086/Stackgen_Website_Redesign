@@ -1,167 +1,167 @@
 [
  {
   "word": "Aiden",
-  "start": 0.0,
-  "end": 0.302
+  "start": 0.06,
+  "end": 0.24
  },
  {
   "word": "starts",
-  "start": 0.36,
-  "end": 0.627
+  "start": 0.4,
+  "end": 0.89
  },
  {
   "word": "investigating",
-  "start": 0.662,
-  "end": 1.242
+  "start": 0.89,
+  "end": 1.91
  },
  {
   "word": "the",
-  "start": 1.277,
-  "end": 1.347
+  "start": 2.06,
+  "end": 2.19
  },
  {
   "word": "moment",
-  "start": 1.405,
-  "end": 1.695
+  "start": 2.19,
+  "end": 2.68
  },
  {
   "word": "an",
-  "start": 1.73,
-  "end": 1.8
+  "start": 2.68,
+  "end": 2.83
  },
  {
   "word": "alert",
-  "start": 1.858,
-  "end": 2.125
+  "start": 2.83,
+  "end": 3.22
  },
  {
   "word": "fires.",
-  "start": 2.194,
-  "end": 2.81
+  "start": 3.68,
+  "end": 3.73
  },
  {
   "word": "It",
-  "start": 3.053,
-  "end": 3.193
+  "start": 3.74,
+  "end": 3.86
  },
  {
   "word": "correlates",
-  "start": 3.251,
-  "end": 3.692
+  "start": 3.86,
+  "end": 4.66
  },
  {
   "word": "logs,",
-  "start": 3.762,
-  "end": 4.284
+  "start": 4.79,
+  "end": 5.15
  },
  {
   "word": "metrics",
-  "start": 4.458,
-  "end": 4.923
+  "start": 5.15,
+  "end": 5.33
  },
  {
   "word": "and",
-  "start": 4.969,
-  "end": 5.074
+  "start": 6.12,
+  "end": 6.16
  },
  {
   "word": "events",
-  "start": 5.12,
-  "end": 5.48
+  "start": 6.29,
+  "end": 6.68
  },
  {
   "word": "across",
-  "start": 5.526,
-  "end": 5.817
+  "start": 6.74,
+  "end": 7.19
  },
  {
   "word": "your",
-  "start": 5.851,
-  "end": 5.944
+  "start": 7.19,
+  "end": 7.53
  },
  {
   "word": "dependencies.",
-  "start": 5.979,
-  "end": 6.803
+  "start": 7.53,
+  "end": 8.55
  },
  {
   "word": "Then",
-  "start": 7.187,
-  "end": 7.361
+  "start": 8.55,
+  "end": 8.82
  },
  {
   "word": "it",
-  "start": 7.407,
-  "end": 7.477
+  "start": 9.11,
+  "end": 9.23
  },
  {
   "word": "scores",
-  "start": 7.523,
-  "end": 7.93
+  "start": 9.25,
+  "end": 9.69
  },
  {
   "word": "every",
-  "start": 8.046,
-  "end": 8.382
+  "start": 9.69,
+  "end": 10.06
  },
  {
   "word": "possible",
-  "start": 8.452,
-  "end": 8.858
+  "start": 10.06,
+  "end": 10.65
  },
  {
   "word": "cause",
-  "start": 8.905,
-  "end": 9.207
+  "start": 10.65,
+  "end": 11.04
  },
  {
   "word": "against",
-  "start": 9.242,
-  "end": 9.509
+  "start": 11.04,
+  "end": 11.59
  },
  {
   "word": "the",
-  "start": 9.543,
-  "end": 9.613
+  "start": 11.59,
+  "end": 11.82
  },
  {
   "word": "evidence,",
-  "start": 9.671,
-  "end": 10.194
+  "start": 11.82,
+  "end": 12.05
  },
  {
   "word": "and",
-  "start": 10.368,
-  "end": 10.53
+  "start": 12.54,
+  "end": 12.75
  },
  {
   "word": "even",
-  "start": 10.588,
-  "end": 10.774
+  "start": 12.75,
+  "end": 13.09
  },
  {
   "word": "tries",
-  "start": 10.82,
-  "end": 11.076
+  "start": 13.15,
+  "end": 13.52
  },
  {
   "word": "to",
-  "start": 11.111,
-  "end": 11.169
+  "start": 13.58,
+  "end": 13.75
  },
  {
   "word": "prove",
-  "start": 11.227,
-  "end": 11.436
+  "start": 13.75,
+  "end": 14.21
  },
  {
   "word": "itself",
-  "start": 11.459,
-  "end": 11.738
+  "start": 14.21,
+  "end": 14.76
  },
  {
   "word": "wrong.",
-  "start": 11.784,
-  "end": 12.492
+  "start": 14.76,
+  "end": 15.22
  }
 ]

@@ -1,0 +1,49 @@
+{
+ "bridges": {
+  "1": 4.412,
+  "4": 3.352,
+  "8": 2.896,
+  "12": 2.698,
+  "17": 3.359,
+  "20": 2.5
+ },
+ "log": [
+  {
+   "frame": 1,
+   "next": 2,
+   "kind": "phrase",
+   "start_next": 4.412
+  },
+  {
+   "frame": 4,
+   "next": 5,
+   "kind": "phrase",
+   "start_next": 24.404
+  },
+  {
+   "frame": 8,
+   "next": 9,
+   "kind": "phrase",
+   "start_next": 44.42
+  },
+  {
+   "frame": 12,
+   "next": 13,
+   "kind": "downbeat",
+   "start_next": 69.428
+  },
+  {
+   "frame": 17,
+   "next": 18,
+   "kind": "downbeat",
+   "start_next": 101.912
+  },
+  {
+   "frame": 20,
+   "kind": "tail",
+   "miss": 1.687
+  }
+ ],
+ "total": 121.607,
+ "offset": 0.0
+}

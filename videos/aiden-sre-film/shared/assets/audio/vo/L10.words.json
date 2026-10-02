@@ -1,57 +1,57 @@
 [
  {
   "word": "Even",
-  "start": 0.0,
-  "end": 0.267
+  "start": 0.11,
+  "end": 0.28
  },
  {
   "word": "with",
-  "start": 0.302,
-  "end": 0.43
+  "start": 0.28,
+  "end": 0.56
  },
  {
   "word": "the",
-  "start": 0.453,
-  "end": 0.522
+  "start": 0.56,
+  "end": 0.77
  },
  {
   "word": "cause",
-  "start": 0.569,
-  "end": 0.848
+  "start": 0.77,
+  "end": 1.12
  },
  {
   "word": "in",
-  "start": 0.882,
-  "end": 0.952
+  "start": 1.12,
+  "end": 1.26
  },
  {
   "word": "hand,",
-  "start": 1.022,
-  "end": 1.405
+  "start": 1.26,
+  "end": 1.53
  },
  {
   "word": "the",
-  "start": 1.44,
-  "end": 1.544
+  "start": 1.83,
+  "end": 1.94
  },
  {
   "word": "fix",
-  "start": 1.614,
-  "end": 1.8
+  "start": 2.09,
+  "end": 2.36
  },
  {
   "word": "is",
-  "start": 1.869,
-  "end": 1.939
+  "start": 2.36,
+  "end": 2.49
  },
  {
   "word": "often",
-  "start": 2.009,
-  "end": 2.229
+  "start": 2.67,
+  "end": 3.1
  },
  {
   "word": "manual.",
-  "start": 2.276,
-  "end": 3.019
+  "start": 3.1,
+  "end": 3.65
  }
 ]

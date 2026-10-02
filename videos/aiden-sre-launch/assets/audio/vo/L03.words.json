@@ -1,0 +1,56 @@
+[
+ {
+  "id": "w0",
+  "text": "One",
+  "start": 0.1,
+  "end": 0.32
+ },
+ {
+  "id": "w1",
+  "text": "failure",
+  "start": 0.32,
+  "end": 0.99
+ },
+ {
+  "id": "w2",
+  "text": "can",
+  "start": 1.05,
+  "end": 1.38
+ },
+ {
+  "id": "w3",
+  "text": "set",
+  "start": 1.38,
+  "end": 1.7
+ },
+ {
+  "id": "w4",
+  "text": "off",
+  "start": 1.7,
+  "end": 2.02
+ },
+ {
+  "id": "w5",
+  "text": "a",
+  "start": 2.02,
+  "end": 2.12
+ },
+ {
+  "id": "w6",
+  "text": "flood",
+  "start": 2.12,
+  "end": 2.65
+ },
+ {
+  "id": "w7",
+  "text": "of",
+  "start": 2.65,
+  "end": 2.77
+ },
+ {
+  "id": "w8",
+  "text": "alerts.",
+  "start": 2.86,
+  "end": 3.52
+ }
+]

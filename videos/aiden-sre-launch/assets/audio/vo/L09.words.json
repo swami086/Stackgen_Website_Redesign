@@ -1,0 +1,74 @@
+[
+ {
+  "id": "w0",
+  "text": "Your",
+  "start": 0.065,
+  "end": 0.265
+ },
+ {
+  "id": "w1",
+  "text": "team",
+  "start": 0.265,
+  "end": 0.585
+ },
+ {
+  "id": "w2",
+  "text": "starts",
+  "start": 0.585,
+  "end": 1.075
+ },
+ {
+  "id": "w3",
+  "text": "from",
+  "start": 1.075,
+  "end": 1.415
+ },
+ {
+  "id": "w4",
+  "text": "a",
+  "start": 1.415,
+  "end": 1.495
+ },
+ {
+  "id": "w5",
+  "text": "probable",
+  "start": 1.495,
+  "end": 2.155
+ },
+ {
+  "id": "w6",
+  "text": "root",
+  "start": 2.155,
+  "end": 2.485
+ },
+ {
+  "id": "w7",
+  "text": "cause,",
+  "start": 2.485,
+  "end": 3.035
+ },
+ {
+  "id": "w8",
+  "text": "and",
+  "start": 3.065,
+  "end": 3.295
+ },
+ {
+  "id": "w9",
+  "text": "MTTR",
+  "start": 3.295,
+  "end": 3.615
+ },
+ {
+  "id": "w10",
+  "text": "comes",
+  "start": 3.615,
+  "end": 4.005
+ },
+ {
+  "id": "w11",
+  "text": "down.",
+  "start": 4.005,
+  "end": 4.655
+ }
+]

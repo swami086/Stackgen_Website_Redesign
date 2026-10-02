@@ -1,122 +1,122 @@
 [
  {
   "word": "Meet",
-  "start": 0.0,
-  "end": 0.279
+  "start": 0.05,
+  "end": 0.47
  },
  {
   "word": "Aiden",
-  "start": 0.348,
-  "end": 0.673
+  "start": 0.47,
+  "end": 0.58
  },
  {
   "word": "for",
-  "start": 0.743,
-  "end": 0.906
+  "start": 1.04,
+  "end": 1.39
  },
  {
   "word": "SRE,",
-  "start": 0.998,
-  "end": 1.8
+  "start": 1.695,
+  "end": 1.939
  },
  {
   "word": "your",
-  "start": 2.009,
-  "end": 2.159
+  "start": 2.0,
+  "end": 2.05
  },
  {
   "word": "AI",
-  "start": 2.241,
-  "end": 2.717
+  "start": 2.6,
+  "end": 2.9
  },
  {
   "word": "SRE",
-  "start": 2.81,
-  "end": 3.402
+  "start": 3.12,
+  "end": 3.296
  },
  {
   "word": "teammate.",
-  "start": 3.483,
-  "end": 4.017
+  "start": 3.34,
+  "end": 3.94
  },
  {
   "word": "It",
-  "start": 4.342,
-  "end": 4.481
+  "start": 5.05,
+  "end": 5.12
  },
  {
   "word": "connects",
-  "start": 4.528,
-  "end": 4.853
+  "start": 5.12,
+  "end": 5.6
  },
  {
   "word": "to",
-  "start": 4.888,
-  "end": 4.934
+  "start": 5.61,
+  "end": 5.73
  },
  {
   "word": "the",
-  "start": 4.981,
-  "end": 5.062
+  "start": 5.73,
+  "end": 5.91
  },
  {
   "word": "observability",
-  "start": 5.108,
-  "end": 5.782
+  "start": 5.91,
+  "end": 6.28
  },
  {
   "word": "tools",
-  "start": 5.84,
-  "end": 6.107
+  "start": 7.04,
+  "end": 7.09
  },
  {
   "word": "you",
-  "start": 6.153,
-  "end": 6.246
+  "start": 7.06,
+  "end": 7.22
  },
  {
   "word": "already",
-  "start": 6.339,
-  "end": 6.653
+  "start": 7.22,
+  "end": 7.64
  },
  {
   "word": "run",
-  "start": 6.711,
-  "end": 6.989
+  "start": 7.64,
+  "end": 8.32
  },
  {
   "word": "and",
-  "start": 7.105,
-  "end": 7.314
+  "start": 8.37,
+  "end": 8.52
  },
  {
   "word": "maps",
-  "start": 7.384,
-  "end": 7.663
+  "start": 8.52,
+  "end": 8.79
  },
  {
   "word": "your",
-  "start": 7.697,
-  "end": 7.825
+  "start": 8.79,
+  "end": 9.06
  },
  {
   "word": "services",
-  "start": 7.872,
-  "end": 8.406
+  "start": 9.06,
+  "end": 9.6
  },
  {
   "word": "on",
-  "start": 8.487,
-  "end": 8.626
+  "start": 9.6,
+  "end": 9.73
  },
  {
   "word": "its",
-  "start": 8.684,
-  "end": 8.8
+  "start": 9.73,
+  "end": 9.92
  },
  {
   "word": "own.",
-  "start": 8.847,
-  "end": 9.474
+  "start": 9.92,
+  "end": 10.0
  }
 ]

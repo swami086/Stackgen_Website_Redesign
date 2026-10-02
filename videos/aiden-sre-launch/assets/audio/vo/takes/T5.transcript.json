@@ -1,0 +1,422 @@
+[
+  {
+    "text": "and",
+    "start": 0.09,
+    "end": 0.26,
+    "id": "w0"
+  },
+  {
+    "text": "it",
+    "start": 0.36,
+    "end": 0.47,
+    "id": "w1"
+  },
+  {
+    "text": "keeps",
+    "start": 0.47,
+    "end": 0.94,
+    "id": "w2"
+  },
+  {
+    "text": "learning.",
+    "start": 0.94,
+    "end": 1.76,
+    "id": "w3"
+  },
+  {
+    "text": "Every",
+    "start": 1.85,
+    "end": 2.02,
+    "id": "w4"
+  },
+  {
+    "text": "investigation",
+    "start": 2.13,
+    "end": 2.95,
+    "id": "w5"
+  },
+  {
+    "text": "adds",
+    "start": 2.95,
+    "end": 3.15,
+    "id": "w6"
+  },
+  {
+    "text": "to",
+    "start": 3.32,
+    "end": 3.35,
+    "id": "w7"
+  },
+  {
+    "text": "what",
+    "start": 3.59,
+    "end": 3.62,
+    "id": "w8"
+  },
+  {
+    "text": "Aiden",
+    "start": 3.62,
+    "end": 3.88,
+    "id": "w9"
+  },
+  {
+    "text": "knows",
+    "start": 3.88,
+    "end": 4.23,
+    "id": "w10"
+  },
+  {
+    "text": "about",
+    "start": 4.23,
+    "end": 4.44,
+    "id": "w11"
+  },
+  {
+    "text": "your",
+    "start": 4.44,
+    "end": 4.56,
+    "id": "w12"
+  },
+  {
+    "text": "environment,",
+    "start": 4.56,
+    "end": 5.4,
+    "id": "w13"
+  },
+  {
+    "text": "so",
+    "start": 5.5,
+    "end": 5.54,
+    "id": "w14"
+  },
+  {
+    "text": "the",
+    "start": 5.54,
+    "end": 5.66,
+    "id": "w15"
+  },
+  {
+    "text": "next",
+    "start": 5.76,
+    "end": 6.05,
+    "id": "w16"
+  },
+  {
+    "text": "incident",
+    "start": 6.05,
+    "end": 6.59,
+    "id": "w17"
+  },
+  {
+    "text": "starts",
+    "start": 6.65,
+    "end": 6.82,
+    "id": "w18"
+  },
+  {
+    "text": "further",
+    "start": 7.24,
+    "end": 7.58,
+    "id": "w19"
+  },
+  {
+    "text": "ahead.",
+    "start": 7.58,
+    "end": 8.2,
+    "id": "w20"
+  },
+  {
+    "text": "Aiden",
+    "start": 8.29,
+    "end": 8.65,
+    "id": "w21"
+  },
+  {
+    "text": "for",
+    "start": 8.65,
+    "end": 8.92,
+    "id": "w22"
+  },
+  {
+    "text": "SRE",
+    "start": 8.92,
+    "end": 9.19,
+    "id": "w23"
+  },
+  {
+    "text": "runs",
+    "start": 9.19,
+    "end": 9.51,
+    "id": "w24"
+  },
+  {
+    "text": "on",
+    "start": 9.51,
+    "end": 9.64,
+    "id": "w25"
+  },
+  {
+    "text": "the",
+    "start": 9.64,
+    "end": 10.04,
+    "id": "w26"
+  },
+  {
+    "text": "Aiden",
+    "start": 10.04,
+    "end": 10.45,
+    "id": "w27"
+  },
+  {
+    "text": "World",
+    "start": 10.45,
+    "end": 10.9,
+    "id": "w28"
+  },
+  {
+    "text": "Model,",
+    "start": 10.9,
+    "end": 11.36,
+    "id": "w29"
+  },
+  {
+    "text": "the",
+    "start": 11.45,
+    "end": 11.53,
+    "id": "w30"
+  },
+  {
+    "text": "shared",
+    "start": 11.53,
+    "end": 11.87,
+    "id": "w31"
+  },
+  {
+    "text": "record",
+    "start": 11.87,
+    "end": 12.21,
+    "id": "w32"
+  },
+  {
+    "text": "of",
+    "start": 12.21,
+    "end": 12.32,
+    "id": "w33"
+  },
+  {
+    "text": "what's",
+    "start": 12.32,
+    "end": 12.65,
+    "id": "w34"
+  },
+  {
+    "text": "deployed,",
+    "start": 12.65,
+    "end": 13.24,
+    "id": "w35"
+  },
+  {
+    "text": "what",
+    "start": 13.24,
+    "end": 13.52,
+    "id": "w36"
+  },
+  {
+    "text": "changed,",
+    "start": 13.52,
+    "end": 14.16,
+    "id": "w37"
+  },
+  {
+    "text": "what",
+    "start": 14.25,
+    "end": 14.42,
+    "id": "w38"
+  },
+  {
+    "text": "broke,",
+    "start": 14.52,
+    "end": 14.96,
+    "id": "w39"
+  },
+  {
+    "text": "and",
+    "start": 14.96,
+    "end": 15.25,
+    "id": "w40"
+  },
+  {
+    "text": "what",
+    "start": 15.25,
+    "end": 15.49,
+    "id": "w41"
+  },
+  {
+    "text": "fixed",
+    "start": 15.99,
+    "end": 16.11,
+    "id": "w42"
+  },
+  {
+    "text": "it.",
+    "start": 16.17,
+    "end": 16.32,
+    "id": "w43"
+  },
+  {
+    "text": "And",
+    "start": 16.41,
+    "end": 16.57,
+    "id": "w44"
+  },
+  {
+    "text": "Aiden",
+    "start": 16.57,
+    "end": 16.99,
+    "id": "w45"
+  },
+  {
+    "text": "OS",
+    "start": 16.99,
+    "end": 17.16,
+    "id": "w46"
+  },
+  {
+    "text": "holds",
+    "start": 17.16,
+    "end": 17.58,
+    "id": "w47"
+  },
+  {
+    "text": "every",
+    "start": 17.58,
+    "end": 17.75,
+    "id": "w48"
+  },
+  {
+    "text": "action",
+    "start": 18.16,
+    "end": 18.53,
+    "id": "w49"
+  },
+  {
+    "text": "to",
+    "start": 18.53,
+    "end": 18.67,
+    "id": "w50"
+  },
+  {
+    "text": "your",
+    "start": 18.68,
+    "end": 19.04,
+    "id": "w51"
+  },
+  {
+    "text": "policies.",
+    "start": 19.04,
+    "end": 20.04,
+    "id": "w52"
+  },
+  {
+    "text": "See",
+    "start": 20.13,
+    "end": 20.29,
+    "id": "w53"
+  },
+  {
+    "text": "Aiden",
+    "start": 20.29,
+    "end": 20.7,
+    "id": "w54"
+  },
+  {
+    "text": "for",
+    "start": 20.7,
+    "end": 20.95,
+    "id": "w55"
+  },
+  {
+    "text": "SRE",
+    "start": 20.95,
+    "end": 21.19,
+    "id": "w56"
+  },
+  {
+    "text": "on",
+    "start": 21.19,
+    "end": 21.35,
+    "id": "w57"
+  },
+  {
+    "text": "your",
+    "start": 21.35,
+    "end": 21.48,
+    "id": "w58"
+  },
+  {
+    "text": "own",
+    "start": 21.87,
+    "end": 21.93,
+    "id": "w59"
+  },
+  {
+    "text": "alerts.",
+    "start": 21.93,
+    "end": 22.72,
+    "id": "w60"
+  },
+  {
+    "text": "Book",
+    "start": 22.81,
+    "end": 22.98,
+    "id": "w61"
+  },
+  {
+    "text": "a",
+    "start": 23.08,
+    "end": 23.17,
+    "id": "w62"
+  },
+  {
+    "text": "demo",
+    "start": 23.17,
+    "end": 23.53,
+    "id": "w63"
+  },
+  {
+    "text": "or",
+    "start": 23.53,
+    "end": 23.71,
+    "id": "w64"
+  },
+  {
+    "text": "try",
+    "start": 23.71,
+    "end": 23.98,
+    "id": "w65"
+  },
+  {
+    "text": "the",
+    "start": 23.98,
+    "end": 24.14,
+    "id": "w66"
+  },
+  {
+    "text": "free",
+    "start": 24.55,
+    "end": 24.61,
+    "id": "w67"
+  },
+  {
+    "text": "community",
+    "start": 24.61,
+    "end": 25.41,
+    "id": "w68"
+  },
+  {
+    "text": "edition.",
+    "start": 25.41,
+    "end": 26.27,
+    "id": "w69"
+  }
+]

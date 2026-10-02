@@ -1,0 +1,12 @@
+{
+  "name": "11-approval-gate",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/66:56",
+  "files": [
+    {
+      "path": "11-approval-gate.html",
+      "target": "compositions/components/11-approval-gate/11-approval-gate.html",
+      "type": "hyperframes:snippet"
+    }
+  ]
+}

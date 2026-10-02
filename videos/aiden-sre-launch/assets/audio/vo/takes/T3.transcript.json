@@ -1,0 +1,344 @@
+[
+  {
+    "text": "When",
+    "start": 0.13,
+    "end": 0.3,
+    "id": "w0"
+  },
+  {
+    "text": "a",
+    "start": 0.3,
+    "end": 0.37,
+    "id": "w1"
+  },
+  {
+    "text": "real",
+    "start": 0.37,
+    "end": 0.67,
+    "id": "w2"
+  },
+  {
+    "text": "incident",
+    "start": 0.67,
+    "end": 1.27,
+    "id": "w3"
+  },
+  {
+    "text": "hits,",
+    "start": 1.27,
+    "end": 1.63,
+    "id": "w4"
+  },
+  {
+    "text": "most",
+    "start": 1.9,
+    "end": 2.03,
+    "id": "w5"
+  },
+  {
+    "text": "of",
+    "start": 2.03,
+    "end": 2.16,
+    "id": "w6"
+  },
+  {
+    "text": "the",
+    "start": 2.16,
+    "end": 2.36,
+    "id": "w7"
+  },
+  {
+    "text": "time",
+    "start": 2.36,
+    "end": 2.64,
+    "id": "w8"
+  },
+  {
+    "text": "goes",
+    "start": 2.64,
+    "end": 2.97,
+    "id": "w9"
+  },
+  {
+    "text": "into",
+    "start": 2.97,
+    "end": 3.28,
+    "id": "w10"
+  },
+  {
+    "text": "investigation.",
+    "start": 3.31,
+    "end": 4.4,
+    "id": "w11"
+  },
+  {
+    "text": "Aiden",
+    "start": 4.4,
+    "end": 4.73,
+    "id": "w12"
+  },
+  {
+    "text": "starts",
+    "start": 4.73,
+    "end": 5.13,
+    "id": "w13"
+  },
+  {
+    "text": "investigating",
+    "start": 5.14,
+    "end": 5.97,
+    "id": "w14"
+  },
+  {
+    "text": "the",
+    "start": 5.97,
+    "end": 6.3,
+    "id": "w15"
+  },
+  {
+    "text": "moment",
+    "start": 6.3,
+    "end": 6.63,
+    "id": "w16"
+  },
+  {
+    "text": "an",
+    "start": 6.63,
+    "end": 6.76,
+    "id": "w17"
+  },
+  {
+    "text": "alert",
+    "start": 6.76,
+    "end": 7.1,
+    "id": "w18"
+  },
+  {
+    "text": "fires.",
+    "start": 7.1,
+    "end": 7.67,
+    "id": "w19"
+  },
+  {
+    "text": "It",
+    "start": 7.67,
+    "end": 7.81,
+    "id": "w20"
+  },
+  {
+    "text": "correlates",
+    "start": 7.81,
+    "end": 8.49,
+    "id": "w21"
+  },
+  {
+    "text": "logs,",
+    "start": 8.49,
+    "end": 8.89,
+    "id": "w22"
+  },
+  {
+    "text": "metrics,",
+    "start": 8.89,
+    "end": 9.49,
+    "id": "w23"
+  },
+  {
+    "text": "and",
+    "start": 9.58,
+    "end": 9.69,
+    "id": "w24"
+  },
+  {
+    "text": "events",
+    "start": 9.69,
+    "end": 10.08,
+    "id": "w25"
+  },
+  {
+    "text": "across",
+    "start": 10.09,
+    "end": 10.49,
+    "id": "w26"
+  },
+  {
+    "text": "your",
+    "start": 10.49,
+    "end": 10.76,
+    "id": "w27"
+  },
+  {
+    "text": "dependencies.",
+    "start": 10.76,
+    "end": 11.77,
+    "id": "w28"
+  },
+  {
+    "text": "Then",
+    "start": 11.97,
+    "end": 12.12,
+    "id": "w29"
+  },
+  {
+    "text": "it",
+    "start": 12.12,
+    "end": 12.24,
+    "id": "w30"
+  },
+  {
+    "text": "scores",
+    "start": 12.26,
+    "end": 12.67,
+    "id": "w31"
+  },
+  {
+    "text": "every",
+    "start": 12.67,
+    "end": 13.02,
+    "id": "w32"
+  },
+  {
+    "text": "possible",
+    "start": 13.02,
+    "end": 13.44,
+    "id": "w33"
+  },
+  {
+    "text": "cause",
+    "start": 13.74,
+    "end": 13.92,
+    "id": "w34"
+  },
+  {
+    "text": "against",
+    "start": 13.92,
+    "end": 14.4,
+    "id": "w35"
+  },
+  {
+    "text": "the",
+    "start": 14.4,
+    "end": 14.61,
+    "id": "w36"
+  },
+  {
+    "text": "evidence,",
+    "start": 14.61,
+    "end": 15.31,
+    "id": "w37"
+  },
+  {
+    "text": "and",
+    "start": 15.35,
+    "end": 15.5,
+    "id": "w38"
+  },
+  {
+    "text": "even",
+    "start": 15.5,
+    "end": 15.76,
+    "id": "w39"
+  },
+  {
+    "text": "tries",
+    "start": 15.76,
+    "end": 15.93,
+    "id": "w40"
+  },
+  {
+    "text": "to",
+    "start": 15.93,
+    "end": 16.165,
+    "id": "w41"
+  },
+  {
+    "text": "prove",
+    "start": 16.165,
+    "end": 16.4,
+    "id": "w42"
+  },
+  {
+    "text": "itself",
+    "start": 16.4,
+    "end": 16.67,
+    "id": "w43"
+  },
+  {
+    "text": "wrong.",
+    "start": 16.77,
+    "end": 17.52,
+    "id": "w44"
+  },
+  {
+    "text": "Your",
+    "start": 17.65,
+    "end": 17.85,
+    "id": "w45"
+  },
+  {
+    "text": "team",
+    "start": 17.85,
+    "end": 18.17,
+    "id": "w46"
+  },
+  {
+    "text": "starts",
+    "start": 18.17,
+    "end": 18.66,
+    "id": "w47"
+  },
+  {
+    "text": "from",
+    "start": 18.66,
+    "end": 19,
+    "id": "w48"
+  },
+  {
+    "text": "a",
+    "start": 19,
+    "end": 19.08,
+    "id": "w49"
+  },
+  {
+    "text": "probable",
+    "start": 19.08,
+    "end": 19.74,
+    "id": "w50"
+  },
+  {
+    "text": "root",
+    "start": 19.74,
+    "end": 20.07,
+    "id": "w51"
+  },
+  {
+    "text": "cause,",
+    "start": 20.07,
+    "end": 20.62,
+    "id": "w52"
+  },
+  {
+    "text": "and",
+    "start": 20.65,
+    "end": 20.88,
+    "id": "w53"
+  },
+  {
+    "text": "MTTR",
+    "start": 20.88,
+    "end": 21.2,
+    "id": "w54"
+  },
+  {
+    "text": "comes",
+    "start": 21.2,
+    "end": 21.59,
+    "id": "w55"
+  },
+  {
+    "text": "down.",
+    "start": 21.59,
+    "end": 22.24,
+    "id": "w56"
+  }
+]

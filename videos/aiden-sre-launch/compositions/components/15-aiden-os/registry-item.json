@@ -1,0 +1,12 @@
+{
+  "name": "15-aiden-os",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/66:87",
+  "files": [
+    {
+      "path": "15-aiden-os.html",
+      "target": "compositions/components/15-aiden-os/15-aiden-os.html",
+      "type": "hyperframes:snippet"
+    }
+  ]
+}

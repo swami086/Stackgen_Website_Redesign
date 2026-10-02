@@ -1,0 +1,74 @@
+[
+ {
+  "id": "w0",
+  "text": "When",
+  "start": 0.12,
+  "end": 0.29
+ },
+ {
+  "id": "w1",
+  "text": "a",
+  "start": 0.29,
+  "end": 0.36
+ },
+ {
+  "id": "w2",
+  "text": "real",
+  "start": 0.36,
+  "end": 0.66
+ },
+ {
+  "id": "w3",
+  "text": "incident",
+  "start": 0.66,
+  "end": 1.26
+ },
+ {
+  "id": "w4",
+  "text": "hits,",
+  "start": 1.26,
+  "end": 1.62
+ },
+ {
+  "id": "w5",
+  "text": "most",
+  "start": 1.89,
+  "end": 2.02
+ },
+ {
+  "id": "w6",
+  "text": "of",
+  "start": 2.02,
+  "end": 2.15
+ },
+ {
+  "id": "w7",
+  "text": "the",
+  "start": 2.15,
+  "end": 2.35
+ },
+ {
+  "id": "w8",
+  "text": "time",
+  "start": 2.35,
+  "end": 2.63
+ },
+ {
+  "id": "w9",
+  "text": "goes",
+  "start": 2.63,
+  "end": 2.96
+ },
+ {
+  "id": "w10",
+  "text": "into",
+  "start": 2.96,
+  "end": 3.27
+ },
+ {
+  "id": "w11",
+  "text": "investigation.",
+  "start": 3.3,
+  "end": 4.39
+ }
+]

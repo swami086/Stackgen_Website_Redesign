@@ -1,0 +1,12 @@
+{
+  "name": "10-manual-fix",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/66:49",
+  "files": [
+    {
+      "path": "10-manual-fix.html",
+      "target": "compositions/components/10-manual-fix/10-manual-fix.html",
+      "type": "hyperframes:snippet"
+    }
+  ]
+}

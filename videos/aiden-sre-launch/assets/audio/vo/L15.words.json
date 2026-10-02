@@ -1,0 +1,194 @@
+[
+ {
+  "id": "w0",
+  "text": "Aiden",
+  "start": 0.045,
+  "end": 0.405
+ },
+ {
+  "id": "w1",
+  "text": "for",
+  "start": 0.405,
+  "end": 0.675
+ },
+ {
+  "id": "w2",
+  "text": "SRE",
+  "start": 0.675,
+  "end": 0.945
+ },
+ {
+  "id": "w3",
+  "text": "runs",
+  "start": 0.945,
+  "end": 1.265
+ },
+ {
+  "id": "w4",
+  "text": "on",
+  "start": 1.265,
+  "end": 1.395
+ },
+ {
+  "id": "w5",
+  "text": "the",
+  "start": 1.395,
+  "end": 1.795
+ },
+ {
+  "id": "w6",
+  "text": "Aiden",
+  "start": 1.795,
+  "end": 2.205
+ },
+ {
+  "id": "w7",
+  "text": "World",
+  "start": 2.205,
+  "end": 2.655
+ },
+ {
+  "id": "w8",
+  "text": "Model,",
+  "start": 2.655,
+  "end": 3.115
+ },
+ {
+  "id": "w9",
+  "text": "the",
+  "start": 3.205,
+  "end": 3.285
+ },
+ {
+  "id": "w10",
+  "text": "shared",
+  "start": 3.285,
+  "end": 3.625
+ },
+ {
+  "id": "w11",
+  "text": "record",
+  "start": 3.625,
+  "end": 3.965
+ },
+ {
+  "id": "w12",
+  "text": "of",
+  "start": 3.965,
+  "end": 4.075
+ },
+ {
+  "id": "w13",
+  "text": "what's",
+  "start": 4.075,
+  "end": 4.405
+ },
+ {
+  "id": "w14",
+  "text": "deployed,",
+  "start": 4.405,
+  "end": 4.995
+ },
+ {
+  "id": "w15",
+  "text": "what",
+  "start": 4.995,
+  "end": 5.275
+ },
+ {
+  "id": "w16",
+  "text": "changed,",
+  "start": 5.275,
+  "end": 5.915
+ },
+ {
+  "id": "w17",
+  "text": "what",
+  "start": 6.005,
+  "end": 6.175
+ },
+ {
+  "id": "w18",
+  "text": "broke,",
+  "start": 6.275,
+  "end": 6.715
+ },
+ {
+  "id": "w19",
+  "text": "and",
+  "start": 6.715,
+  "end": 7.005
+ },
+ {
+  "id": "w20",
+  "text": "what",
+  "start": 7.005,
+  "end": 7.245
+ },
+ {
+  "id": "w21",
+  "text": "fixed",
+  "start": 7.745,
+  "end": 7.865
+ },
+ {
+  "id": "w22",
+  "text": "it.",
+  "start": 7.925,
+  "end": 8.075
+ },
+ {
+  "id": "w23",
+  "text": "And",
+  "start": 8.165,
+  "end": 8.325
+ },
+ {
+  "id": "w24",
+  "text": "Aiden",
+  "start": 8.325,
+  "end": 8.745
+ },
+ {
+  "id": "w25",
+  "text": "OS",
+  "start": 8.745,
+  "end": 8.915
+ },
+ {
+  "id": "w26",
+  "text": "holds",
+  "start": 8.915,
+  "end": 9.335
+ },
+ {
+  "id": "w27",
+  "text": "every",
+  "start": 9.335,
+  "end": 9.505
+ },
+ {
+  "id": "w28",
+  "text": "action",
+  "start": 9.915,
+  "end": 10.285
+ },
+ {
+  "id": "w29",
+  "text": "to",
+  "start": 10.285,
+  "end": 10.425
+ },
+ {
+  "id": "w30",
+  "text": "your",
+  "start": 10.435,
+  "end": 10.795
+ },
+ {
+  "id": "w31",
+  "text": "policies.",
+  "start": 10.795,
+  "end": 11.795
+ }
+]

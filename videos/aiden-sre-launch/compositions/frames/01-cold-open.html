@@ -1,0 +1,123 @@
+<template>
+<style>
+  @font-face {
+    font-family: "Geist Mono";
+    src: url("shared/fonts/GeistMono-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  :root {
+    --sg-ink: #14110c;
+    --sg-ink-raised: #1b1811;
+    --sg-cream: #f1eae0;
+    --sg-violet: #ba99fd;
+    --sg-cyan: #a0eafc;
+  }
+  #root {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    color: var(--sg-cream);
+    background: var(--sg-ink);
+  }
+  .clip {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .f01-bg {
+    background: var(--sg-ink);
+  }
+  .el-atmo {
+    width: 1920px;
+    height: 1080px;
+    object-fit: cover;
+    z-index: 2;
+  }
+  .f01-fg {
+    z-index: 4;
+  }
+  .f01-counter {
+    display: none;
+    position: absolute;
+    top: 108px;
+    right: 88px;
+    z-index: 2;
+    padding: 8px 14px 10px;
+    background: var(--sg-ink);
+    font-family: "Geist Mono", monospace;
+    font-size: 84px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--sg-cream);
+    opacity: 1;
+  }
+</style>
+
+<div id="root" data-composition-id="01-cold-open" data-width="1920" data-height="1080" data-duration="4.412">
+  <div class="clip f01-bg" id="f01-bg" data-start="0" data-duration="4.412" data-track-index="0"></div>
+
+  <div class="clip" id="f01-ribbon-host" data-start="0" data-duration="4.412" data-track-index="1"></div>
+
+  <video class="clip el-atmo" src="assets/el-video/A1.mp4" data-start="0" data-duration="4.412" data-track-index="4" data-media-start="0" muted playsinline></video>
+
+  <div class="clip f01-fg" id="f01-fg" data-start="0" data-duration="4.412" data-track-index="2">
+    <div class="f01-counter" id="f01-counter">0</div>
+  </div>
+
+  
+  
+  
+</div>
+
+<script src="assets/frames/10/vendor/gsap.min.js"></script>
+<script type="module">
+  const ID = "01-cold-open";
+  const D = 4.412;
+
+  const { mountRibbons } = await import(
+    new URL("../../assets/frames/10/ribbons-mount.js", import.meta.url).href,
+  );
+
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  window.__timelines[ID] = tl;
+  window.__timelines.main = tl;
+
+  mountRibbons(document.getElementById("f01-ribbon-host"), {
+    seed: 101,
+    count: 8,
+    split: 0.7,
+    modes: [
+      { t: 0, mode: "dormant", opacity: 0.32 },
+      { t: 0.7, mode: "storm", opacity: 0.64 },
+    ],
+  }).bind(tl, D);
+
+  const counter = document.getElementById("f01-counter");
+  const countState = { value: 0 };
+  const writeCount = () => {
+    counter.textContent = Math.round(countState.value).toLocaleString("en-US");
+  };
+  writeCount();
+  gsap.set(counter, { opacity: 1 });
+
+  tl.to(
+    countState,
+    {
+      value: 212,
+      duration: D,
+      ease: "power2.inOut",
+      onUpdate: writeCount,
+    },
+    0,
+  );
+
+  tl.to({}, { duration: D }, 0);
+</script>
+</template>

@@ -1,0 +1,12 @@
+{
+  "name": "12-resolved",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/66:70",
+  "files": [
+    {
+      "path": "12-resolved.html",
+      "target": "compositions/components/12-resolved/12-resolved.html",
+      "type": "hyperframes:snippet"
+    }
+  ]
+}

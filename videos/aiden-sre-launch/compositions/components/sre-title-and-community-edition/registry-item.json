@@ -1,0 +1,27 @@
+{
+  "name": "sre-title-and-community-edition",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/80:2",
+  "files": [
+    {
+      "path": "sre-title-and-community-edition.html",
+      "target": "compositions/components/sre-title-and-community-edition/sre-title-and-community-edition.html",
+      "type": "hyperframes:snippet"
+    },
+    {
+      "path": "image_633.svg",
+      "target": ".media/images/image_633.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_634.svg",
+      "target": ".media/images/image_634.svg",
+      "type": "hyperframes:asset"
+    },
+    {
+      "path": "image_635.svg",
+      "target": ".media/images/image_635.svg",
+      "type": "hyperframes:asset"
+    }
+  ]
+}

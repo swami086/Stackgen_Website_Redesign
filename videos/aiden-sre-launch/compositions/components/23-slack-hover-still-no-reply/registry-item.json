@@ -1,0 +1,17 @@
+{
+  "name": "23-slack-hover-still-no-reply",
+  "type": "hyperframes:component",
+  "description": "Imported from figma zpQTgAfsrkN6PI3eTHOb5p/99:36",
+  "files": [
+    {
+      "path": "23-slack-hover-still-no-reply.html",
+      "target": "compositions/components/23-slack-hover-still-no-reply/23-slack-hover-still-no-reply.html",
+      "type": "hyperframes:snippet"
+    },
+    {
+      "path": "image_636.svg",
+      "target": ".media/images/image_636.svg",
+      "type": "hyperframes:asset"
+    }
+  ]
+}

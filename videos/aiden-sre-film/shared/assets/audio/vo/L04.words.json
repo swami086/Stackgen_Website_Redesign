@@ -1,117 +1,117 @@
 [
  {
   "word": "Aiden",
-  "start": 0.0,
-  "end": 0.313
+  "start": 0.19,
+  "end": 0.27
  },
  {
   "word": "triages",
-  "start": 0.372,
-  "end": 0.929
+  "start": 0.45,
+  "end": 0.72
  },
  {
   "word": "every",
-  "start": 1.045,
-  "end": 1.358
+  "start": 1.08,
+  "end": 1.53
  },
  {
   "word": "alert",
-  "start": 1.416,
-  "end": 1.672
+  "start": 1.53,
+  "end": 1.98
  },
  {
   "word": "as",
-  "start": 1.718,
-  "end": 1.788
+  "start": 1.98,
+  "end": 2.16
  },
  {
   "word": "it",
-  "start": 1.846,
-  "end": 1.904
+  "start": 2.16,
+  "end": 2.34
  },
  {
   "word": "arrives.",
-  "start": 1.939,
-  "end": 2.508
+  "start": 2.34,
+  "end": 2.82
  },
  {
   "word": "It",
-  "start": 2.833,
-  "end": 2.984
+  "start": 3.32,
+  "end": 3.37
  },
  {
   "word": "groups",
-  "start": 3.03,
-  "end": 3.32
+  "start": 3.35,
+  "end": 3.81
  },
  {
   "word": "related",
-  "start": 3.367,
-  "end": 3.738
+  "start": 3.81,
+  "end": 4.38
  },
  {
   "word": "alerts,",
-  "start": 3.785,
-  "end": 4.296
+  "start": 4.38,
+  "end": 4.87
  },
  {
   "word": "filters",
-  "start": 4.447,
-  "end": 4.841
+  "start": 4.87,
+  "end": 5.05
  },
  {
   "word": "the",
-  "start": 4.888,
-  "end": 4.957
+  "start": 5.74,
+  "end": 5.99
  },
  {
   "word": "noise,",
-  "start": 5.027,
-  "end": 5.399
+  "start": 6.49,
+  "end": 6.56
  },
  {
   "word": "and",
-  "start": 5.433,
-  "end": 5.55
+  "start": 6.79,
+  "end": 6.83
  },
  {
   "word": "ranks",
-  "start": 5.631,
-  "end": 5.909
+  "start": 6.81,
+  "end": 7.16
  },
  {
   "word": "the",
-  "start": 5.956,
-  "end": 6.026
+  "start": 7.16,
+  "end": 7.37
  },
  {
   "word": "rest",
-  "start": 6.084,
-  "end": 6.304
+  "start": 7.37,
+  "end": 7.65
  },
  {
   "word": "by",
-  "start": 6.351,
-  "end": 6.478
+  "start": 7.65,
+  "end": 7.79
  },
  {
   "word": "impact",
-  "start": 6.56,
-  "end": 7.001
+  "start": 7.79,
+  "end": 8.21
  },
  {
   "word": "on",
-  "start": 7.047,
-  "end": 7.117
+  "start": 8.21,
+  "end": 8.35
  },
  {
   "word": "your",
-  "start": 7.163,
-  "end": 7.268
+  "start": 8.35,
+  "end": 8.63
  },
  {
   "word": "services.",
-  "start": 7.303,
-  "end": 8.22
+  "start": 8.63,
+  "end": 9.18
  }
 ]

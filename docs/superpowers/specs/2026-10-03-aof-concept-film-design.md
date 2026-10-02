@@ -200,7 +200,7 @@ The film’s stage is the homepage itself. Values come from [stackgen.com](https
 
 ### 6.8 Finish
 
-- Grain at 3% luma, vignette at 12%, applied in HyperFrames at the master.
+- Grain at 3% luma, vignette at 12%, applied in a finish pass on each rendered master (ffmpeg, fixed seed), as on the SRE film.
 - No color grade beyond tone mapping. The site colors must survive unchanged.
 
 ### 6.9 Signs of AI that fail review
@@ -506,7 +506,7 @@ Files: `assets/audio/sfx/<id>.wav`.
 ### 9.7 Mix
 
 - Voice at −16 LUFS integrated for web. True peak −1 dBTP.
-- Music carved −6 dB under speech.
+- Music carved under speech with the HyperFrames voiceover carve (strength 0.8, against the whole voice group), not a flat duck.
 - Room tone under the voice at about −42 LUFS, so there is never dead silence.
 - Spanish uses the same music and effects stems with its own voice track.
 

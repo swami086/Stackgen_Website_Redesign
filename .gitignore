@@ -28,6 +28,27 @@ design-reference/
 # Payload uploads (embedded in web)
 web/media/
 
+# Audiovisual media stays on disk. Git tracks source, not the bytes.
+*.mp4
+*.mov
+*.webm
+*.mkv
+*.avi
+*.m4v
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.ogg
+*.flac
+*.aiff
+*.aif
+videos/**/*.png
+videos/**/*.jpg
+videos/**/*.jpeg
+videos/**/*.gif
+videos/**/*.webp
+
 # Local tooling / caches (do not commit)
 .DS_Store
 .obsidian/
